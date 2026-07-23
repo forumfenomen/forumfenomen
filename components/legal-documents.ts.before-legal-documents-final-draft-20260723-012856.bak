@@ -1,0 +1,836 @@
+﻿export type LegalDocumentKey =
+  | "kvkk-aydinlatma"
+  | "gizlilik"
+  | "cerez-politikasi"
+  | "kullanim-kosullari"
+  | "topluluk-kurallari"
+  | "moderasyon-politikasi"
+  | "telif-ve-ihlal"
+  | "hesap-ve-veri-silme"
+  | "kvkk-basvuru";
+
+type LocalizedText = {
+  tr: string;
+  en: string;
+};
+
+type LegalSection = {
+  title: LocalizedText;
+  body: LocalizedText;
+};
+
+export type LegalDocument = {
+  key: LegalDocumentKey;
+  route: string;
+  icon: string;
+  title: LocalizedText;
+  summary: LocalizedText;
+  sections: LegalSection[];
+};
+
+export const legalDocuments: LegalDocument[] = [
+  {
+    key: "kvkk-aydinlatma",
+    route: "/yasal/kvkk-aydinlatma",
+    icon: "KV",
+    title: {
+      tr: "KVKK Aydınlatma Metni",
+      en: "Privacy Notice",
+    },
+    summary: {
+      tr: "Kişisel verilerin hangi amaçlarla ve hangi yöntemlerle işlendiğini açıklar.",
+      en: "Explains how and why personal data is processed.",
+    },
+    sections: [
+      {
+        title: {
+          tr: "Veri Sorumlusu",
+          en: "Data Controller",
+        },
+        body: {
+          tr: "Veri sorumlusunun resmi unvanı, adresi ve iletişim bilgileri kesinleştirildiğinde bu bölüm doldurulacaktır.",
+          en: "This section will be completed when the official data controller identity and contact details are confirmed.",
+        },
+      },
+      {
+        title: {
+          tr: "İşlenen Veriler ve Amaçlar",
+          en: "Data and Purposes",
+        },
+        body: {
+          tr: "Üyelik, profil, içerik paylaşımı, güvenlik, destek ve yasal yükümlülükler kapsamında işlenen veri grupları burada açıklanacaktır.",
+          en: "Data categories processed for membership, profiles, content, security, support and legal obligations will be explained here.",
+        },
+      },
+      {
+        title: {
+          tr: "Haklar ve Başvuru",
+          en: "Rights and Requests",
+        },
+        body: {
+          tr: "Kullanıcıların kişisel verileriyle ilgili hakları ve başvuru yöntemi yayın öncesinde bu bölüme eklenecektir.",
+          en: "User rights and the request procedure will be added before publication.",
+        },
+      },
+    ],
+  },
+  {
+    key: "gizlilik",
+    route: "/yasal/gizlilik",
+    icon: "GZ",
+    title: {
+      tr: "Gizlilik Politikası",
+      en: "Privacy Policy",
+    },
+    summary: {
+      tr: "ForumFenomen’de kullanıcı bilgilerinin korunmasına ilişkin yaklaşımı açıklar.",
+      en: "Explains how user information is protected on ForumFenomen.",
+    },
+    sections: [
+      {
+        title: {
+          tr: "Toplanan Bilgiler",
+          en: "Information Collected",
+        },
+        body: {
+          tr: "Hesap, profil, cihaz, kullanım ve iletişim verilerine ilişkin kapsam teknik altyapı tamamlandığında netleştirilecektir.",
+          en: "The scope of account, profile, device, usage and contact data will be finalized after the technical infrastructure is completed.",
+        },
+      },
+      {
+        title: {
+          tr: "Bilgilerin Kullanımı",
+          en: "Use of Information",
+        },
+        body: {
+          tr: "Bilgilerin hizmet sunumu, güvenlik, moderasyon ve kullanıcı desteği için nasıl kullanıldığı bu bölümde açıklanacaktır.",
+          en: "This section will explain how information is used for service delivery, security, moderation and support.",
+        },
+      },
+      {
+        title: {
+          tr: "Saklama ve Güvenlik",
+          en: "Retention and Security",
+        },
+        body: {
+          tr: "Veri saklama süreleri ve güvenlik önlemleri kullanılan servisler kesinleştirildikten sonra eklenecektir.",
+          en: "Retention periods and security measures will be added after service providers are finalized.",
+        },
+      },
+    ],
+  },
+  {
+    key: "cerez-politikasi",
+    route: "/yasal/cerez-politikasi",
+    icon: "ÇR",
+    title: {
+      tr: "Çerez Politikası",
+      en: "Cookie Policy",
+    },
+    summary: {
+      tr: "Zorunlu, analitik ve reklam çerezlerinin kullanımını açıklar.",
+      en: "Explains the use of necessary, analytics and advertising cookies.",
+    },
+    sections: [
+      {
+        title: {
+          tr: "Çerez Nedir?",
+          en: "What Is a Cookie?",
+        },
+        body: {
+          tr: "Çerezlerin ve benzeri teknolojilerin temel işlevleri bu bölümde açıklanacaktır.",
+          en: "This section will explain the basic functions of cookies and similar technologies.",
+        },
+      },
+      {
+        title: {
+          tr: "Kullanılan Çerezler",
+          en: "Cookies Used",
+        },
+        body: {
+          tr: "Zorunlu, tercih, analitik ve reklam amaçlı çerezler kullanılan servisler belirlendikten sonra ayrı ayrı listelenecektir.",
+          en: "Necessary, preference, analytics and advertising cookies will be listed after service providers are selected.",
+        },
+      },
+      {
+        title: {
+          tr: "Tercihleri Yönetme",
+          en: "Managing Preferences",
+        },
+        body: {
+          tr: "Kullanıcıların zorunlu olmayan çerezleri kabul etme, reddetme ve tercihlerini değiştirme yöntemi burada açıklanacaktır.",
+          en: "This section will explain how users can accept, reject and change non-essential cookie preferences.",
+        },
+      },
+    ],
+  },
+  {
+    key: "kullanim-kosullari",
+    route: "/yasal/kullanim-kosullari",
+    icon: "KK",
+    title: {
+      tr: "Kullanım Koşulları",
+      en: "Terms of Use",
+    },
+    summary: {
+      tr: "ForumFenomen hizmetlerinin kullanımına ilişkin temel şartları açıklar.",
+      en: "Explains the main terms for using ForumFenomen services.",
+    },
+    sections: [
+      {
+        title: {
+          tr: "Hizmetin Kapsamı",
+          en: "Scope of Service",
+        },
+        body: {
+          tr: "Forum, blog, profil ve ileride eklenecek hizmetlerin kapsamı burada tanımlanacaktır.",
+          en: "The scope of the forum, blog, profiles and future services will be defined here.",
+        },
+      },
+      {
+        title: {
+          tr: "Üyelik ve Hesap Güvenliği",
+          en: "Membership and Account Security",
+        },
+        body: {
+          tr: "Üyelik şartları, hesap güvenliği ve kullanıcı sorumlulukları yayın öncesinde detaylandırılacaktır.",
+          en: "Membership requirements, account security and user responsibilities will be detailed before publication.",
+        },
+      },
+      {
+        title: {
+          tr: "İçerik ve Sorumluluk",
+          en: "Content and Responsibility",
+        },
+        body: {
+          tr: "Kullanıcı içerikleri, yasaklanan davranışlar ve platformun müdahale yetkileri bu bölümde açıklanacaktır.",
+          en: "User content, prohibited behavior and platform enforcement rights will be explained here.",
+        },
+      },
+    ],
+  },
+  {
+    key: "topluluk-kurallari",
+    route: "/yasal/topluluk-kurallari",
+    icon: "FK",
+
+    title: {
+      tr: "Forum Kuralları ve Topluluk Standartları",
+      en: "Forum Rules and Community Standards",
+    },
+
+    summary: {
+      tr: "ForumFenomen’de güvenli, saygılı, faydalı ve içerik üreticilerine değer katan bir topluluk için geçerli kuralları açıklar.",
+      en: "Explains the rules for maintaining a safe, respectful and useful ForumFenomen community that creates value for content creators.",
+    },
+
+    sections: [
+      {
+        title: {
+          tr: "Madde 1 — Amaç ve Kapsam",
+          en: "Article 1 — Purpose and Scope",
+        },
+
+        body: {
+          tr: "Bu kuralların amacı ForumFenomen’in düzenli, güvenli ve faydalı biçimde kullanılmasını sağlamaktır. Kurallar; üyeleri, kullanıcı adlarını, profil bilgilerini, konu başlıklarını, yorumları, görselleri, videoları, bağlantıları, etiketleri, anketleri ve ForumFenomen üzerinde paylaşılabilecek diğer tüm içerikleri kapsar. Platformu ziyaret eden veya kullanan herkes ilgili olduğu ölçüde bu kurallara tabidir.",
+          en: "These rules aim to ensure that ForumFenomen is used in an orderly, safe and useful manner. They apply to members, usernames, profile information, topics, comments, images, videos, links, tags, polls and all other content that may be shared on ForumFenomen. Everyone visiting or using the platform is subject to these rules where applicable.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 2 — Tanımlar",
+          en: "Article 2 — Definitions",
+        },
+
+        body: {
+          tr: "ForumFenomen veya Platform, forumfenomen.com alan adı üzerinden sunulan hizmetleri; Yönetim, platformun işleyişinden sorumlu yetkilileri; Moderatör, topluluk kurallarını uygulamakla görevlendirilen kişileri; Üye, ForumFenomen hesabı kullanan kişiyi; Konu, üyeler tarafından açılan tartışma başlığını; Yorum, bir konu altında paylaşılan cevabı; İçerik ise metin, görsel, video, bağlantı, kullanıcı adı, profil bilgisi ve benzeri tüm paylaşımları ifade eder.",
+          en: "ForumFenomen or Platform means the services provided through forumfenomen.com; Management means persons responsible for operating the platform; Moderator means persons authorized to apply community rules; Member means a person using a ForumFenomen account; Topic means a discussion opened by a member; Comment means a reply posted under a topic; and Content means all text, images, videos, links, usernames, profile information and similar submissions.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 3 — Hukuka Uygunluk ve Kullanıcı Sorumluluğu",
+          en: "Article 3 — Legal Compliance and User Responsibility",
+        },
+
+        body: {
+          tr: "Üyeler oluşturdukları ve paylaştıkları içeriklerden sorumludur. Türkiye Cumhuriyeti mevzuatına aykırı, suç teşkil eden, başkalarının haklarını ihlal eden veya hukuka aykırı bir faaliyeti teşvik eden içeriklere izin verilmez. ForumFenomen, hukuka aykırılık şüphesi bulunan içerikleri inceleyebilir, erişimini sınırlandırabilir veya kaldırabilir. Yetkili makamların hukuka uygun talepleri ilgili mevzuat kapsamında değerlendirilir.",
+          en: "Members are responsible for the content they create and share. Content that violates the laws of the Republic of Türkiye, constitutes an offence, infringes the rights of others or encourages unlawful activity is prohibited. ForumFenomen may review, restrict or remove content suspected of being unlawful. Lawful requests from competent authorities are handled under applicable legislation.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 4 — Hesap Güvenliği ve Kimlik Taklidi",
+          en: "Article 4 — Account Security and Impersonation",
+        },
+
+        body: {
+          tr: "Her üye hesabının güvenliğinden ve kendi hesabı üzerinden gerçekleştirilen işlemlerden sorumludur. Başka bir kişiyi, markayı, kurumu, içerik üreticisini veya ForumFenomen yetkilisini taklit etmek yasaktır. Yanıltıcı kullanıcı adı, profil görseli veya açıklama kullanılarak sahte kimlik oluşturulamaz. Hesap kısıtlamalarını aşmak amacıyla yeni ya da başka bir hesap kullanmak ayrıca ihlal sayılır.",
+          en: "Each member is responsible for securing their account and for activity performed through it. Impersonating another person, brand, organization, creator or ForumFenomen representative is prohibited. Misleading usernames, profile images or descriptions may not be used to create a false identity. Using a new or another account to evade restrictions is also a violation.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 5 — Konu Başlığı, Kategori ve Tekrarlanan Paylaşımlar",
+          en: "Article 5 — Topic Titles, Categories and Duplicate Posts",
+        },
+
+        body: {
+          tr: "Konu başlığı içeriği açık ve anlaşılır biçimde özetlemeli, konu doğru ana kategori ve alt kategori altında açılmalıdır. Aynı veya büyük ölçüde benzer konu tekrar tekrar açılamaz. Daha önce açılmış bir tartışma bulunuyorsa mümkün olduğunda mevcut konuya katkı sağlanmalıdır. Yanlış kategoride açılan konular taşınabilir, birleştirilebilir veya kaldırılabilir.",
+          en: "A topic title must clearly summarize its content and be posted in the correct main category and subcategory. The same or substantially similar topic may not be repeatedly created. Where an existing discussion is available, members should contribute to it where possible. Topics opened in the wrong category may be moved, merged or removed.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 6 — Yazım Düzeni ve Okunabilirlik",
+          en: "Article 6 — Writing Quality and Readability",
+        },
+
+        body: {
+          tr: "İçerikler diğer üyelerin kolayca anlayabileceği şekilde yazılmalıdır. İçeriğin tamamını büyük harfle, kalın, italik veya aşırı sembollerle yazmak; anlamsız başlıklar kullanmak; gereksiz etiket, emoji ya da bağlantı eklemek; okunabilirliği kasıtlı olarak bozmak yasaktır. Yönetim, içeriğin anlamını değiştirmeden başlık, kategori, etiket veya biçim düzenlemesi yapabilir.",
+          en: "Content should be written so other members can understand it easily. Writing entire posts in capital letters, bold, italics or excessive symbols; using meaningless titles; adding unnecessary tags, emojis or links; or deliberately reducing readability is prohibited. Management may adjust titles, categories, tags or formatting without changing the meaning.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 7 — Anlamsız İçerik, Spam ve Yapay Etkileşim",
+          en: "Article 7 — Meaningless Content, Spam and Artificial Engagement",
+        },
+
+        body: {
+          tr: "Yalnızca ileti sayısını artırmak, konuyu sürekli üst sıralara taşımak veya dikkat çekmek amacıyla anlamsız yorumlar yapılamaz. Aynı içeriğin tekrar paylaşılması, ilgisiz bağlantı bırakılması, otomatik mesaj gönderilmesi, organize beğeni veya yorum talep edilmesi ve yapay etkileşim oluşturulması yasaktır. Konuyu canlı tutmak amacıyla art arda mesaj yazılması sınırlandırılabilir.",
+          en: "Meaningless comments may not be posted merely to increase post count, repeatedly raise a topic or attract attention. Reposting the same content, leaving irrelevant links, sending automated messages, organizing likes or comments and creating artificial engagement are prohibited. Consecutive replies intended only to keep a topic active may be restricted.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 8 — Saygılı İletişim",
+          en: "Article 8 — Respectful Communication",
+        },
+
+        body: {
+          tr: "Fikir ayrılıkları kişilere saldırmadan tartışılmalıdır. Hakaret, aşağılama, tehdit, taciz, zorbalık, hedef gösterme, ısrarlı rahatsız etme, küçük düşürme ve kişilik haklarına saldırı niteliğindeki içeriklere izin verilmez. Bir paylaşımın mizah, eleştiri, tepki veya ironi amacı taşıması bu kuralları ortadan kaldırmaz.",
+          en: "Disagreements must be discussed without personal attacks. Insults, humiliation, threats, harassment, bullying, targeting, persistent disturbance, degradation and attacks on personal rights are prohibited. Presenting content as humor, criticism, reaction or irony does not override these rules.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 9 — Nefret Söylemi ve Ayrımcılık",
+          en: "Article 9 — Hate Speech and Discrimination",
+        },
+
+        body: {
+          tr: "Irk, etnik köken, milliyet, dil, din, mezhep, cinsiyet, cinsel yönelim, engellilik, sağlık durumu veya benzeri kişisel özellikler nedeniyle kişi ya da grupları aşağılayan, dışlayan, tehdit eden veya şiddeti teşvik eden içerikler yasaktır. Topluluk huzurunu bozma amacı taşıyan ayrımcı semboller, kullanıcı adları ve profil içerikleri de bu kapsamdadır.",
+          en: "Content that degrades, excludes, threatens or promotes violence against individuals or groups because of race, ethnicity, nationality, language, religion, gender, sexual orientation, disability, health status or similar characteristics is prohibited. Discriminatory symbols, usernames and profile content intended to disturb the community are also covered.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 10 — Siyaset, Din ve Platform Dışı Tartışmalar",
+          en: "Article 10 — Politics, Religion and Off-Topic Debates",
+        },
+
+        body: {
+          tr: "ForumFenomen’in temel amacı içerik üretimi ve sosyal medya ekosistemine ilişkin bilgi paylaşımıdır. Bu amaçla ilgisi bulunmayan, topluluğu kutuplaştırmaya veya tartışma çıkarmaya yönelik siyasi, ideolojik ya da dini konular kaldırılabilir. İçerik üreticilerini doğrudan ilgilendiren mevzuat, reklam politikası veya güncel gelişmeler kaynak gösterilerek ve saygılı biçimde tartışılabilir.",
+          en: "ForumFenomen primarily exists for knowledge sharing about content creation and the social media ecosystem. Political, ideological or religious topics unrelated to this purpose and intended to polarize the community may be removed. Regulations, advertising policies or current events directly affecting creators may be discussed respectfully and with sources.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 11 — Kişisel Bilgiler ve Mahremiyet",
+          en: "Article 11 — Personal Information and Privacy",
+        },
+
+        body: {
+          tr: "Başkasına ait telefon numarası, adres, kimlik bilgisi, özel yazışma, konum, finansal bilgi, hesap erişim bilgisi, özel görüntü veya benzeri hassas bilgiler kişinin açık izni olmadan paylaşılamaz. Kullanıcıları ifşa etmeye, takip etmeye, tehdit etmeye veya güvenliğini tehlikeye atmaya yönelik paylaşımlar kaldırılır. Banka kartı, şifre, doğrulama kodu ve benzeri güvenlik bilgileri hiçbir koşulda açık alanda paylaşılmamalıdır.",
+          en: "Phone numbers, addresses, identity information, private correspondence, locations, financial information, account credentials, private images or similar sensitive information belonging to others may not be shared without clear permission. Content intended to expose, track, threaten or endanger users will be removed. Card details, passwords, verification codes and similar security information must never be shared publicly.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 12 — Yasa Dışı ve Tehlikeli İçerikler",
+          en: "Article 12 — Illegal and Dangerous Content",
+        },
+
+        body: {
+          tr: "Suç işlemeyi teşvik eden, yasa dışı ürün veya hizmet sunan, şiddeti öven, kendine veya başkasına zarar vermeye yönlendiren ya da ciddi güvenlik riski oluşturan içerikler yasaktır. Yetkisiz sistem erişimi, zararlı yazılım, kimlik avı veya güvenlik önlemlerini aşmaya yönelik uygulanabilir talimatlar paylaşılamaz. Eğitim ve savunma amaçlı siber güvenlik tartışmaları dahi hukuka uygun, güvenli ve zarar vermeyen sınırlar içinde olmalıdır.",
+          en: "Content that encourages crime, offers illegal goods or services, glorifies violence, encourages harm to oneself or others, or creates a serious safety risk is prohibited. Actionable instructions for unauthorized access, malware, phishing or bypassing security measures may not be shared. Even educational or defensive cybersecurity discussions must remain lawful, safe and non-harmful.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 13 — Çocuk Güvenliği",
+          en: "Article 13 — Child Safety",
+        },
+
+        body: {
+          tr: "Çocukların cinsel istismarı, sömürülmesi, teşhiri veya güvenliğini tehlikeye atan içerikler konusunda sıfır tolerans uygulanır. Bu tür içerikler derhal kaldırılır, ilgili hesap kalıcı olarak kapatılabilir ve gerekli görülmesi halinde yetkili mercilere bildirim yapılabilir. Çocuklara ait kişisel bilgilerin ve özel görüntülerin paylaşılmasında güvenlik ve mahremiyet önceliklidir.",
+          en: "Zero tolerance applies to content involving child sexual abuse, exploitation, exposure or endangerment. Such content will be removed immediately, accounts may be permanently closed and reports may be made to competent authorities where necessary. Safety and privacy are paramount when sharing personal information or private images involving children.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 14 — Dolandırıcılık ve Yanıltıcı Faaliyetler",
+          en: "Article 14 — Fraud and Misleading Activity",
+        },
+
+        body: {
+          tr: "Kimlik taklidi, sahte kampanya, sahte çekiliş, yanıltıcı kazanç vaadi, kimlik avı, şüpheli ödeme talebi, sahte belge veya istatistik kullanımı ve kullanıcıları maddi ya da dijital zarara uğratabilecek yönlendirmeler yasaktır. Bir üye veya işletme hakkında dolandırıcılık iddiasında bulunulacaksa iddia açık, ölçülü ve doğrulanabilir bilgiye dayanmalıdır. Suç isnadı içeren durumlarda ilgili yasal mercilere başvurulması gerekebilir.",
+          en: "Impersonation, fake campaigns, fake giveaways, misleading income promises, phishing, suspicious payment demands, false documents or statistics and directions that may cause financial or digital harm are prohibited. Fraud allegations against a member or business must be clear, proportionate and based on verifiable information. Matters involving criminal allegations may need to be reported to competent authorities.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 15 — Hesap, Takipçi ve Etkileşim Hizmetleri",
+          en: "Article 15 — Accounts, Followers and Engagement Services",
+        },
+
+        body: {
+          tr: "Çalınmış, ele geçirilmiş veya sahibinin izni olmadan devredilen sosyal medya hesaplarıyla ilgili içeriklere izin verilmez. Sahte takipçi, sahte izlenme, otomatik yorum, bot etkileşim veya sosyal medya platformlarının kurallarını açıkça ihlal eden hizmetlerin satışı, tanıtımı ya da talep edilmesi yasaktır. Organik büyüme, reklam yönetimi ve hukuka uygun danışmanlık hizmetleri açık ve yanıltıcı olmayan biçimde tartışılabilir.",
+          en: "Content involving stolen, compromised or unauthorized social media accounts is prohibited. Selling, promoting or requesting fake followers, fake views, automated comments, bot engagement or services clearly violating social platform rules is prohibited. Organic growth, advertising management and lawful consulting services may be discussed transparently and without misleading claims.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 16 — Telif Hakları ve İçerik Sahipliği",
+          en: "Article 16 — Copyright and Content Ownership",
+        },
+
+        body: {
+          tr: "Başkasına ait metin, görsel, video, müzik, tasarım, eğitim içeriği veya diğer eserler izin alınmadan sahiplenilemez, satılamaz veya dağıtılamaz. Alıntılarda mümkün olduğunda kaynak ve hak sahibi belirtilmelidir. Başkasına ait ücretli eğitim, şablon, yazılım veya dijital ürünün izinsiz kopyası paylaşılamaz. Geçerli hak sahibi bildirimleri sonucunda içerik kaldırılabilir.",
+          en: "Text, images, videos, music, designs, educational material or other works belonging to others may not be claimed, sold or distributed without permission. Sources and rights holders should be identified where possible. Unauthorized copies of paid training, templates, software or digital products may not be shared. Content may be removed following a valid rights-holder notice.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 17 — Yapay Zekâ ve Düzenlenmiş İçerikler",
+          en: "Article 17 — AI and Manipulated Content",
+        },
+
+        body: {
+          tr: "Gerçek kişi, marka, olay, ürün sonucu veya kazanç hakkında yanlış izlenim oluşturabilecek yapay zekâ üretimi ya da yoğun biçimde düzenlenmiş içerikler uygun şekilde belirtilmelidir. Yapay zekâ kullanılarak kimlik taklidi yapmak, sahte kanıt, sahte yorum, sahte başarı sonucu veya yanıltıcı reklam üretmek yasaktır. Eğitim amacıyla paylaşılan yapay zekâ içeriklerinde kullanılan yöntemin ve önemli sınırlamaların açıklanması teşvik edilir.",
+          en: "AI-generated or heavily edited content that may create a false impression about a real person, brand, event, product result or income claim should be appropriately disclosed. Using AI to impersonate others or create fake evidence, reviews, performance results or misleading advertisements is prohibited. Educational AI content should explain the method used and important limitations where relevant.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 18 — Reklam, Sponsorluk, UGC ve Affiliate İçerikleri",
+          en: "Article 18 — Advertising, Sponsorships, UGC and Affiliate Content",
+        },
+
+        body: {
+          tr: "Bir marka, işletme veya ürünle maddi ya da ayni menfaat ilişkisi bulunan içerikler açıkça belirtilmelidir. Ücretli iş birliği, hediye ürün, ücretsiz hizmet, indirim, komisyon, affiliate bağlantısı ve UGC çalışması gibi ilişkiler kullanıcıların kolayca anlayabileceği şekilde reklam veya tanıtım olarak açıklanmalıdır. Örtülü reklam, sahte deneyim, kullanılmayan bir ürün hakkında kullanılmış izlenimi verme ve doğrulanamayan sonuç vaatleri yasaktır.",
+          en: "Content involving a financial or non-financial benefit from a brand, business or product must be clearly disclosed. Paid partnerships, gifted products, free services, discounts, commissions, affiliate links and UGC relationships must be identified as advertising or promotion in a way users can easily understand. Hidden advertising, fake experiences, pretending to have used a product and unverifiable performance claims are prohibited.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 19 — Tanıtım ve Ticari Paylaşımlar",
+          en: "Article 19 — Promotions and Commercial Posts",
+        },
+
+        body: {
+          tr: "Kişisel hizmet, ajans, eğitim, ürün veya marka tanıtımları yalnızca izin verilen kategori ve formatlarda paylaşılmalıdır. Topluluk tartışmalarını sürekli satışa yönlendirmek, ilgisiz konulara reklam bırakmak, yanıltıcı fiyat veya indirim kullanmak ve kullanıcıları baskıyla satın almaya yönlendirmek yasaktır. Ticari içerik paylaşan kişi teklifin kapsamını, ücretini, önemli şartlarını ve varsa sınırlamalarını açıkça belirtmelidir.",
+          en: "Personal services, agencies, training, products or brands may be promoted only in permitted categories and formats. Repeatedly redirecting discussions toward sales, placing advertisements in unrelated topics, using misleading prices or discounts and pressuring users to purchase are prohibited. Commercial posts must clearly state the offer, price, important conditions and relevant limitations.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 20 — Forum Dışında Gerçekleşen İşlemler",
+          en: "Article 20 — Transactions Outside ForumFenomen",
+        },
+
+        body: {
+          tr: "ForumFenomen, açıkça aksi belirtilmedikçe üyeler arasında kurulabilecek ticari ilişkinin, ödemenin, teslimatın veya sözleşmenin tarafı değildir. Platform bir ödeme, emanet veya garanti hizmeti sunmaz. Üyeler forum dışında gerçekleştirdikleri işlemlerde karşı tarafı, teklif koşullarını ve ödeme güvenliğini kendileri değerlendirmelidir. Şüpheli ödeme bağlantıları ve herkese açık IBAN veya hassas finansal bilgi paylaşımları kaldırılabilir.",
+          en: "Unless expressly stated otherwise, ForumFenomen is not a party to commercial relationships, payments, deliveries or agreements between members. The platform does not provide payment, escrow or guarantee services. Members must independently evaluate counterparties, offer terms and payment security in off-platform transactions. Suspicious payment links and public sharing of bank or sensitive financial details may be removed.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 21 — Şikâyet ve İddiaların Kanıtlanması",
+          en: "Article 21 — Complaints and Supporting Evidence",
+        },
+
+        body: {
+          tr: "Bir kişi, marka veya işletme hakkında ciddi bir iddia paylaşan üye, iddiasını doğrulanabilir bilgi ve belgelerle desteklemelidir. Kişisel veri, özel yazışma veya hassas bilgi içeren kanıtlar herkese açık biçimde paylaşılmamalı; gerekli bölümler gizlenmelidir. Kanıt içermeyen karalama kampanyaları, organize saldırılar ve karşı tarafı tehdit etmeye yönelik şikâyetler kaldırılabilir.",
+          en: "A member making a serious claim about a person, brand or business must support it with verifiable information and evidence. Evidence containing personal data, private correspondence or sensitive information must not be posted publicly and relevant sections should be redacted. Unsupported smear campaigns, organized attacks and complaints intended to threaten another party may be removed.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 22 — Moderasyon İşlemleri ve Yaptırımlar",
+          en: "Article 22 — Moderation Actions and Sanctions",
+        },
+
+        body: {
+          tr: "İhlalin niteliği, oluşturduğu risk, tekrar durumu ve kullanıcının önceki ihlalleri dikkate alınarak içerik düzenleme, kategori değiştirme, konu birleştirme, içeriğin görünürlüğünü azaltma, içeriği kaldırma, uyarı verme, özellikleri geçici kısıtlama, hesabı 24 saat ile 7 gün arasında kısıtlama, 7 ile 30 gün arasında askıya alma veya hesabı kalıcı olarak kapatma işlemleri uygulanabilir. Ağır ihlallerde bu sıralama izlenmeden doğrudan kalıcı yaptırım uygulanabilir.",
+          en: "Depending on severity, risk, repetition and prior violations, actions may include editing content, changing categories, merging topics, reducing visibility, removing content, issuing warnings, temporarily restricting features, restricting an account for 24 hours to 7 days, suspending it for 7 to 30 days or permanently closing it. Severe violations may result in immediate permanent enforcement without following this order.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 23 — Tekrarlanan İhlaller ve Yaptırımdan Kaçınma",
+          en: "Article 23 — Repeated Violations and Evasion",
+        },
+
+        body: {
+          tr: "Aynı veya benzer ihlallerin tekrarlanması daha ağır yaptırıma neden olabilir. Kısıtlanan ya da kapatılan hesabın yerine yeni hesap açmak, başka bir kişinin hesabını kullanmak, teknik yöntemlerle erişim sağlamak veya başkalarını kendi adına paylaşım yapmaya yönlendirmek yaptırımdan kaçınma sayılır. Bu hesaplar da kısıtlanabilir veya kapatılabilir.",
+          en: "Repeated similar violations may result in stronger sanctions. Creating a new account, using another person's account, employing technical methods to gain access or directing others to post on behalf of a restricted or closed account constitutes enforcement evasion. Related accounts may also be restricted or closed.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 24 — Moderasyon Kararına İtiraz",
+          en: "Article 24 — Appeals",
+        },
+
+        body: {
+          tr: "Bir moderasyon kararının hatalı olduğunu düşünen kullanıcı merhaba@forumfenomen.com adresi veya İletişim sayfasındaki Genel İletişim formu üzerinden itiraz edebilir. İtirazda kullanıcı adı, ilgili konu veya içerik bağlantısı, karar tarihi ve kararın neden hatalı olduğuna ilişkin kısa açıklama bulunmalıdır. Aynı karara ilişkin yeni bilgi içermeyen tekrarlanan başvurular yeniden incelenmeyebilir.",
+          en: "A user who believes a moderation decision is incorrect may appeal through merhaba@forumfenomen.com or the General Contact form. Appeals should include the username, relevant topic or content link, decision date and a brief explanation. Repeated submissions containing no new information may not be reviewed again.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 25 — Yönetim Hakkında Görüş ve Eleştiri",
+          en: "Article 25 — Feedback About Management",
+        },
+
+        body: {
+          tr: "Üyeler ForumFenomen’in işleyişi ve moderasyon kararları hakkında saygılı, somut ve çözüm odaklı eleştiri yapabilir. Hakaret, tehdit, kişisel bilgileri ifşa etme, moderatörleri hedef gösterme veya topluluğu organize biçimde rahatsız etmeye yönelik içerikler eleştiri kapsamında değerlendirilmez. Teknik sorunlar ve öneriler uygun kategori veya İletişim sayfası üzerinden iletilmelidir.",
+          en: "Members may provide respectful, specific and constructive criticism about ForumFenomen operations and moderation decisions. Insults, threats, disclosure of personal information, targeting moderators or organizing disruption are not protected as criticism. Technical issues and suggestions should be submitted through the appropriate category or Contact page.",
+        },
+      },
+
+      {
+        title: {
+          tr: "Madde 26 — Kuralların Güncellenmesi ve Bütünlüğü",
+          en: "Article 26 — Updates and Integrity of the Rules",
+        },
+
+        body: {
+          tr: "Bu kurallar, kategoriye özel kurallar, Kullanım Koşulları, Gizlilik Politikası ve diğer ForumFenomen politikalarıyla birlikte uygulanır. Topluluğun gelişmesi, yeni özellikler, güvenlik riskleri veya yasal gereklilikler nedeniyle kurallar güncellenebilir. Önemli değişiklikler uygun yöntemlerle duyurulur. Bir hükmün uygulanamaz olması diğer hükümlerin geçerliliğini ortadan kaldırmaz.",
+          en: "These rules operate together with category-specific rules, the Terms of Use, Privacy Policy and other ForumFenomen policies. They may be updated as the community develops, features change, new safety risks emerge or legal requirements evolve. Material changes will be communicated appropriately. If one provision is unenforceable, the remaining provisions continue to apply.",
+        },
+      },
+    ],
+  },
+  {
+    key: "moderasyon-politikasi",
+    route: "/yasal/moderasyon-politikasi",
+    icon: "MD",
+
+    title: {
+      tr: "Moderasyon Politikası",
+      en: "Moderation Policy",
+    },
+
+    summary: {
+      tr: "ForumFenomen’de içerik inceleme, bildirim, yaptırım ve itiraz süreçlerinin nasıl yürütüldüğünü açıklar.",
+      en: "Explains how content review, reporting, enforcement and appeal processes operate on ForumFenomen.",
+    },
+
+    sections: [
+      {
+        title: {
+          tr: "1. Moderasyonun Amacı",
+          en: "1. Purpose of Moderation",
+        },
+
+        body: {
+          tr: "ForumFenomen moderasyonunun amacı, farklı görüşlerin özgürce paylaşılabildiği ancak kullanıcı güvenliğinin, kişisel hakların ve topluluk düzeninin korunduğu bir ortam oluşturmaktır. Moderasyon yalnızca görüş ayrılığı bulunduğu için değil, kuralların ihlal edilip edilmediğine göre uygulanır.",
+          en: "ForumFenomen moderation aims to create an environment where different views can be shared freely while protecting user safety, personal rights and community order. Moderation is based on rule violations, not merely on disagreement.",
+        },
+      },
+
+      {
+        title: {
+          tr: "2. İncelenen Alanlar",
+          en: "2. Areas Subject to Review",
+        },
+
+        body: {
+          tr: "Konu başlıkları, yorumlar, profiller, kullanıcı adları, görseller, videolar, bağlantılar, etiketler, anketler ve platforma yüklenen diğer içerikler moderasyon kapsamında incelenebilir. Kamuya açık olmayan teknik güvenlik kayıtları da hesap güvenliği ve kötüye kullanım araştırmalarında değerlendirilebilir.",
+          en: "Topics, comments, profiles, usernames, images, videos, links, tags, polls and other content uploaded to the platform may be reviewed. Non-public technical security records may also be assessed during account security and abuse investigations.",
+        },
+      },
+
+      {
+        title: {
+          tr: "3. İçeriklerin Tespit Edilmesi",
+          en: "3. Detection of Content",
+        },
+
+        body: {
+          tr: "İçerikler kullanıcı bildirimleri, moderatör kontrolleri ve otomatik güvenlik sistemleri aracılığıyla incelemeye alınabilir. Otomatik sistemlerden gelen sonuçlar destekleyici sinyal olarak kullanılabilir; bağlam gerektiren durumlarda insan değerlendirmesi yapılabilir.",
+          en: "Content may be reviewed following user reports, moderator checks and automated safety systems. Automated results may be used as supporting signals, while human review may be used where context is required.",
+        },
+      },
+
+      {
+        title: {
+          tr: "4. Değerlendirme İlkeleri",
+          en: "4. Review Principles",
+        },
+
+        body: {
+          tr: "İncelemede içeriğin bağlamı, amacı, hedef aldığı kişi veya grup, oluşturabileceği zarar, kamu yararı, tekrar durumu ve kullanıcının önceki ihlalleri dikkate alınabilir. Alıntı, haber verme, eleştiri veya eğitim amacı bulunan içerikler de paylaşım biçimine ve oluşturduğu riske göre değerlendirilir.",
+          en: "Reviews may consider context, intent, targeted individuals or groups, potential harm, public interest, repetition and previous violations. Content shared for quotation, reporting, criticism or education is also assessed according to presentation and risk.",
+        },
+      },
+
+      {
+        title: {
+          tr: "5. Uygulanabilecek İşlemler",
+          en: "5. Possible Actions",
+        },
+
+        body: {
+          tr: "İhlalin niteliğine göre içerik düzenleme talebi, etiket veya kategori düzeltmesi, içeriğin görünürlüğünün azaltılması, içeriğin kaldırılması, özelliklerin geçici olarak kısıtlanması, hesap uyarısı, geçici hesap askısı veya kalıcı hesap kapatma uygulanabilir.",
+          en: "Depending on the violation, actions may include requesting edits, correcting tags or categories, reducing visibility, removing content, temporarily restricting features, issuing warnings, temporarily suspending or permanently closing an account.",
+        },
+      },
+
+      {
+        title: {
+          tr: "6. Ağır ve Acil İhlaller",
+          en: "6. Severe and Urgent Violations",
+        },
+
+        body: {
+          tr: "Şiddet tehdidi, çocuk güvenliği ihlali, ciddi dolandırıcılık, kimlik avı, hassas kişisel bilgilerin ifşası veya yakın zarar riski bulunan durumlarda içerik önceden bildirim yapılmadan kaldırılabilir ve hesap derhal kısıtlanabilir. Yasal zorunluluk bulunan durumlarda ilgili bilgiler yetkili mercilerle paylaşılabilir.",
+          en: "Content involving threats of violence, child safety violations, serious fraud, phishing, disclosure of sensitive personal information or imminent harm may be removed without prior notice and accounts may be restricted immediately. Information may be shared with competent authorities where legally required.",
+        },
+      },
+
+      {
+        title: {
+          tr: "7. Tekrarlanan İhlaller ve Yaptırımdan Kaçınma",
+          en: "7. Repeated Violations and Evasion",
+        },
+
+        body: {
+          tr: "Aynı veya benzer ihlallerin tekrarlanması daha ağır yaptırımlara neden olabilir. Kısıtlanan ya da kapatılan bir hesabın yaptırımlarından kaçınmak amacıyla yeni hesap açmak, başka hesapları kullanmak veya teknik yöntemlerle erişim sağlamaya çalışmak ayrıca ihlal sayılır.",
+          en: "Repeated similar violations may result in stronger enforcement. Creating new accounts, using other accounts or employing technical methods to evade restrictions or account closure is itself a violation.",
+        },
+      },
+
+      {
+        title: {
+          tr: "8. İçeriğin Düzenlenmesi",
+          en: "8. Content Adjustments",
+        },
+
+        body: {
+          tr: "Açık yazım hataları, yanlış kategori, uygunsuz başlık, aşırı etiket veya kişisel bilgi içeren kısımlar gerektiğinde düzenlenebilir. İçeriğin anlamını önemli ölçüde değiştiren işlemlerde içeriğin kaldırılması veya kullanıcıdan düzeltme istenmesi tercih edilebilir.",
+          en: "Obvious spelling errors, incorrect categories, unsuitable titles, excessive tags or sections containing personal information may be adjusted where necessary. Removal or a correction request may be preferred where an edit would materially change the meaning.",
+        },
+      },
+
+      {
+        title: {
+          tr: "9. İtiraz ve Yeniden İnceleme",
+          en: "9. Appeals and Reconsideration",
+        },
+
+        body: {
+          tr: "Bir moderasyon kararının hatalı olduğunu düşünen kullanıcılar İletişim sayfasındaki Genel İletişim kanalından itiraz edebilir. İtirazda kullanıcı adı, ilgili konu veya içerik bağlantısı ve kararın neden hatalı olduğuna ilişkin kısa açıklama bulunmalıdır. Aynı karara ilişkin tekrarlanan ve yeni bilgi içermeyen başvurular yeniden değerlendirilmeyebilir.",
+          en: "Users who believe a moderation decision is incorrect may appeal through the General Contact channel. Appeals should include the username, relevant content link and a brief explanation. Repeated appeals containing no new information may not be reviewed again.",
+        },
+      },
+
+      {
+        title: {
+          tr: "10. Tarafsızlık ve Çıkar Çatışması",
+          en: "10. Impartiality and Conflicts of Interest",
+        },
+
+        body: {
+          tr: "Moderasyon kararları kullanıcıların popülerliği, görüşü veya ticari ilişkisi yerine davranış ve içerik üzerinden verilmelidir. Bir moderatörün kişisel olarak taraf olduğu veya çıkar çatışması yaşadığı durumlarda inceleme başka bir yetkiliye bırakılabilir.",
+          en: "Moderation decisions should be based on behavior and content rather than popularity, opinions or commercial relationships. Where a moderator is personally involved or has a conflict of interest, the review may be assigned to another authorized person.",
+        },
+      },
+
+      {
+        title: {
+          tr: "11. Politikanın Güncellenmesi",
+          en: "11. Policy Updates",
+        },
+
+        body: {
+          tr: "Topluluğun gelişmesi, yeni güvenlik riskleri, teknik özellikler veya yasal gereklilikler doğrultusunda bu politika güncellenebilir. Önemli değişiklikler uygun yöntemlerle kullanıcılara duyurulur ve güncel metin Yasal Merkez’de yayınlanır.",
+          en: "This policy may be updated as the community evolves, new safety risks or technical features emerge, or legal requirements change. Material changes will be communicated appropriately and the current version will be published in the Legal Center.",
+        },
+      },
+    ],
+  },
+  {
+    key: "telif-ve-ihlal",
+    route: "/yasal/telif-ve-ihlal",
+    icon: "TL",
+    title: {
+      tr: "Telif ve İhlal Bildirimi",
+      en: "Copyright and Violation Notices",
+    },
+    summary: {
+      tr: "Telif hakkı ve hukuka aykırı içerik bildirimlerinin nasıl yapılacağını açıklar.",
+      en: "Explains how copyright and unlawful content notices can be submitted.",
+    },
+    sections: [
+      {
+        title: {
+          tr: "Telif Bildirimi",
+          en: "Copyright Notice",
+        },
+        body: {
+          tr: "Hak sahibinin kimliği, ihlal edildiği belirtilen eser ve ilgili içerik bağlantısı gibi gerekli bilgiler burada listelenecektir.",
+          en: "Required information such as the rights holder, protected work and reported content link will be listed here.",
+        },
+      },
+      {
+        title: {
+          tr: "İçerik İncelemesi",
+          en: "Content Review",
+        },
+        body: {
+          tr: "Geçerli bildirimlerin incelenmesi, içerik sahibinden bilgi istenmesi ve gerektiğinde içeriğin kaldırılması süreci açıklanacaktır.",
+          en: "The process for reviewing valid notices, requesting information and removing content when necessary will be explained.",
+        },
+      },
+      {
+        title: {
+          tr: "Kötüye Kullanım",
+          en: "Misuse",
+        },
+        body: {
+          tr: "Yanlış veya kötü niyetli telif bildirimlerine ilişkin kurallar yayın öncesinde eklenecektir.",
+          en: "Rules regarding false or malicious copyright notices will be added before publication.",
+        },
+      },
+    ],
+  },
+  {
+    key: "hesap-ve-veri-silme",
+    route: "/yasal/hesap-ve-veri-silme",
+    icon: "VS",
+    title: {
+      tr: "Hesap ve Veri Silme",
+      en: "Account and Data Deletion",
+    },
+    summary: {
+      tr: "Hesap kapatma ve kişisel verilerin silinmesini isteme yöntemlerini açıklar.",
+      en: "Explains how to close an account and request personal data deletion.",
+    },
+    sections: [
+      {
+        title: {
+          tr: "Hesap Kapatma",
+          en: "Account Closure",
+        },
+        body: {
+          tr: "Profil ayarlarından hesap kapatma işlemi üyelik sistemi tamamlandığında bu bölümde adım adım açıklanacaktır.",
+          en: "Account closure steps will be explained after the membership system is completed.",
+        },
+      },
+      {
+        title: {
+          tr: "Veri Silme Talebi",
+          en: "Data Deletion Request",
+        },
+        body: {
+          tr: "Hesap dışında kalan kişisel verilere yönelik silme taleplerinin iletileceği yöntem burada açıklanacaktır.",
+          en: "The method for requesting deletion of personal data outside the account will be explained here.",
+        },
+      },
+      {
+        title: {
+          tr: "Yasal Saklama Süreleri",
+          en: "Legal Retention",
+        },
+        body: {
+          tr: "Yasal yükümlülükler nedeniyle hemen silinemeyen kayıtlar ve saklama süreleri yayın öncesinde belirtilecektir.",
+          en: "Records that cannot be deleted immediately due to legal obligations and their retention periods will be described before publication.",
+        },
+      },
+    ],
+  },
+  {
+    key: "kvkk-basvuru",
+    route: "/yasal/kvkk-basvuru",
+    icon: "KB",
+    title: {
+      tr: "KVKK Başvuru Yöntemi",
+      en: "Privacy Request Procedure",
+    },
+    summary: {
+      tr: "Kişisel verilerle ilgili başvuruların nasıl iletileceğini açıklar.",
+      en: "Explains how privacy-related requests can be submitted.",
+    },
+    sections: [
+      {
+        title: {
+          tr: "Başvuru Konuları",
+          en: "Request Subjects",
+        },
+        body: {
+          tr: "Kişisel verilere erişme, düzeltme, silme ve işleme faaliyetleri hakkında bilgi isteme gibi başvuru konuları burada açıklanacaktır.",
+          en: "Requests such as access, correction, deletion and information about processing will be explained here.",
+        },
+      },
+      {
+        title: {
+          tr: "Başvuru Kanalı",
+          en: "Request Channel",
+        },
+        body: {
+          tr: "Başvuruların gönderileceği e-posta veya diğer doğrulanmış iletişim kanalı kesinleştirildiğinde eklenecektir.",
+          en: "The verified email or other request channel will be added when finalized.",
+        },
+      },
+      {
+        title: {
+          tr: "Kimlik Doğrulama",
+          en: "Identity Verification",
+        },
+        body: {
+          tr: "Yetkisiz veri paylaşımını önlemek amacıyla uygulanacak kimlik doğrulama yöntemi burada belirtilecektir.",
+          en: "Identity verification methods used to prevent unauthorized data disclosure will be described here.",
+        },
+      },
+    ],
+  },
+];
+
+export function getLegalDocument(
+  key: LegalDocumentKey
+) {
+  return legalDocuments.find(
+    (document) =>
+      document.key === key
+  );
+}
+
+

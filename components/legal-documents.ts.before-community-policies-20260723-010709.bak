@@ -1,0 +1,446 @@
+﻿export type LegalDocumentKey =
+  | "kvkk-aydinlatma"
+  | "gizlilik"
+  | "cerez-politikasi"
+  | "kullanim-kosullari"
+  | "topluluk-kurallari"
+  | "moderasyon-politikasi"
+  | "telif-ve-ihlal"
+  | "hesap-ve-veri-silme"
+  | "kvkk-basvuru";
+
+type LocalizedText = {
+  tr: string;
+  en: string;
+};
+
+type LegalSection = {
+  title: LocalizedText;
+  body: LocalizedText;
+};
+
+export type LegalDocument = {
+  key: LegalDocumentKey;
+  route: string;
+  icon: string;
+  title: LocalizedText;
+  summary: LocalizedText;
+  sections: LegalSection[];
+};
+
+export const legalDocuments: LegalDocument[] = [
+  {
+    key: "kvkk-aydinlatma",
+    route: "/yasal/kvkk-aydinlatma",
+    icon: "KV",
+    title: {
+      tr: "KVKK Aydınlatma Metni",
+      en: "Privacy Notice",
+    },
+    summary: {
+      tr: "Kişisel verilerin hangi amaçlarla ve hangi yöntemlerle işlendiğini açıklar.",
+      en: "Explains how and why personal data is processed.",
+    },
+    sections: [
+      {
+        title: {
+          tr: "Veri Sorumlusu",
+          en: "Data Controller",
+        },
+        body: {
+          tr: "Veri sorumlusunun resmi unvanı, adresi ve iletişim bilgileri kesinleştirildiğinde bu bölüm doldurulacaktır.",
+          en: "This section will be completed when the official data controller identity and contact details are confirmed.",
+        },
+      },
+      {
+        title: {
+          tr: "İşlenen Veriler ve Amaçlar",
+          en: "Data and Purposes",
+        },
+        body: {
+          tr: "Üyelik, profil, içerik paylaşımı, güvenlik, destek ve yasal yükümlülükler kapsamında işlenen veri grupları burada açıklanacaktır.",
+          en: "Data categories processed for membership, profiles, content, security, support and legal obligations will be explained here.",
+        },
+      },
+      {
+        title: {
+          tr: "Haklar ve Başvuru",
+          en: "Rights and Requests",
+        },
+        body: {
+          tr: "Kullanıcıların kişisel verileriyle ilgili hakları ve başvuru yöntemi yayın öncesinde bu bölüme eklenecektir.",
+          en: "User rights and the request procedure will be added before publication.",
+        },
+      },
+    ],
+  },
+  {
+    key: "gizlilik",
+    route: "/yasal/gizlilik",
+    icon: "GZ",
+    title: {
+      tr: "Gizlilik Politikası",
+      en: "Privacy Policy",
+    },
+    summary: {
+      tr: "ForumFenomen’de kullanıcı bilgilerinin korunmasına ilişkin yaklaşımı açıklar.",
+      en: "Explains how user information is protected on ForumFenomen.",
+    },
+    sections: [
+      {
+        title: {
+          tr: "Toplanan Bilgiler",
+          en: "Information Collected",
+        },
+        body: {
+          tr: "Hesap, profil, cihaz, kullanım ve iletişim verilerine ilişkin kapsam teknik altyapı tamamlandığında netleştirilecektir.",
+          en: "The scope of account, profile, device, usage and contact data will be finalized after the technical infrastructure is completed.",
+        },
+      },
+      {
+        title: {
+          tr: "Bilgilerin Kullanımı",
+          en: "Use of Information",
+        },
+        body: {
+          tr: "Bilgilerin hizmet sunumu, güvenlik, moderasyon ve kullanıcı desteği için nasıl kullanıldığı bu bölümde açıklanacaktır.",
+          en: "This section will explain how information is used for service delivery, security, moderation and support.",
+        },
+      },
+      {
+        title: {
+          tr: "Saklama ve Güvenlik",
+          en: "Retention and Security",
+        },
+        body: {
+          tr: "Veri saklama süreleri ve güvenlik önlemleri kullanılan servisler kesinleştirildikten sonra eklenecektir.",
+          en: "Retention periods and security measures will be added after service providers are finalized.",
+        },
+      },
+    ],
+  },
+  {
+    key: "cerez-politikasi",
+    route: "/yasal/cerez-politikasi",
+    icon: "ÇR",
+    title: {
+      tr: "Çerez Politikası",
+      en: "Cookie Policy",
+    },
+    summary: {
+      tr: "Zorunlu, analitik ve reklam çerezlerinin kullanımını açıklar.",
+      en: "Explains the use of necessary, analytics and advertising cookies.",
+    },
+    sections: [
+      {
+        title: {
+          tr: "Çerez Nedir?",
+          en: "What Is a Cookie?",
+        },
+        body: {
+          tr: "Çerezlerin ve benzeri teknolojilerin temel işlevleri bu bölümde açıklanacaktır.",
+          en: "This section will explain the basic functions of cookies and similar technologies.",
+        },
+      },
+      {
+        title: {
+          tr: "Kullanılan Çerezler",
+          en: "Cookies Used",
+        },
+        body: {
+          tr: "Zorunlu, tercih, analitik ve reklam amaçlı çerezler kullanılan servisler belirlendikten sonra ayrı ayrı listelenecektir.",
+          en: "Necessary, preference, analytics and advertising cookies will be listed after service providers are selected.",
+        },
+      },
+      {
+        title: {
+          tr: "Tercihleri Yönetme",
+          en: "Managing Preferences",
+        },
+        body: {
+          tr: "Kullanıcıların zorunlu olmayan çerezleri kabul etme, reddetme ve tercihlerini değiştirme yöntemi burada açıklanacaktır.",
+          en: "This section will explain how users can accept, reject and change non-essential cookie preferences.",
+        },
+      },
+    ],
+  },
+  {
+    key: "kullanim-kosullari",
+    route: "/yasal/kullanim-kosullari",
+    icon: "KK",
+    title: {
+      tr: "Kullanım Koşulları",
+      en: "Terms of Use",
+    },
+    summary: {
+      tr: "ForumFenomen hizmetlerinin kullanımına ilişkin temel şartları açıklar.",
+      en: "Explains the main terms for using ForumFenomen services.",
+    },
+    sections: [
+      {
+        title: {
+          tr: "Hizmetin Kapsamı",
+          en: "Scope of Service",
+        },
+        body: {
+          tr: "Forum, blog, profil ve ileride eklenecek hizmetlerin kapsamı burada tanımlanacaktır.",
+          en: "The scope of the forum, blog, profiles and future services will be defined here.",
+        },
+      },
+      {
+        title: {
+          tr: "Üyelik ve Hesap Güvenliği",
+          en: "Membership and Account Security",
+        },
+        body: {
+          tr: "Üyelik şartları, hesap güvenliği ve kullanıcı sorumlulukları yayın öncesinde detaylandırılacaktır.",
+          en: "Membership requirements, account security and user responsibilities will be detailed before publication.",
+        },
+      },
+      {
+        title: {
+          tr: "İçerik ve Sorumluluk",
+          en: "Content and Responsibility",
+        },
+        body: {
+          tr: "Kullanıcı içerikleri, yasaklanan davranışlar ve platformun müdahale yetkileri bu bölümde açıklanacaktır.",
+          en: "User content, prohibited behavior and platform enforcement rights will be explained here.",
+        },
+      },
+    ],
+  },
+  {
+    key: "topluluk-kurallari",
+    route: "/yasal/topluluk-kurallari",
+    icon: "TK",
+    title: {
+      tr: "Topluluk Kuralları",
+      en: "Community Guidelines",
+    },
+    summary: {
+      tr: "Sağlıklı ve güvenli bir topluluk için uyulması gereken kuralları açıklar.",
+      en: "Explains the rules required for a healthy and safe community.",
+    },
+    sections: [
+      {
+        title: {
+          tr: "Saygılı İletişim",
+          en: "Respectful Communication",
+        },
+        body: {
+          tr: "Hakaret, tehdit, taciz, nefret söylemi ve kişileri hedef alan saldırgan içeriklere izin verilmeyecektir.",
+          en: "Insults, threats, harassment, hate speech and targeted abusive content will not be allowed.",
+        },
+      },
+      {
+        title: {
+          tr: "Güvenli ve Doğru Bilgi",
+          en: "Safe and Accurate Information",
+        },
+        body: {
+          tr: "Dolandırıcılık, yanıltıcı bilgi, spam ve kullanıcı güvenliğini tehlikeye atan paylaşımlar kaldırılabilecektir.",
+          en: "Fraud, misinformation, spam and content that endangers user safety may be removed.",
+        },
+      },
+      {
+        title: {
+          tr: "Kişisel Bilgiler",
+          en: "Personal Information",
+        },
+        body: {
+          tr: "Kullanıcıların kendilerine veya başkalarına ait hassas kişisel bilgileri açık biçimde paylaşmaması gerekir.",
+          en: "Users must not publicly share sensitive personal information belonging to themselves or others.",
+        },
+      },
+    ],
+  },
+  {
+    key: "moderasyon-politikasi",
+    route: "/yasal/moderasyon-politikasi",
+    icon: "MD",
+    title: {
+      tr: "Moderasyon Politikası",
+      en: "Moderation Policy",
+    },
+    summary: {
+      tr: "İçerik inceleme, bildirim ve yaptırım süreçlerini açıklar.",
+      en: "Explains content review, reporting and enforcement processes.",
+    },
+    sections: [
+      {
+        title: {
+          tr: "İçerik İnceleme",
+          en: "Content Review",
+        },
+        body: {
+          tr: "Kullanıcı bildirimleri, otomatik güvenlik kontrolleri ve moderatör incelemelerinin kapsamı burada açıklanacaktır.",
+          en: "The scope of user reports, automated safety checks and moderator reviews will be explained here.",
+        },
+      },
+      {
+        title: {
+          tr: "Uygulanabilecek Yaptırımlar",
+          en: "Possible Enforcement",
+        },
+        body: {
+          tr: "İçerik kaldırma, görünürlüğü azaltma, geçici kısıtlama ve hesap kapatma gibi işlemler ihlalin ağırlığına göre uygulanabilecektir.",
+          en: "Content removal, reduced visibility, temporary restrictions and account closure may be applied depending on severity.",
+        },
+      },
+      {
+        title: {
+          tr: "İtiraz Süreci",
+          en: "Appeal Process",
+        },
+        body: {
+          tr: "Moderasyon kararlarına itiraz yöntemi destek altyapısı tamamlandıktan sonra eklenecektir.",
+          en: "The moderation appeal process will be added after the support infrastructure is completed.",
+        },
+      },
+    ],
+  },
+  {
+    key: "telif-ve-ihlal",
+    route: "/yasal/telif-ve-ihlal",
+    icon: "TL",
+    title: {
+      tr: "Telif ve İhlal Bildirimi",
+      en: "Copyright and Violation Notices",
+    },
+    summary: {
+      tr: "Telif hakkı ve hukuka aykırı içerik bildirimlerinin nasıl yapılacağını açıklar.",
+      en: "Explains how copyright and unlawful content notices can be submitted.",
+    },
+    sections: [
+      {
+        title: {
+          tr: "Telif Bildirimi",
+          en: "Copyright Notice",
+        },
+        body: {
+          tr: "Hak sahibinin kimliği, ihlal edildiği belirtilen eser ve ilgili içerik bağlantısı gibi gerekli bilgiler burada listelenecektir.",
+          en: "Required information such as the rights holder, protected work and reported content link will be listed here.",
+        },
+      },
+      {
+        title: {
+          tr: "İçerik İncelemesi",
+          en: "Content Review",
+        },
+        body: {
+          tr: "Geçerli bildirimlerin incelenmesi, içerik sahibinden bilgi istenmesi ve gerektiğinde içeriğin kaldırılması süreci açıklanacaktır.",
+          en: "The process for reviewing valid notices, requesting information and removing content when necessary will be explained.",
+        },
+      },
+      {
+        title: {
+          tr: "Kötüye Kullanım",
+          en: "Misuse",
+        },
+        body: {
+          tr: "Yanlış veya kötü niyetli telif bildirimlerine ilişkin kurallar yayın öncesinde eklenecektir.",
+          en: "Rules regarding false or malicious copyright notices will be added before publication.",
+        },
+      },
+    ],
+  },
+  {
+    key: "hesap-ve-veri-silme",
+    route: "/yasal/hesap-ve-veri-silme",
+    icon: "VS",
+    title: {
+      tr: "Hesap ve Veri Silme",
+      en: "Account and Data Deletion",
+    },
+    summary: {
+      tr: "Hesap kapatma ve kişisel verilerin silinmesini isteme yöntemlerini açıklar.",
+      en: "Explains how to close an account and request personal data deletion.",
+    },
+    sections: [
+      {
+        title: {
+          tr: "Hesap Kapatma",
+          en: "Account Closure",
+        },
+        body: {
+          tr: "Profil ayarlarından hesap kapatma işlemi üyelik sistemi tamamlandığında bu bölümde adım adım açıklanacaktır.",
+          en: "Account closure steps will be explained after the membership system is completed.",
+        },
+      },
+      {
+        title: {
+          tr: "Veri Silme Talebi",
+          en: "Data Deletion Request",
+        },
+        body: {
+          tr: "Hesap dışında kalan kişisel verilere yönelik silme taleplerinin iletileceği yöntem burada açıklanacaktır.",
+          en: "The method for requesting deletion of personal data outside the account will be explained here.",
+        },
+      },
+      {
+        title: {
+          tr: "Yasal Saklama Süreleri",
+          en: "Legal Retention",
+        },
+        body: {
+          tr: "Yasal yükümlülükler nedeniyle hemen silinemeyen kayıtlar ve saklama süreleri yayın öncesinde belirtilecektir.",
+          en: "Records that cannot be deleted immediately due to legal obligations and their retention periods will be described before publication.",
+        },
+      },
+    ],
+  },
+  {
+    key: "kvkk-basvuru",
+    route: "/yasal/kvkk-basvuru",
+    icon: "KB",
+    title: {
+      tr: "KVKK Başvuru Yöntemi",
+      en: "Privacy Request Procedure",
+    },
+    summary: {
+      tr: "Kişisel verilerle ilgili başvuruların nasıl iletileceğini açıklar.",
+      en: "Explains how privacy-related requests can be submitted.",
+    },
+    sections: [
+      {
+        title: {
+          tr: "Başvuru Konuları",
+          en: "Request Subjects",
+        },
+        body: {
+          tr: "Kişisel verilere erişme, düzeltme, silme ve işleme faaliyetleri hakkında bilgi isteme gibi başvuru konuları burada açıklanacaktır.",
+          en: "Requests such as access, correction, deletion and information about processing will be explained here.",
+        },
+      },
+      {
+        title: {
+          tr: "Başvuru Kanalı",
+          en: "Request Channel",
+        },
+        body: {
+          tr: "Başvuruların gönderileceği e-posta veya diğer doğrulanmış iletişim kanalı kesinleştirildiğinde eklenecektir.",
+          en: "The verified email or other request channel will be added when finalized.",
+        },
+      },
+      {
+        title: {
+          tr: "Kimlik Doğrulama",
+          en: "Identity Verification",
+        },
+        body: {
+          tr: "Yetkisiz veri paylaşımını önlemek amacıyla uygulanacak kimlik doğrulama yöntemi burada belirtilecektir.",
+          en: "Identity verification methods used to prevent unauthorized data disclosure will be described here.",
+        },
+      },
+    ],
+  },
+];
+
+export function getLegalDocument(
+  key: LegalDocumentKey
+) {
+  return legalDocuments.find(
+    (document) =>
+      document.key === key
+  );
+}
