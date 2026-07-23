@@ -1,7 +1,6 @@
 ﻿"use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { setForumLanguage } from "@/lib/forumfenomen-language";
 
@@ -13,6 +12,7 @@ const translations = {
     welcome: "Tekrar hoş geldin!",
     slogan: "Keşfet, paylaş, konuş!",
     google: "Google ile devam et",
+    googleOnly: "ForumFenomen'e Google hesabınla güvenli şekilde giriş yap.",
     apple: "Apple ile devam et",
     separator: "veya e-posta ile",
     emailLabel: "E-posta adresi",
@@ -39,6 +39,7 @@ const translations = {
     welcome: "Welcome back!",
     slogan: "Discover, share, connect!",
     google: "Continue with Google",
+    googleOnly: "Sign in to ForumFenomen securely with your Google account.",
     apple: "Continue with Apple",
     separator: "or continue with email",
     emailLabel: "Email address",
@@ -122,7 +123,6 @@ function MoonIcon() {
 }
 
 export default function GirisPage() {
-  const router = useRouter();
   const [language, setLanguage] = useState<Language>("tr");
   const [theme, setTheme] = useState<Theme>("dark");
 
@@ -170,85 +170,85 @@ export default function GirisPage() {
       <div className="ff-auth-shell">
         <section className="ff-auth-card">
           <header className="ff-auth-toolbar">
-          <div
-            className="ff-choice-group"
-            aria-label={t.languageLabel}
-          >
-            <button
-              type="button"
-              className={
-                language === "tr"
-                  ? "ff-choice-button active"
-                  : "ff-choice-button"
-              }
-              onClick={() => setLanguage("tr")}
-              title="Türkçe"
-              aria-label="Türkçe"
+            <div
+              className="ff-choice-group"
+              aria-label={t.languageLabel}
             >
-              <Image
-                src="/flags/tr.svg"
-                alt=""
-                width={30}
-                height={20}
-                className="ff-flag-image"
-                aria-hidden="true"
-              />
-              <span className="ff-sr-only">Türkçe</span>
-            </button>
+              <button
+                type="button"
+                className={
+                  language === "tr"
+                    ? "ff-choice-button active"
+                    : "ff-choice-button"
+                }
+                onClick={() => setLanguage("tr")}
+                title="Türkçe"
+                aria-label="Türkçe"
+              >
+                <Image
+                  src="/flags/tr.svg"
+                  alt=""
+                  width={30}
+                  height={20}
+                  className="ff-flag-image"
+                  aria-hidden="true"
+                />
+                <span className="ff-sr-only">Türkçe</span>
+              </button>
 
-            <button
-              type="button"
-              className={
-                language === "en"
-                  ? "ff-choice-button active"
-                  : "ff-choice-button"
-              }
-              onClick={() => setLanguage("en")}
-              title="English"
-              aria-label="English"
-            >
-              <Image
-                src="/flags/gb.svg"
-                alt=""
-                width={30}
-                height={20}
-                className="ff-flag-image"
-                aria-hidden="true"
-              />
-              <span className="ff-sr-only">English</span>
-            </button>
-          </div>
+              <button
+                type="button"
+                className={
+                  language === "en"
+                    ? "ff-choice-button active"
+                    : "ff-choice-button"
+                }
+                onClick={() => setLanguage("en")}
+                title="English"
+                aria-label="English"
+              >
+                <Image
+                  src="/flags/gb.svg"
+                  alt=""
+                  width={30}
+                  height={20}
+                  className="ff-flag-image"
+                  aria-hidden="true"
+                />
+                <span className="ff-sr-only">English</span>
+              </button>
+            </div>
 
-          <div
-            className="ff-choice-group ff-theme-group"
-            aria-label={t.themeLabel}
-          >
-            <button
-              type="button"
-              className={
-                theme === "light"
-                  ? "ff-choice-button ff-theme-button active"
-                  : "ff-choice-button ff-theme-button"
-              }
-              onClick={() => setTheme("light")}
+            <div
+              className="ff-choice-group ff-theme-group"
+              aria-label={t.themeLabel}
             >
-              <SunIcon />
-              <span>{t.light}</span>
-            </button>
+              <button
+                type="button"
+                className={
+                  theme === "light"
+                    ? "ff-choice-button ff-theme-button active"
+                    : "ff-choice-button ff-theme-button"
+                }
+                onClick={() => setTheme("light")}
+              >
+                <SunIcon />
+                <span>{t.light}</span>
+              </button>
 
-            <button
-              type="button"
-              className={
-                theme === "dark"
-                  ? "ff-choice-button ff-theme-button active"
-                  : "ff-choice-button ff-theme-button"
-              }
-              onClick={() => setTheme("dark")}
-            >
-              <MoonIcon />
-              <span>{t.dark}</span>
-            </button>
-          </div>
+              <button
+                type="button"
+                className={
+                  theme === "dark"
+                    ? "ff-choice-button ff-theme-button active"
+                    : "ff-choice-button ff-theme-button"
+                }
+                onClick={() => setTheme("dark")}
+              >
+                <MoonIcon />
+                <span>{t.dark}</span>
+              </button>
+            </div>
           </header>
 
           <div className="ff-brand-panel">
@@ -272,82 +272,18 @@ export default function GirisPage() {
             <button
               className="ff-social-button"
               type="button"
+              onClick={() => {
+                setForumLanguage(language);
+                window.location.assign("/auth/google");
+              }}
             >
               <GoogleIcon />
               <span>{t.google}</span>
             </button>
-
-            <button
-              className="ff-social-button ff-apple-button"
-              type="button"
-            >
-              <AppleIcon />
-              <span>{t.apple}</span>
-            </button>
           </div>
-
-          <div className="ff-auth-separator">
-            <span />
-            <p>{t.separator}</p>
-            <span />
-          </div>
-
-          <form
-            className="ff-auth-form"
-            onSubmit={(event) => {
-            event.preventDefault();
-            setForumLanguage(language);
-            router.push("/akis");
-          }}
-          >
-            <label className="ff-input-group">
-              <span>{t.emailLabel}</span>
-
-              <input
-                type="email"
-                placeholder={t.emailPlaceholder}
-                autoComplete="email"
-              />
-            </label>
-
-            <label className="ff-input-group">
-              <span>{t.passwordLabel}</span>
-
-              <input
-                type="password"
-                placeholder={t.passwordPlaceholder}
-                autoComplete="current-password"
-              />
-            </label>
-
-            <div className="ff-auth-options">
-              <label className="ff-remember-row">
-                <input type="checkbox" />
-                <span>{t.remember}</span>
-              </label>
-
-              <button
-                type="button"
-                className="ff-text-button"
-              >
-                {t.forgot}
-              </button>
-            </div>
-
-            <button
-              className="ff-login-button"
-              type="submit"
-            >
-              {t.login}
-            </button>
-          </form>
 
           <p className="ff-register-text">
-            <span>{t.noAccount}</span>
-
-            <button type="button">
-              {t.register}
-            </button>
+            <span>{t.googleOnly}</span>
           </p>
 
           <p className="ff-auth-legal">
