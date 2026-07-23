@@ -43,3 +43,7 @@ next-env.d.ts
 # Local design backups
 app/*.bak
 app/globals-before-*.css
+
+# Local backup files
+*.bak
+*before-*
