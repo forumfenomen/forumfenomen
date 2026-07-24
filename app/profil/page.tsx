@@ -529,14 +529,14 @@ export default function ProfilePage() {
 
       const {
         data: { user },
-        error,
+        error: userError,
       } = await supabase.auth.getUser();
 
       if (!isActive) {
         return;
       }
 
-      if (error || !user) {
+      if (userError || !user) {
         window.location.replace("/giris");
         return;
       }
@@ -563,7 +563,7 @@ export default function ProfilePage() {
         for (const value of values) {
           if (
             typeof value === "string" &&
-            value.trim().length > 0
+            value.trim()
           ) {
             return value.trim();
           }
@@ -572,24 +572,24 @@ export default function ProfilePage() {
         return null;
       }
 
-      const givenName = firstText(
+      const firstName = firstText(
         metadata.given_name,
         identityData.given_name
       );
 
-      const familyName = firstText(
+      const lastName = firstText(
         metadata.family_name,
         identityData.family_name
       );
 
       const combinedName = [
-        givenName,
-        familyName,
+        firstName,
+        lastName,
       ]
         .filter(Boolean)
         .join(" ");
 
-      const fullName =
+      const fallbackName =
         firstText(
           metadata.full_name,
           metadata.name,
@@ -598,55 +598,87 @@ export default function ProfilePage() {
           combinedName
         ) ?? "ForumFenomen Üyesi";
 
-      const googleAvatar = firstText(
+      const fallbackAvatar = firstText(
         metadata.avatar_url,
         metadata.picture,
         identityData.avatar_url,
         identityData.picture
       );
 
-      const email =
-        user.email ??
-        firstText(
-          metadata.email,
-          identityData.email
-        ) ??
-        "";
-
-      const providerUsername = firstText(
-        metadata.preferred_username,
-        metadata.user_name,
-        identityData.preferred_username,
-        identityData.user_name
-      );
+      const email = user.email ?? "";
 
       const emailUsername =
         email
           .split("@")[0]
-          ?.replace(
-            /[^a-zA-Z0-9._-]/g,
+          ?.toLowerCase()
+          .replace(
+            /[^a-z0-9._-]/g,
             ""
           ) ?? "";
 
-      setProfileName(fullName);
-      setProfileEmail(email);
-      setAvatarUrl(googleAvatar);
-      setIsAuthenticated(true);
+      const fallbackUsername =
+        emailUsername ||
+        `fenomen-${user.id.slice(0, 6)}`;
 
-      if (providerUsername) {
-        setUsername(
-          `@${providerUsername.replace(
-            /^@/,
-            ""
-          )}`
-        );
-      } else if (emailUsername) {
-        setUsername(`@${emailUsername}`);
-      } else {
-        setUsername(
-          `@fenomen-${user.id.slice(0, 6)}`
+      const {
+        data: profile,
+        error: profileError,
+      } = await supabase
+        .from("profiles")
+        .select(
+          "display_name, username, avatar_url, bio"
+        )
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (profileError) {
+        console.error(
+          "Profil bilgileri alınamadı:",
+          profileError.message
         );
       }
+
+      const databaseUsername =
+        typeof profile?.username === "string"
+          ? profile.username
+            .trim()
+            .replace(/^@/, "")
+          : "";
+
+      const databaseBio =
+        typeof profile?.bio === "string" &&
+          profile.bio.trim()
+          ? profile.bio
+          : translations[getForumLanguage()]
+            .bioDefault;
+
+      setProfileEmail(email);
+
+      setProfileName(
+        typeof profile?.display_name === "string" &&
+          profile.display_name.trim()
+          ? profile.display_name.trim()
+          : fallbackName
+      );
+
+      setUsername(
+        databaseUsername
+          ? `@${databaseUsername}`
+          : `@${fallbackUsername}`
+      );
+
+      setAvatarUrl(
+        typeof profile?.avatar_url === "string" &&
+          profile.avatar_url.trim()
+          ? profile.avatar_url
+          : fallbackAvatar
+      );
+
+      setProfileBio(databaseBio);
     }
 
     void loadAuthenticatedUser();
@@ -745,17 +777,75 @@ export default function ProfilePage() {
     window.location.assign("/giris");
   }
 
-  function handleProfileSave(
+  async function handleProfileSave(
     event: FormEvent<HTMLFormElement>
   ) {
     event.preventDefault();
 
-    const normalizedUsername =
-      username.startsWith("@")
-        ? username
-        : `@${username}`;
+    const supabase = createClient();
 
-    setUsername(normalizedUsername);
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      window.location.replace("/giris");
+      return;
+    }
+
+    const normalizedUsername = username
+      .trim()
+      .replace(/^@/, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9._-]/g, "");
+
+    if (normalizedUsername.length < 3) {
+      window.alert(
+        "Kullanıcı adı en az 3 karakter olmalıdır."
+      );
+      return;
+    }
+
+    const normalizedName =
+      profileName.trim() ||
+      "ForumFenomen Üyesi";
+
+    const normalizedBio =
+      profileBio.trim().slice(0, 180);
+
+    const { error: updateError } = await supabase
+      .from("profiles")
+      .update({
+        display_name: normalizedName,
+        username: normalizedUsername,
+        bio: normalizedBio,
+      })
+      .eq("id", user.id);
+
+    if (updateError) {
+      if (updateError.code === "23505") {
+        window.alert(
+          "Bu kullanıcı adı başka bir kullanıcı tarafından kullanılıyor."
+        );
+        return;
+      }
+
+      console.error(
+        "Profil güncellenemedi:",
+        updateError.message
+      );
+
+      window.alert(
+        "Profil kaydedilemedi. Lütfen tekrar deneyin."
+      );
+      return;
+    }
+
+    setProfileName(normalizedName);
+    setUsername(`@${normalizedUsername}`);
+    setProfileBio(normalizedBio);
+
     setEditOpen(false);
     setSavedMessage(true);
 
