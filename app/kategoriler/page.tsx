@@ -17,6 +17,7 @@ import {
   setForumLanguage,
   type ForumLanguage,
 } from "@/lib/forumfenomen-language";
+import { createClient } from "@/lib/supabase/client";
 
 type Theme = "dark" | "light";
 
@@ -37,11 +38,15 @@ type LocalizedText = {
 
 type Subcategory = {
   id: string;
+  databaseId?: number;
+  slug?: string;
   label: LocalizedText;
 };
 
 type CategoryDefinition = {
   id: CategoryId;
+  databaseId?: number;
+  slug?: string;
   title: LocalizedText;
   description: LocalizedText;
   accent: string;
@@ -60,6 +65,66 @@ type Topic = {
   comments: number;
   views: number;
   followed: boolean;
+};
+type CategoryGroupRow = {
+  id: number;
+  slug: string;
+  name: string;
+  description: string;
+  sort_order: number;
+  is_active: boolean;
+};
+
+type CategoryRow = {
+  id: number;
+  group_id: number;
+  slug: string;
+  name: string;
+  description: string;
+  sort_order: number;
+  is_active: boolean;
+};
+
+const categoryGroupMap: Record<
+  string,
+  CategoryId
+> = {
+  platformlar: "platforms",
+  "icerik-uretimi": "content",
+  buyume: "growth",
+  "para-kazanma": "money",
+  egitim: "education",
+  yasal: "legal",
+};
+
+const subcategoryIdMap: Record<
+  string,
+  string
+> = {
+  instagram: "instagram",
+  tiktok: "tiktok",
+  youtube: "youtube",
+
+  "yapay-zeka": "ai",
+  "video-edit": "video-edit",
+  "kamera-ekipman": "camera",
+  "thumbnail-kapak-tasarimi": "thumbnail",
+
+  seo: "seo",
+  algoritmalar: "algorithms",
+  "hashtag-anahtar-kelimeler": "hashtags",
+  "viral-analizleri": "viral",
+
+  "marka-is-birlikleri": "brand-deals",
+  ugc: "ugc",
+  affiliate: "affiliate",
+  "youtube-para-kazanma": "youtube-money",
+  "tiktok-para-kazanma": "tiktok-money",
+
+  "reklam-kurallari": "ad-rules",
+  "vergi-mevzuati": "tax",
+  sozlesmeler: "contracts",
+  "telif-haklari": "copyright",
 };
 
 const ui = {
@@ -882,6 +947,9 @@ export default function CategoriesPage() {
   const [theme, setTheme] =
     useState<Theme>("dark");
 
+  const [categoryData, setCategoryData] =
+    useState<CategoryDefinition[]>(categories);
+
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryId>("platforms");
 
@@ -919,13 +987,171 @@ export default function CategoriesPage() {
       resolvedTheme;
   }, []);
 
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadCategories() {
+      const supabase = createClient();
+
+      const [
+        groupsResult,
+        categoriesResult,
+      ] = await Promise.all([
+        supabase
+          .from("category_groups")
+          .select(
+            "id, slug, name, description, sort_order, is_active"
+          )
+          .eq("is_active", true)
+          .order("sort_order", {
+            ascending: true,
+          }),
+
+        supabase
+          .from("categories")
+          .select(
+            "id, group_id, slug, name, description, sort_order, is_active"
+          )
+          .eq("is_active", true)
+          .order("sort_order", {
+            ascending: true,
+          }),
+      ]);
+
+      if (!isActive) {
+        return;
+      }
+
+      if (
+        groupsResult.error ||
+        categoriesResult.error
+      ) {
+        console.error(
+          "Kategoriler Supabase üzerinden alınamadı:",
+          groupsResult.error?.message ??
+          categoriesResult.error?.message
+        );
+
+        return;
+      }
+
+      const groupRows =
+        (groupsResult.data ??
+          []) as CategoryGroupRow[];
+
+      const categoryRows =
+        (categoriesResult.data ??
+          []) as CategoryRow[];
+
+      const nextCategories =
+        groupRows.flatMap((group) => {
+          const categoryId =
+            categoryGroupMap[group.slug];
+
+          const fallbackCategory =
+            categories.find(
+              (category) =>
+                category.id === categoryId
+            );
+
+          if (
+            !categoryId ||
+            !fallbackCategory
+          ) {
+            return [];
+          }
+
+          const subcategories =
+            categoryRows
+              .filter(
+                (subcategory) =>
+                  subcategory.group_id ===
+                  group.id
+              )
+              .sort(
+                (a, b) =>
+                  a.sort_order - b.sort_order
+              )
+              .map((subcategory) => {
+                const localId =
+                  subcategoryIdMap[
+                  subcategory.slug
+                  ] ?? subcategory.slug;
+
+                const fallbackSubcategory =
+                  fallbackCategory.subcategories.find(
+                    (item) =>
+                      item.id === localId
+                  );
+
+                return {
+                  id: localId,
+                  databaseId: subcategory.id,
+                  slug: subcategory.slug,
+
+                  label: {
+                    tr: subcategory.name,
+
+                    en:
+                      fallbackSubcategory
+                        ?.label.en ??
+                      subcategory.name,
+                  },
+                };
+              });
+
+          return [
+            {
+              ...fallbackCategory,
+
+              databaseId: group.id,
+              slug: group.slug,
+
+              title: {
+                ...fallbackCategory.title,
+                tr: group.name,
+              },
+
+              description: {
+                ...fallbackCategory.description,
+
+                tr:
+                  group.description.trim() ||
+                  fallbackCategory
+                    .description.tr,
+              },
+
+              subcategories,
+            },
+          ];
+        });
+
+      if (
+        nextCategories.length ===
+        categories.length
+      ) {
+        setCategoryData(
+          nextCategories
+        );
+      }
+    }
+
+    void loadCategories();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
   const t = ui[language];
 
   const activeCategory =
-    categories.find(
+    categoryData.find(
       (category) =>
         category.id === selectedCategory
-    ) ?? categories[0];
+    ) ??
+    categoryData[0] ??
+    categories[0];
 
   const visibleTopics = useMemo(() => {
     let result = topics.filter(
@@ -1123,7 +1349,7 @@ export default function CategoriesPage() {
           className="ff-category-grid"
           aria-label={t.chooseCategory}
         >
-          {categories.map((category) => {
+          {categoryData.map((category) => {
             const active =
               category.id ===
               selectedCategory;
@@ -1180,7 +1406,7 @@ export default function CategoriesPage() {
               <h2>
                 {
                   activeCategory.title[
-                    language
+                  language
                   ]
                 }
               </h2>
@@ -1195,7 +1421,7 @@ export default function CategoriesPage() {
           </div>
 
           {selectedCategory ===
-          "education" ? (
+            "education" ? (
             <div className="ff-education-announcement">
               <span className="ff-education-badge">
                 {t.educationBadge}
@@ -1238,7 +1464,7 @@ export default function CategoriesPage() {
                     type="button"
                     className={
                       selectedSubcategory ===
-                      subcategory.id
+                        subcategory.id
                         ? "active"
                         : ""
                     }
@@ -1250,7 +1476,7 @@ export default function CategoriesPage() {
                   >
                     {
                       subcategory.label[
-                        language
+                      language
                       ]
                     }
                   </button>
@@ -1349,7 +1575,7 @@ export default function CategoriesPage() {
                         <h3>
                           {
                             topic.title[
-                              language
+                            language
                             ]
                           }
                         </h3>
@@ -1358,7 +1584,7 @@ export default function CategoriesPage() {
                           <span className="ff-category-topic-tag">
                             {
                               topic.tag[
-                                language
+                              language
                               ]
                             }
                           </span>
