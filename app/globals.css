@@ -52,11 +52,9 @@ button {
   place-items: center;
   overflow: hidden;
   background:
-    radial-gradient(
-      circle at center,
+    radial-gradient(circle at center,
       rgba(123, 47, 247, 0.08),
-      transparent 33%
-    ),
+      transparent 33%),
     #030509;
   animation: splash-exit 0.25s ease 1.05s forwards;
 }
@@ -67,12 +65,10 @@ button {
   height: 420px;
   border-radius: 50%;
   background:
-    radial-gradient(
-      circle,
+    radial-gradient(circle,
       rgba(255, 45, 149, 0.12),
       rgba(123, 47, 247, 0.07) 42%,
-      transparent 70%
-    );
+      transparent 70%);
   filter: blur(35px);
   animation: background-breathe 1.1s ease-in-out;
 }
@@ -95,9 +91,7 @@ button {
   opacity: 0;
   transform: scale(0.58);
   filter:
-    drop-shadow(0 0 10px rgba(255, 113, 57, 0.28))
-    drop-shadow(0 0 25px rgba(255, 45, 149, 0.34))
-    drop-shadow(0 0 50px rgba(123, 47, 247, 0.25));
+    drop-shadow(0 0 10px rgba(255, 113, 57, 0.28)) drop-shadow(0 0 25px rgba(255, 45, 149, 0.34)) drop-shadow(0 0 50px rgba(123, 47, 247, 0.25));
   animation: logo-arrival 1.15s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
@@ -126,17 +120,14 @@ button {
     opacity: 0;
     transform: scale(0.58);
     filter:
-      drop-shadow(0 0 0 rgba(255, 45, 149, 0))
-      drop-shadow(0 0 0 rgba(123, 47, 247, 0));
+      drop-shadow(0 0 0 rgba(255, 45, 149, 0)) drop-shadow(0 0 0 rgba(123, 47, 247, 0));
   }
 
   48% {
     opacity: 1;
     transform: scale(1.08);
     filter:
-      drop-shadow(0 0 18px rgba(255, 113, 57, 0.7))
-      drop-shadow(0 0 44px rgba(255, 45, 149, 0.78))
-      drop-shadow(0 0 85px rgba(123, 47, 247, 0.65));
+      drop-shadow(0 0 18px rgba(255, 113, 57, 0.7)) drop-shadow(0 0 44px rgba(255, 45, 149, 0.78)) drop-shadow(0 0 85px rgba(123, 47, 247, 0.65));
   }
 
   72% {
@@ -147,9 +138,7 @@ button {
     opacity: 1;
     transform: scale(1);
     filter:
-      drop-shadow(0 0 10px rgba(255, 113, 57, 0.35))
-      drop-shadow(0 0 24px rgba(255, 45, 149, 0.42))
-      drop-shadow(0 0 48px rgba(123, 47, 247, 0.3));
+      drop-shadow(0 0 10px rgba(255, 113, 57, 0.35)) drop-shadow(0 0 24px rgba(255, 45, 149, 0.42)) drop-shadow(0 0 48px rgba(123, 47, 247, 0.3));
   }
 }
 
@@ -203,16 +192,12 @@ button {
   overflow: hidden;
   padding: 32px 20px;
   background:
-    radial-gradient(
-      circle at 20% 20%,
+    radial-gradient(circle at 20% 20%,
       rgba(255, 45, 149, 0.08),
-      transparent 27%
-    ),
-    radial-gradient(
-      circle at 80% 80%,
+      transparent 27%),
+    radial-gradient(circle at 80% 80%,
       rgba(123, 47, 247, 0.1),
-      transparent 30%
-    ),
+      transparent 30%),
     linear-gradient(145deg, #030509, #080a10 52%, #040509);
 }
 
@@ -266,8 +251,7 @@ button {
   height: 52px;
   object-fit: contain;
   filter:
-    drop-shadow(0 0 12px rgba(255, 45, 149, 0.35))
-    drop-shadow(0 0 24px rgba(123, 47, 247, 0.2));
+    drop-shadow(0 0 12px rgba(255, 45, 149, 0.35)) drop-shadow(0 0 24px rgba(123, 47, 247, 0.2));
 }
 
 .auth-wordmark {
@@ -283,12 +267,10 @@ button {
 }
 
 .auth-wordmark-fenomen {
-  background: linear-gradient(
-    90deg,
-    var(--orange),
-    var(--pink),
-    var(--purple)
-  );
+  background: linear-gradient(90deg,
+      var(--orange),
+      var(--pink),
+      var(--purple));
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -379,12 +361,12 @@ button {
   gap: 17px;
 }
 
-.auth-form > label {
+.auth-form>label {
   display: grid;
   gap: 8px;
 }
 
-.auth-form > label > span {
+.auth-form>label>span {
   color: #c7c9d1;
   font-size: 13px;
   font-weight: 600;
@@ -453,12 +435,10 @@ button {
 .login-button {
   margin-top: 4px;
   border: 0;
-  background: linear-gradient(
-    100deg,
-    var(--orange),
-    var(--pink) 48%,
-    var(--purple)
-  );
+  background: linear-gradient(100deg,
+      var(--orange),
+      var(--pink) 48%,
+      var(--purple));
   color: white;
   box-shadow: 0 13px 32px rgba(255, 45, 149, 0.19);
 }
@@ -533,6 +513,7 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -564,16 +545,12 @@ button {
 
 .splash-screen {
   background:
-    radial-gradient(
-      circle at center,
+    radial-gradient(circle at center,
       rgba(166, 16, 249, 0.13),
-      transparent 31%
-    ),
-    radial-gradient(
-      circle at 53% 50%,
+      transparent 31%),
+    radial-gradient(circle at 53% 50%,
       rgba(4, 175, 248, 0.055),
-      transparent 43%
-    ),
+      transparent 43%),
     #020306;
 }
 
@@ -581,14 +558,12 @@ button {
   width: 570px;
   height: 570px;
   background:
-    radial-gradient(
-      circle,
+    radial-gradient(circle,
       rgba(230, 96, 251, 0.18) 0%,
       rgba(166, 16, 249, 0.13) 29%,
       rgba(54, 103, 249, 0.09) 48%,
       rgba(4, 175, 248, 0.035) 62%,
-      transparent 72%
-    );
+      transparent 72%);
   filter: blur(48px);
 }
 
@@ -612,9 +587,7 @@ button {
   image-rendering: auto;
 
   filter:
-    drop-shadow(0 0 16px rgba(230, 96, 251, 0.32))
-    drop-shadow(0 0 38px rgba(166, 16, 249, 0.26))
-    drop-shadow(0 0 62px rgba(4, 175, 248, 0.13));
+    drop-shadow(0 0 16px rgba(230, 96, 251, 0.32)) drop-shadow(0 0 38px rgba(166, 16, 249, 0.26)) drop-shadow(0 0 62px rgba(4, 175, 248, 0.13));
 }
 
 .splash-ring-one {
@@ -633,22 +606,16 @@ button {
 
 .auth-page {
   background:
-    radial-gradient(
-      circle at 18% 18%,
+    radial-gradient(circle at 18% 18%,
       rgba(230, 96, 251, 0.09),
-      transparent 29%
-    ),
-    radial-gradient(
-      circle at 82% 82%,
+      transparent 29%),
+    radial-gradient(circle at 82% 82%,
       rgba(4, 175, 248, 0.085),
-      transparent 31%
-    ),
-    linear-gradient(
-      145deg,
+      transparent 31%),
+    linear-gradient(145deg,
       #020306,
       #070912 51%,
-      #020306
-    );
+      #020306);
 }
 
 .auth-orb-left {
@@ -674,31 +641,26 @@ button {
   mix-blend-mode: screen;
   image-rendering: auto;
   filter:
-    drop-shadow(0 0 13px rgba(230, 96, 251, 0.29))
-    drop-shadow(0 0 25px rgba(4, 175, 248, 0.13));
+    drop-shadow(0 0 13px rgba(230, 96, 251, 0.29)) drop-shadow(0 0 25px rgba(4, 175, 248, 0.13));
 }
 
 .auth-wordmark-fenomen {
-  background: linear-gradient(
-    90deg,
-    #e660fb 0%,
-    #a610f9 35%,
-    #4a46f9 68%,
-    #04aff8 100%
-  );
+  background: linear-gradient(90deg,
+      #e660fb 0%,
+      #a610f9 35%,
+      #4a46f9 68%,
+      #04aff8 100%);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
 }
 
 .login-button {
-  background: linear-gradient(
-    105deg,
-    #e660fb 0%,
-    #a610f9 33%,
-    #4a46f9 68%,
-    #04aff8 100%
-  );
+  background: linear-gradient(105deg,
+      #e660fb 0%,
+      #a610f9 33%,
+      #4a46f9 68%,
+      #04aff8 100%);
   box-shadow:
     0 13px 32px rgba(166, 16, 249, 0.21),
     0 0 24px rgba(4, 175, 248, 0.06);
@@ -757,17 +719,13 @@ button {
 
 .splash-screen {
   background:
-    radial-gradient(
-      circle at 50% 48%,
+    radial-gradient(circle at 50% 48%,
       rgba(150, 20, 255, 0.16) 0%,
       rgba(65, 54, 255, 0.07) 28%,
-      transparent 53%
-    ),
-    radial-gradient(
-      circle at 50% 53%,
+      transparent 53%),
+    radial-gradient(circle at 50% 53%,
       rgba(0, 185, 255, 0.055),
-      transparent 45%
-    ),
+      transparent 45%),
     #020307;
 }
 
@@ -776,14 +734,12 @@ button {
   height: 690px;
   opacity: 1;
   background:
-    radial-gradient(
-      circle,
+    radial-gradient(circle,
       rgba(232, 77, 255, 0.2) 0%,
       rgba(162, 16, 249, 0.15) 25%,
       rgba(69, 60, 255, 0.1) 43%,
       rgba(0, 183, 255, 0.055) 58%,
-      transparent 72%
-    );
+      transparent 72%);
   filter: blur(52px);
 }
 
@@ -807,15 +763,13 @@ button {
   z-index: -3;
   border-radius: 50%;
   background:
-    conic-gradient(
-      from 215deg,
+    conic-gradient(from 215deg,
       rgba(232, 77, 255, 0.74),
       rgba(164, 16, 249, 0.7),
       rgba(67, 67, 255, 0.64),
       rgba(0, 185, 255, 0.58),
       rgba(164, 16, 249, 0.66),
-      rgba(232, 77, 255, 0.74)
-    );
+      rgba(232, 77, 255, 0.74));
   filter: blur(58px);
   opacity: 0.72;
   animation: forumfenomen-halo 2.4s ease-in-out infinite alternate;
@@ -831,11 +785,9 @@ button {
   z-index: -1;
   border-radius: 50%;
   background:
-    radial-gradient(
-      circle at 36% 28%,
+    radial-gradient(circle at 36% 28%,
       rgba(105, 35, 180, 0.16),
-      rgba(4, 5, 10, 0.98) 60%
-    );
+      rgba(4, 5, 10, 0.98) 60%);
   border: 1px solid rgba(205, 92, 255, 0.22);
   box-shadow:
     0 0 25px rgba(228, 70, 255, 0.28),
@@ -888,18 +840,14 @@ button {
     opacity: 0;
     transform: scale(0.52);
     filter:
-      brightness(0.7)
-      drop-shadow(0 0 0 rgba(232, 77, 255, 0));
+      brightness(0.7) drop-shadow(0 0 0 rgba(232, 77, 255, 0));
   }
 
   45% {
     opacity: 1;
     transform: scale(1.09);
     filter:
-      brightness(1.2)
-      drop-shadow(0 0 20px rgba(232, 77, 255, 0.8))
-      drop-shadow(0 0 50px rgba(155, 20, 249, 0.68))
-      drop-shadow(0 0 85px rgba(0, 181, 255, 0.38));
+      brightness(1.2) drop-shadow(0 0 20px rgba(232, 77, 255, 0.8)) drop-shadow(0 0 50px rgba(155, 20, 249, 0.68)) drop-shadow(0 0 85px rgba(0, 181, 255, 0.38));
   }
 
   72% {
@@ -911,10 +859,7 @@ button {
     opacity: 1;
     transform: scale(1);
     filter:
-      brightness(1.05)
-      drop-shadow(0 0 14px rgba(232, 77, 255, 0.44))
-      drop-shadow(0 0 34px rgba(155, 20, 249, 0.34))
-      drop-shadow(0 0 55px rgba(0, 181, 255, 0.2));
+      brightness(1.05) drop-shadow(0 0 14px rgba(232, 77, 255, 0.44)) drop-shadow(0 0 34px rgba(155, 20, 249, 0.34)) drop-shadow(0 0 55px rgba(0, 181, 255, 0.2));
   }
 }
 
@@ -992,22 +937,16 @@ html[data-theme="light"] {
   overflow-x: hidden;
   padding: 24px 18px 40px;
   background:
-    radial-gradient(
-      circle at 18% 17%,
+    radial-gradient(circle at 18% 17%,
       rgba(221, 67, 255, 0.09),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 82% 80%,
+      transparent 28%),
+    radial-gradient(circle at 82% 80%,
       rgba(0, 181, 255, 0.075),
-      transparent 31%
-    ),
-    linear-gradient(
-      145deg,
+      transparent 31%),
+    linear-gradient(145deg,
       var(--ff-page),
       var(--ff-page-secondary) 52%,
-      var(--ff-page)
-    );
+      var(--ff-page));
   color: var(--ff-text);
   font-family:
     Inter,
@@ -1038,22 +977,16 @@ html[data-theme="light"] .ff-auth-page {
   --ff-divider: rgba(31, 28, 45, 0.1);
 
   background:
-    radial-gradient(
-      circle at 16% 15%,
+    radial-gradient(circle at 16% 15%,
       rgba(221, 67, 255, 0.105),
-      transparent 29%
-    ),
-    radial-gradient(
-      circle at 84% 81%,
+      transparent 29%),
+    radial-gradient(circle at 84% 81%,
       rgba(0, 181, 255, 0.09),
-      transparent 32%
-    ),
-    linear-gradient(
-      145deg,
+      transparent 32%),
+    linear-gradient(145deg,
       #f2f3f9,
       #ffffff 52%,
-      #f4f5fa
-    );
+      #f4f5fa);
 }
 
 .ff-auth-shell {
@@ -1132,13 +1065,11 @@ html[data-theme="light"] .ff-auth-page {
 
 .ff-choice-button.active {
   background:
-    linear-gradient(
-      105deg,
+    linear-gradient(105deg,
       #e75cf6,
       #aa16f4 37%,
       #4d45ff 69%,
-      #08b8f5
-    );
+      #08b8f5);
   color: #ffffff;
   box-shadow:
     0 7px 18px rgba(164, 21, 244, 0.22),
@@ -1194,16 +1125,12 @@ html[data-theme="light"] .ff-auth-card {
   border-radius: 20px;
   overflow: hidden;
   background:
-    radial-gradient(
-      circle at 22% 20%,
+    radial-gradient(circle at 22% 20%,
       rgba(212, 53, 255, 0.11),
-      transparent 33%
-    ),
-    radial-gradient(
-      circle at 82% 80%,
+      transparent 33%),
+    radial-gradient(circle at 82% 80%,
       rgba(0, 185, 255, 0.1),
-      transparent 34%
-    ),
+      transparent 34%),
     #030409;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.035),
@@ -1217,8 +1144,7 @@ html[data-theme="light"] .ff-auth-card {
   object-fit: contain;
   image-rendering: auto;
   filter:
-    drop-shadow(0 0 10px rgba(215, 54, 255, 0.11))
-    drop-shadow(0 0 18px rgba(0, 181, 255, 0.07));
+    drop-shadow(0 0 10px rgba(215, 54, 255, 0.11)) drop-shadow(0 0 18px rgba(0, 181, 255, 0.07));
 }
 
 .ff-auth-heading {
@@ -1321,7 +1247,7 @@ html[data-theme="light"] .ff-auth-card {
   gap: 8px;
 }
 
-.ff-input-group > span {
+.ff-input-group>span {
   color: var(--ff-text);
   font-size: 12px;
   font-weight: 650;
@@ -1397,13 +1323,11 @@ html[data-theme="light"] .ff-auth-card {
   border: 0;
   border-radius: 14px;
   background:
-    linear-gradient(
-      105deg,
+    linear-gradient(105deg,
       #e75cf6 0%,
       #aa16f4 34%,
       #4d45ff 68%,
-      #08b8f5 100%
-    );
+      #08b8f5 100%);
   color: #ffffff;
   font-size: 14px;
   font-weight: 740;
@@ -1550,8 +1474,7 @@ html[data-theme="light"] .ff-auth-card {
 
 .ff-auth-toolbar .ff-choice-button.active .ff-flag {
   filter:
-    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25))
-    saturate(1.08);
+    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25)) saturate(1.08);
 }
 
 .ff-brand-panel {
@@ -1624,9 +1547,7 @@ html[data-theme="light"] .ff-auth-card {
   font-size: 10px;
 }
 
-.ff-auth-toolbar
-.ff-choice-group:first-child
-.ff-choice-button {
+.ff-auth-toolbar .ff-choice-group:first-child .ff-choice-button {
   min-width: 40px;
   padding: 0 5px;
 }
@@ -1735,7 +1656,7 @@ html[data-theme="light"] .ff-auth-card {
   gap: 6px;
 }
 
-.ff-input-group > span {
+.ff-input-group>span {
   font-size: 11px;
 }
 
@@ -1898,9 +1819,7 @@ html[data-theme="light"] .ff-auth-card {
 
 /* Bayrakları butonların tam ortasına al */
 
-.ff-auth-toolbar
-.ff-choice-group:first-child
-.ff-choice-button {
+.ff-auth-toolbar .ff-choice-group:first-child .ff-choice-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2028,7 +1947,7 @@ html[data-theme="light"] .ff-auth-card {
   gap: 7px;
 }
 
-.ff-input-group > span {
+.ff-input-group>span {
   font-size: 12px;
   font-weight: 680;
 }
@@ -2296,7 +2215,7 @@ html[data-theme="light"] .ff-auth-card {
   min-height: 72px;
 }
 
-.ff-input-group > span {
+.ff-input-group>span {
   display: flex;
   min-height: 17px;
   align-items: center;
@@ -2441,16 +2360,12 @@ html[data-theme="light"] .ff-auth-card {
   min-height: 100dvh;
   padding: 0 15px 135px;
   background:
-    radial-gradient(
-      circle at 15% 5%,
+    radial-gradient(circle at 15% 5%,
       rgba(220, 53, 255, 0.08),
-      transparent 27%
-    ),
-    radial-gradient(
-      circle at 86% 62%,
+      transparent 27%),
+    radial-gradient(circle at 86% 62%,
       rgba(0, 175, 255, 0.065),
-      transparent 32%
-    ),
+      transparent 32%),
     var(--feed-bg);
   color: var(--feed-text);
 }
@@ -2465,16 +2380,12 @@ html[data-theme="light"] .ff-feed-page {
   --feed-muted: #747888;
 
   background:
-    radial-gradient(
-      circle at 15% 5%,
+    radial-gradient(circle at 15% 5%,
       rgba(220, 53, 255, 0.09),
-      transparent 27%
-    ),
-    radial-gradient(
-      circle at 86% 62%,
+      transparent 27%),
+    radial-gradient(circle at 86% 62%,
       rgba(0, 175, 255, 0.08),
-      transparent 32%
-    ),
+      transparent 32%),
     var(--feed-bg);
 }
 
@@ -2493,11 +2404,9 @@ html[data-theme="light"] .ff-feed-page {
   min-height: 82px;
   padding: 14px 4px 11px;
   background:
-    linear-gradient(
-      to bottom,
+    linear-gradient(to bottom,
       var(--feed-bg) 70%,
-      transparent
-    );
+      transparent);
 }
 
 .ff-feed-logo-wrap {
@@ -2529,11 +2438,9 @@ html[data-theme="light"] .ff-feed-page {
   border: 1px solid rgba(190, 57, 255, 0.34);
   border-radius: 50%;
   background:
-    radial-gradient(
-      circle,
+    radial-gradient(circle,
       rgba(165, 30, 245, 0.13),
-      rgba(8, 9, 17, 0.95)
-    );
+      rgba(8, 9, 17, 0.95));
   color: #ffffff;
   box-shadow:
     0 0 24px rgba(171, 29, 245, 0.11);
@@ -2594,16 +2501,12 @@ html[data-theme="light"] .ff-feed-page {
   border-radius: 27px;
   padding: 30px;
   background:
-    radial-gradient(
-      circle at 83% 48%,
+    radial-gradient(circle at 83% 48%,
       rgba(57, 56, 255, 0.2),
-      transparent 31%
-    ),
-    radial-gradient(
-      circle at 65% 77%,
+      transparent 31%),
+    radial-gradient(circle at 65% 77%,
       rgba(217, 33, 255, 0.17),
-      transparent 33%
-    ),
+      transparent 33%),
     linear-gradient(135deg, #05060d, #090a15);
   box-shadow:
     0 26px 70px rgba(0, 0, 0, 0.26);
@@ -2624,13 +2527,11 @@ html[data-theme="light"] .ff-feed-page {
 
 .ff-feed-hero h1 span {
   background:
-    linear-gradient(
-      100deg,
+    linear-gradient(100deg,
       #ed5df4,
       #b419f3 40%,
       #4d48ff 72%,
-      #0ab8f4
-    );
+      #0ab8f4);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -2652,13 +2553,11 @@ html[data-theme="light"] .ff-feed-page {
   border-radius: 15px;
   padding: 0 27px;
   background:
-    linear-gradient(
-      105deg,
+    linear-gradient(105deg,
       #dd42f4,
       #aa13f4 37%,
       #4d48ff 70%,
-      #08b8f4
-    );
+      #08b8f4);
   color: #ffffff;
   font-weight: 740;
   text-decoration: none;
@@ -2695,8 +2594,7 @@ html[data-theme="light"] .ff-feed-page {
   width: 190px;
   height: 190px;
   filter:
-    drop-shadow(0 18px 20px rgba(0, 0, 0, 0.3))
-    drop-shadow(0 0 25px rgba(203, 34, 255, 0.22));
+    drop-shadow(0 18px 20px rgba(0, 0, 0, 0.3)) drop-shadow(0 0 25px rgba(203, 34, 255, 0.22));
   transform: rotate(7deg);
 }
 
@@ -2761,12 +2659,10 @@ html[data-theme="light"] .ff-feed-page {
 
 .ff-topic-icon.social {
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #ff8a23,
       #f3269e 50%,
-      #7547ff
-    );
+      #7547ff);
   color: #ffffff;
   font-size: 37px;
 }
@@ -2930,16 +2826,12 @@ html[data-theme="light"] .ff-feed-page {
   border-radius: 20px;
   padding: 24px;
   background:
-    radial-gradient(
-      circle at 15% 50%,
+    radial-gradient(circle at 15% 50%,
       rgba(205, 44, 255, 0.18),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 88% 50%,
+      transparent 30%),
+    radial-gradient(circle at 88% 50%,
       rgba(0, 176, 255, 0.13),
-      transparent 31%
-    ),
+      transparent 31%),
     #080713;
 }
 
@@ -2995,7 +2887,7 @@ html[data-theme="light"] .ff-feed-page {
   backdrop-filter: blur(23px);
 }
 
-.ff-bottom-nav > a:not(.ff-center-nav-button) {
+.ff-bottom-nav>a:not(.ff-center-nav-button) {
   display: flex;
   min-width: 0;
   flex-direction: column;
@@ -3007,11 +2899,11 @@ html[data-theme="light"] .ff-feed-page {
   text-decoration: none;
 }
 
-.ff-bottom-nav > a.active {
+.ff-bottom-nav>a.active {
   color: #ef3eb9;
 }
 
-.ff-bottom-nav > a svg {
+.ff-bottom-nav>a svg {
   width: 23px;
   height: 23px;
   fill: none;
@@ -3037,13 +2929,11 @@ html[data-theme="light"] .ff-feed-page {
   inset: -8px;
   border-radius: 28px;
   background:
-    conic-gradient(
-      #e83fe8,
+    conic-gradient(#e83fe8,
       #9d18ef,
       #3e50ff,
       #0ab8f4,
-      #e83fe8
-    );
+      #e83fe8);
   filter: blur(14px);
   opacity: 0.43;
 }
@@ -3108,13 +2998,11 @@ html[data-theme="light"] .ff-feed-page {
   border-radius: 13px;
   padding: 0 20px;
   background:
-    linear-gradient(
-      105deg,
+    linear-gradient(105deg,
       #df42f2,
       #a716f3,
       #4b4cff,
-      #0ab8f4
-    );
+      #0ab8f4);
   color: white;
   font-weight: 700;
   text-decoration: none;
@@ -3224,7 +3112,7 @@ html[data-theme="light"] .ff-feed-page {
     padding-left: 5px;
   }
 
-  .ff-bottom-nav > a:not(.ff-center-nav-button) {
+  .ff-bottom-nav>a:not(.ff-center-nav-button) {
     font-size: 9px;
   }
 
@@ -3277,7 +3165,7 @@ html[data-theme="light"] .ff-feed-page {
     gap: 10px;
   }
 
-  .ff-bottom-nav > a span {
+  .ff-bottom-nav>a span {
     max-width: 63px;
     overflow: hidden;
     white-space: nowrap;
@@ -3309,11 +3197,9 @@ html[data-theme="light"] .ff-feed-page {
 html[data-theme="light"] .ff-theme-icon-button {
   color: #6c3be8;
   background:
-    radial-gradient(
-      circle,
+    radial-gradient(circle,
       rgba(143, 75, 255, 0.11),
-      rgba(255, 255, 255, 0.96)
-    );
+      rgba(255, 255, 255, 0.96));
 }
 
 /* Hero sosyal medya alanı */
@@ -3375,7 +3261,7 @@ html[data-theme="light"] .ff-theme-icon-button {
   color: #ff4051;
 }
 
-.ff-hero-social-button.youtube svg > path:first-child {
+.ff-hero-social-button.youtube svg>path:first-child {
   fill: currentColor;
   stroke: currentColor;
 }
@@ -3420,8 +3306,7 @@ html[data-theme="light"] .ff-hero-social-button {
   height: 190px;
   overflow: visible;
   filter:
-    drop-shadow(0 18px 24px rgba(0, 0, 0, 0.32))
-    drop-shadow(0 0 30px rgba(176, 31, 245, 0.22));
+    drop-shadow(0 18px 24px rgba(0, 0, 0, 0.32)) drop-shadow(0 0 30px rgba(176, 31, 245, 0.22));
   animation:
     ff-community-float 3.5s ease-in-out infinite;
 }
@@ -3448,6 +3333,7 @@ html[data-theme="light"] .ff-hero-social-button {
 }
 
 @keyframes ff-community-float {
+
   0%,
   100% {
     transform: translateY(2px) rotate(-1deg);
@@ -3522,16 +3408,12 @@ html[data-theme="light"] .ff-hero-social-button {
   border: 1px solid rgba(155, 75, 255, 0.25);
   border-radius: 22px;
   background:
-    radial-gradient(
-      circle at 8% 50%,
+    radial-gradient(circle at 8% 50%,
       rgba(196, 41, 255, 0.11),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 92% 50%,
+      transparent 28%),
+    radial-gradient(circle at 92% 50%,
       rgba(0, 178, 255, 0.08),
-      transparent 28%
-    ),
+      transparent 28%),
     rgba(4, 5, 12, 0.97) !important;
   box-shadow:
     0 15px 40px rgba(0, 0, 0, 0.24),
@@ -3542,16 +3424,12 @@ html[data-theme="light"] .ff-hero-social-button {
 
 html[data-theme="light"] .ff-feed-header {
   background:
-    radial-gradient(
-      circle at 8% 50%,
+    radial-gradient(circle at 8% 50%,
       rgba(196, 41, 255, 0.12),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 92% 50%,
+      transparent 28%),
+    radial-gradient(circle at 92% 50%,
       rgba(0, 178, 255, 0.09),
-      transparent 28%
-    ),
+      transparent 28%),
     rgba(4, 5, 12, 0.98) !important;
   border-color: rgba(155, 75, 255, 0.28);
   box-shadow:
@@ -3574,8 +3452,7 @@ html[data-theme="light"] .ff-feed-header {
   width: 100%;
   height: auto;
   filter:
-    drop-shadow(0 0 10px rgba(215, 55, 255, 0.12))
-    drop-shadow(0 0 18px rgba(0, 181, 255, 0.07));
+    drop-shadow(0 0 10px rgba(215, 55, 255, 0.12)) drop-shadow(0 0 18px rgba(0, 181, 255, 0.07));
 }
 
 /* Üstteki tema ve arama butonlarını belirginleştir */
@@ -3583,22 +3460,18 @@ html[data-theme="light"] .ff-feed-header {
 .ff-round-action {
   flex: 0 0 45px;
   background:
-    radial-gradient(
-      circle,
+    radial-gradient(circle,
       rgba(154, 31, 240, 0.17),
-      rgba(9, 10, 19, 0.96)
-    );
+      rgba(9, 10, 19, 0.96));
   border-color: rgba(190, 70, 255, 0.38);
   color: #ffffff;
 }
 
 html[data-theme="light"] .ff-round-action {
   background:
-    radial-gradient(
-      circle,
+    radial-gradient(circle,
       rgba(154, 31, 240, 0.18),
-      rgba(9, 10, 19, 0.97)
-    );
+      rgba(9, 10, 19, 0.97));
   color: #ffffff;
 }
 
@@ -3609,22 +3482,16 @@ html[data-theme="light"] .ff-round-action {
   min-height: 290px;
   border-color: rgba(155, 73, 255, 0.25);
   background:
-    radial-gradient(
-      circle at 76% 43%,
+    radial-gradient(circle at 76% 43%,
       rgba(108, 42, 255, 0.25),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 66% 82%,
+      transparent 32%),
+    radial-gradient(circle at 66% 82%,
       rgba(213, 31, 255, 0.18),
-      transparent 37%
-    ),
-    linear-gradient(
-      135deg,
+      transparent 37%),
+    linear-gradient(135deg,
       #04050c 0%,
       #080914 48%,
-      #0b0920 100%
-    ) !important;
+      #0b0920 100%) !important;
   box-shadow:
     0 27px 70px rgba(0, 0, 0, 0.29),
     inset 0 1px 0 rgba(255, 255, 255, 0.035);
@@ -3642,13 +3509,11 @@ html[data-theme="light"] .ff-round-action {
   z-index: 0;
   border-radius: inherit;
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       rgba(3, 4, 11, 0.98) 0%,
       rgba(3, 4, 11, 0.91) 37%,
       rgba(5, 5, 15, 0.52) 62%,
-      transparent 84%
-    );
+      transparent 84%);
   pointer-events: none;
 }
 
@@ -3675,13 +3540,11 @@ html[data-theme="light"] .ff-round-action {
 
 .ff-feed-hero h1 span {
   background:
-    linear-gradient(
-      100deg,
+    linear-gradient(100deg,
       #ef62f4 0%,
       #be1df3 34%,
       #6645ff 68%,
-      #11baf2 100%
-    );
+      #11baf2 100%);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -3766,13 +3629,11 @@ html[data-theme="light"] .ff-hero-social-button.share {
 
   .ff-feed-hero::before {
     background:
-      linear-gradient(
-        90deg,
+      linear-gradient(90deg,
         rgba(3, 4, 11, 0.98) 0%,
         rgba(3, 4, 11, 0.9) 48%,
         rgba(5, 5, 15, 0.37) 73%,
-        transparent 100%
-      );
+        transparent 100%);
   }
 
   .ff-feed-hero h1 {
@@ -3937,22 +3798,16 @@ html[data-theme="light"] body {
 html[data-theme="light"] .ff-ad-banner {
   color: #ffffff !important;
   background:
-    radial-gradient(
-      circle at 14% 50%,
+    radial-gradient(circle at 14% 50%,
       rgba(205, 44, 255, 0.22),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 88% 50%,
+      transparent 32%),
+    radial-gradient(circle at 88% 50%,
       rgba(0, 176, 255, 0.15),
-      transparent 33%
-    ),
-    linear-gradient(
-      100deg,
+      transparent 33%),
+    linear-gradient(100deg,
       #10051b,
       #080913 48%,
-      #071321
-    ) !important;
+      #071321) !important;
 }
 
 .ff-ad-banner strong,
@@ -4026,6 +3881,7 @@ html[data-theme="light"] .ff-ad-banner button {
     min-height: 130px;
   }
 }
+
 /* FORUMFENOMEN DESIRED BOTTOM NAV */
 
 /* ------------------------------------------------------
@@ -4151,22 +4007,16 @@ html[data-theme="light"] .ff-ad-banner {
   color: #ffffff !important;
 
   background:
-    radial-gradient(
-      circle at 13% 50%,
+    radial-gradient(circle at 13% 50%,
       rgba(207, 39, 255, 0.25),
-      transparent 34%
-    ),
-    radial-gradient(
-      circle at 88% 48%,
+      transparent 34%),
+    radial-gradient(circle at 88% 48%,
       rgba(0, 176, 255, 0.17),
-      transparent 36%
-    ),
-    linear-gradient(
-      105deg,
+      transparent 36%),
+    linear-gradient(105deg,
       #11051d 0%,
       #080913 52%,
-      #061523 100%
-    ) !important;
+      #061523 100%) !important;
 }
 
 .ff-ad-banner strong,
@@ -4280,7 +4130,7 @@ html[data-theme="light"] .ff-bottom-nav {
 
 /* Normal menü düğmeleri */
 
-.ff-bottom-nav > a:not(.ff-center-nav-button) {
+.ff-bottom-nav>a:not(.ff-center-nav-button) {
   position: relative;
   z-index: 3;
 
@@ -4310,21 +4160,21 @@ html[data-theme="light"] .ff-bottom-nav {
     transform 0.2s ease;
 }
 
-.ff-bottom-nav > a:not(.ff-center-nav-button):hover {
+.ff-bottom-nav>a:not(.ff-center-nav-button):hover {
   color: #d7d8e0;
   transform: translateY(-1px);
 }
 
-.ff-bottom-nav > a.active {
+.ff-bottom-nav>a.active {
   color: #ee42b9;
 }
 
-.ff-bottom-nav > a.active svg {
+.ff-bottom-nav>a.active svg {
   filter:
     drop-shadow(0 0 7px rgba(238, 66, 185, 0.48));
 }
 
-.ff-bottom-nav > a svg {
+.ff-bottom-nav>a svg {
   width: 23px;
   height: 23px;
 
@@ -4368,14 +4218,12 @@ html[data-theme="light"] .ff-bottom-nav {
   border-radius: 50%;
 
   background:
-    conic-gradient(
-      from 210deg,
+    conic-gradient(from 210deg,
       #e943e7,
       #a21def,
       #494cff,
       #09b8f4,
-      #e943e7
-    );
+      #e943e7);
 
   filter: blur(14px);
 
@@ -4407,11 +4255,9 @@ html[data-theme="light"] .ff-bottom-nav {
   border-radius: 50%;
 
   background:
-    radial-gradient(
-      circle at 36% 27%,
+    radial-gradient(circle at 36% 27%,
       rgba(116, 40, 215, 0.18),
-      transparent 48%
-    ),
+      transparent 48%),
     #020307;
 
   box-shadow:
@@ -4447,8 +4293,7 @@ html[data-theme="light"] .ff-bottom-nav {
   height: 10px;
 
   transform:
-    translateX(-50%)
-    rotate(-4deg);
+    translateX(-50%) rotate(-4deg);
 
   border-radius: 999px;
 
@@ -4534,7 +4379,7 @@ html[data-theme="light"] .ff-bottom-nav {
     border-radius: 27px;
   }
 
-  .ff-bottom-nav > a:not(.ff-center-nav-button) {
+  .ff-bottom-nav>a:not(.ff-center-nav-button) {
     height: 54px;
 
     gap: 5px;
@@ -4544,7 +4389,7 @@ html[data-theme="light"] .ff-bottom-nav {
     font-size: 8.5px;
   }
 
-  .ff-bottom-nav > a svg {
+  .ff-bottom-nav>a svg {
     width: 21px;
     height: 21px;
   }
@@ -4563,12 +4408,13 @@ html[data-theme="light"] .ff-bottom-nav {
 }
 
 @media (max-width: 430px) {
+
   .ff-bottom-nav,
   html[data-theme="light"] .ff-bottom-nav {
     width: calc(100% - 10px);
   }
 
-  .ff-bottom-nav > a span {
+  .ff-bottom-nav>a span {
     max-width: 62px;
 
     overflow: hidden;
@@ -4652,8 +4498,7 @@ html[data-theme="light"] .ff-bottom-nav {
 .ff-feed-hero {
   min-height: 245px;
   grid-template-columns:
-    minmax(0, 1.42fr)
-    minmax(215px, 0.58fr);
+    minmax(0, 1.42fr) minmax(215px, 0.58fr);
 
   padding: 21px 27px;
   border-radius: 25px;
@@ -4715,8 +4560,7 @@ html[data-theme="light"] .ff-bottom-nav {
   .ff-feed-hero {
     min-height: 235px;
     grid-template-columns:
-      minmax(0, 1.35fr)
-      minmax(185px, 0.65fr);
+      minmax(0, 1.35fr) minmax(185px, 0.65fr);
 
     padding: 20px 23px;
   }
@@ -4763,8 +4607,7 @@ html[data-theme="light"] .ff-bottom-nav {
   .ff-feed-hero {
     min-height: 238px;
     grid-template-columns:
-      minmax(0, 1fr)
-      130px;
+      minmax(0, 1fr) 130px;
 
     padding: 18px 17px;
   }
@@ -4811,8 +4654,7 @@ html[data-theme="light"] .ff-bottom-nav {
 
   .ff-feed-hero {
     grid-template-columns:
-      minmax(0, 1fr)
-      105px;
+      minmax(0, 1fr) 105px;
 
     padding-right: 13px;
   }
@@ -5147,25 +4989,19 @@ html[data-theme="light"] .ff-bottom-nav {
 
   margin: 0 !important;
   padding:
-    18px
-    16px
-    8px !important;
+    18px 16px 8px !important;
 
   border: 0 !important;
   border-radius: 35px !important;
 
   background-color: #04050c !important;
   background-image:
-    radial-gradient(
-      circle at 50% -22%,
+    radial-gradient(circle at 50% -22%,
       rgba(94, 40, 221, 0.16),
-      transparent 34%
-    ),
-    linear-gradient(
-      180deg,
+      transparent 34%),
+    linear-gradient(180deg,
       rgba(8, 8, 18, 0.99),
-      rgba(3, 4, 10, 0.995)
-    ) !important;
+      rgba(3, 4, 10, 0.995)) !important;
 
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
@@ -5230,14 +5066,12 @@ html[data-theme="light"] .ff-bottom-nav {
   padding: 1px !important;
 
   background:
-    linear-gradient(
-      100deg,
+    linear-gradient(100deg,
       rgba(230, 58, 225, 0.72),
       rgba(144, 34, 235, 0.55) 30%,
       rgba(65, 78, 255, 0.58) 55%,
       rgba(8, 181, 244, 0.55) 76%,
-      rgba(222, 60, 226, 0.7)
-    ) !important;
+      rgba(222, 60, 226, 0.7)) !important;
 
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -5259,7 +5093,7 @@ html[data-theme="light"] .ff-bottom-nav {
 
 /* Normal alt menü seçenekleri */
 
-.ff-bottom-nav > a:not(.ff-center-nav-button) {
+.ff-bottom-nav>a:not(.ff-center-nav-button) {
   position: relative !important;
   z-index: 4 !important;
 
@@ -5287,21 +5121,21 @@ html[data-theme="light"] .ff-bottom-nav {
     transform 0.2s ease !important;
 }
 
-.ff-bottom-nav > a:not(.ff-center-nav-button):hover {
+.ff-bottom-nav>a:not(.ff-center-nav-button):hover {
   color: #dedee5 !important;
   transform: translateY(-1px) !important;
 }
 
-.ff-bottom-nav > a.active {
+.ff-bottom-nav>a.active {
   color: #ed42b9 !important;
 }
 
-.ff-bottom-nav > a.active svg {
+.ff-bottom-nav>a.active svg {
   filter:
     drop-shadow(0 0 7px rgba(237, 66, 185, 0.48)) !important;
 }
 
-.ff-bottom-nav > a svg {
+.ff-bottom-nav>a svg {
   width: 24px !important;
   height: 24px !important;
 
@@ -5348,14 +5182,12 @@ html[data-theme="light"] .ff-bottom-nav {
   border-radius: 50% !important;
 
   background:
-    conic-gradient(
-      from 210deg,
+    conic-gradient(from 210deg,
       #e742e6,
       #a51fee,
       #4d4cff,
       #0ab8f4,
-      #e742e6
-    ) !important;
+      #e742e6) !important;
 
   opacity: 0.39 !important;
   filter: blur(14px) !important;
@@ -5385,11 +5217,9 @@ html[data-theme="light"] .ff-bottom-nav {
   border-radius: 50% !important;
 
   background:
-    radial-gradient(
-      circle at 36% 27%,
+    radial-gradient(circle at 36% 27%,
       rgba(118, 39, 218, 0.18),
-      transparent 48%
-    ),
+      transparent 48%),
     #020307 !important;
 
   box-shadow:
@@ -5433,8 +5263,7 @@ html[data-theme="light"] .ff-bottom-nav {
   height: 11px !important;
 
   transform:
-    translateX(-50%)
-    rotate(-4deg) !important;
+    translateX(-50%) rotate(-4deg) !important;
 
   border-radius: 999px !important;
 
@@ -5485,6 +5314,7 @@ html[data-theme="light"] .ff-bottom-nav {
 /* Mobil */
 
 @media (max-width: 680px) {
+
   .ff-bottom-nav,
   html[data-theme="light"] .ff-bottom-nav {
     bottom: max(7px, env(safe-area-inset-bottom)) !important;
@@ -5494,9 +5324,7 @@ html[data-theme="light"] .ff-bottom-nav {
     min-height: 86px !important;
 
     padding:
-      15px
-      5px
-      6px !important;
+      15px 5px 6px !important;
 
     border-radius: 29px !important;
   }
@@ -5512,14 +5340,14 @@ html[data-theme="light"] .ff-bottom-nav {
     border-radius: 29px !important;
   }
 
-  .ff-bottom-nav > a:not(.ff-center-nav-button) {
+  .ff-bottom-nav>a:not(.ff-center-nav-button) {
     height: 57px !important;
     gap: 5px !important;
     padding-top: 8px !important;
     font-size: 8.8px !important;
   }
 
-  .ff-bottom-nav > a svg {
+  .ff-bottom-nav>a svg {
     width: 22px !important;
     height: 22px !important;
   }
@@ -5547,12 +5375,13 @@ html[data-theme="light"] .ff-bottom-nav {
 }
 
 @media (max-width: 430px) {
+
   .ff-bottom-nav,
   html[data-theme="light"] .ff-bottom-nav {
     width: calc(100% - 10px) !important;
   }
 
-  .ff-bottom-nav > a span {
+  .ff-bottom-nav>a span {
     max-width: 62px;
 
     overflow: hidden;
@@ -5650,7 +5479,7 @@ html[data-theme="light"] .ff-bottom-nav {
 
 /* Normal menü seçenekleri */
 
-.ff-bottom-nav > a:not(.ff-center-nav-button) {
+.ff-bottom-nav>a:not(.ff-center-nav-button) {
   position: relative !important;
   z-index: 4 !important;
 
@@ -5674,16 +5503,16 @@ html[data-theme="light"] .ff-bottom-nav {
   text-decoration: none !important;
 }
 
-.ff-bottom-nav > a.active {
+.ff-bottom-nav>a.active {
   color: #ed42b9 !important;
 }
 
-.ff-bottom-nav > a.active svg {
+.ff-bottom-nav>a.active svg {
   filter:
     drop-shadow(0 0 7px rgba(237, 66, 185, 0.48)) !important;
 }
 
-.ff-bottom-nav > a svg {
+.ff-bottom-nav>a svg {
   width: 24px !important;
   height: 24px !important;
 
@@ -5726,14 +5555,12 @@ html[data-theme="light"] .ff-bottom-nav {
   border-radius: 50% !important;
 
   background:
-    conic-gradient(
-      from 210deg,
+    conic-gradient(from 210deg,
       #e842e5,
       #a41fee,
       #4d4cff,
       #0ab8f4,
-      #e842e5
-    ) !important;
+      #e842e5) !important;
 
   opacity: 0.36 !important;
   filter: blur(14px) !important;
@@ -5759,11 +5586,9 @@ html[data-theme="light"] .ff-bottom-nav {
   border-radius: 50% !important;
 
   background:
-    radial-gradient(
-      circle at 35% 25%,
+    radial-gradient(circle at 35% 25%,
       rgba(118, 39, 218, 0.18),
-      transparent 48%
-    ),
+      transparent 48%),
     #020307 !important;
 
   box-shadow:
@@ -5802,8 +5627,7 @@ html[data-theme="light"] .ff-bottom-nav {
   height: 11px !important;
 
   transform:
-    translateX(-50%)
-    rotate(-4deg) !important;
+    translateX(-50%) rotate(-4deg) !important;
 
   border-radius: 999px !important;
 
@@ -5850,6 +5674,7 @@ html[data-theme="light"] .ff-bottom-nav {
 /* Mobil */
 
 @media (max-width: 680px) {
+
   .ff-bottom-nav,
   html[data-theme="light"] .ff-bottom-nav {
     bottom: max(7px, env(safe-area-inset-bottom)) !important;
@@ -5865,14 +5690,14 @@ html[data-theme="light"] .ff-bottom-nav {
     top: -11px !important;
   }
 
-  .ff-bottom-nav > a:not(.ff-center-nav-button) {
+  .ff-bottom-nav>a:not(.ff-center-nav-button) {
     height: 54px !important;
     gap: 5px !important;
     padding-top: 8px !important;
     font-size: 8.8px !important;
   }
 
-  .ff-bottom-nav > a svg {
+  .ff-bottom-nav>a svg {
     width: 22px !important;
     height: 22px !important;
   }
@@ -5896,12 +5721,13 @@ html[data-theme="light"] .ff-bottom-nav {
 }
 
 @media (max-width: 430px) {
+
   .ff-bottom-nav,
   html[data-theme="light"] .ff-bottom-nav {
     width: calc(100% - 8px) !important;
   }
 
-  .ff-bottom-nav > a span {
+  .ff-bottom-nav>a span {
     max-width: 62px;
 
     overflow: hidden;
@@ -5931,11 +5757,7 @@ html[data-theme="light"] .ff-bottom-nav {
   min-height: 88px !important;
 
   grid-template-columns:
-    minmax(0, 1fr)
-    minmax(0, 1fr)
-    108px
-    minmax(0, 1fr)
-    minmax(0, 1fr) !important;
+    minmax(0, 1fr) minmax(0, 1fr) 108px minmax(0, 1fr) minmax(0, 1fr) !important;
 
   align-items: center !important;
 
@@ -5977,22 +5799,15 @@ html[data-theme="light"] .ff-bottom-nav {
     1px solid rgba(196, 62, 242, 0.3) !important;
 
   border-radius:
-    27px
-    14px
-    14px
-    27px !important;
+    27px 14px 14px 27px !important;
 
   background:
-    radial-gradient(
-      circle at 100% 50%,
+    radial-gradient(circle at 100% 50%,
       rgba(114, 46, 255, 0.16),
-      transparent 42%
-    ),
-    linear-gradient(
-      145deg,
+      transparent 42%),
+    linear-gradient(145deg,
       rgba(11, 11, 24, 0.98),
-      rgba(4, 5, 12, 0.99)
-    ) !important;
+      rgba(4, 5, 12, 0.99)) !important;
 
   box-shadow:
     0 13px 35px rgba(0, 0, 0, 0.34),
@@ -6023,22 +5838,15 @@ html[data-theme="light"] .ff-bottom-nav {
     1px solid rgba(57, 123, 255, 0.28) !important;
 
   border-radius:
-    14px
-    27px
-    27px
-    14px !important;
+    14px 27px 27px 14px !important;
 
   background:
-    radial-gradient(
-      circle at 0 50%,
+    radial-gradient(circle at 0 50%,
       rgba(26, 132, 255, 0.15),
-      transparent 42%
-    ),
-    linear-gradient(
-      215deg,
+      transparent 42%),
+    linear-gradient(215deg,
       rgba(11, 11, 24, 0.98),
-      rgba(4, 5, 12, 0.99)
-    ) !important;
+      rgba(4, 5, 12, 0.99)) !important;
 
   box-shadow:
     0 13px 35px rgba(0, 0, 0, 0.34),
@@ -6051,7 +5859,7 @@ html[data-theme="light"] .ff-bottom-nav {
 
 /* Normal menü bağlantıları */
 
-.ff-bottom-nav > a:not(.ff-center-nav-button) {
+.ff-bottom-nav>a:not(.ff-center-nav-button) {
   position: relative !important;
   z-index: 4 !important;
 
@@ -6079,7 +5887,7 @@ html[data-theme="light"] .ff-bottom-nav {
     transform 0.2s ease !important;
 }
 
-.ff-bottom-nav > a:not(.ff-center-nav-button)::before {
+.ff-bottom-nav>a:not(.ff-center-nav-button)::before {
   content: "" !important;
 
   position: absolute !important;
@@ -6105,28 +5913,27 @@ html[data-theme="light"] .ff-bottom-nav {
     transform 0.2s ease !important;
 }
 
-.ff-bottom-nav > a:not(.ff-center-nav-button):hover {
+.ff-bottom-nav>a:not(.ff-center-nav-button):hover {
   color: #d9dae2 !important;
   transform: translateY(-1px) !important;
 }
 
-.ff-bottom-nav > a.active {
+.ff-bottom-nav>a.active {
   color: #ef43bb !important;
 }
 
-.ff-bottom-nav > a.active::before {
+.ff-bottom-nav>a.active::before {
   opacity: 1 !important;
   transform:
-    translateX(-50%)
-    scale(1) !important;
+    translateX(-50%) scale(1) !important;
 }
 
-.ff-bottom-nav > a.active svg {
+.ff-bottom-nav>a.active svg {
   filter:
     drop-shadow(0 0 7px rgba(239, 67, 187, 0.52)) !important;
 }
 
-.ff-bottom-nav > a svg {
+.ff-bottom-nav>a svg {
   width: 23px !important;
   height: 23px !important;
 
@@ -6170,8 +5977,7 @@ html[data-theme="light"] .ff-bottom-nav {
   border-radius: 34px !important;
 
   background:
-    conic-gradient(
-      from 0deg,
+    conic-gradient(from 0deg,
       transparent 0deg,
       #eb43e8 42deg,
       transparent 86deg,
@@ -6180,20 +5986,15 @@ html[data-theme="light"] .ff-bottom-nav {
       #3f65ff 220deg,
       transparent 267deg,
       #0bb8f4 310deg,
-      transparent 360deg
-    ) !important;
+      transparent 360deg) !important;
 
   filter:
-    drop-shadow(0 0 8px rgba(176, 49, 239, 0.42))
-    blur(0.2px) !important;
+    drop-shadow(0 0 8px rgba(176, 49, 239, 0.42)) blur(0.2px) !important;
 
   opacity: 0.9 !important;
 
   animation:
-    ff-pulse-dock-rotate
-    8s
-    linear
-    infinite !important;
+    ff-pulse-dock-rotate 8s linear infinite !important;
 }
 
 /* Sekizgen koyu logo plakası */
@@ -6215,28 +6016,22 @@ html[data-theme="light"] .ff-bottom-nav {
   border-radius: 0 !important;
 
   clip-path:
-    polygon(
-      28% 0,
+    polygon(28% 0,
       72% 0,
       100% 28%,
       100% 72%,
       72% 100%,
       28% 100%,
       0 72%,
-      0 28%
-    ) !important;
+      0 28%) !important;
 
   background:
-    radial-gradient(
-      circle at 37% 27%,
+    radial-gradient(circle at 37% 27%,
       rgba(119, 39, 220, 0.2),
-      transparent 48%
-    ),
-    linear-gradient(
-      145deg,
+      transparent 48%),
+    linear-gradient(145deg,
       #0c0716,
-      #020308
-    ) !important;
+      #020308) !important;
 
   box-shadow:
     0 12px 31px rgba(0, 0, 0, 0.54),
@@ -6286,11 +6081,7 @@ html[data-theme="light"] .ff-bottom-nav {
     drop-shadow(0 0 5px rgba(218, 57, 237, 0.6)) !important;
 
   animation:
-    ff-pulse-dock-satellites
-    2.1s
-    ease-in-out
-    infinite
-    alternate !important;
+    ff-pulse-dock-satellites 2.1s ease-in-out infinite alternate !important;
 }
 
 /* Çekirdeğin altındaki enerji izi */
@@ -6312,22 +6103,18 @@ html[data-theme="light"] .ff-bottom-nav {
   border-radius: 50% !important;
 
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       transparent,
       rgba(178, 44, 241, 0.65),
       rgba(39, 139, 255, 0.6),
-      transparent
-    ) !important;
+      transparent) !important;
 
   filter: blur(8px) !important;
 }
 
 /* Eski dalga ve katman izlerini kesin olarak gizle */
 
-.ff-bottom-nav svg:not(
-  .ff-bottom-nav > a svg
-) {
+.ff-bottom-nav svg:not(.ff-bottom-nav > a svg) {
   pointer-events: none !important;
 }
 
@@ -6367,6 +6154,7 @@ html[data-theme="light"] .ff-bottom-nav {
 /* Mobil */
 
 @media (max-width: 680px) {
+
   .ff-bottom-nav,
   html[data-theme="light"] .ff-bottom-nav {
     bottom: max(7px, env(safe-area-inset-bottom)) !important;
@@ -6376,11 +6164,7 @@ html[data-theme="light"] .ff-bottom-nav {
     min-height: 79px !important;
 
     grid-template-columns:
-      minmax(0, 1fr)
-      minmax(0, 1fr)
-      86px
-      minmax(0, 1fr)
-      minmax(0, 1fr) !important;
+      minmax(0, 1fr) minmax(0, 1fr) 86px minmax(0, 1fr) minmax(0, 1fr) !important;
 
     padding: 0 5px !important;
   }
@@ -6391,7 +6175,7 @@ html[data-theme="light"] .ff-bottom-nav {
     width: calc(50% - 47px) !important;
   }
 
-  .ff-bottom-nav > a:not(.ff-center-nav-button) {
+  .ff-bottom-nav>a:not(.ff-center-nav-button) {
     height: 64px !important;
 
     gap: 5px !important;
@@ -6400,7 +6184,7 @@ html[data-theme="light"] .ff-bottom-nav {
     font-size: 8.7px !important;
   }
 
-  .ff-bottom-nav > a svg {
+  .ff-bottom-nav>a svg {
     width: 21px !important;
     height: 21px !important;
   }
@@ -6441,12 +6225,13 @@ html[data-theme="light"] .ff-bottom-nav {
 }
 
 @media (max-width: 430px) {
+
   .ff-bottom-nav,
   html[data-theme="light"] .ff-bottom-nav {
     width: calc(100% - 8px) !important;
   }
 
-  .ff-bottom-nav > a span {
+  .ff-bottom-nav>a span {
     max-width: 61px;
 
     overflow: hidden;
@@ -6467,11 +6252,7 @@ html[data-theme="light"] .ff-bottom-nav {
   min-height: 74px !important;
 
   grid-template-columns:
-    minmax(0, 1fr)
-    minmax(0, 1fr)
-    84px
-    minmax(0, 1fr)
-    minmax(0, 1fr) !important;
+    minmax(0, 1fr) minmax(0, 1fr) 84px minmax(0, 1fr) minmax(0, 1fr) !important;
 
   padding: 0 11px !important;
 }
@@ -6494,23 +6275,17 @@ html[data-theme="light"] .ff-bottom-nav {
 
 .ff-bottom-nav::before {
   border-radius:
-    23px
-    12px
-    12px
-    23px !important;
+    23px 12px 12px 23px !important;
 }
 
 .ff-bottom-nav::after {
   border-radius:
-    12px
-    23px
-    23px
-    12px !important;
+    12px 23px 23px 12px !important;
 }
 
 /* Menü yazıları daha net ve okunaklı */
 
-.ff-bottom-nav > a:not(.ff-center-nav-button) {
+.ff-bottom-nav>a:not(.ff-center-nav-button) {
   height: 61px !important;
   gap: 5px !important;
   padding: 6px 0 0 !important;
@@ -6522,15 +6297,15 @@ html[data-theme="light"] .ff-bottom-nav {
   letter-spacing: -0.1px !important;
 }
 
-.ff-bottom-nav > a:not(.ff-center-nav-button):hover {
+.ff-bottom-nav>a:not(.ff-center-nav-button):hover {
   color: #ffffff !important;
 }
 
-.ff-bottom-nav > a.active {
+.ff-bottom-nav>a.active {
   color: #f04abe !important;
 }
 
-.ff-bottom-nav > a svg {
+.ff-bottom-nav>a svg {
   width: 22px !important;
   height: 22px !important;
 
@@ -6539,7 +6314,7 @@ html[data-theme="light"] .ff-bottom-nav {
 
 /* Aktif menünün üzerindeki küçük nokta sakinleştirilir */
 
-.ff-bottom-nav > a:not(.ff-center-nav-button)::before {
+.ff-bottom-nav>a:not(.ff-center-nav-button)::before {
   top: 5px !important;
 
   width: 3px !important;
@@ -6568,8 +6343,7 @@ html[data-theme="light"] .ff-bottom-nav {
   border-radius: 24px !important;
 
   background:
-    conic-gradient(
-      from 0deg,
+    conic-gradient(from 0deg,
       transparent 0deg,
       rgba(232, 67, 232, 0.68) 34deg,
       transparent 74deg,
@@ -6578,8 +6352,7 @@ html[data-theme="light"] .ff-bottom-nav {
       rgba(58, 101, 255, 0.54) 216deg,
       transparent 262deg,
       rgba(10, 184, 244, 0.52) 310deg,
-      transparent 360deg
-    ) !important;
+      transparent 360deg) !important;
 
   opacity: 0.42 !important;
 
@@ -6587,10 +6360,7 @@ html[data-theme="light"] .ff-bottom-nav {
     drop-shadow(0 0 4px rgba(157, 54, 229, 0.2)) !important;
 
   animation:
-    ff-pulse-dock-rotate
-    18s
-    linear
-    infinite !important;
+    ff-pulse-dock-rotate 18s linear infinite !important;
 }
 
 /* Ortadaki asıl logo plakası küçültülür */
@@ -6600,16 +6370,14 @@ html[data-theme="light"] .ff-bottom-nav {
   height: 59px !important;
 
   clip-path:
-    polygon(
-      27% 0,
+    polygon(27% 0,
       73% 0,
       100% 27%,
       100% 73%,
       73% 100%,
       27% 100%,
       0 73%,
-      0 27%
-    ) !important;
+      0 27%) !important;
 
   box-shadow:
     0 8px 21px rgba(0, 0, 0, 0.46),
@@ -6641,11 +6409,7 @@ html[data-theme="light"] .ff-bottom-nav {
     drop-shadow(0 0 3px rgba(218, 57, 237, 0.3)) !important;
 
   animation:
-    ff-pulse-dock-satellites
-    3.8s
-    ease-in-out
-    infinite
-    alternate !important;
+    ff-pulse-dock-satellites 3.8s ease-in-out infinite alternate !important;
 }
 
 /* Altındaki enerji izi de küçültülür */
@@ -6663,6 +6427,7 @@ html[data-theme="light"] .ff-bottom-nav {
 /* Mobil */
 
 @media (max-width: 680px) {
+
   .ff-bottom-nav,
   html[data-theme="light"] .ff-bottom-nav {
     width: calc(100% - 12px) !important;
@@ -6670,11 +6435,7 @@ html[data-theme="light"] .ff-bottom-nav {
     min-height: 69px !important;
 
     grid-template-columns:
-      minmax(0, 1fr)
-      minmax(0, 1fr)
-      74px
-      minmax(0, 1fr)
-      minmax(0, 1fr) !important;
+      minmax(0, 1fr) minmax(0, 1fr) 74px minmax(0, 1fr) minmax(0, 1fr) !important;
   }
 
   .ff-bottom-nav::before,
@@ -6685,7 +6446,7 @@ html[data-theme="light"] .ff-bottom-nav {
     width: calc(50% - 40px) !important;
   }
 
-  .ff-bottom-nav > a:not(.ff-center-nav-button) {
+  .ff-bottom-nav>a:not(.ff-center-nav-button) {
     height: 57px !important;
     padding-top: 5px !important;
 
@@ -6693,7 +6454,7 @@ html[data-theme="light"] .ff-bottom-nav {
     font-weight: 610 !important;
   }
 
-  .ff-bottom-nav > a svg {
+  .ff-bottom-nav>a svg {
     width: 20px !important;
     height: 20px !important;
   }
@@ -6731,7 +6492,7 @@ html[data-theme="light"] .ff-bottom-nav {
 }
 
 @media (max-width: 430px) {
-  .ff-bottom-nav > a:not(.ff-center-nav-button) {
+  .ff-bottom-nav>a:not(.ff-center-nav-button) {
     font-size: 9px !important;
   }
 }
@@ -6788,17 +6549,13 @@ html[data-theme="light"] .ff-bottom-nav {
   .ff-feed-hero {
     min-height: 0 !important;
     grid-template-columns:
-      minmax(0, 1fr)
-      118px !important;
+      minmax(0, 1fr) 118px !important;
 
     align-items: center !important;
     column-gap: 3px !important;
 
     padding:
-      13px
-      13px
-      14px
-      16px !important;
+      13px 13px 14px 16px !important;
 
     border-radius: 22px !important;
   }
@@ -6872,14 +6629,10 @@ html[data-theme="light"] .ff-bottom-nav {
 
   .ff-feed-hero {
     grid-template-columns:
-      minmax(0, 1fr)
-      108px !important;
+      minmax(0, 1fr) 108px !important;
 
     padding:
-      12px
-      10px
-      13px
-      14px !important;
+      12px 10px 13px 14px !important;
   }
 
   .ff-feed-hero h1 {
@@ -6907,17 +6660,13 @@ html[data-theme="light"] .ff-bottom-nav {
 .ff-bottom-nav::before,
 html[data-theme="light"] .ff-bottom-nav::before {
   background:
-    radial-gradient(
-      circle at 100% 50%,
+    radial-gradient(circle at 100% 50%,
       rgba(116, 43, 255, 0.16),
-      transparent 43%
-    ),
-    linear-gradient(
-      145deg,
+      transparent 43%),
+    linear-gradient(145deg,
       #0d0918 0%,
       #070711 55%,
-      #03040a 100%
-    ) !important;
+      #03040a 100%) !important;
 
   border-color:
     rgba(199, 62, 244, 0.33) !important;
@@ -6934,17 +6683,13 @@ html[data-theme="light"] .ff-bottom-nav::after {
   display: block !important;
 
   background:
-    radial-gradient(
-      circle at 0 50%,
+    radial-gradient(circle at 0 50%,
       rgba(20, 137, 255, 0.15),
-      transparent 43%
-    ),
-    linear-gradient(
-      215deg,
+      transparent 43%),
+    linear-gradient(215deg,
       #09101b 0%,
       #070711 55%,
-      #03040a 100%
-    ) !important;
+      #03040a 100%) !important;
 
   border:
     1px solid rgba(65, 120, 255, 0.3) !important;
@@ -6957,21 +6702,15 @@ html[data-theme="light"] .ff-bottom-nav::after {
 
 /* Açık temada menü ikonları ve yazıları okunaklı kalır */
 
-html[data-theme="light"]
-.ff-bottom-nav
-> a:not(.ff-center-nav-button) {
+html[data-theme="light"] .ff-bottom-nav>a:not(.ff-center-nav-button) {
   color: #b8bac4 !important;
 }
 
-html[data-theme="light"]
-.ff-bottom-nav
-> a:not(.ff-center-nav-button):hover {
+html[data-theme="light"] .ff-bottom-nav>a:not(.ff-center-nav-button):hover {
   color: #ffffff !important;
 }
 
-html[data-theme="light"]
-.ff-bottom-nav
-> a.active {
+html[data-theme="light"] .ff-bottom-nav>a.active {
   color: #f04abe !important;
 }
 
@@ -6979,16 +6718,12 @@ html[data-theme="light"]
 
 html[data-theme="light"] .ff-center-nav-image {
   background:
-    radial-gradient(
-      circle at 37% 27%,
+    radial-gradient(circle at 37% 27%,
       rgba(119, 39, 220, 0.2),
-      transparent 48%
-    ),
-    linear-gradient(
-      145deg,
+      transparent 48%),
+    linear-gradient(145deg,
       #0c0716,
-      #020308
-    ) !important;
+      #020308) !important;
 }
 
 /*
@@ -7005,6 +6740,7 @@ html[data-theme="light"] .ff-ad-banner {
 /* Masaüstünde menü biraz reklama yaklaşır */
 
 @media (min-width: 681px) {
+
   .ff-bottom-nav,
   html[data-theme="light"] .ff-bottom-nav {
     bottom:
@@ -7015,6 +6751,7 @@ html[data-theme="light"] .ff-ad-banner {
 /* Mobilde boşluk daha da azaltılır */
 
 @media (max-width: 680px) {
+
   .ff-ad-banner,
   html[data-theme="light"] .ff-ad-banner {
     margin-bottom:
@@ -7080,17 +6817,13 @@ html[data-theme="light"] .ff-bottom-nav::after {
 html[data-theme="light"] .ff-bottom-nav::before {
   background-color: #05050d !important;
   background-image:
-    radial-gradient(
-      circle at 100% 50%,
+    radial-gradient(circle at 100% 50%,
       rgba(120, 43, 255, 0.16),
-      transparent 43%
-    ),
-    linear-gradient(
-      145deg,
+      transparent 43%),
+    linear-gradient(145deg,
       #0d0918 0%,
       #070711 55%,
-      #03040a 100%
-    ) !important;
+      #03040a 100%) !important;
 
   border:
     1px solid rgba(199, 62, 244, 0.33) !important;
@@ -7105,17 +6838,13 @@ html[data-theme="light"] .ff-bottom-nav::after {
 
   background-color: #05050d !important;
   background-image:
-    radial-gradient(
-      circle at 0 50%,
+    radial-gradient(circle at 0 50%,
       rgba(20, 137, 255, 0.15),
-      transparent 43%
-    ),
-    linear-gradient(
-      215deg,
+      transparent 43%),
+    linear-gradient(215deg,
       #09101b 0%,
       #070711 55%,
-      #03040a 100%
-    ) !important;
+      #03040a 100%) !important;
 
   border:
     1px solid rgba(65, 120, 255, 0.3) !important;
@@ -7123,21 +6852,18 @@ html[data-theme="light"] .ff-bottom-nav::after {
 
 /* Açık temada bütün alt menü yazıları okunaklı kalsın */
 
-html[data-theme="light"]
-.ff-bottom-nav
-> a:not(.ff-center-nav-button) {
+html[data-theme="light"] .ff-bottom-nav>a:not(.ff-center-nav-button) {
   color: #b9bbc5 !important;
 }
 
-html[data-theme="light"]
-.ff-bottom-nav
-> a.active {
+html[data-theme="light"] .ff-bottom-nav>a.active {
   color: #f04abe !important;
 }
 
 /* Mobilde reklam ve menü arasındaki aralığı daha da azalt */
 
 @media (max-width: 680px) {
+
   .ff-ad-banner,
   html[data-theme="light"] .ff-ad-banner {
     margin-bottom:
@@ -7186,8 +6912,7 @@ html[data-theme="light"]
 
   transform: none !important;
   filter:
-    drop-shadow(0 0 11px rgba(214, 55, 255, 0.14))
-    drop-shadow(0 0 17px rgba(0, 181, 255, 0.07)) !important;
+    drop-shadow(0 0 11px rgba(214, 55, 255, 0.14)) drop-shadow(0 0 17px rgba(0, 181, 255, 0.07)) !important;
 }
 
 /* Tablet */
@@ -7307,8 +7032,7 @@ html[data-theme="light"]
   flex-shrink: 0 !important;
 
   filter:
-    drop-shadow(0 0 12px rgba(214, 55, 255, 0.17))
-    drop-shadow(0 0 19px rgba(0, 181, 255, 0.09)) !important;
+    drop-shadow(0 0 12px rgba(214, 55, 255, 0.17)) drop-shadow(0 0 19px rgba(0, 181, 255, 0.09)) !important;
 }
 
 /* Sağ butonlar logoyu küçültemez */
@@ -7470,8 +7194,7 @@ html[data-theme="light"]
 
 html[lang="en"] .ff-feed-hero {
   grid-template-columns:
-    minmax(0, 1fr)
-    245px !important;
+    minmax(0, 1fr) 245px !important;
 
   column-gap: 14px !important;
 }
@@ -7497,8 +7220,7 @@ html[lang="en"] .ff-feed-hero-art {
   justify-self: end !important;
 
   transform:
-    translateX(8px)
-    scale(0.94) !important;
+    translateX(8px) scale(0.94) !important;
 
   transform-origin: center right !important;
 }
@@ -7508,8 +7230,7 @@ html[lang="en"] .ff-feed-hero-art {
 @media (max-width: 1000px) and (min-width: 681px) {
   html[lang="en"] .ff-feed-hero {
     grid-template-columns:
-      minmax(0, 1fr)
-      225px !important;
+      minmax(0, 1fr) 225px !important;
   }
 
   html[lang="en"] .ff-feed-hero h1 {
@@ -7519,8 +7240,7 @@ html[lang="en"] .ff-feed-hero-art {
 
   html[lang="en"] .ff-feed-hero-art {
     transform:
-      translateX(9px)
-      scale(0.9) !important;
+      translateX(9px) scale(0.9) !important;
   }
 }
 
@@ -7529,8 +7249,7 @@ html[lang="en"] .ff-feed-hero-art {
 @media (max-width: 680px) {
   html[lang="en"] .ff-feed-hero {
     grid-template-columns:
-      minmax(0, 1fr)
-      108px !important;
+      minmax(0, 1fr) 108px !important;
 
     column-gap: 2px !important;
   }
@@ -7544,8 +7263,7 @@ html[lang="en"] .ff-feed-hero-art {
 
   html[lang="en"] .ff-feed-hero-art {
     transform:
-      translateX(4px)
-      scale(0.92) !important;
+      translateX(4px) scale(0.92) !important;
   }
 }
 
@@ -7618,9 +7336,7 @@ html[lang="en"] .ff-center-nav-button::after {
   animation-duration: 22s !important;
 
   filter:
-    drop-shadow(
-      0 0 3px rgba(157, 54, 229, 0.16)
-    ) !important;
+    drop-shadow(0 0 3px rgba(157, 54, 229, 0.16)) !important;
 }
 
 /* Mobil */
@@ -7701,8 +7417,7 @@ html[lang="en"] .ff-center-nav-button::after {
 
 /* Açık temada da koyu etiket kullan */
 
-html[data-theme="light"]
-.ff-center-nav-button::after {
+html[data-theme="light"] .ff-center-nav-button::after {
   color: #ffffff !important;
 
   background:
@@ -7806,11 +7521,9 @@ html[data-theme="light"]
   color: #f7f5fb !important;
 
   background:
-    linear-gradient(
-      180deg,
+    linear-gradient(180deg,
       rgba(24, 13, 38, 0.94),
-      rgba(6, 6, 15, 0.9)
-    ) !important;
+      rgba(6, 6, 15, 0.9)) !important;
 
   border:
     1px solid rgba(213, 73, 255, 0.38) !important;
@@ -7853,11 +7566,9 @@ html[data-theme="light"] .ff-center-nav-button::after {
   color: #422250 !important;
 
   background:
-    linear-gradient(
-      180deg,
+    linear-gradient(180deg,
       rgba(255, 255, 255, 0.98),
-      rgba(240, 243, 252, 0.94)
-    ) !important;
+      rgba(240, 243, 252, 0.94)) !important;
 
   border-color:
     rgba(176, 53, 221, 0.46) !important;
@@ -7876,9 +7587,7 @@ html[data-theme="light"] .ff-center-nav-button::after {
   animation-duration: 26s !important;
 
   filter:
-    drop-shadow(
-      0 0 3px rgba(157, 54, 229, 0.13)
-    ) !important;
+    drop-shadow(0 0 3px rgba(157, 54, 229, 0.13)) !important;
 }
 
 /* Uydu noktalarını daha zarif yap */
@@ -8131,8 +7840,7 @@ html[data-theme="light"] .ff-center-nav-button::after {
   opacity: 0.4 !important;
 
   filter:
-    drop-shadow(0 0 5px rgba(187, 52, 236, 0.22))
-    drop-shadow(0 0 7px rgba(31, 146, 255, 0.12)) !important;
+    drop-shadow(0 0 5px rgba(187, 52, 236, 0.22)) drop-shadow(0 0 7px rgba(31, 146, 255, 0.12)) !important;
 
   animation-duration: 24s !important;
 }
@@ -8189,16 +7897,12 @@ html[data-theme="light"] .ff-center-nav-button::after {
   color: #f7f7fb;
 
   background:
-    radial-gradient(
-      circle at 10% 5%,
+    radial-gradient(circle at 10% 5%,
       rgba(167, 21, 236, 0.13),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 92% 18%,
+      transparent 28%),
+    radial-gradient(circle at 92% 18%,
       rgba(10, 159, 246, 0.1),
-      transparent 31%
-    ),
+      transparent 31%),
     #03040a;
 }
 
@@ -8278,28 +7982,22 @@ html[data-theme="light"] .ff-center-nav-button::after {
   border-radius: 24px;
 
   background:
-    radial-gradient(
-      circle at 83% 45%,
+    radial-gradient(circle at 83% 45%,
       rgba(39, 120, 255, 0.18),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 68% 120%,
+      transparent 32%),
+    radial-gradient(circle at 68% 120%,
       rgba(217, 39, 237, 0.17),
-      transparent 40%
-    ),
-    linear-gradient(
-      135deg,
+      transparent 40%),
+    linear-gradient(135deg,
       rgba(15, 7, 28, 0.98),
-      rgba(4, 5, 13, 0.99)
-    );
+      rgba(4, 5, 13, 0.99));
 
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.035),
     0 18px 42px rgba(0, 0, 0, 0.24);
 }
 
-.ff-category-intro > div:first-child {
+.ff-category-intro>div:first-child {
   position: relative;
   z-index: 2;
 
@@ -8371,12 +8069,10 @@ html[data-theme="light"] .ff-center-nav-button::after {
   inset: 36px;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #e633ec,
       #345fff,
-      #11b8ef
-    );
+      #11b8ef);
 
   border: 0;
 
@@ -8452,20 +8148,14 @@ html[data-theme="light"] .ff-center-nav-button::after {
   border-radius: 18px;
 
   background:
-    radial-gradient(
-      circle at 50% 0,
-      color-mix(
-        in srgb,
+    radial-gradient(circle at 50% 0,
+      color-mix(in srgb,
         var(--category-accent) 16%,
-        transparent
-      ),
-      transparent 55%
-    ),
-    linear-gradient(
-      150deg,
+        transparent),
+      transparent 55%),
+    linear-gradient(150deg,
       rgba(13, 13, 26, 0.96),
-      rgba(5, 6, 13, 0.98)
-    );
+      rgba(5, 6, 13, 0.98));
 
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.035),
@@ -8508,31 +8198,24 @@ html[data-theme="light"] .ff-center-nav-button::after {
   transform: translateY(-2px);
 
   border-color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 45%,
-      transparent
-    );
+      transparent);
 }
 
 .ff-category-card.active {
   color: #ffffff;
 
   border-color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 72%,
-      transparent
-    );
+      transparent);
 
   box-shadow:
     0 13px 30px rgba(0, 0, 0, 0.2),
-    0 0 19px
-      color-mix(
-        in srgb,
-        var(--category-accent) 15%,
-        transparent
-      ),
+    0 0 19px color-mix(in srgb,
+      var(--category-accent) 15%,
+      transparent),
     inset 0 1px 0 rgba(255, 255, 255, 0.055);
 }
 
@@ -8553,29 +8236,21 @@ html[data-theme="light"] .ff-center-nav-button::after {
   color: var(--category-accent);
 
   border:
-    1px solid
-      color-mix(
-        in srgb,
-        var(--category-accent) 40%,
-        transparent
-      );
+    1px solid color-mix(in srgb,
+      var(--category-accent) 40%,
+      transparent);
 
   border-radius: 13px;
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 10%,
-      rgba(7, 7, 16, 0.94)
-    );
+      rgba(7, 7, 16, 0.94));
 
   box-shadow:
-    0 0 15px
-      color-mix(
-        in srgb,
-        var(--category-accent) 14%,
-        transparent
-      );
+    0 0 15px color-mix(in srgb,
+      var(--category-accent) 14%,
+      transparent);
 }
 
 .ff-category-card-icon svg {
@@ -8608,25 +8283,18 @@ html[data-theme="light"] .ff-center-nav-button::after {
   padding: 19px;
 
   border:
-    1px solid
-      color-mix(
-        in srgb,
-        var(--category-accent) 24%,
-        rgba(255, 255, 255, 0.05)
-      );
+    1px solid color-mix(in srgb,
+      var(--category-accent) 24%,
+      rgba(255, 255, 255, 0.05));
 
   border-radius: 21px;
 
   background:
-    radial-gradient(
-      circle at 100% 0,
-      color-mix(
-        in srgb,
+    radial-gradient(circle at 100% 0,
+      color-mix(in srgb,
         var(--category-accent) 12%,
-        transparent
-      ),
-      transparent 42%
-    ),
+        transparent),
+      transparent 42%),
     rgba(8, 8, 18, 0.92);
 
   box-shadow:
@@ -8652,21 +8320,16 @@ html[data-theme="light"] .ff-center-nav-button::after {
   color: var(--category-accent);
 
   border:
-    1px solid
-      color-mix(
-        in srgb,
-        var(--category-accent) 35%,
-        transparent
-      );
+    1px solid color-mix(in srgb,
+      var(--category-accent) 35%,
+      transparent);
 
   border-radius: 14px;
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 11%,
-      transparent
-    );
+      transparent);
 }
 
 .ff-category-detail-icon svg {
@@ -8737,18 +8400,14 @@ html[data-theme="light"] .ff-center-nav-button::after {
   color: #ffffff;
 
   border-color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 48%,
-      transparent
-    );
+      transparent);
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 14%,
-      rgba(255, 255, 255, 0.025)
-    );
+      rgba(255, 255, 255, 0.025));
 }
 
 .ff-education-announcement {
@@ -8764,16 +8423,12 @@ html[data-theme="light"] .ff-center-nav-button::after {
   border-radius: 17px;
 
   background:
-    radial-gradient(
-      circle at 90% 15%,
+    radial-gradient(circle at 90% 15%,
       rgba(67, 116, 255, 0.22),
-      transparent 38%
-    ),
-    linear-gradient(
-      140deg,
+      transparent 38%),
+    linear-gradient(140deg,
       rgba(13, 12, 29, 0.98),
-      rgba(6, 8, 18, 0.96)
-    );
+      rgba(6, 8, 18, 0.96));
 }
 
 .ff-education-announcement::after {
@@ -8894,11 +8549,9 @@ html[data-theme="light"] .ff-center-nav-button::after {
   color: #ffffff;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(209, 45, 227, 0.17),
-      rgba(58, 91, 255, 0.13)
-    );
+      rgba(58, 91, 255, 0.13));
 
   box-shadow:
     inset 0 0 0 1px rgba(202, 59, 236, 0.15);
@@ -8917,11 +8570,9 @@ html[data-theme="light"] .ff-center-nav-button::after {
   border-radius: 999px;
 
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       #df39e6,
-      #4f74ff
-    );
+      #4f74ff);
 
   box-shadow:
     0 0 8px rgba(212, 50, 232, 0.4);
@@ -8971,11 +8622,9 @@ html[data-theme="light"] .ff-center-nav-button::after {
   border-radius: 15px;
 
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       rgba(13, 13, 26, 0.88),
-      rgba(7, 8, 16, 0.94)
-    );
+      rgba(7, 8, 16, 0.94));
 
   transition:
     transform 0.18s ease,
@@ -9003,11 +8652,9 @@ html[data-theme="light"] .ff-center-nav-button::after {
   border-radius: 13px;
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 13%,
-      rgba(255, 255, 255, 0.02)
-    );
+      rgba(255, 255, 255, 0.02));
 }
 
 .ff-category-topic-icon svg {
@@ -9136,21 +8783,16 @@ html[data-theme="light"] .ff-categories-page {
   color: #171721;
 
   background:
-    radial-gradient(
-      circle at 8% 5%,
+    radial-gradient(circle at 8% 5%,
       rgba(198, 60, 237, 0.08),
-      transparent 29%
-    ),
-    radial-gradient(
-      circle at 95% 13%,
+      transparent 29%),
+    radial-gradient(circle at 95% 13%,
       rgba(48, 143, 245, 0.08),
-      transparent 30%
-    ),
+      transparent 30%),
     #f4f6fb;
 }
 
-html[data-theme="light"]
-.ff-category-search-panel {
+html[data-theme="light"] .ff-category-search-panel {
   background:
     rgba(255, 255, 255, 0.94);
 
@@ -9161,48 +8803,35 @@ html[data-theme="light"]
     0 12px 28px rgba(39, 34, 63, 0.08);
 }
 
-html[data-theme="light"]
-.ff-category-search-panel input {
+html[data-theme="light"] .ff-category-search-panel input {
   color: #20202a;
 }
 
-html[data-theme="light"]
-.ff-category-intro {
+html[data-theme="light"] .ff-category-intro {
   background:
-    radial-gradient(
-      circle at 83% 45%,
+    radial-gradient(circle at 83% 45%,
       rgba(39, 120, 255, 0.14),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 68% 120%,
+      transparent 32%),
+    radial-gradient(circle at 68% 120%,
       rgba(217, 39, 237, 0.13),
-      transparent 40%
-    ),
-    linear-gradient(
-      135deg,
+      transparent 40%),
+    linear-gradient(135deg,
       #12091d,
-      #060914
-    );
+      #060914);
 }
 
-html[data-theme="light"]
-.ff-category-card {
+html[data-theme="light"] .ff-category-card {
   color: #5f606b;
 
   border-color:
     rgba(39, 34, 63, 0.09);
 
   background:
-    radial-gradient(
-      circle at 50% 0,
-      color-mix(
-        in srgb,
+    radial-gradient(circle at 50% 0,
+      color-mix(in srgb,
         var(--category-accent) 10%,
-        transparent
-      ),
-      transparent 57%
-    ),
+        transparent),
+      transparent 57%),
     rgba(255, 255, 255, 0.96);
 
   box-shadow:
@@ -9210,35 +8839,25 @@ html[data-theme="light"]
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-html[data-theme="light"]
-.ff-category-card:hover,
-html[data-theme="light"]
-.ff-category-card.active {
+html[data-theme="light"] .ff-category-card:hover,
+html[data-theme="light"] .ff-category-card.active {
   color: #20202a;
 }
 
-html[data-theme="light"]
-.ff-category-card-icon {
+html[data-theme="light"] .ff-category-card-icon {
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 9%,
-      #ffffff
-    );
+      #ffffff);
 }
 
-html[data-theme="light"]
-.ff-category-detail {
+html[data-theme="light"] .ff-category-detail {
   background:
-    radial-gradient(
-      circle at 100% 0,
-      color-mix(
-        in srgb,
+    radial-gradient(circle at 100% 0,
+      color-mix(in srgb,
         var(--category-accent) 8%,
-        transparent
-      ),
-      transparent 42%
-    ),
+        transparent),
+      transparent 42%),
     rgba(255, 255, 255, 0.94);
 
   border-color:
@@ -9248,24 +8867,18 @@ html[data-theme="light"]
     0 12px 28px rgba(43, 38, 68, 0.07);
 }
 
-html[data-theme="light"]
-.ff-category-detail-heading h2,
-html[data-theme="light"]
-.ff-education-announcement h3,
-html[data-theme="light"]
-.ff-category-list-heading h2 {
+html[data-theme="light"] .ff-category-detail-heading h2,
+html[data-theme="light"] .ff-education-announcement h3,
+html[data-theme="light"] .ff-category-list-heading h2 {
   color: #20202a;
 }
 
-html[data-theme="light"]
-.ff-category-detail-heading p,
-html[data-theme="light"]
-.ff-education-announcement p {
+html[data-theme="light"] .ff-category-detail-heading p,
+html[data-theme="light"] .ff-education-announcement p {
   color: #6f7180;
 }
 
-html[data-theme="light"]
-.ff-subcategory-list button {
+html[data-theme="light"] .ff-subcategory-list button {
   color: #686a76;
 
   border-color:
@@ -9275,38 +8888,29 @@ html[data-theme="light"]
     rgba(35, 31, 58, 0.025);
 }
 
-html[data-theme="light"]
-.ff-subcategory-list button:hover,
-html[data-theme="light"]
-.ff-subcategory-list button.active {
+html[data-theme="light"] .ff-subcategory-list button:hover,
+html[data-theme="light"] .ff-subcategory-list button.active {
   color: #25242d;
 }
 
-html[data-theme="light"]
-.ff-education-announcement {
+html[data-theme="light"] .ff-education-announcement {
   background:
-    radial-gradient(
-      circle at 90% 15%,
+    radial-gradient(circle at 90% 15%,
       rgba(67, 116, 255, 0.14),
-      transparent 38%
-    ),
-    linear-gradient(
-      140deg,
+      transparent 38%),
+    linear-gradient(140deg,
       #f7f9ff,
-      #edf2ff
-    );
+      #edf2ff);
 
   border-color:
     rgba(69, 112, 231, 0.17);
 }
 
-html[data-theme="light"]
-.ff-education-announcement strong {
+html[data-theme="light"] .ff-education-announcement strong {
   color: #415988;
 }
 
-html[data-theme="light"]
-.ff-category-topic-section {
+html[data-theme="light"] .ff-category-topic-section {
   background:
     rgba(255, 255, 255, 0.74);
 
@@ -9317,8 +8921,7 @@ html[data-theme="light"]
     0 12px 29px rgba(43, 38, 68, 0.06);
 }
 
-html[data-theme="light"]
-.ff-category-tabs {
+html[data-theme="light"] .ff-category-tabs {
   background:
     rgba(44, 39, 67, 0.035);
 
@@ -9326,25 +8929,20 @@ html[data-theme="light"]
     rgba(42, 38, 62, 0.06);
 }
 
-html[data-theme="light"]
-.ff-category-tabs button {
+html[data-theme="light"] .ff-category-tabs button {
   color: #737582;
 }
 
-html[data-theme="light"]
-.ff-category-tabs button.active {
+html[data-theme="light"] .ff-category-tabs button.active {
   color: #282630;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(209, 45, 227, 0.1),
-      rgba(58, 91, 255, 0.08)
-    );
+      rgba(58, 91, 255, 0.08));
 }
 
-html[data-theme="light"]
-.ff-category-topic {
+html[data-theme="light"] .ff-category-topic {
   border-color:
     rgba(42, 38, 62, 0.075);
 
@@ -9355,22 +8953,17 @@ html[data-theme="light"]
     0 8px 18px rgba(43, 38, 68, 0.045);
 }
 
-html[data-theme="light"]
-.ff-category-topic-content h3 {
+html[data-theme="light"] .ff-category-topic-content h3 {
   color: #25242d;
 }
 
-html[data-theme="light"]
-.ff-category-topic-meta,
-html[data-theme="light"]
-.ff-category-topic-stats,
-html[data-theme="light"]
-.ff-category-list-heading span {
+html[data-theme="light"] .ff-category-topic-meta,
+html[data-theme="light"] .ff-category-topic-stats,
+html[data-theme="light"] .ff-category-list-heading span {
   color: #747682;
 }
 
-html[data-theme="light"]
-.ff-category-empty {
+html[data-theme="light"] .ff-category-empty {
   color: #747682;
 
   border-color:
@@ -9399,10 +8992,7 @@ html[data-theme="light"]
   .ff-categories-page {
     padding-top: 7px;
     padding-bottom:
-      calc(
-        99px +
-        env(safe-area-inset-bottom)
-      );
+      calc(99px + env(safe-area-inset-bottom));
   }
 
   .ff-categories-shell {
@@ -9426,7 +9016,7 @@ html[data-theme="light"]
     border-radius: 20px;
   }
 
-  .ff-category-intro > div:first-child {
+  .ff-category-intro>div:first-child {
     max-width: calc(100% - 72px);
   }
 
@@ -9444,6 +9034,7 @@ html[data-theme="light"]
     font-size: 11px;
     line-height: 1.45;
 
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
@@ -9671,10 +9262,7 @@ html[data-theme="light"]
   right: 50px !important;
 
   animation:
-    ff-category-orbit-float
-    5.5s
-    ease-in-out
-    infinite !important;
+    ff-category-orbit-float 5.5s ease-in-out infinite !important;
 
   transform-origin: center !important;
 }
@@ -9683,21 +9271,14 @@ html[data-theme="light"]
 
 .ff-category-intro-orbit::after {
   animation:
-    ff-category-core-pulse
-    3.6s
-    ease-in-out
-    infinite !important;
+    ff-category-core-pulse 3.6s ease-in-out infinite !important;
 }
 
 /* Yörünge noktalarına ayrı, hafif hareket */
 
 .ff-category-intro-orbit span {
   animation:
-    ff-category-satellite-pulse
-    3.2s
-    ease-in-out
-    infinite
-    alternate !important;
+    ff-category-satellite-pulse 3.2s ease-in-out infinite alternate !important;
 }
 
 .ff-category-intro-orbit span:nth-child(2) {
@@ -9711,25 +9292,23 @@ html[data-theme="light"]
 /* Çok hafif sağ-sol ve yukarı-aşağı hareket */
 
 @keyframes ff-category-orbit-float {
+
   0%,
   100% {
     transform:
-      translateY(-50%)
-      translateX(0)
-      rotate(-1.5deg);
+      translateY(-50%) translateX(0) rotate(-1.5deg);
   }
 
   50% {
     transform:
-      translateY(calc(-50% - 4px))
-      translateX(-3px)
-      rotate(1.5deg);
+      translateY(calc(-50% - 4px)) translateX(-3px) rotate(1.5deg);
   }
 }
 
 /* Merkez çekirdeğin parlaklığı ve ölçeği değişir */
 
 @keyframes ff-category-core-pulse {
+
   0%,
   100% {
     transform: scale(0.94);
@@ -9819,10 +9398,7 @@ html[data-theme="light"]
   pointer-events: none !important;
 
   animation:
-    ff-pulse-dock-rotate
-    24s
-    linear
-    infinite !important;
+    ff-pulse-dock-rotate 24s linear infinite !important;
 }
 
 /* İkon her zaman halkanın tam merkezinde kalır */
@@ -10156,6 +9732,7 @@ html[data-theme="light"]
     font-size: 8.8px !important;
   }
 }
+
 /* CATEGORIES MOBILE TYPOGRAPHY V2 END */
 
 /* CATEGORIES GLOBAL READABLE SECONDARY TEXT V3 START */
@@ -10257,6 +9834,7 @@ html[data-theme="light"] .ff-category-list-heading span {
     font-size: 10.5px !important;
   }
 }
+
 /* CATEGORIES GLOBAL READABLE SECONDARY TEXT V3 END */
 
 
@@ -10311,34 +9889,25 @@ html[data-theme="light"] .ff-category-list-heading span {
 
   box-shadow:
     0 14px 32px rgba(0, 0, 0, 0.25),
-    0 0 24px
-      color-mix(
-        in srgb,
-        var(--category-accent) 20%,
-        transparent
-      ),
+    0 0 24px color-mix(in srgb,
+      var(--category-accent) 20%,
+      transparent),
     inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
 }
 
 .ff-category-card.active .ff-category-card-icon {
   transform:
-    translateY(-2px)
-    scale(1.06) !important;
+    translateY(-2px) scale(1.06) !important;
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 17%,
-      rgba(6, 7, 15, 0.94)
-    ) !important;
+      rgba(6, 7, 15, 0.94)) !important;
 
   box-shadow:
-    0 0 19px
-      color-mix(
-        in srgb,
-        var(--category-accent) 29%,
-        transparent
-      ),
+    0 0 19px color-mix(in srgb,
+      var(--category-accent) 29%,
+      transparent),
     inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
 }
 
@@ -10346,12 +9915,9 @@ html[data-theme="light"] .ff-category-list-heading span {
   color: #ffffff !important;
 
   text-shadow:
-    0 0 9px
-      color-mix(
-        in srgb,
-        var(--category-accent) 30%,
-        transparent
-      ) !important;
+    0 0 9px color-mix(in srgb,
+      var(--category-accent) 30%,
+      transparent) !important;
 }
 
 /* Seçilen kategori açıklama alanı */
@@ -10373,12 +9939,9 @@ html[data-theme="light"] .ff-category-list-heading span {
   border-radius: 16px !important;
 
   box-shadow:
-    0 0 18px
-      color-mix(
-        in srgb,
-        var(--category-accent) 18%,
-        transparent
-      ) !important;
+    0 0 18px color-mix(in srgb,
+      var(--category-accent) 18%,
+      transparent) !important;
 }
 
 .ff-category-detail-icon svg {
@@ -10423,11 +9986,9 @@ html[data-theme="light"] .ff-category-list-heading span {
     1px solid rgba(255, 255, 255, 0.11) !important;
 
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       rgba(255, 255, 255, 0.047),
-      rgba(255, 255, 255, 0.018)
-    ) !important;
+      rgba(255, 255, 255, 0.018)) !important;
 
   font-size: 12px !important;
   font-weight: 700 !important;
@@ -10450,45 +10011,32 @@ html[data-theme="light"] .ff-category-list-heading span {
   transform: translateY(-1px) !important;
 
   border-color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 42%,
-      transparent
-    ) !important;
+      transparent) !important;
 }
 
 .ff-subcategory-list button.active {
   color: #ffffff !important;
 
   border-color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 67%,
-      transparent
-    ) !important;
+      transparent) !important;
 
   background:
-    linear-gradient(
-      135deg,
-      color-mix(
-        in srgb,
+    linear-gradient(135deg,
+      color-mix(in srgb,
         var(--category-accent) 23%,
-        rgba(255, 255, 255, 0.025)
-      ),
-      color-mix(
-        in srgb,
+        rgba(255, 255, 255, 0.025)),
+      color-mix(in srgb,
         var(--category-accent) 9%,
-        rgba(255, 255, 255, 0.018)
-      )
-    ) !important;
+        rgba(255, 255, 255, 0.018))) !important;
 
   box-shadow:
-    0 0 14px
-      color-mix(
-        in srgb,
-        var(--category-accent) 19%,
-        transparent
-      ),
+    0 0 14px color-mix(in srgb,
+      var(--category-accent) 19%,
+      transparent),
     inset 0 1px 0 rgba(255, 255, 255, 0.055) !important;
 }
 
@@ -10498,38 +10046,31 @@ html[data-theme="light"] .ff-category-card-title {
   color: #474852 !important;
 }
 
-html[data-theme="light"]
-.ff-category-card.active
-.ff-category-card-title {
+html[data-theme="light"] .ff-category-card.active .ff-category-card-title {
   color: #20202a !important;
 }
 
-html[data-theme="light"]
-.ff-category-detail-heading p {
+html[data-theme="light"] .ff-category-detail-heading p {
   color: #626571 !important;
 }
 
-html[data-theme="light"]
-.ff-subcategory-list button {
+html[data-theme="light"] .ff-subcategory-list button {
   color: #565965 !important;
 
   border-color:
     rgba(39, 35, 58, 0.12) !important;
 
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       rgba(255, 255, 255, 0.98),
-      rgba(242, 243, 248, 0.94)
-    ) !important;
+      rgba(242, 243, 248, 0.94)) !important;
 
   box-shadow:
     0 5px 12px rgba(42, 37, 64, 0.045),
     inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
 }
 
-html[data-theme="light"]
-.ff-subcategory-list button.active {
+html[data-theme="light"] .ff-subcategory-list button.active {
   color: #25242d !important;
 }
 
@@ -10638,83 +10179,59 @@ html[data-theme="light"]
 
 .ff-subcategory-list button {
   color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 64%,
-      #ffffff
-    ) !important;
+      #ffffff) !important;
 
   border-color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 22%,
-      rgba(255, 255, 255, 0.07)
-    ) !important;
+      rgba(255, 255, 255, 0.07)) !important;
 
   background:
-    linear-gradient(
-      145deg,
-      color-mix(
-        in srgb,
+    linear-gradient(145deg,
+      color-mix(in srgb,
         var(--category-accent) 7%,
-        rgba(255, 255, 255, 0.03)
-      ),
-      rgba(255, 255, 255, 0.018)
-    ) !important;
+        rgba(255, 255, 255, 0.03)),
+      rgba(255, 255, 255, 0.018)) !important;
 }
 
 .ff-subcategory-list button:hover {
   color: #ffffff !important;
 
   border-color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 52%,
-      transparent
-    ) !important;
+      transparent) !important;
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 12%,
-      rgba(255, 255, 255, 0.025)
-    ) !important;
+      rgba(255, 255, 255, 0.025)) !important;
 }
 
 .ff-subcategory-list button.active {
   color: #ffffff !important;
 
   border-color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 75%,
-      transparent
-    ) !important;
+      transparent) !important;
 
   background:
-    linear-gradient(
-      135deg,
-      color-mix(
-        in srgb,
+    linear-gradient(135deg,
+      color-mix(in srgb,
         var(--category-accent) 27%,
-        rgba(255, 255, 255, 0.025)
-      ),
-      color-mix(
-        in srgb,
+        rgba(255, 255, 255, 0.025)),
+      color-mix(in srgb,
         var(--category-accent) 11%,
-        rgba(255, 255, 255, 0.02)
-      )
-    ) !important;
+        rgba(255, 255, 255, 0.02))) !important;
 
   box-shadow:
-    0 0 16px
-      color-mix(
-        in srgb,
-        var(--category-accent) 23%,
-        transparent
-      ),
-    inset 0 1px 0
-      rgba(255, 255, 255, 0.07) !important;
+    0 0 16px color-mix(in srgb,
+      var(--category-accent) 23%,
+      transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
 }
 
 /*
@@ -10724,34 +10241,24 @@ html[data-theme="light"]
 
 .ff-category-topic-tag {
   color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 78%,
-      #ffffff
-    ) !important;
+      #ffffff) !important;
 
   border:
-    1px solid
-      color-mix(
-        in srgb,
-        var(--category-accent) 30%,
-        transparent
-      ) !important;
+    1px solid color-mix(in srgb,
+      var(--category-accent) 30%,
+      transparent) !important;
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 13%,
-      transparent
-    ) !important;
+      transparent) !important;
 
   box-shadow:
-    0 0 10px
-      color-mix(
-        in srgb,
-        var(--category-accent) 12%,
-        transparent
-      ) !important;
+    0 0 10px color-mix(in srgb,
+      var(--category-accent) 12%,
+      transparent) !important;
 
   font-weight: 680 !important;
 }
@@ -10760,114 +10267,81 @@ html[data-theme="light"]
 
 .ff-category-tabs button.active {
   background:
-    linear-gradient(
-      135deg,
-      color-mix(
-        in srgb,
+    linear-gradient(135deg,
+      color-mix(in srgb,
         var(--category-accent) 19%,
-        transparent
-      ),
-      color-mix(
-        in srgb,
+        transparent),
+      color-mix(in srgb,
         var(--category-accent) 7%,
-        transparent
-      )
-    ) !important;
+        transparent)) !important;
 
   box-shadow:
-    inset 0 0 0 1px
-      color-mix(
-        in srgb,
-        var(--category-accent) 22%,
-        transparent
-      ) !important;
+    inset 0 0 0 1px color-mix(in srgb,
+      var(--category-accent) 22%,
+      transparent) !important;
 }
 
 .ff-category-tabs button.active::after {
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       transparent,
       var(--category-accent),
-      color-mix(
-        in srgb,
+      color-mix(in srgb,
         var(--category-accent) 55%,
-        #ffffff
-      ),
-      transparent
-    ) !important;
+        #ffffff),
+      transparent) !important;
 
   box-shadow:
-    0 0 9px
-      color-mix(
-        in srgb,
-        var(--category-accent) 45%,
-        transparent
-      ) !important;
+    0 0 9px color-mix(in srgb,
+      var(--category-accent) 45%,
+      transparent) !important;
 }
 
 /* Konu kartlarının hover rengi de kategoriyle uyumlu */
 
 .ff-category-topic:hover {
   border-color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 27%,
-      rgba(255, 255, 255, 0.06)
-    ) !important;
+      rgba(255, 255, 255, 0.06)) !important;
 }
 
 /* Açık tema */
 
-html[data-theme="light"]
-.ff-subcategory-list button {
+html[data-theme="light"] .ff-subcategory-list button {
   color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 72%,
-      #26242d
-    ) !important;
+      #26242d) !important;
 
   border-color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 23%,
-      rgba(42, 38, 62, 0.08)
-    ) !important;
+      rgba(42, 38, 62, 0.08)) !important;
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 5%,
-      #ffffff
-    ) !important;
+      #ffffff) !important;
 }
 
-html[data-theme="light"]
-.ff-subcategory-list button.active {
+html[data-theme="light"] .ff-subcategory-list button.active {
   color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 75%,
-      #17171f
-    ) !important;
+      #17171f) !important;
 }
 
-html[data-theme="light"]
-.ff-category-topic-tag {
+html[data-theme="light"] .ff-category-topic-tag {
   color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 76%,
-      #26242d
-    ) !important;
+      #26242d) !important;
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 9%,
-      #ffffff
-    ) !important;
+      #ffffff) !important;
 }
 
 /* Mobilde renk etkisini koru */
@@ -10880,12 +10354,9 @@ html[data-theme="light"]
 
   .ff-subcategory-list button.active {
     box-shadow:
-      0 0 12px
-        color-mix(
-          in srgb,
-          var(--category-accent) 19%,
-          transparent
-        ) !important;
+      0 0 12px color-mix(in srgb,
+        var(--category-accent) 19%,
+        transparent) !important;
   }
 }
 
@@ -10905,11 +10376,9 @@ html[data-theme="light"] .ff-category-card {
     1px solid rgba(39, 35, 58, 0.11) !important;
 
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       rgba(255, 255, 255, 0.99),
-      rgba(247, 248, 252, 0.97)
-    ) !important;
+      rgba(247, 248, 252, 0.97)) !important;
 
   box-shadow:
     0 8px 19px rgba(43, 38, 68, 0.065),
@@ -10920,57 +10389,37 @@ html[data-theme="light"] .ff-category-card {
 
 html[data-theme="light"] .ff-category-card.active {
   border:
-    2px solid
-      color-mix(
-        in srgb,
-        var(--category-accent) 76%,
-        #ffffff
-      ) !important;
+    2px solid color-mix(in srgb,
+      var(--category-accent) 76%,
+      #ffffff) !important;
 
   outline:
-    2px solid
-      color-mix(
-        in srgb,
-        var(--category-accent) 15%,
-        transparent
-      ) !important;
+    2px solid color-mix(in srgb,
+      var(--category-accent) 15%,
+      transparent) !important;
 
   outline-offset: 2px !important;
 
   background:
-    radial-gradient(
-      circle at 50% 0%,
-      color-mix(
-        in srgb,
+    radial-gradient(circle at 50% 0%,
+      color-mix(in srgb,
         var(--category-accent) 24%,
-        transparent
-      ),
-      transparent 61%
-    ),
-    linear-gradient(
-      145deg,
-      color-mix(
-        in srgb,
+        transparent),
+      transparent 61%),
+    linear-gradient(145deg,
+      color-mix(in srgb,
         var(--category-accent) 9%,
-        #ffffff
-      ),
-      #ffffff
-    ) !important;
+        #ffffff),
+      #ffffff) !important;
 
   box-shadow:
     0 13px 29px rgba(43, 38, 68, 0.12),
-    0 0 0 3px
-      color-mix(
-        in srgb,
-        var(--category-accent) 9%,
-        transparent
-      ),
-    0 0 24px
-      color-mix(
-        in srgb,
-        var(--category-accent) 20%,
-        transparent
-      ),
+    0 0 0 3px color-mix(in srgb,
+      var(--category-accent) 9%,
+      transparent),
+    0 0 24px color-mix(in srgb,
+      var(--category-accent) 20%,
+      transparent),
     inset 0 1px 0 rgba(255, 255, 255, 1) !important;
 }
 
@@ -10997,67 +10446,44 @@ html[data-theme="light"] .ff-category-card.active::before {
     var(--category-accent) !important;
 
   box-shadow:
-    0 0 0 3px
-      color-mix(
-        in srgb,
-        var(--category-accent) 13%,
-        transparent
-      ),
-    0 0 9px
-      color-mix(
-        in srgb,
-        var(--category-accent) 45%,
-        transparent
-      ) !important;
+    0 0 0 3px color-mix(in srgb,
+      var(--category-accent) 13%,
+      transparent),
+    0 0 9px color-mix(in srgb,
+      var(--category-accent) 45%,
+      transparent) !important;
 }
 
 /* Seçili kategori ikonu */
 
-html[data-theme="light"]
-.ff-category-card.active
-.ff-category-card-icon {
+html[data-theme="light"] .ff-category-card.active .ff-category-card-icon {
   color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 84%,
-      #17131d
-    ) !important;
+      #17131d) !important;
 
   border:
-    2px solid
-      color-mix(
-        in srgb,
-        var(--category-accent) 66%,
-        #ffffff
-      ) !important;
+    2px solid color-mix(in srgb,
+      var(--category-accent) 66%,
+      #ffffff) !important;
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 19%,
-      #ffffff
-    ) !important;
+      #ffffff) !important;
 
   box-shadow:
-    0 7px 17px
-      color-mix(
-        in srgb,
-        var(--category-accent) 19%,
-        transparent
-      ),
-    0 0 15px
-      color-mix(
-        in srgb,
-        var(--category-accent) 23%,
-        transparent
-      ) !important;
+    0 7px 17px color-mix(in srgb,
+      var(--category-accent) 19%,
+      transparent),
+    0 0 15px color-mix(in srgb,
+      var(--category-accent) 23%,
+      transparent) !important;
 }
 
 /* Seçili kategori başlığı */
 
-html[data-theme="light"]
-.ff-category-card.active
-.ff-category-card-title {
+html[data-theme="light"] .ff-category-card.active .ff-category-card-title {
   color: #17151d !important;
 
   font-weight: 850 !important;
@@ -11069,33 +10495,23 @@ html[data-theme="light"]
 
 html[data-theme="light"] .ff-category-detail {
   border:
-    2px solid
-      color-mix(
-        in srgb,
-        var(--category-accent) 34%,
-        rgba(42, 38, 62, 0.08)
-      ) !important;
+    2px solid color-mix(in srgb,
+      var(--category-accent) 34%,
+      rgba(42, 38, 62, 0.08)) !important;
 
   background:
-    radial-gradient(
-      circle at 100% 0,
-      color-mix(
-        in srgb,
+    radial-gradient(circle at 100% 0,
+      color-mix(in srgb,
         var(--category-accent) 13%,
-        transparent
-      ),
-      transparent 43%
-    ),
+        transparent),
+      transparent 43%),
     rgba(255, 255, 255, 0.98) !important;
 
   box-shadow:
     0 13px 30px rgba(43, 38, 68, 0.09),
-    inset 5px 0 0
-      color-mix(
-        in srgb,
-        var(--category-accent) 75%,
-        transparent
-      ) !important;
+    inset 5px 0 0 color-mix(in srgb,
+      var(--category-accent) 75%,
+      transparent) !important;
 }
 
 /* Normal alt kategori balonları */
@@ -11111,11 +10527,9 @@ html[data-theme="light"] .ff-subcategory-list button {
     1px solid rgba(42, 38, 62, 0.14) !important;
 
   background:
-    linear-gradient(
-      180deg,
+    linear-gradient(180deg,
       #ffffff,
-      #f5f5f8
-    ) !important;
+      #f5f5f8) !important;
 
   box-shadow:
     0 4px 10px rgba(43, 38, 68, 0.05),
@@ -11124,64 +10538,45 @@ html[data-theme="light"] .ff-subcategory-list button {
 
 /* Seçili alt kategori */
 
-html[data-theme="light"]
-.ff-subcategory-list button.active {
+html[data-theme="light"] .ff-subcategory-list button.active {
   gap: 7px !important;
 
   color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--category-accent) 70%,
-      #17131d
-    ) !important;
+      #17131d) !important;
 
   border:
-    2px solid
-      color-mix(
-        in srgb,
-        var(--category-accent) 74%,
-        #ffffff
-      ) !important;
+    2px solid color-mix(in srgb,
+      var(--category-accent) 74%,
+      #ffffff) !important;
 
   background:
-    linear-gradient(
-      135deg,
-      color-mix(
-        in srgb,
+    linear-gradient(135deg,
+      color-mix(in srgb,
         var(--category-accent) 25%,
-        #ffffff
-      ),
-      color-mix(
-        in srgb,
+        #ffffff),
+      color-mix(in srgb,
         var(--category-accent) 12%,
-        #ffffff
-      )
-    ) !important;
+        #ffffff)) !important;
 
   font-weight: 820 !important;
 
   transform: translateY(-1px) !important;
 
   box-shadow:
-    0 7px 15px
-      color-mix(
-        in srgb,
-        var(--category-accent) 17%,
-        transparent
-      ),
-    0 0 0 3px
-      color-mix(
-        in srgb,
-        var(--category-accent) 8%,
-        transparent
-      ),
+    0 7px 15px color-mix(in srgb,
+      var(--category-accent) 17%,
+      transparent),
+    0 0 0 3px color-mix(in srgb,
+      var(--category-accent) 8%,
+      transparent),
     inset 0 1px 0 rgba(255, 255, 255, 0.92) !important;
 }
 
 /* Alt kategori içindeki renkli seçim noktası */
 
-html[data-theme="light"]
-.ff-subcategory-list button.active::before {
+html[data-theme="light"] .ff-subcategory-list button.active::before {
   content: "" !important;
 
   display: block !important;
@@ -11196,82 +10591,60 @@ html[data-theme="light"]
     var(--category-accent) !important;
 
   box-shadow:
-    0 0 7px
-      color-mix(
-        in srgb,
-        var(--category-accent) 45%,
-        transparent
-      ) !important;
+    0 0 7px color-mix(in srgb,
+      var(--category-accent) 45%,
+      transparent) !important;
 }
 
 /* Popüler / Yeni / Takip Edilen aktif sekmesi */
 
-html[data-theme="light"]
-.ff-category-tabs button.active {
+html[data-theme="light"] .ff-category-tabs button.active {
   color: #1d1a22 !important;
 
   border:
-    1px solid
-      color-mix(
-        in srgb,
-        var(--category-accent) 40%,
-        transparent
-      ) !important;
+    1px solid color-mix(in srgb,
+      var(--category-accent) 40%,
+      transparent) !important;
 
   background:
-    linear-gradient(
-      135deg,
-      color-mix(
-        in srgb,
+    linear-gradient(135deg,
+      color-mix(in srgb,
         var(--category-accent) 19%,
-        #ffffff
-      ),
-      color-mix(
-        in srgb,
+        #ffffff),
+      color-mix(in srgb,
         var(--category-accent) 8%,
-        #ffffff
-      )
-    ) !important;
+        #ffffff)) !important;
 
   font-weight: 800 !important;
 
   box-shadow:
-    0 5px 13px
-      color-mix(
-        in srgb,
-        var(--category-accent) 13%,
-        transparent
-      ) !important;
+    0 5px 13px color-mix(in srgb,
+      var(--category-accent) 13%,
+      transparent) !important;
 }
 
-html[data-theme="light"]
-.ff-category-tabs button.active::after {
+html[data-theme="light"] .ff-category-tabs button.active::after {
   height: 3px !important;
 
   background:
     var(--category-accent) !important;
 
   box-shadow:
-    0 0 8px
-      color-mix(
-        in srgb,
-        var(--category-accent) 40%,
-        transparent
-      ) !important;
+    0 0 8px color-mix(in srgb,
+      var(--category-accent) 40%,
+      transparent) !important;
 }
 
 /* Mobil */
 
 @media (max-width: 680px) {
 
-  html[data-theme="light"]
-  .ff-category-card.active {
+  html[data-theme="light"] .ff-category-card.active {
     outline-width: 1px !important;
     outline-offset: 1px !important;
   }
 
-  html[data-theme="light"]
-  .ff-category-card.active::before {
+  html[data-theme="light"] .ff-category-card.active::before {
     top: 8px !important;
     right: 8px !important;
 
@@ -11279,13 +10652,11 @@ html[data-theme="light"]
     height: 8px !important;
   }
 
-  html[data-theme="light"]
-  .ff-subcategory-list button.active {
+  html[data-theme="light"] .ff-subcategory-list button.active {
     gap: 5px !important;
   }
 
-  html[data-theme="light"]
-  .ff-subcategory-list button.active::before {
+  html[data-theme="light"] .ff-subcategory-list button.active::before {
     width: 6px !important;
     height: 6px !important;
 
@@ -11320,11 +10691,7 @@ html[data-theme="light"] .ff-bottom-nav {
   min-height: 86px !important;
 
   grid-template-columns:
-    minmax(0, 1fr)
-    minmax(0, 1fr)
-    100px
-    minmax(0, 1fr)
-    minmax(0, 1fr) !important;
+    minmax(0, 1fr) minmax(0, 1fr) 100px minmax(0, 1fr) minmax(0, 1fr) !important;
 
   align-items: start !important;
 
@@ -11373,17 +10740,13 @@ html[data-theme="light"] .ff-bottom-nav::before {
     27px !important;
 
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       rgba(10, 8, 20, 0.99),
-      rgba(4, 6, 14, 0.995)
-    ) padding-box,
-    linear-gradient(
-      90deg,
+      rgba(4, 6, 14, 0.995)) padding-box,
+    linear-gradient(90deg,
       rgba(221, 54, 235, 0.48),
       rgba(118, 68, 255, 0.31),
-      rgba(31, 144, 245, 0.4)
-    ) border-box !important;
+      rgba(31, 144, 245, 0.4)) border-box !important;
 
   box-shadow:
     0 14px 35px rgba(0, 0, 0, 0.45),
@@ -11412,7 +10775,7 @@ html[data-theme="light"] .ff-bottom-nav::after {
 
 /* Ana menü bağlantıları */
 
-.ff-bottom-nav > a:not(.ff-center-nav-button) {
+.ff-bottom-nav>a:not(.ff-center-nav-button) {
   position: relative !important;
   z-index: 5 !important;
 
@@ -11449,18 +10812,18 @@ html[data-theme="light"] .ff-bottom-nav::after {
     transform 0.2s ease !important;
 }
 
-.ff-bottom-nav > a:not(.ff-center-nav-button):hover {
+.ff-bottom-nav>a:not(.ff-center-nav-button):hover {
   color: #ffffff !important;
 
   background:
     rgba(255, 255, 255, 0.025) !important;
 }
 
-.ff-bottom-nav > a.active {
+.ff-bottom-nav>a.active {
   color: #f04abe !important;
 }
 
-.ff-bottom-nav > a:not(.ff-center-nav-button)::before {
+.ff-bottom-nav>a:not(.ff-center-nav-button)::before {
   top: 7px !important;
 }
 
@@ -11495,22 +10858,15 @@ html[data-theme="light"] .ff-center-nav-button {
     rgba(69, 112, 255, 0.12) !important;
 
   border-radius:
-    29px
-    29px
-    20px
-    20px !important;
+    29px 29px 20px 20px !important;
 
   background:
-    radial-gradient(
-      circle at 50% 4%,
+    radial-gradient(circle at 50% 4%,
       rgba(196, 45, 238, 0.2),
-      transparent 44%
-    ),
-    linear-gradient(
-      180deg,
+      transparent 44%),
+    linear-gradient(180deg,
       rgba(12, 8, 23, 1),
-      rgba(5, 7, 15, 1)
-    ) !important;
+      rgba(5, 7, 15, 1)) !important;
 
   box-shadow:
     0 13px 30px rgba(0, 0, 0, 0.44),
@@ -11567,10 +10923,7 @@ html[data-theme="light"] .ff-center-nav-button {
   opacity: 0.42 !important;
 
   animation:
-    ff-pulse-dock-rotate
-    24s
-    linear
-    infinite !important;
+    ff-pulse-dock-rotate 24s linear infinite !important;
 }
 
 /*
@@ -11635,20 +10988,15 @@ html[lang="en"] .ff-center-nav-button::after {
 
 /* Açık temada dock yine koyu kalır */
 
-html[data-theme="light"]
-.ff-bottom-nav
-> a:not(.ff-center-nav-button) {
+html[data-theme="light"] .ff-bottom-nav>a:not(.ff-center-nav-button) {
   color: #b5b7c1 !important;
 }
 
-html[data-theme="light"]
-.ff-bottom-nav
-> a.active {
+html[data-theme="light"] .ff-bottom-nav>a.active {
   color: #f04abe !important;
 }
 
-html[data-theme="light"]
-.ff-center-nav-button::after {
+html[data-theme="light"] .ff-center-nav-button::after {
   color: #f4f4f8 !important;
 
   text-shadow:
@@ -11672,11 +11020,7 @@ html[data-theme="light"]
     min-height: 80px !important;
 
     grid-template-columns:
-      minmax(0, 1fr)
-      minmax(0, 1fr)
-      86px
-      minmax(0, 1fr)
-      minmax(0, 1fr) !important;
+      minmax(0, 1fr) minmax(0, 1fr) 86px minmax(0, 1fr) minmax(0, 1fr) !important;
 
     padding: 0 5px !important;
   }
@@ -11688,7 +11032,7 @@ html[data-theme="light"]
     border-radius: 23px !important;
   }
 
-  .ff-bottom-nav > a:not(.ff-center-nav-button) {
+  .ff-bottom-nav>a:not(.ff-center-nav-button) {
     height: 65px !important;
 
     gap: 4px !important;
@@ -11699,7 +11043,7 @@ html[data-theme="light"]
     font-size: 9.7px !important;
   }
 
-  .ff-bottom-nav > a svg {
+  .ff-bottom-nav>a svg {
     width: 21px !important;
     height: 21px !important;
   }
@@ -11713,10 +11057,7 @@ html[data-theme="light"]
       translateY(-12px) !important;
 
     border-radius:
-      25px
-      25px
-      18px
-      18px !important;
+      25px 25px 18px 18px !important;
   }
 
   .ff-center-nav-image {
@@ -11754,7 +11095,7 @@ html[data-theme="light"]
 
 @media (max-width: 390px) {
 
-  .ff-bottom-nav > a:not(.ff-center-nav-button) {
+  .ff-bottom-nav>a:not(.ff-center-nav-button) {
     font-size: 9px !important;
   }
 
@@ -11859,8 +11200,7 @@ html[data-theme="light"] .ff-center-nav-button {
   margin: 0 !important;
 
   transform:
-    translateX(-50%)
-    rotate(0deg) !important;
+    translateX(-50%) rotate(0deg) !important;
 
   transform-origin: 50% 50% !important;
 
@@ -11869,18 +11209,10 @@ html[data-theme="light"] .ff-center-nav-button {
   opacity: 0.42 !important;
 
   filter:
-    drop-shadow(
-      0 0 5px rgba(187, 52, 236, 0.22)
-    )
-    drop-shadow(
-      0 0 7px rgba(31, 146, 255, 0.13)
-    ) !important;
+    drop-shadow(0 0 5px rgba(187, 52, 236, 0.22)) drop-shadow(0 0 7px rgba(31, 146, 255, 0.13)) !important;
 
   animation:
-    ff-center-ring-spin-fixed
-    24s
-    linear
-    infinite !important;
+    ff-center-ring-spin-fixed 24s linear infinite !important;
 
   pointer-events: none !important;
 }
@@ -11917,16 +11249,10 @@ html[data-theme="light"] .ff-center-nav-button {
     54px 58px 0 -1px rgba(23, 164, 244, 0.72) !important;
 
   filter:
-    drop-shadow(
-      0 0 4px rgba(218, 57, 237, 0.35)
-    ) !important;
+    drop-shadow(0 0 4px rgba(218, 57, 237, 0.35)) !important;
 
   animation:
-    ff-center-dots-pulse-fixed
-    4.5s
-    ease-in-out
-    infinite
-    alternate !important;
+    ff-center-dots-pulse-fixed 4.5s ease-in-out infinite alternate !important;
 
   pointer-events: none !important;
 }
@@ -11994,8 +11320,7 @@ html[lang="en"] .ff-center-nav-button::after {
 
 /* Açık temada menü koyu olduğu için yazı beyaz kalır */
 
-html[data-theme="light"]
-.ff-center-nav-button::after {
+html[data-theme="light"] .ff-center-nav-button::after {
   color: #f2f2f7 !important;
 }
 
@@ -12004,14 +11329,12 @@ html[data-theme="light"]
 @keyframes ff-center-ring-spin-fixed {
   from {
     transform:
-      translateX(-50%)
-      rotate(0deg);
+      translateX(-50%) rotate(0deg);
   }
 
   to {
     transform:
-      translateX(-50%)
-      rotate(360deg);
+      translateX(-50%) rotate(360deg);
   }
 }
 
@@ -12074,8 +11397,7 @@ html[data-theme="light"]
     font-size: 9.5px !important;
   }
 
-  html[lang="en"]
-  .ff-center-nav-button::after {
+  html[lang="en"] .ff-center-nav-button::after {
     font-size: 9.2px !important;
   }
 }
@@ -12088,8 +11410,7 @@ html[data-theme="light"]
     font-size: 9.1px !important;
   }
 
-  html[lang="en"]
-  .ff-center-nav-button::after {
+  html[lang="en"] .ff-center-nav-button::after {
     font-size: 8.9px !important;
   }
 }
@@ -12150,48 +11471,37 @@ html[data-theme="light"]
   border-radius: 27px !important;
 
   background:
-    conic-gradient(
-      from 0deg,
+    conic-gradient(from 0deg,
       transparent 0deg 34deg,
       #f044e1 35deg 74deg,
       transparent 75deg 139deg,
       #7859ff 140deg 179deg,
       transparent 180deg 247deg,
       #19b2ef 248deg 292deg,
-      transparent 293deg 360deg
-    ) !important;
+      transparent 293deg 360deg) !important;
 
   -webkit-mask:
-    radial-gradient(
-      farthest-side,
+    radial-gradient(farthest-side,
       transparent calc(100% - 5px),
-      #000 calc(100% - 4px)
-    ) !important;
+      #000 calc(100% - 4px)) !important;
 
   mask:
-    radial-gradient(
-      farthest-side,
+    radial-gradient(farthest-side,
       transparent calc(100% - 5px),
-      #000 calc(100% - 4px)
-    ) !important;
+      #000 calc(100% - 4px)) !important;
 
   opacity: 0.9 !important;
 
   filter:
-    drop-shadow(0 0 4px rgba(237, 68, 225, 0.38))
-    drop-shadow(0 0 5px rgba(25, 178, 239, 0.23)) !important;
+    drop-shadow(0 0 4px rgba(237, 68, 225, 0.38)) drop-shadow(0 0 5px rgba(25, 178, 239, 0.23)) !important;
 
   transform:
-    translateX(-50%)
-    rotate(0deg) !important;
+    translateX(-50%) rotate(0deg) !important;
 
   transform-origin: 50% 50% !important;
 
   animation:
-    ff-clean-orbit-spin
-    7s
-    linear
-    infinite !important;
+    ff-clean-orbit-spin 7s linear infinite !important;
 
   will-change: transform !important;
   pointer-events: none !important;
@@ -12212,14 +11522,12 @@ html[data-theme="light"]
 @keyframes ff-clean-orbit-spin {
   from {
     transform:
-      translateX(-50%)
-      rotate(0deg);
+      translateX(-50%) rotate(0deg);
   }
 
   to {
     transform:
-      translateX(-50%)
-      rotate(360deg);
+      translateX(-50%) rotate(360deg);
   }
 }
 
@@ -12300,8 +11608,7 @@ html[data-theme="light"]
   border-radius: inherit !important;
 
   background:
-    conic-gradient(
-      from 0deg,
+    conic-gradient(from 0deg,
 
       transparent 0deg 25deg,
 
@@ -12319,42 +11626,29 @@ html[data-theme="light"]
 
       rgba(226, 54, 235, 0.7) 330deg 350deg,
 
-      transparent 351deg 360deg
-    ) !important;
+      transparent 351deg 360deg) !important;
 
   -webkit-mask:
-    radial-gradient(
-      farthest-side,
+    radial-gradient(farthest-side,
       transparent calc(100% - 5px),
-      #000 calc(100% - 4px)
-    ) !important;
+      #000 calc(100% - 4px)) !important;
 
   mask:
-    radial-gradient(
-      farthest-side,
+    radial-gradient(farthest-side,
       transparent calc(100% - 5px),
-      #000 calc(100% - 4px)
-    ) !important;
+      #000 calc(100% - 4px)) !important;
 
   opacity: 0.92 !important;
 
   filter:
-    drop-shadow(
-      0 0 4px rgba(240, 68, 225, 0.48)
-    )
-    drop-shadow(
-      0 0 5px rgba(25, 180, 239, 0.3)
-    ) !important;
+    drop-shadow(0 0 4px rgba(240, 68, 225, 0.48)) drop-shadow(0 0 5px rgba(25, 180, 239, 0.3)) !important;
 
   transform: rotate(0deg);
 
   transform-origin: 50% 50% !important;
 
   animation:
-    ff-center-orbit-real-spin
-    5.5s
-    linear
-    infinite !important;
+    ff-center-orbit-real-spin 5.5s linear infinite !important;
 
   animation-play-state: running !important;
 
@@ -12415,18 +11709,14 @@ html[data-theme="light"]
     animation-duration: 5.5s !important;
 
     -webkit-mask:
-      radial-gradient(
-        farthest-side,
+      radial-gradient(farthest-side,
         transparent calc(100% - 5px),
-        #000 calc(100% - 4px)
-      ) !important;
+        #000 calc(100% - 4px)) !important;
 
     mask:
-      radial-gradient(
-        farthest-side,
+      radial-gradient(farthest-side,
         transparent calc(100% - 5px),
-        #000 calc(100% - 4px)
-      ) !important;
+        #000 calc(100% - 4px)) !important;
   }
 }
 
@@ -12501,15 +11791,12 @@ html[data-theme="light"]
     rgba(37, 225, 218, 0.34) !important;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(37, 244, 238, 0.09),
-      rgba(254, 44, 85, 0.11)
-    ) !important;
+      rgba(254, 44, 85, 0.11)) !important;
 
   box-shadow:
-    inset 0 1px 0
-    rgba(255, 255, 255, 0.04) !important;
+    inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
 }
 
 .ff-hero-social-button.tiktok:hover {
@@ -12519,15 +11806,12 @@ html[data-theme="light"]
     rgba(254, 44, 85, 0.46) !important;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(37, 244, 238, 0.16),
-      rgba(254, 44, 85, 0.18)
-    ) !important;
+      rgba(254, 44, 85, 0.18)) !important;
 
   box-shadow:
-    0 0 17px
-    rgba(37, 225, 218, 0.12) !important;
+    0 0 17px rgba(37, 225, 218, 0.12) !important;
 }
 
 .ff-hero-social-button.tiktok svg {
@@ -12619,6 +11903,32 @@ html[data-theme="light"]
     min-width: 194px !important;
     max-width: 194px !important;
   }
+}
+
+/* Oturum açıkken alt menü Profil göstergesi */
+
+html[data-authenticated="true"] body .ff-bottom-nav a[href="/profil"] {
+  position: relative;
+  color: #39d69d !important;
+}
+
+html[data-authenticated="true"] body .ff-bottom-nav a[href="/profil"]>span {
+  color: #39d69d !important;
+}
+
+html[data-authenticated="true"] body .ff-bottom-nav a[href="/profil"] svg {
+  color: #39d69d !important;
+  fill: none !important;
+  stroke: #39d69d !important;
+
+  filter:
+    drop-shadow(0 0 5px rgba(57, 214, 157, 0.55)) !important;
+}
+
+html[data-authenticated="true"] body .ff-bottom-nav a[href="/profil"] svg path,
+html[data-authenticated="true"] body .ff-bottom-nav a[href="/profil"] svg circle {
+  fill: none !important;
+  stroke: #39d69d !important;
 }
 
 /* FEED TIKTOK AND HERO ALIGNMENT V1 END */

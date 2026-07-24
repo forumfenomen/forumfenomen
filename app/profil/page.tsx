@@ -17,6 +17,8 @@ import {
   type ForumLanguage,
 } from "@/lib/forumfenomen-language";
 
+import { createClient } from "@/lib/supabase/client";
+
 import styles from "./page.module.css";
 
 type Theme = "dark" | "light";
@@ -46,6 +48,7 @@ const translations = {
     saved: "Kaydedilen Konular",
     notifications: "Bildirimler",
     settings: "Ayarlar",
+    logout: "Çıkış Yap",
     editProfile: "Profili Düzenle",
     close: "Kapat",
     save: "Değişiklikleri Kaydet",
@@ -122,6 +125,7 @@ const translations = {
     saved: "Saved Topics",
     notifications: "Notifications",
     settings: "Settings",
+    logout: "Log Out",
     editProfile: "Edit Profile",
     close: "Close",
     save: "Save Changes",
@@ -302,6 +306,16 @@ function SettingsIcon() {
   );
 }
 
+function LogoutIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M10 5H5v14h5" />
+      <path d="M13 8l4 4-4 4" />
+      <path d="M17 12H9" />
+    </svg>
+  );
+}
+
 function TopicIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -463,13 +477,22 @@ export default function ProfilePage() {
     useState(false);
 
   const [profileName, setProfileName] =
-    useState("Fatih");
+    useState("ForumFenomen Üyesi");
 
   const [username, setUsername] =
-    useState("@fatih");
+    useState("@fenomen");
 
   const [profileBio, setProfileBio] =
     useState("");
+
+  const [avatarUrl, setAvatarUrl] =
+    useState<string | null>(null);
+
+  const [profileEmail, setProfileEmail] =
+    useState("");
+
+  const [isAuthenticated, setIsAuthenticated] =
+    useState(false);
 
   useEffect(() => {
     const savedLanguage =
@@ -498,7 +521,152 @@ export default function ProfilePage() {
     );
   }, []);
 
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadAuthenticatedUser() {
+      const supabase = createClient();
+
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (error || !user) {
+        window.location.replace("/giris");
+        return;
+      }
+
+      const metadata =
+        (user.user_metadata ?? {}) as Record<
+          string,
+          unknown
+        >;
+
+      const googleIdentity =
+        user.identities?.find(
+          (identity) =>
+            identity.provider === "google"
+        );
+
+      const identityData =
+        (googleIdentity?.identity_data ??
+          {}) as Record<string, unknown>;
+
+      function firstText(
+        ...values: unknown[]
+      ): string | null {
+        for (const value of values) {
+          if (
+            typeof value === "string" &&
+            value.trim().length > 0
+          ) {
+            return value.trim();
+          }
+        }
+
+        return null;
+      }
+
+      const givenName = firstText(
+        metadata.given_name,
+        identityData.given_name
+      );
+
+      const familyName = firstText(
+        metadata.family_name,
+        identityData.family_name
+      );
+
+      const combinedName = [
+        givenName,
+        familyName,
+      ]
+        .filter(Boolean)
+        .join(" ");
+
+      const fullName =
+        firstText(
+          metadata.full_name,
+          metadata.name,
+          identityData.full_name,
+          identityData.name,
+          combinedName
+        ) ?? "ForumFenomen Üyesi";
+
+      const googleAvatar = firstText(
+        metadata.avatar_url,
+        metadata.picture,
+        identityData.avatar_url,
+        identityData.picture
+      );
+
+      const email =
+        user.email ??
+        firstText(
+          metadata.email,
+          identityData.email
+        ) ??
+        "";
+
+      const providerUsername = firstText(
+        metadata.preferred_username,
+        metadata.user_name,
+        identityData.preferred_username,
+        identityData.user_name
+      );
+
+      const emailUsername =
+        email
+          .split("@")[0]
+          ?.replace(
+            /[^a-zA-Z0-9._-]/g,
+            ""
+          ) ?? "";
+
+      setProfileName(fullName);
+      setProfileEmail(email);
+      setAvatarUrl(googleAvatar);
+      setIsAuthenticated(true);
+
+      if (providerUsername) {
+        setUsername(
+          `@${providerUsername.replace(
+            /^@/,
+            ""
+          )}`
+        );
+      } else if (emailUsername) {
+        setUsername(`@${emailUsername}`);
+      } else {
+        setUsername(
+          `@fenomen-${user.id.slice(0, 6)}`
+        );
+      }
+    }
+
+    void loadAuthenticatedUser();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
   const t = translations[language];
+
+  const profileInitials =
+    profileName
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) =>
+        part.charAt(0).toLocaleUpperCase("tr-TR")
+      )
+      .join("") || "FF";
 
   const menuItems: MenuItem[] = [
     {
@@ -562,6 +730,19 @@ export default function ProfilePage() {
       "forumfenomen-theme",
       nextTheme
     );
+  }
+
+  async function handleLogout() {
+    const supabase = createClient();
+
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      console.error("Çıkış işlemi başarısız:", error.message);
+      return;
+    }
+
+    window.location.assign("/giris");
   }
 
   function handleProfileSave(
@@ -871,7 +1052,7 @@ export default function ProfilePage() {
             <button type="button">
               <span>
                 <strong>{t.emailNotifications}</strong>
-                <small>fatih@example.com</small>
+                <small>{profileEmail || "—"}</small>
               </span>
 
               <span className={styles.switchActive} />
@@ -1056,7 +1237,17 @@ export default function ProfilePage() {
             <div className={styles.avatarShell}>
               <span className={styles.avatarOrbit} />
               <span className={styles.avatarCore}>
-                FK
+                {avatarUrl ? (
+                  <img
+                    src={avatarUrl}
+                    alt={profileName}
+                    className={styles.avatarImage}
+                    referrerPolicy="no-referrer"
+                    onError={() => setAvatarUrl(null)}
+                  />
+                ) : (
+                  profileInitials
+                )}
               </span>
               <span className={styles.onlineStatus} />
             </div>
@@ -1087,9 +1278,7 @@ export default function ProfilePage() {
             <button
               type="button"
               className={styles.editButton}
-              onClick={() =>
-                setEditOpen(true)
-              }
+              onClick={() => setEditOpen(true)}
             >
               <EditIcon />
               {t.editProfile}
@@ -1098,12 +1287,21 @@ export default function ProfilePage() {
             <button
               type="button"
               className={styles.settingsButton}
-              onClick={() =>
-                setActiveSection("settings")
-              }
+              onClick={() => setActiveSection("settings")}
               aria-label={t.settings}
+              title={t.settings}
             >
               <SettingsIcon />
+            </button>
+
+            <button
+              type="button"
+              className={`${styles.settingsButton} ${styles.logoutButton}`}
+              onClick={handleLogout}
+              aria-label={t.logout}
+              title={t.logout}
+            >
+              <LogoutIcon />
             </button>
           </div>
 
@@ -1333,7 +1531,11 @@ export default function ProfilePage() {
 
         <Link
           href="/profil"
-          className="active"
+          className={
+            isAuthenticated
+              ? "active ff-authenticated-profile"
+              : "active"
+          }
           aria-current="page"
         >
           <UserIcon />

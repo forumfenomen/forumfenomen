@@ -5,16 +5,12 @@
   color: #f6f6fa;
 
   background:
-    radial-gradient(
-      circle at 8% 3%,
+    radial-gradient(circle at 8% 3%,
       rgba(197, 42, 235, 0.12),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 94% 15%,
+      transparent 28%),
+    radial-gradient(circle at 94% 15%,
       rgba(25, 146, 246, 0.1),
-      transparent 30%
-    ),
+      transparent 30%),
     #03040a;
 }
 
@@ -111,8 +107,7 @@
 
   display: grid;
   grid-template-columns:
-    minmax(0, 1fr)
-    auto;
+    minmax(0, 1fr) auto;
 
   align-items: center;
   gap: 20px;
@@ -127,21 +122,15 @@
   border-radius: 24px;
 
   background:
-    radial-gradient(
-      circle at 84% 16%,
+    radial-gradient(circle at 84% 16%,
       rgba(51, 119, 255, 0.19),
-      transparent 31%
-    ),
-    radial-gradient(
-      circle at 17% 110%,
+      transparent 31%),
+    radial-gradient(circle at 17% 110%,
       rgba(216, 40, 234, 0.16),
-      transparent 39%
-    ),
-    linear-gradient(
-      140deg,
+      transparent 39%),
+    linear-gradient(140deg,
       rgba(15, 8, 28, 0.99),
-      rgba(4, 6, 14, 0.99)
-    );
+      rgba(4, 6, 14, 0.99));
 
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.04),
@@ -198,28 +187,21 @@
   border-radius: 33px;
 
   background:
-    conic-gradient(
-      from 0deg,
+    conic-gradient(from 0deg,
       #e63de5,
       transparent 25%,
       #5e58ff,
       transparent 55%,
       #17b5ee,
       transparent 80%,
-      #e63de5
-    );
+      #e63de5);
 
   opacity: 0.72;
   filter:
-    drop-shadow(
-      0 0 8px rgba(186, 44, 237, 0.28)
-    );
+    drop-shadow(0 0 8px rgba(186, 44, 237, 0.28));
 
   animation:
-    profileOrbit
-    13s
-    linear
-    infinite;
+    profileOrbit 13s linear infinite;
 }
 
 .avatarCore {
@@ -230,6 +212,7 @@
   width: 80px;
   height: 80px;
 
+  overflow: hidden;
   place-items: center;
 
   color: #ffffff;
@@ -239,21 +222,15 @@
   border-radius: 27px;
 
   background:
-    radial-gradient(
-      circle at 30% 25%,
+    radial-gradient(circle at 30% 25%,
       rgba(232, 54, 234, 0.48),
-      transparent 38%
-    ),
-    radial-gradient(
-      circle at 80% 80%,
+      transparent 38%),
+    radial-gradient(circle at 80% 80%,
       rgba(25, 162, 243, 0.48),
-      transparent 42%
-    ),
-    linear-gradient(
-      145deg,
+      transparent 42%),
+    linear-gradient(145deg,
       #181027,
-      #060711
-    );
+      #060711);
 
   box-shadow:
     0 12px 30px rgba(0, 0, 0, 0.4),
@@ -262,6 +239,16 @@
   font-size: 27px;
   font-weight: 900;
   letter-spacing: -1.5px;
+}
+
+.avatarImage {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  border-radius: inherit;
 }
 
 .onlineStatus {
@@ -315,11 +302,9 @@
   border-radius: 50%;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #dc39e6,
-      #3c79ff
-    );
+      #3c79ff);
 }
 
 .verifiedBadge svg {
@@ -421,11 +406,9 @@
   border-radius: 12px;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(218, 48, 232, 0.18),
-      rgba(54, 104, 255, 0.15)
-    );
+      rgba(54, 104, 255, 0.15));
 
   font-size: 9px;
   font-weight: 760;
@@ -462,6 +445,26 @@
     rgba(255, 255, 255, 0.025);
 
   cursor: pointer;
+}
+
+.logoutButton {
+  color: #ff8995;
+
+  border-color:
+    rgba(255, 91, 109, 0.22);
+
+  background:
+    rgba(255, 73, 94, 0.055);
+}
+
+.logoutButton:hover {
+  color: #ffb1b9;
+
+  border-color:
+    rgba(255, 91, 109, 0.38);
+
+  background:
+    rgba(255, 73, 94, 0.1);
 }
 
 .statsGrid {
@@ -524,11 +527,9 @@
   border-radius: 21px;
 
   background:
-    radial-gradient(
-      circle at 100% 0,
+    radial-gradient(circle at 100% 0,
       rgba(56, 118, 255, 0.13),
-      transparent 38%
-    ),
+      transparent 38%),
     rgba(8, 8, 18, 0.96);
 }
 
@@ -557,7 +558,7 @@
   font-size: 18px;
 }
 
-.editPanelHeading > button {
+.editPanelHeading>button {
   display: grid;
   width: 30px;
   height: 30px;
@@ -590,7 +591,7 @@
   gap: 7px;
 }
 
-.editPanel label > span {
+.editPanel label>span {
   color: #9b9daa;
 
   font-size: 9px;
@@ -675,11 +676,9 @@
     1px solid rgba(210, 59, 235, 0.4);
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(216, 49, 232, 0.25),
-      rgba(54, 105, 255, 0.2)
-    );
+      rgba(54, 105, 255, 0.2));
 }
 
 .formActions svg {
@@ -694,8 +693,7 @@
 .profileLayout {
   display: grid;
   grid-template-columns:
-    246px
-    minmax(0, 1fr);
+    246px minmax(0, 1fr);
 
   align-items: start;
   gap: 10px;
@@ -730,9 +728,7 @@
 .profileMenu button {
   display: grid;
   grid-template-columns:
-    34px
-    minmax(0, 1fr)
-    auto;
+    34px minmax(0, 1fr) auto;
 
   width: 100%;
   min-height: 50px;
@@ -765,11 +761,9 @@
   color: #ffffff;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(209, 45, 229, 0.14),
-      rgba(52, 107, 255, 0.1)
-    );
+      rgba(52, 107, 255, 0.1));
 }
 
 .menuIcon {
@@ -793,7 +787,7 @@
 }
 
 .menuIcon svg,
-.profileMenu button > svg {
+.profileMenu button>svg {
   width: 17px;
   height: 17px;
 
@@ -804,7 +798,7 @@
   stroke-linejoin: round;
 }
 
-.profileMenu button > small {
+.profileMenu button>small {
   display: grid;
   min-width: 24px;
   height: 20px;
@@ -838,7 +832,7 @@
   gap: 4px;
 }
 
-.levelHeading div > span {
+.levelHeading div>span {
   color: #888b97;
 
   font-size: 8px;
@@ -866,11 +860,9 @@
   border-radius: 13px;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(219, 49, 232, 0.28),
-      rgba(46, 118, 255, 0.24)
-    );
+      rgba(46, 118, 255, 0.24));
 
   font-size: 16px;
   font-weight: 900;
@@ -897,12 +889,10 @@
   border-radius: inherit;
 
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       #df3ee8,
       #6b58ff,
-      #21aef0
-    );
+      #21aef0);
 
   box-shadow:
     0 0 10px rgba(190, 50, 235, 0.3);
@@ -945,7 +935,7 @@
     1px solid rgba(255, 255, 255, 0.06);
 }
 
-.contentHeading > div > span {
+.contentHeading>div>span {
   color: #cf4cdd;
 
   font-size: 8px;
@@ -1031,7 +1021,7 @@
     rgba(255, 255, 255, 0.02);
 }
 
-.summaryGrid article > span {
+.summaryGrid article>span {
   color: #9c9eaa;
 
   font-size: 8px;
@@ -1103,9 +1093,7 @@
 .activityList article {
   display: grid;
   grid-template-columns:
-    39px
-    minmax(0, 1fr)
-    auto;
+    39px minmax(0, 1fr) auto;
 
   align-items: center;
   gap: 10px;
@@ -1185,9 +1173,7 @@
 .simpleList button {
   display: grid;
   grid-template-columns:
-    39px
-    minmax(0, 1fr)
-    17px;
+    39px minmax(0, 1fr) 17px;
 
   width: 100%;
 
@@ -1220,7 +1206,7 @@
   font-size: 8px;
 }
 
-.simpleList button > svg {
+.simpleList button>svg {
   width: 17px;
   height: 17px;
 
@@ -1232,8 +1218,7 @@
 .commentList article {
   display: grid;
   grid-template-columns:
-    29px
-    minmax(0, 1fr);
+    29px minmax(0, 1fr);
 
   gap: 10px;
 
@@ -1247,7 +1232,7 @@
     rgba(255, 255, 255, 0.018);
 }
 
-.commentList article > svg {
+.commentList article>svg {
   width: 20px;
   height: 20px;
 
@@ -1266,9 +1251,7 @@
 .peopleList article {
   display: grid;
   grid-template-columns:
-    42px
-    minmax(0, 1fr)
-    auto;
+    42px minmax(0, 1fr) auto;
 
   align-items: center;
   gap: 10px;
@@ -1295,12 +1278,10 @@
   border-radius: 13px;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #dc3ee6,
       #4b6fff,
-      #16b1ed
-    );
+      #16b1ed);
 
   font-size: 14px;
   font-weight: 850;
@@ -1341,8 +1322,7 @@
 
   display: grid;
   grid-template-columns:
-    8px
-    minmax(0, 1fr);
+    8px minmax(0, 1fr);
 
   gap: 9px;
 
@@ -1462,7 +1442,7 @@
   font-size: 8px;
 }
 
-.settingsGroups button > svg {
+.settingsGroups button>svg {
   width: 17px;
   height: 17px;
 
@@ -1480,11 +1460,9 @@
   border-radius: 999px;
 
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       #d941e4,
-      #5574ff
-    );
+      #5574ff);
 }
 
 .switchActive::after {
@@ -1520,16 +1498,12 @@
   border-radius: 19px;
 
   background:
-    radial-gradient(
-      circle at 7% 50%,
+    radial-gradient(circle at 7% 50%,
       rgba(212, 37, 228, 0.24),
-      transparent 34%
-    ),
-    radial-gradient(
-      circle at 100% 50%,
+      transparent 34%),
+    radial-gradient(circle at 100% 50%,
       rgba(20, 149, 243, 0.22),
-      transparent 41%
-    ),
+      transparent 41%),
     #070712;
 }
 
@@ -1582,16 +1556,12 @@
   color: #22222b;
 
   background:
-    radial-gradient(
-      circle at 8% 3%,
+    radial-gradient(circle at 8% 3%,
       rgba(197, 42, 235, 0.08),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 94% 15%,
+      transparent 28%),
+    radial-gradient(circle at 94% 15%,
       rgba(25, 146, 246, 0.08),
-      transparent 30%
-    ),
+      transparent 30%),
     #f4f6fb;
 }
 
@@ -1679,8 +1649,7 @@
 @media (max-width: 800px) {
   .profileLayout {
     grid-template-columns:
-      225px
-      minmax(0, 1fr);
+      225px minmax(0, 1fr);
   }
 }
 
@@ -1690,10 +1659,7 @@
   .page {
     padding-top: 7px;
     padding-bottom:
-      calc(
-        99px +
-        env(safe-area-inset-bottom)
-      );
+      calc(99px + env(safe-area-inset-bottom));
   }
 
   .shell {
@@ -1747,14 +1713,15 @@
   }
 
   .profileText p {
-    display: -webkit-box;
-    overflow: hidden;
+  display: -webkit-box;
+  overflow: hidden;
 
-    font-size: 9px;
+  font-size: 9px;
 
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
 
   .profileActions {
     position: absolute;
@@ -1866,8 +1833,8 @@
     height: 15px;
   }
 
-  .profileMenu button > svg,
-  .profileMenu button > small {
+  .profileMenu button>svg,
+  .profileMenu button>small {
     display: none;
   }
 
@@ -1917,8 +1884,7 @@
 
   .activityList article {
     grid-template-columns:
-      36px
-      minmax(0, 1fr);
+      36px minmax(0, 1fr);
 
     padding: 9px;
   }
@@ -1929,8 +1895,7 @@
 
   .peopleList article {
     grid-template-columns:
-      39px
-      minmax(0, 1fr);
+      39px minmax(0, 1fr);
 
     padding: 9px;
   }
@@ -2021,7 +1986,7 @@
     font-weight: 680;
   }
 
-  .levelHeading div > span {
+  .levelHeading div>span {
     font-size: 8.8px;
   }
 
@@ -2037,7 +2002,7 @@
 
   /* İçerik başlıkları */
 
-  .contentHeading > div > span {
+  .contentHeading>div>span {
     font-size: 8.8px;
   }
 
@@ -2057,7 +2022,7 @@
     padding: 15px;
   }
 
-  .summaryGrid article > span {
+  .summaryGrid article>span {
     font-size: 9px;
   }
 
@@ -2213,7 +2178,7 @@
   line-height: 1.55 !important;
 }
 
-.summaryGrid article > span {
+.summaryGrid article>span {
   color: #a5a8b3 !important;
   font-size: 9.5px !important;
   font-weight: 700 !important;
@@ -2332,6 +2297,7 @@
     font-size: 9.3px !important;
   }
 }
+
 /* PROFILE GLOBAL READABLE SECONDARY TEXT V3 END */
 
 /* PROFILE TYPOGRAPHY READABLE V4 START */
@@ -2386,7 +2352,7 @@
   font-weight: 680 !important;
 }
 
-.profileMenu button > small {
+.profileMenu button>small {
   min-width: 27px !important;
   height: 22px !important;
 
@@ -2400,14 +2366,14 @@
 }
 
 .menuIcon svg,
-.profileMenu button > svg {
+.profileMenu button>svg {
   width: 18px !important;
   height: 18px !important;
 }
 
 /* Fenomen seviyesi */
 
-.levelHeading div > span {
+.levelHeading div>span {
   font-size: 9.5px !important;
   font-weight: 750 !important;
 }
@@ -2431,7 +2397,7 @@
 
 /* Profil içerik başlığı */
 
-.contentHeading > div > span {
+.contentHeading>div>span {
   font-size: 9.5px !important;
   font-weight: 800 !important;
 }
@@ -2464,7 +2430,7 @@
   padding: 16px !important;
 }
 
-.summaryGrid article > span {
+.summaryGrid article>span {
   color: #b2b4bf !important;
 
   font-size: 10px !important;
@@ -2764,15 +2730,15 @@
 
 /* Eski yapay çarpı işaretini tamamen kaldır */
 
-.editPanelHeading > button::before,
-.editPanelHeading > button::after {
+.editPanelHeading>button::before,
+.editPanelHeading>button::after {
   content: none !important;
   display: none !important;
 }
 
 /* Gerçek SVG kapatma düğmesi */
 
-.editPanelHeading > button {
+.editPanelHeading>button {
   display: flex !important;
 
   width: 36px !important;
@@ -2795,7 +2761,7 @@
   border-radius: 11px !important;
 }
 
-.editPanelHeading > button svg {
+.editPanelHeading>button svg {
   display: block !important;
 
   width: 17px !important;
@@ -2925,9 +2891,9 @@
 .activityIcon svg,
 .simpleListIcon svg,
 .followingBadge svg,
-.commentList article > svg,
-.simpleList button > svg,
-.profileMenu button > svg {
+.commentList article>svg,
+.simpleList button>svg,
+.profileMenu button>svg {
   display: block !important;
 
   margin: 0 !important;
@@ -2935,7 +2901,7 @@
   flex: 0 0 auto !important;
 
   transform: none !important;
-  vertical-align: middle !important;
+  
 }
 
 .profileMenu button,
@@ -2957,7 +2923,7 @@
 
 @media (max-width: 680px) {
 
-  .editPanelHeading > button {
+  .editPanelHeading>button {
     width: 34px !important;
     height: 34px !important;
     min-width: 34px !important;
@@ -2966,7 +2932,7 @@
     flex-basis: 34px !important;
   }
 
-  .editPanelHeading > button svg {
+  .editPanelHeading>button svg {
     width: 16px !important;
     height: 16px !important;
   }
@@ -3038,6 +3004,18 @@
     width: 15px !important;
     height: 15px !important;
   }
+}
+
+:global(.ff-bottom-nav a.ff-authenticated-profile svg) {
+  color: #39d69d !important;
+  stroke: currentColor !important;
+
+  filter:
+    drop-shadow(0 0 5px rgba(57, 214, 157, 0.48));
+}
+
+:global(.ff-bottom-nav a.ff-authenticated-profile > span) {
+  color: #39d69d !important;
 }
 
 /* PROFILE ICON CENTERING REAL FIX V6 END */
