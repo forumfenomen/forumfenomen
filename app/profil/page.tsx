@@ -52,6 +52,7 @@ const translations = {
     editProfile: "Profili Düzenle",
     close: "Kapat",
     save: "Değişiklikleri Kaydet",
+    saving: "Kaydediliyor...",
     cancel: "Vazgeç",
     name: "Görünen Ad",
     username: "Kullanıcı Adı",
@@ -111,7 +112,7 @@ const translations = {
     changeTheme: "Temayı değiştir",
     search: "Ara",
     notificationTitle: "Bildirimler",
-    savedMessage: "Profil bilgileri bu oturum için güncellendi.",
+    savedMessage: "Profil bilgileriniz kaydedildi.",
     empty: "Bu bölümde henüz içerik bulunmuyor.",
     bioDefault:
       "Dijital dünya, içerik üretimi ve yeni fikirlerin peşinde.",
@@ -129,6 +130,7 @@ const translations = {
     editProfile: "Edit Profile",
     close: "Close",
     save: "Save Changes",
+    saving: "Saving...",
     cancel: "Cancel",
     name: "Display Name",
     username: "Username",
@@ -188,7 +190,7 @@ const translations = {
     changeTheme: "Change theme",
     search: "Search",
     notificationTitle: "Notifications",
-    savedMessage: "Profile details were updated for this session.",
+    savedMessage: "Your profile details have been saved.",
     empty: "There is no content in this section yet.",
     bioDefault:
       "Exploring the digital world, content creation and new ideas.",
@@ -474,6 +476,9 @@ export default function ProfilePage() {
     useState(false);
 
   const [savedMessage, setSavedMessage] =
+    useState(false);
+
+  const [isSaving, setIsSaving] =
     useState(false);
 
   const [profileName, setProfileName] =
@@ -782,76 +787,117 @@ export default function ProfilePage() {
   ) {
     event.preventDefault();
 
-    const supabase = createClient();
-
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
-
-    if (userError || !user) {
-      window.location.replace("/giris");
+    if (isSaving) {
       return;
     }
 
-    const normalizedUsername = username
-      .trim()
-      .replace(/^@/, "")
-      .toLowerCase()
-      .replace(/[^a-z0-9._-]/g, "");
+    setIsSaving(true);
 
-    if (normalizedUsername.length < 3) {
-      window.alert(
-        "Kullanıcı adı en az 3 karakter olmalıdır."
-      );
-      return;
-    }
+    try {
+      const supabase = createClient();
 
-    const normalizedName =
-      profileName.trim() ||
-      "ForumFenomen Üyesi";
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
 
-    const normalizedBio =
-      profileBio.trim().slice(0, 180);
+      if (userError || !user) {
+        window.location.replace("/giris");
+        return;
+      }
 
-    const { error: updateError } = await supabase
-      .from("profiles")
-      .update({
-        display_name: normalizedName,
-        username: normalizedUsername,
-        bio: normalizedBio,
-      })
-      .eq("id", user.id);
+      const normalizedUsername = username
+        .trim()
+        .replace(/^@/, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9._-]/g, "");
 
-    if (updateError) {
-      if (updateError.code === "23505") {
+      if (normalizedUsername.length < 3) {
         window.alert(
-          "Bu kullanıcı adı başka bir kullanıcı tarafından kullanılıyor."
+          "Kullanıcı adı en az 3 karakter olmalıdır."
         );
         return;
       }
 
+      const normalizedName =
+        profileName.trim() ||
+        "ForumFenomen Üyesi";
+
+      const normalizedBio =
+        profileBio.trim().slice(0, 180);
+
+      const {
+        data: updatedProfile,
+        error: updateError,
+      } = await supabase
+        .from("profiles")
+        .update({
+          display_name: normalizedName,
+          username: normalizedUsername,
+          bio: normalizedBio,
+        })
+        .eq("id", user.id)
+        .select(
+          "display_name, username, bio, avatar_url"
+        )
+        .single();
+
+      if (updateError) {
+        if (updateError.code === "23505") {
+          window.alert(
+            "Bu kullanıcı adı başka bir kullanıcı tarafından kullanılıyor."
+          );
+          return;
+        }
+
+        console.error(
+          "Profil güncelleme hatası:",
+          updateError
+        );
+
+        window.alert(
+          `Profil kaydedilemedi: ${updateError.message}`
+        );
+        return;
+      }
+
+      setProfileName(
+        updatedProfile.display_name
+      );
+
+      setUsername(
+        `@${updatedProfile.username.replace(
+          /^@/,
+          ""
+        )}`
+      );
+
+      setProfileBio(
+        updatedProfile.bio ?? ""
+      );
+
+      setAvatarUrl(
+        updatedProfile.avatar_url ?? avatarUrl
+      );
+
+      setEditOpen(false);
+      setSavedMessage(true);
+
+      window.setTimeout(() => {
+        setSavedMessage(false);
+      }, 2600);
+    } catch (error) {
       console.error(
-        "Profil güncellenemedi:",
-        updateError.message
+        "Beklenmeyen profil kayıt hatası:",
+        error
       );
 
       window.alert(
-        "Profil kaydedilemedi. Lütfen tekrar deneyin."
+        "Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin."
       );
-      return;
+    } finally {
+      setIsSaving(false);
     }
-
-    setProfileName(normalizedName);
-    setUsername(`@${normalizedUsername}`);
-    setProfileBio(normalizedBio);
-
-    setEditOpen(false);
-    setSavedMessage(true);
-
-    window.setTimeout(() => {
-      setSavedMessage(false);
-    }, 2600);
   }
 
   function renderProfileOverview() {
@@ -1486,6 +1532,7 @@ export default function ProfilePage() {
               <div className={styles.formActions}>
                 <button
                   type="button"
+                  disabled={isSaving}
                   onClick={() =>
                     setEditOpen(false)
                   }
@@ -1493,9 +1540,25 @@ export default function ProfilePage() {
                   {t.cancel}
                 </button>
 
-                <button type="submit">
-                  <CheckIcon />
-                  {t.save}
+                <button
+                  type="submit"
+                  disabled={isSaving}
+                  aria-busy={isSaving}
+                >
+                  {isSaving ? (
+                    <>
+                      <span
+                        className={styles.saveSpinner}
+                        aria-hidden="true"
+                      />
+                      {t.saving}
+                    </>
+                  ) : (
+                    <>
+                      <CheckIcon />
+                      {t.save}
+                    </>
+                  )}
                 </button>
               </div>
             </form>

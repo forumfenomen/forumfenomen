@@ -1713,15 +1713,15 @@
   }
 
   .profileText p {
-  display: -webkit-box;
-  overflow: hidden;
+    display: -webkit-box;
+    overflow: hidden;
 
-  font-size: 9px;
+    font-size: 9px;
 
-  line-clamp: 2;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
 
   .profileActions {
     position: absolute;
@@ -2901,7 +2901,7 @@
   flex: 0 0 auto !important;
 
   transform: none !important;
-  
+
 }
 
 .profileMenu button,
@@ -3016,6 +3016,34 @@
 
 :global(.ff-bottom-nav a.ff-authenticated-profile > span) {
   color: #39d69d !important;
+}
+
+.formActions button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.saveSpinner {
+  width: 15px;
+  height: 15px;
+
+  display: inline-block;
+  flex: 0 0 auto;
+
+  border: 2px solid rgba(255, 255, 255, 0.35);
+
+  border-top-color: currentColor;
+  border-radius: 50%;
+
+  animation:
+    profileSaveSpin 0.7s linear infinite;
+}
+
+@keyframes profileSaveSpin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* PROFILE ICON CENTERING REAL FIX V6 END */
