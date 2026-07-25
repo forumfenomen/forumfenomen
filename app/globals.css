@@ -12809,3 +12809,21 @@ html[data-theme="light"] .ff-feed-header .ff-site-search-results {
     width: 100% !important;
   }
 }
+
+.ff-bookmark-button.saved {
+  color: #ed5df4;
+  border-color: rgba(237, 93, 244, 0.58);
+  background: rgba(165, 22, 244, 0.16);
+  box-shadow:
+    0 0 0 1px rgba(237, 93, 244, 0.08),
+    0 0 20px rgba(165, 22, 244, 0.18);
+}
+
+.ff-bookmark-button.saved svg {
+  fill: currentColor;
+}
+
+.ff-bookmark-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

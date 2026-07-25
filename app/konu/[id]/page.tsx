@@ -279,6 +279,14 @@ export default function TopicDetailPage() {
     const commentInputRef =
         useRef<HTMLTextAreaElement | null>(null);
 
+    const [
+        highlightedCommentId,
+        setHighlightedCommentId,
+    ] = useState<string | null>(null);
+
+    const highlightTimeoutRef =
+        useRef<number | null>(null);
+
     const [currentUserId, setCurrentUserId] =
         useState<string | null>(null);
 
@@ -620,6 +628,101 @@ export default function TopicDetailPage() {
             isActive = false;
         };
     }, [currentUserId]);
+
+    useEffect(() => {
+        if (commentsLoading) {
+            return;
+        }
+
+        function focusCommentFromHash() {
+            const hash = window.location.hash;
+            const prefix = "#comment-";
+
+            if (!hash.startsWith(prefix)) {
+                return;
+            }
+
+            const commentId = hash.slice(
+                prefix.length
+            );
+
+            if (!commentId) {
+                return;
+            }
+
+            const target =
+                document.getElementById(
+                    `comment-${commentId}`
+                );
+
+            if (!target) {
+                return;
+            }
+
+            if (
+                highlightTimeoutRef.current !==
+                null
+            ) {
+                window.clearTimeout(
+                    highlightTimeoutRef.current
+                );
+            }
+
+            setHighlightedCommentId(commentId);
+
+            window.requestAnimationFrame(() => {
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                });
+            });
+
+            highlightTimeoutRef.current =
+                window.setTimeout(() => {
+                    setHighlightedCommentId(
+                        (current) =>
+                            current === commentId
+                                ? null
+                                : current
+                    );
+
+                    highlightTimeoutRef.current =
+                        null;
+                }, 3500);
+        }
+
+        const initialTimerId =
+            window.setTimeout(
+                focusCommentFromHash,
+                50
+            );
+
+        window.addEventListener(
+            "hashchange",
+            focusCommentFromHash
+        );
+
+        return () => {
+            window.clearTimeout(initialTimerId);
+
+            window.removeEventListener(
+                "hashchange",
+                focusCommentFromHash
+            );
+
+            if (
+                highlightTimeoutRef.current !==
+                null
+            ) {
+                window.clearTimeout(
+                    highlightTimeoutRef.current
+                );
+
+                highlightTimeoutRef.current =
+                    null;
+            }
+        };
+    }, [commentsLoading, topicId]);
 
     function toggleTheme() {
         const nextTheme: Theme =
@@ -1400,12 +1503,20 @@ export default function TopicDetailPage() {
 
                                         return (
                                             <article
+                                                id={`comment-${comment.id}`}
                                                 key={comment.id}
-                                                className={
+                                                className={[
+                                                    styles.commentItem,
                                                     comment.parent_comment_id
-                                                        ? `${styles.commentItem} ${styles.commentReply}`
-                                                        : styles.commentItem
-                                                }
+                                                        ? styles.commentReply
+                                                        : "",
+                                                    highlightedCommentId ===
+                                                        comment.id
+                                                        ? styles.highlightedComment
+                                                        : "",
+                                                ]
+                                                    .filter(Boolean)
+                                                    .join(" ")}
                                             >
                                                 <div className={styles.commentHeader}>
                                                     <span className={styles.commentAvatar}>

@@ -3047,3 +3047,63 @@
 }
 
 /* PROFILE ICON CENTERING REAL FIX V6 END */
+
+.emptyState {
+  padding: 32px 20px;
+  text-align: center;
+  color: var(--ff-muted, #9b9aaa);
+}
+
+.emptyState p {
+  margin: 0;
+}
+
+.savedTopicRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.savedTopicLink {
+  width: 100%;
+  min-width: 0;
+}
+
+.removeSavedButton {
+  width: 42px;
+  min-width: 42px;
+  border: 1px solid rgba(239, 68, 68, 0.28);
+  border-radius: 12px;
+  background: rgba(239, 68, 68, 0.08);
+  color: #fb7185;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.removeSavedButton:hover {
+  background: rgba(239, 68, 68, 0.16);
+  border-color: rgba(239, 68, 68, 0.5);
+  transform: translateY(-1px);
+}
+
+.removeSavedButton:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+@media (max-width: 640px) {
+  .savedTopicRow {
+    grid-template-columns: minmax(0, 1fr) 38px;
+  }
+
+  .removeSavedButton {
+    width: 38px;
+    min-width: 38px;
+  }
+}

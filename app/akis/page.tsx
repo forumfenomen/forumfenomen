@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   getForumLanguage,
@@ -584,7 +585,10 @@ function CommunityGraphic() {
 }
 
 export default function FeedPage() {
-  const [language, setLanguage] = useState<Language>("tr");
+  const router = useRouter();
+
+  const [language, setLanguage] =
+    useState<Language>("tr");
   const [theme, setTheme] = useState<Theme>("dark");
   const [shared, setShared] = useState(false);
 
@@ -593,6 +597,15 @@ export default function FeedPage() {
 
   const [topicsLoading, setTopicsLoading] =
     useState(true);
+
+  const [currentUserId, setCurrentUserId] =
+    useState<string | null>(null);
+
+  const [savedTopicIds, setSavedTopicIds] =
+    useState<Record<string, boolean>>({});
+
+  const [savingTopicId, setSavingTopicId] =
+    useState<string | null>(null);
 
   useEffect(() => {
     const savedLanguage = getForumLanguage();
@@ -613,6 +626,75 @@ export default function FeedPage() {
       setTheme("dark");
       document.documentElement.dataset.theme = "dark";
     }
+  }, []);
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    let isActive = true;
+
+    async function loadSavedTopics() {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (userError || !user) {
+        setCurrentUserId(null);
+        setSavedTopicIds({});
+        return;
+      }
+
+      setCurrentUserId(user.id);
+
+      const { data, error } = await supabase
+        .from("saved_topics")
+        .select("topic_id")
+        .eq("user_id", user.id);
+
+      if (!isActive) {
+        return;
+      }
+
+      if (error) {
+        console.error(
+          "Kaydedilen konular alınamadı:",
+          error.message
+        );
+
+        setSavedTopicIds({});
+        return;
+      }
+
+      const nextSavedTopicIds: Record<
+        string,
+        boolean
+      > = {};
+
+      for (const item of data ?? []) {
+        nextSavedTopicIds[item.topic_id] = true;
+      }
+
+      setSavedTopicIds(nextSavedTopicIds);
+    }
+
+    void loadSavedTopics();
+
+    const { data: authListener } =
+      supabase.auth.onAuthStateChange(() => {
+        window.setTimeout(() => {
+          void loadSavedTopics();
+        }, 0);
+      });
+
+    return () => {
+      isActive = false;
+      authListener.subscription.unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
@@ -742,6 +824,104 @@ export default function FeedPage() {
     };
   }, [language]);
 
+  const toggleSavedTopic = async (
+    topicId?: string
+  ) => {
+    if (
+      !topicId ||
+      savingTopicId === topicId
+    ) {
+      return;
+    }
+
+    if (!currentUserId) {
+      router.push("/giris");
+      return;
+    }
+
+    const wasSaved =
+      Boolean(savedTopicIds[topicId]);
+
+    setSavingTopicId(topicId);
+
+    setSavedTopicIds((current) => ({
+      ...current,
+      [topicId]: !wasSaved,
+    }));
+
+    try {
+      const supabase = createClient();
+
+      const { data, error } =
+        await supabase.rpc(
+          "toggle_saved_topic",
+          {
+            p_topic_id: topicId,
+          }
+        );
+
+      if (error) {
+        console.error(
+          "Konu kaydedilemedi:",
+          error.message
+        );
+
+        setSavedTopicIds((current) => {
+          const next = { ...current };
+
+          if (wasSaved) {
+            next[topicId] = true;
+          } else {
+            delete next[topicId];
+          }
+
+          return next;
+        });
+
+        window.alert(
+          language === "tr"
+            ? "Kaydetme işlemi gerçekleştirilemedi."
+            : "The save action could not be completed."
+        );
+
+        return;
+      }
+
+      const isSaved = data === true;
+
+      setSavedTopicIds((current) => {
+        const next = { ...current };
+
+        if (isSaved) {
+          next[topicId] = true;
+        } else {
+          delete next[topicId];
+        }
+
+        return next;
+      });
+    } catch (error) {
+      console.error(
+        "Beklenmeyen kaydetme hatası:",
+        error
+      );
+
+      setSavedTopicIds((current) => {
+        const next = { ...current };
+
+        if (wasSaved) {
+          next[topicId] = true;
+        } else {
+          delete next[topicId];
+        }
+
+        return next;
+      });
+    } finally {
+      setSavingTopicId(null);
+    }
+  };
+
   const toggleTheme = () => {
     const nextTheme: Theme =
       theme === "dark" ? "light" : "dark";
@@ -828,7 +1008,7 @@ export default function FeedPage() {
                 <SunIcon />
               )}
             </button>
-            
+
             <NotificationBell />
 
             <SiteSearch language={language} />
@@ -985,8 +1165,44 @@ export default function FeedPage() {
 
                 <button
                   type="button"
-                  className="ff-bookmark-button"
-                  aria-label="Kaydet"
+                  className={
+                    post.id &&
+                      savedTopicIds[post.id]
+                      ? "ff-bookmark-button saved"
+                      : "ff-bookmark-button"
+                  }
+                  disabled={
+                    !post.id ||
+                    savingTopicId === post.id
+                  }
+                  aria-pressed={
+                    post.id
+                      ? Boolean(savedTopicIds[post.id])
+                      : false
+                  }
+                  aria-label={
+                    post.id &&
+                      savedTopicIds[post.id]
+                      ? language === "tr"
+                        ? "Kaydı kaldır"
+                        : "Remove bookmark"
+                      : language === "tr"
+                        ? "Konuyu kaydet"
+                        : "Save topic"
+                  }
+                  title={
+                    post.id &&
+                      savedTopicIds[post.id]
+                      ? language === "tr"
+                        ? "Kaydedildi"
+                        : "Saved"
+                      : language === "tr"
+                        ? "Kaydet"
+                        : "Save"
+                  }
+                  onClick={() => {
+                    void toggleSavedTopic(post.id);
+                  }}
                 >
                   <BookmarkIcon />
                 </button>

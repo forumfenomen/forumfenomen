@@ -39,6 +39,35 @@ type MenuItem = {
   count?: number;
 };
 
+type NotificationRow = {
+  id: string;
+  type: string;
+  title: string;
+  message: string;
+  related_report_id: string | null;
+  related_topic_id: string | null;
+  related_comment_id: string | null;
+  is_read: boolean;
+  read_at: string | null;
+  created_at: string;
+};
+
+type SavedTopicRow = {
+  topic_id: string;
+  created_at: string;
+
+  topics: {
+    id: string;
+    title: string;
+    comment_count: number;
+    status: string;
+
+    categories: {
+      name: string;
+    } | null;
+  } | null;
+};
+
 const translations = {
   tr: {
     pageTitle: "Profil",
@@ -490,6 +519,26 @@ export default function ProfilePage() {
   const [isAuthenticated, setIsAuthenticated] =
     useState(false);
 
+  const [notifications, setNotifications] =
+    useState<NotificationRow[]>([]);
+
+  const [notificationsLoading, setNotificationsLoading] =
+    useState(true);
+
+  const [
+    unreadNotificationCount,
+    setUnreadNotificationCount,
+  ] = useState(0);
+
+  const [savedTopics, setSavedTopics] =
+    useState<SavedTopicRow[]>([]);
+
+  const [savedTopicsLoading, setSavedTopicsLoading] =
+    useState(true);
+
+  const [removingSavedTopicId, setRemovingSavedTopicId] =
+    useState<string | null>(null);
+
   useEffect(() => {
     const savedLanguage =
       getForumLanguage();
@@ -536,6 +585,8 @@ export default function ProfilePage() {
         window.location.replace("/giris");
         return;
       }
+
+      setIsAuthenticated(true);
 
       const metadata =
         (user.user_metadata ?? {}) as Record<
@@ -684,6 +735,276 @@ export default function ProfilePage() {
     };
   }, []);
 
+
+  useEffect(() => {
+    let isActive = true;
+
+    const supabase = createClient();
+
+    let notificationChannel:
+      ReturnType<typeof supabase.channel> | null =
+      null;
+
+    async function loadNotifications() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (!user) {
+        setNotifications([]);
+        setUnreadNotificationCount(0);
+        setNotificationsLoading(false);
+        return;
+      }
+
+      const [listResult, countResult] =
+        await Promise.all([
+          supabase
+            .from("notifications")
+            .select(`
+            id,
+            type,
+            title,
+            message,
+            related_report_id,
+            related_comment_id,
+            related_topic_id,
+            is_read,
+            read_at,
+            created_at
+          `)
+            .order("created_at", {
+              ascending: false,
+            })
+            .limit(50),
+
+          supabase
+            .from("notifications")
+            .select("id", {
+              count: "exact",
+              head: true,
+            })
+            .eq("is_read", false),
+        ]);
+
+      if (!isActive) {
+        return;
+      }
+
+      if (listResult.error || countResult.error) {
+        console.error(
+          "Profil bildirimleri alınamadı:",
+          listResult.error?.message ??
+          countResult.error?.message
+        );
+
+        setNotifications([]);
+        setUnreadNotificationCount(0);
+        setNotificationsLoading(false);
+        return;
+      }
+
+      setNotifications(
+        (listResult.data ?? []) as NotificationRow[]
+      );
+
+      setUnreadNotificationCount(
+        countResult.count ?? 0
+      );
+
+      setNotificationsLoading(false);
+    }
+
+    async function setupRealtimeNotifications() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!isActive) {
+        return;
+      }
+
+      await loadNotifications();
+
+      if (!user) {
+        return;
+      }
+
+      notificationChannel = supabase
+        .channel(
+          `profile-notifications-${user.id}`
+        )
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "notifications",
+            filter: `user_id=eq.${user.id}`,
+          },
+          () => {
+            void loadNotifications();
+          }
+        )
+        .subscribe((status) => {
+          if (
+            status === "CHANNEL_ERROR" ||
+            status === "TIMED_OUT"
+          ) {
+            console.error(
+              "Profil bildirim Realtime bağlantısı kurulamadı:",
+              status
+            );
+          }
+        });
+    }
+
+    void setupRealtimeNotifications();
+
+    const intervalId = window.setInterval(() => {
+      if (document.visibilityState === "visible") {
+        void loadNotifications();
+      }
+    }, 120_000);
+
+    function handleFocus() {
+      void loadNotifications();
+    }
+
+    function handleVisibilityChange() {
+      if (document.visibilityState === "visible") {
+        void loadNotifications();
+      }
+    }
+
+    window.addEventListener(
+      "focus",
+      handleFocus
+    );
+
+    document.addEventListener(
+      "visibilitychange",
+      handleVisibilityChange
+    );
+
+    return () => {
+      isActive = false;
+
+      window.clearInterval(intervalId);
+
+      window.removeEventListener(
+        "focus",
+        handleFocus
+      );
+
+      document.removeEventListener(
+        "visibilitychange",
+        handleVisibilityChange
+      );
+
+      if (notificationChannel) {
+        void supabase.removeChannel(
+          notificationChannel
+        );
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadSavedTopics() {
+      const supabase = createClient();
+
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (userError || !user) {
+        setSavedTopics([]);
+        setSavedTopicsLoading(false);
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("saved_topics")
+        .select(`
+        topic_id,
+        created_at,
+        topics (
+          id,
+          title,
+          comment_count,
+          status,
+          categories (
+            name
+          )
+        )
+      `)
+        .eq("user_id", user.id)
+        .order("created_at", {
+          ascending: false,
+        });
+
+      if (!isActive) {
+        return;
+      }
+
+      if (error) {
+        console.error(
+          "Kaydedilen konular alınamadı:",
+          error.message
+        );
+
+        setSavedTopics([]);
+        setSavedTopicsLoading(false);
+        return;
+      }
+
+      const rows =
+        (data ?? []) as unknown as SavedTopicRow[];
+
+      setSavedTopics(
+        rows.filter(
+          (item) =>
+            item.topics &&
+            item.topics.status === "published"
+        )
+      );
+
+      setSavedTopicsLoading(false);
+    }
+
+    void loadSavedTopics();
+
+    function handleSavedTopicsChanged() {
+      void loadSavedTopics();
+    }
+
+    window.addEventListener(
+      "focus",
+      handleSavedTopicsChanged
+    );
+
+    return () => {
+      isActive = false;
+
+      window.removeEventListener(
+        "focus",
+        handleSavedTopicsChanged
+      );
+    };
+  }, []);
+
   const t = translations[language];
 
   const profileInitials =
@@ -719,12 +1040,12 @@ export default function ProfilePage() {
     {
       id: "saved",
       icon: <BookmarkIcon />,
-      count: 12,
+      count: savedTopics.length,
     },
     {
       id: "notifications",
       icon: <BellIcon />,
-      count: 3,
+      count: unreadNotificationCount,
     },
     {
       id: "settings",
@@ -744,6 +1065,153 @@ export default function ProfilePage() {
     notifications: t.notifications,
     settings: t.settings,
   };
+
+  function formatNotificationDate(value: string) {
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return "";
+    }
+
+    return new Intl.DateTimeFormat(
+      language === "tr" ? "tr-TR" : "en-US",
+      {
+        dateStyle: "medium",
+        timeStyle: "short",
+        timeZone: "Europe/Istanbul",
+      }
+    ).format(date);
+  }
+
+  async function markNotificationRead(
+    notification: NotificationRow
+  ) {
+    if (notification.is_read) {
+      return;
+    }
+
+    const supabase = createClient();
+
+    const { error } = await supabase.rpc(
+      "mark_notification_read",
+      {
+        p_notification_id: notification.id,
+      }
+    );
+
+    if (error) {
+      console.error(
+        "Bildirim okundu yapılamadı:",
+        error.message
+      );
+
+      return;
+    }
+
+    const readAt = new Date().toISOString();
+
+    setNotifications((current) =>
+      current.map((item) =>
+        item.id === notification.id
+          ? {
+            ...item,
+            is_read: true,
+            read_at: readAt,
+          }
+          : item
+      )
+    );
+
+    setUnreadNotificationCount((current) =>
+      Math.max(0, current - 1)
+    );
+  }
+
+  async function markAllProfileNotificationsRead() {
+    if (unreadNotificationCount === 0) {
+      return;
+    }
+
+    const supabase = createClient();
+
+    const { error } = await supabase.rpc(
+      "mark_all_notifications_read"
+    );
+
+    if (error) {
+      console.error(
+        "Bildirimlerin tamamı okundu yapılamadı:",
+        error.message
+      );
+
+      return;
+    }
+
+    const readAt = new Date().toISOString();
+
+    setNotifications((current) =>
+      current.map((notification) => ({
+        ...notification,
+        is_read: true,
+        read_at:
+          notification.read_at ?? readAt,
+      }))
+    );
+
+    setUnreadNotificationCount(0);
+  }
+
+  async function removeSavedTopic(
+    topicId: string
+  ) {
+    if (removingSavedTopicId === topicId) {
+      return;
+    }
+
+    setRemovingSavedTopicId(topicId);
+
+    try {
+      const supabase = createClient();
+
+      const { data, error } = await supabase.rpc(
+        "toggle_saved_topic",
+        {
+          p_topic_id: topicId,
+        }
+      );
+
+      if (error) {
+        console.error(
+          "Kayıt kaldırılamadı:",
+          error.message
+        );
+
+        window.alert(
+          language === "tr"
+            ? "Konu kayıtlardan kaldırılamadı."
+            : "The topic could not be removed from saved topics."
+        );
+
+        return;
+      }
+
+      if (data === false) {
+        setSavedTopics((current) =>
+          current.filter(
+            (item) =>
+              item.topic_id !== topicId
+          )
+        );
+      }
+    } catch (error) {
+      console.error(
+        "Beklenmeyen kayıt kaldırma hatası:",
+        error
+      );
+    } finally {
+      setRemovingSavedTopicId(null);
+    }
+  }
 
   function toggleTheme() {
     const nextTheme: Theme =
@@ -1090,26 +1558,108 @@ export default function ProfilePage() {
         </div>
 
         <div className={styles.simpleList}>
-          {sampleTopics[language]
-            .slice()
-            .reverse()
-            .map((topic) => (
-              <button
-                type="button"
-                key={topic.title}
-              >
-                <span className={styles.simpleListIcon}>
-                  <BookmarkIcon />
-                </span>
+          {savedTopicsLoading ? (
+            <div className={styles.emptyState}>
+              <p>
+                {language === "tr"
+                  ? "Kaydedilen konular yükleniyor..."
+                  : "Loading saved topics..."}
+              </p>
+            </div>
+          ) : savedTopics.length === 0 ? (
+            <div className={styles.emptyState}>
+              <p>
+                {language === "tr"
+                  ? "Henüz kaydettiğin bir konu bulunmuyor."
+                  : "You have not saved any topics yet."}
+              </p>
+            </div>
+          ) : (
+            savedTopics.map((savedTopic) => {
+              const topic = savedTopic.topics;
 
-                <span>
-                  <strong>{topic.title}</strong>
-                  <small>{topic.meta}</small>
-                </span>
+              if (!topic) {
+                return null;
+              }
 
-                <ChevronIcon />
-              </button>
-            ))}
+              const categoryName =
+                topic.categories?.name ??
+                (language === "tr"
+                  ? "Genel"
+                  : "General");
+
+              const commentText =
+                language === "tr"
+                  ? `${topic.comment_count ?? 0} yorum`
+                  : `${topic.comment_count ?? 0} comments`;
+
+              return (
+                <div
+                  key={savedTopic.topic_id}
+                  className={styles.savedTopicRow}
+                >
+                  <button
+                    type="button"
+                    className={styles.savedTopicLink}
+                    onClick={() => {
+                      window.location.assign(
+                        `/konu/${topic.id}`
+                      );
+                    }}
+                  >
+                    <span
+                      className={
+                        styles.simpleListIcon
+                      }
+                    >
+                      <BookmarkIcon />
+                    </span>
+
+                    <span>
+                      <strong>{topic.title}</strong>
+
+                      <small>
+                        {categoryName} · {commentText}
+                      </small>
+                    </span>
+
+                    <ChevronIcon />
+                  </button>
+
+                  <button
+                    type="button"
+                    className={
+                      styles.removeSavedButton
+                    }
+                    disabled={
+                      removingSavedTopicId ===
+                      topic.id
+                    }
+                    onClick={() => {
+                      void removeSavedTopic(
+                        topic.id
+                      );
+                    }}
+                    aria-label={
+                      language === "tr"
+                        ? "Kaydı kaldır"
+                        : "Remove saved topic"
+                    }
+                    title={
+                      language === "tr"
+                        ? "Kaydı kaldır"
+                        : "Remove saved topic"
+                    }
+                  >
+                    {removingSavedTopicId ===
+                      topic.id
+                      ? "…"
+                      : "×"}
+                  </button>
+                </div>
+              );
+            })
+          )}
         </div>
       </>
     );
@@ -1128,33 +1678,97 @@ export default function ProfilePage() {
           <button
             type="button"
             className={styles.textButton}
+            disabled={
+              notificationsLoading ||
+              unreadNotificationCount === 0
+            }
+            onClick={() =>
+              void markAllProfileNotificationsRead()
+            }
           >
             {t.markAllRead}
           </button>
         </div>
 
         <div className={styles.notificationList}>
-          {sampleActivities[language].map(
-            (notification, index) => (
+          {notificationsLoading ? (
+            <article>
+              <div>
+                <strong>
+                  {language === "tr"
+                    ? "Bildirimler yükleniyor..."
+                    : "Loading notifications..."}
+                </strong>
+              </div>
+            </article>
+          ) : notifications.length === 0 ? (
+            <article>
+              <div>
+                <strong>{t.empty}</strong>
+              </div>
+            </article>
+          ) : (
+            notifications.map((notification) => (
               <article
-                key={notification.title}
+                key={notification.id}
                 className={
-                  index < 2
-                    ? styles.unreadNotification
-                    : ""
+                  notification.is_read
+                    ? ""
+                    : styles.unreadNotification
                 }
+                role={
+                  notification.is_read
+                    ? undefined
+                    : "button"
+                }
+                tabIndex={
+                  notification.is_read
+                    ? undefined
+                    : 0
+                }
+                onClick={() =>
+                  void markNotificationRead(
+                    notification
+                  )
+                }
+                onKeyDown={(event) => {
+                  if (
+                    event.key === "Enter" ||
+                    event.key === " "
+                  ) {
+                    event.preventDefault();
+
+                    void markNotificationRead(
+                      notification
+                    );
+                  }
+                }}
               >
-                <span className={styles.notificationDot} />
+                <span
+                  className={styles.notificationDot}
+                  aria-hidden="true"
+                  style={{
+                    visibility: notification.is_read
+                      ? "hidden"
+                      : "visible",
+                  }}
+                />
 
                 <div>
                   <strong>
                     {notification.title}
                   </strong>
-                  <p>{notification.detail}</p>
-                  <small>{notification.time}</small>
+
+                  <p>{notification.message}</p>
+
+                  <small>
+                    {formatNotificationDate(
+                      notification.created_at
+                    )}
+                  </small>
                 </div>
               </article>
-            )
+            ))
           )}
         </div>
       </>

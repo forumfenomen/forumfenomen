@@ -7,6 +7,8 @@ import {
   useState,
 } from "react";
 
+import { useRouter } from "next/navigation";
+
 import { createClient } from "@/lib/supabase/client";
 
 import styles from "./notification-bell.module.css";
@@ -18,12 +20,13 @@ type NotificationRow = {
   message: string;
   related_report_id: string | null;
   related_comment_id: string | null;
+  related_topic_id: string | null;
   is_read: boolean;
   read_at: string | null;
   created_at: string;
 };
 
-const POLL_INTERVAL_MS = 30_000;
+const POLL_INTERVAL_MS = 120_000;
 
 function BellIcon() {
   return (
@@ -111,6 +114,8 @@ export default function NotificationBell() {
   const panelRef =
     useRef<HTMLDivElement | null>(null);
 
+  const router = useRouter();
+
   const [supabase] = useState(() =>
     createClient()
   );
@@ -156,6 +161,7 @@ export default function NotificationBell() {
           message,
           related_report_id,
           related_comment_id,
+          related_topic_id,
           is_read,
           read_at,
           created_at
@@ -184,7 +190,65 @@ export default function NotificationBell() {
     }, [supabase]);
 
   useEffect(() => {
-    void loadNotifications();
+    let isActive = true;
+
+    let notificationChannel:
+      ReturnType<typeof supabase.channel> | null =
+      null;
+
+    async function setupRealtimeNotifications() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (notificationChannel) {
+        await supabase.removeChannel(
+          notificationChannel
+        );
+
+        notificationChannel = null;
+      }
+
+      void loadNotifications();
+
+      if (!user) {
+        return;
+      }
+
+      notificationChannel = supabase
+        .channel(
+          `notifications-${user.id}`
+        )
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "notifications",
+            filter: `user_id=eq.${user.id}`,
+          },
+          () => {
+            void loadNotifications();
+          }
+        )
+        .subscribe((status) => {
+          if (
+            status === "CHANNEL_ERROR" ||
+            status === "TIMED_OUT"
+          ) {
+            console.error(
+              "Bildirim Realtime bağlantısı kurulamadı:",
+              status
+            );
+          }
+        });
+    }
+
+    void setupRealtimeNotifications();
 
     const intervalId = window.setInterval(
       () => {
@@ -197,18 +261,60 @@ export default function NotificationBell() {
       POLL_INTERVAL_MS
     );
 
+    function handleVisibilityChange() {
+      if (
+        document.visibilityState === "visible"
+      ) {
+        void loadNotifications();
+      }
+    }
+
+    function handleWindowFocus() {
+      void loadNotifications();
+    }
+
+    document.addEventListener(
+      "visibilitychange",
+      handleVisibilityChange
+    );
+
+    window.addEventListener(
+      "focus",
+      handleWindowFocus
+    );
+
     const {
       data: authListener,
     } = supabase.auth.onAuthStateChange(
       () => {
-        void loadNotifications();
+        window.setTimeout(() => {
+          void setupRealtimeNotifications();
+        }, 0);
       }
     );
 
     return () => {
+      isActive = false;
+
       window.clearInterval(intervalId);
 
+      document.removeEventListener(
+        "visibilitychange",
+        handleVisibilityChange
+      );
+
+      window.removeEventListener(
+        "focus",
+        handleWindowFocus
+      );
+
       authListener.subscription.unsubscribe();
+
+      if (notificationChannel) {
+        void supabase.removeChannel(
+          notificationChannel
+        );
+      }
     };
   }, [loadNotifications, supabase]);
 
@@ -255,42 +361,62 @@ export default function NotificationBell() {
     }
   };
 
+  const getNotificationHref = (
+    notification: NotificationRow
+  ) => {
+    if (!notification.related_topic_id) {
+      return null;
+    }
+
+    const commentHash =
+      notification.related_comment_id
+        ? `#comment-${notification.related_comment_id}`
+        : "";
+
+    return `/konu/${notification.related_topic_id}${commentHash}`;
+  };
+
   const handleNotificationClick = async (
     notification: NotificationRow
   ) => {
-    if (notification.is_read) {
-      return;
-    }
+    const href =
+      getNotificationHref(notification);
 
-    const { error } = await supabase.rpc(
-      "mark_notification_read",
-      {
-        p_notification_id:
-          notification.id,
-      }
-    );
-
-    if (error) {
-      console.error(
-        "Bildirim okunmuş olarak işaretlenemedi:",
-        error.message
+    if (!notification.is_read) {
+      const { error } = await supabase.rpc(
+        "mark_notification_read",
+        {
+          p_notification_id:
+            notification.id,
+        }
       );
 
-      return;
+      if (error) {
+        console.error(
+          "Bildirim okunmuş olarak işaretlenemedi:",
+          error.message
+        );
+      } else {
+        setNotifications((current) =>
+          current.map((item) =>
+            item.id === notification.id
+              ? {
+                ...item,
+                is_read: true,
+                read_at:
+                  new Date().toISOString(),
+              }
+              : item
+          )
+        );
+      }
     }
 
-    setNotifications((current) =>
-      current.map((item) =>
-        item.id === notification.id
-          ? {
-              ...item,
-              is_read: true,
-              read_at:
-                new Date().toISOString(),
-            }
-          : item
-      )
-    );
+    setIsOpen(false);
+
+    if (href) {
+      router.push(href);
+    }
   };
 
   const handleMarkAllRead = async () => {
@@ -417,11 +543,10 @@ export default function NotificationBell() {
                   <button
                     type="button"
                     key={notification.id}
-                    className={`${styles.notificationItem} ${
-                      notification.is_read
-                        ? styles.readItem
-                        : styles.unreadItem
-                    }`}
+                    className={`${styles.notificationItem} ${notification.is_read
+                      ? styles.readItem
+                      : styles.unreadItem
+                      }`}
                     onClick={() => {
                       void handleNotificationClick(
                         notification
