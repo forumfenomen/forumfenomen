@@ -21,6 +21,8 @@ import {
   type ForumLanguage,
 } from "@/lib/forumfenomen-language";
 
+import { createClient } from "@/lib/supabase/client";
+
 import styles from "./page.module.css";
 
 type Theme = "dark" | "light";
@@ -40,11 +42,15 @@ type LocalizedText = {
 
 type Subcategory = {
   id: string;
+  databaseId?: number;
+  slug?: string;
   label: LocalizedText;
 };
 
 type CategoryDefinition = {
   id: CategoryId;
+  databaseId?: number;
+  slug?: string;
   title: LocalizedText;
   description: LocalizedText;
   accent: string;
@@ -60,6 +66,61 @@ type SavedDraft = {
   tags: string[];
   pollEnabled: boolean;
   pollOptions: string[];
+};
+
+type CategoryGroupRow = {
+  id: number;
+  slug: string;
+  name: string;
+  description: string;
+  sort_order: number;
+  is_active: boolean;
+};
+
+type CategoryRow = {
+  id: number;
+  group_id: number;
+  slug: string;
+  name: string;
+  description: string;
+  sort_order: number;
+  is_active: boolean;
+};
+
+const categoryGroupMap: Record<string, CategoryId> = {
+  platformlar: "platforms",
+  "icerik-uretimi": "content",
+  buyume: "growth",
+  "para-kazanma": "money",
+  egitim: "education",
+  yasal: "legal",
+};
+
+const subcategoryIdMap: Record<string, string> = {
+  instagram: "instagram",
+  tiktok: "tiktok",
+  youtube: "youtube",
+
+  "yapay-zeka": "ai",
+  "video-edit": "video-edit",
+  "kamera-ekipman": "camera",
+  "thumbnail-kapak-tasarimi": "thumbnail",
+
+  seo: "seo",
+  algoritmalar: "algorithms",
+  "hashtag-anahtar-kelimeler": "hashtags",
+  "viral-analizleri": "viral",
+
+  "marka-is-birlikleri": "brand-deals",
+  ugc: "ugc",
+  affiliate: "affiliate",
+  "youtube-para-kazanma": "youtube-money",
+  "tiktok-para-kazanma": "tiktok-money",
+
+  "reklam-kurallari": "ad-rules",
+  "vergi-mevzuati": "tax",
+  sozlesmeler: "contracts",
+  "telif-haklari": "copyright",
 };
 
 const DRAFT_KEY =
@@ -721,6 +782,9 @@ export default function CreateTopicPage() {
   const [theme, setTheme] =
     useState<Theme>("dark");
 
+  const [categoryData, setCategoryData] =
+    useState<CategoryDefinition[]>(categories);
+
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryId>("platforms");
 
@@ -798,6 +862,151 @@ export default function CreateTopicPage() {
   }, []);
 
   useEffect(() => {
+    let isActive = true;
+
+    async function loadCategories() {
+      const supabase = createClient();
+
+      const [groupsResult, categoriesResult] =
+        await Promise.all([
+          supabase
+            .from("category_groups")
+            .select(
+              "id, slug, name, description, sort_order, is_active"
+            )
+            .eq("is_active", true)
+            .order("sort_order", {
+              ascending: true,
+            }),
+
+          supabase
+            .from("categories")
+            .select(
+              "id, group_id, slug, name, description, sort_order, is_active"
+            )
+            .eq("is_active", true)
+            .order("sort_order", {
+              ascending: true,
+            }),
+        ]);
+
+      if (!isActive) {
+        return;
+      }
+
+      if (
+        groupsResult.error ||
+        categoriesResult.error
+      ) {
+        console.error(
+          "Konu oluşturma kategorileri alınamadı:",
+          groupsResult.error?.message ??
+          categoriesResult.error?.message
+        );
+
+        return;
+      }
+
+      const groupRows =
+        (groupsResult.data ?? []) as CategoryGroupRow[];
+
+      const categoryRows =
+        (categoriesResult.data ?? []) as CategoryRow[];
+
+      const nextCategories =
+        groupRows.flatMap((group) => {
+          const categoryId =
+            categoryGroupMap[group.slug];
+
+          const fallbackCategory =
+            categories.find(
+              (category) =>
+                category.id === categoryId
+            );
+
+          if (
+            !categoryId ||
+            !fallbackCategory
+          ) {
+            return [];
+          }
+
+          const subcategories =
+            categoryRows
+              .filter(
+                (subcategory) =>
+                  subcategory.group_id === group.id
+              )
+              .sort(
+                (a, b) =>
+                  a.sort_order - b.sort_order
+              )
+              .map((subcategory) => {
+                const localId =
+                  subcategoryIdMap[
+                  subcategory.slug
+                  ] ?? subcategory.slug;
+
+                const fallbackSubcategory =
+                  fallbackCategory.subcategories.find(
+                    (item) =>
+                      item.id === localId
+                  );
+
+                return {
+                  id: localId,
+                  databaseId: subcategory.id,
+                  slug: subcategory.slug,
+
+                  label: {
+                    tr: subcategory.name,
+                    en:
+                      fallbackSubcategory?.label.en ??
+                      subcategory.name,
+                  },
+                };
+              });
+
+          return [
+            {
+              ...fallbackCategory,
+
+              databaseId: group.id,
+              slug: group.slug,
+
+              title: {
+                ...fallbackCategory.title,
+                tr: group.name,
+              },
+
+              description: {
+                ...fallbackCategory.description,
+                tr:
+                  group.description.trim() ||
+                  fallbackCategory.description.tr,
+              },
+
+              subcategories,
+            },
+          ];
+        });
+
+      if (
+        nextCategories.length ===
+        categories.length
+      ) {
+        setCategoryData(nextCategories);
+      }
+    }
+
+    void loadCategories();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
+  useEffect(() => {
     if (!attachment) {
       setAttachmentUrl(null);
       return;
@@ -826,10 +1035,12 @@ export default function CreateTopicPage() {
   const t = translations[language];
 
   const activeCategory =
-    categories.find(
+    categoryData.find(
       (category) =>
         category.id === selectedCategory
-    ) ?? categories[0];
+    ) ??
+    categoryData[0] ??
+    categories[0];
 
   const titleValid =
     title.trim().length >= 10;
@@ -1349,7 +1560,7 @@ export default function CreateTopicPage() {
               </div>
 
               <div className={styles.categoryGrid}>
-                {categories.map(
+                {categoryData.map(
                   (category) => {
                     const active =
                       category.id ===
@@ -1383,7 +1594,7 @@ export default function CreateTopicPage() {
                         <strong>
                           {
                             category.title[
-                              language
+                            language
                             ]
                           }
                         </strong>
@@ -1392,7 +1603,7 @@ export default function CreateTopicPage() {
                           {
                             category
                               .description[
-                              language
+                            language
                             ]
                           }
                         </small>
@@ -1439,7 +1650,7 @@ export default function CreateTopicPage() {
                         type="button"
                         className={
                           selectedSubcategory ===
-                          subcategory.id
+                            subcategory.id
                             ? styles.activeSubcategory
                             : ""
                         }
@@ -1451,7 +1662,7 @@ export default function CreateTopicPage() {
                       >
                         {
                           subcategory.label[
-                            language
+                          language
                           ]
                         }
                       </button>
@@ -1484,7 +1695,7 @@ export default function CreateTopicPage() {
               <div
                 className={
                   title.length > 0 &&
-                  !titleValid
+                    !titleValid
                     ? `${styles.inputShell} ${styles.inputInvalid}`
                     : styles.inputShell
                 }
@@ -1873,9 +2084,9 @@ export default function CreateTopicPage() {
                     <span>
                       {attachment
                         ? `${Math.ceil(
-                            attachment.size /
-                              1024
-                          )} KB`
+                          attachment.size /
+                          1024
+                        )} KB`
                         : ""}
                     </span>
                   </div>
@@ -1982,9 +2193,8 @@ export default function CreateTopicPage() {
                               event.target.value
                             )
                           }
-                          placeholder={`${t.pollOption} ${
-                            index + 1
-                          }`}
+                          placeholder={`${t.pollOption} ${index + 1
+                            }`}
                         />
 
                         {pollOptions.length > 2 && (
