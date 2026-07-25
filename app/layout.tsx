@@ -1,6 +1,7 @@
 ﻿import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import AuthSessionIndicator from "@/components/auth-session-indicator";
+import PresenceTracker from "@/components/presence-tracker";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,6 +17,7 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <body>
+        <PresenceTracker />
         <AuthSessionIndicator />
         {children}
       </body>

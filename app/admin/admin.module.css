@@ -967,3 +967,373 @@
 }
 
 /* ADMIN LOGO VISUAL SIZE FIX V5 END */
+
+/* ADMIN USERS PAGE V1 START */
+
+.onlineUsersBadge {
+  display: flex;
+  min-height: 40px;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 0 14px;
+
+  color: #73dcae;
+
+  border:
+    1px solid rgba(89, 219, 167, 0.2);
+  border-radius: 12px;
+
+  background:
+    rgba(67, 207, 150, 0.06);
+
+  font-size: 10px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.onlineUsersDot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 999px;
+
+  background: #4fe5a0;
+
+  box-shadow:
+    0 0 0 4px rgba(79, 229, 160, 0.1),
+    0 0 15px rgba(79, 229, 160, 0.55);
+}
+
+.userSummaryGrid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.userSummaryCard {
+  min-height: 105px;
+
+  padding: 18px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 17px;
+
+  background:
+    rgba(255, 255, 255, 0.022);
+}
+
+.userSummaryCard span {
+  color: #a5a7b2;
+
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.userSummaryCard strong {
+  display: block;
+
+  margin-top: 14px;
+
+  color: #ffffff;
+
+  font-size: 29px;
+  line-height: 1;
+}
+
+.userList {
+  display: grid;
+  gap: 9px;
+}
+
+.userRow {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr) auto;
+
+  align-items: center;
+  gap: 20px;
+
+  min-height: 104px;
+
+  padding: 15px 16px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+
+  background:
+    rgba(255, 255, 255, 0.016);
+}
+
+.userIdentity {
+  display: flex;
+  min-width: 0;
+
+  align-items: center;
+
+  gap: 13px;
+}
+
+.userAvatarLarge {
+  position: relative;
+
+  display: grid;
+  width: 52px;
+  height: 52px;
+
+  flex: 0 0 52px;
+  place-items: center;
+
+  color: #ffffff;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #d83fe7,
+      #596fff
+    );
+
+  background-position: center;
+  background-size: cover;
+
+  font-size: 15px;
+  font-weight: 850;
+}
+
+.presenceDot {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+
+  width: 13px;
+  height: 13px;
+
+  border:
+    3px solid #11111b;
+  border-radius: 999px;
+}
+
+.presenceOnline {
+  background: #4fe5a0;
+
+  box-shadow:
+    0 0 12px rgba(79, 229, 160, 0.7);
+}
+
+.presenceOffline {
+  background: #555966;
+}
+
+.userIdentityText {
+  min-width: 0;
+}
+
+.userNameLine {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+.userNameLine strong {
+  max-width: 260px;
+
+  overflow: hidden;
+
+  color: #f3f2f6;
+
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.userIdentityText small {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #838692;
+
+  font-size: 10px;
+}
+
+.userIdentityText p {
+  margin: 7px 0 0;
+
+  font-size: 9.5px;
+}
+
+.onlineText {
+  color: #62dca4;
+  font-weight: 750;
+}
+
+.lastSeenText {
+  color: #737682;
+}
+
+.roleBadge {
+  display: inline-flex;
+  min-height: 22px;
+
+  align-items: center;
+
+  padding: 0 8px;
+
+  border-radius: 999px;
+
+  font-size: 8px;
+  font-weight: 800;
+}
+
+.roleAdmin {
+  color: #ec85f2;
+
+  border:
+    1px solid rgba(222, 91, 235, 0.2);
+
+  background:
+    rgba(214, 61, 228, 0.07);
+}
+
+.roleModerator {
+  color: #83a9ff;
+
+  border:
+    1px solid rgba(90, 126, 255, 0.2);
+
+  background:
+    rgba(71, 105, 238, 0.07);
+}
+
+.roleUser {
+  color: #a2a5b0;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.08);
+
+  background:
+    rgba(255, 255, 255, 0.025);
+}
+
+.userStats {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+.userStatBox {
+  display: grid;
+  min-width: 67px;
+  min-height: 54px;
+
+  place-content: center;
+
+  text-align: center;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.065);
+  border-radius: 12px;
+
+  background:
+    rgba(255, 255, 255, 0.018);
+}
+
+.userStatBox strong {
+  color: #ffffff;
+
+  font-size: 16px;
+}
+
+.userStatBox span {
+  margin-top: 4px;
+
+  color: #858894;
+
+  font-size: 8px;
+}
+
+.userJoined {
+  min-width: 145px;
+
+  padding-left: 12px;
+
+  border-left:
+    1px solid rgba(255, 255, 255, 0.065);
+}
+
+.userJoined span,
+.userJoined strong {
+  display: block;
+}
+
+.userJoined span {
+  color: #737682;
+
+  font-size: 8px;
+}
+
+.userJoined strong {
+  margin-top: 6px;
+
+  color: #a7a9b3;
+
+  font-size: 9px;
+  font-weight: 650;
+}
+
+@media (max-width: 760px) {
+  .userRow {
+    grid-template-columns: 1fr;
+  }
+
+  .userStats {
+    padding-left: 65px;
+  }
+}
+
+@media (max-width: 620px) {
+  .userSummaryGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .userRow {
+    padding: 14px;
+  }
+
+  .userStats {
+    display: grid;
+    grid-template-columns:
+      1fr 1fr;
+
+    padding-left: 0;
+  }
+
+  .userJoined {
+    grid-column: 1 / -1;
+
+    padding:
+      10px 0 0;
+
+    border-top:
+      1px solid rgba(255, 255, 255, 0.065);
+    border-left: 0;
+  }
+
+  .onlineUsersBadge {
+    white-space: normal;
+  }
+}
+
+/* ADMIN USERS PAGE V1 END */

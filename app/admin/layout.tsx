@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-
+import AdminNav from "@/components/admin/admin-nav";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -78,34 +78,7 @@ export default async function AdminLayout({
             YÖNETİM PANELİ
           </span>
 
-          <nav className={styles.nav}>
-            <Link
-              href="/admin"
-              className={`${styles.navLink} ${styles.navActive}`}
-            >
-              <span>Genel Bakış</span>
-            </Link>
-
-            <span className={styles.navDisabled}>
-              <span>Şikâyetler</span>
-              <small>YAKINDA</small>
-            </span>
-
-            <span className={styles.navDisabled}>
-              <span>Yorumlar</span>
-              <small>YAKINDA</small>
-            </span>
-
-            <span className={styles.navDisabled}>
-              <span>Kullanıcılar</span>
-              <small>YAKINDA</small>
-            </span>
-
-            <span className={styles.navDisabled}>
-              <span>İşlem Kayıtları</span>
-              <small>YAKINDA</small>
-            </span>
-          </nav>
+          <AdminNav />
 
           <div className={styles.adminUser}>
             <span className={styles.adminAvatar}>
