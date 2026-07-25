@@ -1241,3 +1241,610 @@
 }
 
 /* COMMENT ICON BUTTONS V18 END */
+
+/* COMMENT REPORT AND REMOVE V20 START */
+
+.reportedAction {
+    color: #f0b75e !important;
+
+    border-color:
+        rgba(240, 183, 94, 0.42) !important;
+
+    background:
+        rgba(240, 183, 94, 0.1) !important;
+
+    box-shadow:
+        0 0 16px rgba(240, 183, 94, 0.08);
+}
+
+.reportedAction:disabled {
+    cursor: default;
+    opacity: 1;
+}
+
+.removeAction:disabled,
+.reportAction:disabled {
+    cursor: wait;
+    opacity: 0.55;
+}
+
+/* COMMENT REPORT AND REMOVE V20 END */
+
+/* CUSTOM CONFIRM MODAL V21 START */
+
+.modalBackdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+
+    display: grid;
+    place-items: center;
+
+    padding: 20px;
+
+    background:
+        rgba(3, 3, 10, 0.76);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    animation:
+        modalBackdropIn 180ms ease both;
+}
+
+.confirmModal {
+    position: relative;
+
+    width: min(100%, 430px);
+
+    padding: 30px;
+
+    overflow: hidden;
+
+    text-align: center;
+
+    border:
+        1px solid rgba(218, 70, 229, 0.23);
+    border-radius: 24px;
+
+    background:
+        radial-gradient(circle at 15% 0%,
+            rgba(213, 48, 232, 0.13),
+            transparent 42%),
+        radial-gradient(circle at 100% 100%,
+            rgba(72, 100, 255, 0.12),
+            transparent 45%),
+        #0b0b14;
+
+    box-shadow:
+        0 30px 90px rgba(0, 0, 0, 0.6),
+        0 0 45px rgba(211, 54, 229, 0.07);
+
+    animation:
+        confirmModalIn 220ms ease both;
+}
+
+.confirmModal::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 15%;
+    right: 15%;
+
+    height: 1px;
+
+    background:
+        linear-gradient(90deg,
+            transparent,
+            #da49e8,
+            #6575ff,
+            transparent);
+}
+
+.confirmModalIcon {
+    display: grid;
+    width: 58px;
+    height: 58px;
+
+    place-items: center;
+
+    margin: 0 auto 17px;
+
+    color: #ff8299;
+
+    border:
+        1px solid rgba(255, 112, 137, 0.25);
+    border-radius: 18px;
+
+    background:
+        rgba(255, 76, 111, 0.075);
+
+    box-shadow:
+        0 0 26px rgba(255, 72, 108, 0.08);
+}
+
+.confirmModalIcon svg {
+    width: 25px;
+    height: 25px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.confirmModalLabel {
+    display: block;
+
+    color: #df5ee8;
+
+    font-size: 9px;
+    font-weight: 850;
+    letter-spacing: 1.5px;
+}
+
+.confirmModal h2 {
+    margin: 10px 0 0;
+
+    color: #f5f4fa;
+
+    font-size: 22px;
+    line-height: 1.3;
+}
+
+.confirmModal p {
+    max-width: 350px;
+
+    margin: 13px auto 0;
+
+    color: #9395a2;
+
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.confirmModalActions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    margin-top: 24px;
+}
+
+.confirmModalActions button {
+    display: inline-flex;
+    min-height: 46px;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 0 16px;
+
+    border-radius: 13px;
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 750;
+
+    cursor: pointer;
+
+    transition:
+        transform 160ms ease,
+        border-color 160ms ease,
+        background 160ms ease;
+}
+
+.confirmModalActions button:hover {
+    transform: translateY(-1px);
+}
+
+.confirmModalActions button:disabled {
+    cursor: wait;
+    opacity: 0.55;
+    transform: none;
+}
+
+.confirmCancelButton {
+    color: #b8bac5;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.09);
+
+    background:
+        rgba(255, 255, 255, 0.035);
+}
+
+.confirmCancelButton:hover {
+    color: #ffffff;
+
+    border-color:
+        rgba(255, 255, 255, 0.16);
+
+    background:
+        rgba(255, 255, 255, 0.06);
+}
+
+.confirmRemoveButton {
+    color: #ffffff;
+
+    border:
+        1px solid rgba(255, 105, 134, 0.28);
+
+    background:
+        linear-gradient(135deg,
+            rgba(231, 63, 100, 0.72),
+            rgba(174, 51, 154, 0.72));
+
+    box-shadow:
+        0 12px 28px rgba(208, 54, 91, 0.13);
+}
+
+.confirmRemoveButton:hover {
+    border-color:
+        rgba(255, 132, 155, 0.45);
+
+    background:
+        linear-gradient(135deg,
+            rgba(242, 68, 106, 0.86),
+            rgba(190, 54, 169, 0.84));
+}
+
+.confirmRemoveButton svg {
+    width: 16px;
+    height: 16px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+@keyframes modalBackdropIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes confirmModalIn {
+    from {
+        opacity: 0;
+        transform:
+            translateY(12px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0) scale(1);
+    }
+}
+
+:global(html[data-theme="light"]) .modalBackdrop {
+    background:
+        rgba(30, 27, 45, 0.42);
+}
+
+:global(html[data-theme="light"]) .confirmModal {
+    border-color:
+        rgba(181, 63, 200, 0.19);
+
+    background:
+        radial-gradient(circle at 15% 0%,
+            rgba(211, 60, 226, 0.09),
+            transparent 42%),
+        #ffffff;
+
+    box-shadow:
+        0 30px 80px rgba(42, 34, 63, 0.2);
+}
+
+:global(html[data-theme="light"]) .confirmModal h2 {
+    color: #27242f;
+}
+
+:global(html[data-theme="light"]) .confirmModal p {
+    color: #686a76;
+}
+
+:global(html[data-theme="light"]) .confirmCancelButton {
+    color: #62636e;
+
+    border-color:
+        rgba(42, 37, 65, 0.1);
+
+    background:
+        rgba(42, 37, 65, 0.035);
+}
+
+@media (max-width: 520px) {
+    .confirmModal {
+        padding: 25px 18px 18px;
+
+        border-radius: 20px;
+    }
+
+    .confirmModal h2 {
+        font-size: 19px;
+    }
+
+    .confirmModal p {
+        font-size: 12.5px;
+    }
+
+    .confirmModalActions {
+        grid-template-columns: 1fr;
+    }
+
+    .confirmCancelButton {
+        order: 2;
+    }
+
+    .confirmRemoveButton {
+        order: 1;
+    }
+}
+
+/* CUSTOM CONFIRM MODAL V21 END */
+
+/* COMMENT REPORT MODAL V22 START */
+
+.reportModal {
+    width: min(100%, 540px);
+}
+
+.reportModalIcon {
+    color: #f2b45e;
+
+    border-color:
+        rgba(242, 180, 94, 0.26);
+
+    background:
+        rgba(242, 180, 94, 0.075);
+}
+
+.reportSuccessIcon {
+    color: #62e1b2;
+
+    border-color:
+        rgba(83, 222, 170, 0.27);
+
+    background:
+        rgba(61, 215, 157, 0.08);
+
+    box-shadow:
+        0 0 28px rgba(61, 215, 157, 0.08);
+}
+
+.reportReasonGrid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 9px;
+
+    margin-top: 22px;
+}
+
+.reportReasonButton {
+    min-height: 44px;
+
+    padding: 9px 12px;
+
+    color: #a3a5b1;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.075);
+    border-radius: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        color 160ms ease,
+        border-color 160ms ease,
+        background 160ms ease,
+        transform 160ms ease;
+}
+
+.reportReasonButton:hover {
+    color: #ffffff;
+
+    border-color:
+        rgba(219, 78, 232, 0.25);
+
+    transform: translateY(-1px);
+}
+
+.reportReasonActive {
+    color: #ffffff !important;
+
+    border-color:
+        rgba(218, 77, 232, 0.47) !important;
+
+    background:
+        linear-gradient(135deg,
+            rgba(215, 58, 230, 0.16),
+            rgba(78, 101, 255, 0.12)) !important;
+
+    box-shadow:
+        0 0 19px rgba(211, 57, 227, 0.08);
+}
+
+.reportDetailsLabel {
+    display: block;
+
+    margin-top: 17px;
+
+    text-align: left;
+}
+
+.reportDetailsLabel>span {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #a5a7b2;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.reportDetailsLabel textarea {
+    display: block;
+    width: 100%;
+    min-height: 100px;
+
+    resize: vertical;
+
+    padding: 12px 13px;
+
+    color: #eeeeF4;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    outline: none;
+
+    background:
+        rgba(255, 255, 255, 0.022);
+
+    font: inherit;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.reportDetailsLabel textarea:focus {
+    border-color:
+        rgba(218, 72, 232, 0.38);
+
+    box-shadow:
+        0 0 0 3px rgba(213, 58, 229, 0.055);
+}
+
+.reportDetailsLabel textarea::placeholder {
+    color: #686b77;
+}
+
+.reportDetailsLabel>small {
+    display: block;
+
+    margin-top: 6px;
+
+    color: #70737f;
+
+    font-size: 9px;
+    text-align: right;
+}
+
+.reportFeedback {
+    margin: 10px 0 0 !important;
+
+    color: #ff899e !important;
+
+    font-size: 11px !important;
+    text-align: left;
+}
+
+.confirmReportButton {
+    color: #ffffff;
+
+    border:
+        1px solid rgba(217, 74, 231, 0.3);
+
+    background:
+        linear-gradient(135deg,
+            rgba(211, 57, 229, 0.76),
+            rgba(76, 98, 247, 0.76));
+
+    box-shadow:
+        0 12px 28px rgba(153, 53, 211, 0.14);
+}
+
+.confirmReportButton:hover {
+    border-color:
+        rgba(229, 102, 239, 0.46);
+
+    background:
+        linear-gradient(135deg,
+            rgba(221, 65, 237, 0.9),
+            rgba(84, 106, 255, 0.88));
+}
+
+.confirmReportButton svg {
+    width: 16px;
+    height: 16px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+:global(html[data-theme="light"]) .reportReasonButton {
+    color: #696a76;
+
+    border-color:
+        rgba(42, 37, 65, 0.1);
+
+    background:
+        rgba(42, 37, 65, 0.025);
+}
+
+:global(html[data-theme="light"]) .reportDetailsLabel textarea {
+    color: #292832;
+
+    border-color:
+        rgba(42, 37, 65, 0.11);
+
+    background:
+        rgba(42, 37, 65, 0.025);
+}
+
+@media (max-width: 520px) {
+    .reportReasonGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .reportDetailsLabel textarea {
+        font-size: 16px;
+    }
+}
+
+/* COMMENT REPORT MODAL V22 END */
+
+/* REPORT SUCCESS POLISH V23 START */
+
+.reportSuccessActions {
+    display: flex;
+    justify-content: center;
+}
+
+.reportSuccessActions .confirmReportButton {
+    width: min(100%, 235px);
+}
+
+/* Şikâyet edilmiş bayrakta bekleme imleci gösterme */
+.reportAction.reportedAction:disabled {
+    cursor: default !important;
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* REPORT SUCCESS POLISH V23 END */

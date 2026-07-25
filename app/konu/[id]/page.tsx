@@ -11,7 +11,10 @@ import { createClient } from "@/lib/supabase/client";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import {
+    useParams,
+    useRouter,
+} from "next/navigation";
 import {
     useEffect,
     useRef,
@@ -47,6 +50,27 @@ type TopicDetailRow = {
     } | null;
 };
 
+type ReactionValue = -1 | 0 | 1;
+
+type ReactionResult = {
+    like_count: number;
+    dislike_count: number;
+    user_reaction: number;
+};
+
+type ReportReason =
+    | "spam"
+    | "harassment"
+    | "hate"
+    | "illegal"
+    | "personal_information"
+    | "other";
+
+type ReportMessage =
+    | "reason"
+    | "error"
+    | null;
+
 type CommentRow = {
     id: string;
     author_id: string;
@@ -54,6 +78,7 @@ type CommentRow = {
     created_at: string;
     parent_comment_id: string | null;
     like_count: number;
+    dislike_count: number;
 
     profiles: {
         display_name: string | null;
@@ -214,6 +239,8 @@ function ReplyIcon() {
 }
 
 export default function TopicDetailPage() {
+    const router = useRouter();
+
     const params = useParams<{
         id: string;
     }>();
@@ -261,6 +288,43 @@ export default function TopicDetailPage() {
 
     const [currentUserId, setCurrentUserId] =
         useState<string | null>(null);
+
+    const [commentReactions, setCommentReactions] =
+        useState<Record<string, ReactionValue>>({});
+
+    const [reactionLoadingId, setReactionLoadingId] =
+        useState<string | null>(null);
+
+    const [reportedCommentIds, setReportedCommentIds] =
+        useState<Record<string, boolean>>({});
+
+    const [reportLoadingId, setReportLoadingId] =
+        useState<string | null>(null);
+
+    const [removeLoadingId, setRemoveLoadingId] =
+        useState<string | null>(null);
+
+    const [
+        removeConfirmComment,
+        setRemoveConfirmComment,
+    ] = useState<CommentRow | null>(null);
+
+    const [
+        reportModalComment,
+        setReportModalComment,
+    ] = useState<CommentRow | null>(null);
+
+    const [reportReason, setReportReason] =
+        useState<ReportReason | "">("");
+
+    const [reportDetails, setReportDetails] =
+        useState("");
+
+    const [reportMessage, setReportMessage] =
+        useState<ReportMessage>(null);
+
+    const [reportCompleted, setReportCompleted] =
+        useState(false);
 
     useEffect(() => {
         const savedLanguage =
@@ -414,10 +478,11 @@ export default function TopicDetailPage() {
         created_at,
         parent_comment_id,
         like_count,
-        profiles (
-          display_name,
-          username
-        )
+        dislike_count,
+        profiles:profiles!topic_comments_author_id_fkey (
+  display_name,
+  username
+)
       `)
                 .eq("topic_id", topicId)
                 .eq("status", "published")
@@ -453,6 +518,115 @@ export default function TopicDetailPage() {
             isActive = false;
         };
     }, [topicId]);
+
+    useEffect(() => {
+        let isActive = true;
+
+        async function loadUserReactions() {
+            if (!currentUserId) {
+                setCommentReactions({});
+                return;
+            }
+
+            const supabase = createClient();
+
+            const { data, error } = await supabase
+                .from("comment_reactions")
+                .select(`
+        comment_id,
+        reaction
+      `)
+                .eq("user_id", currentUserId);
+
+            if (!isActive) {
+                return;
+            }
+
+            if (error) {
+                console.error(
+                    "Yorum tepkileri alınamadı:",
+                    error.message
+                );
+
+                setCommentReactions({});
+                return;
+            }
+
+            const nextReactions: Record<
+                string,
+                ReactionValue
+            > = {};
+
+            for (const item of data ?? []) {
+                nextReactions[item.comment_id] =
+                    item.reaction === 1
+                        ? 1
+                        : item.reaction === -1
+                            ? -1
+                            : 0;
+            }
+
+            setCommentReactions(nextReactions);
+        }
+
+        void loadUserReactions();
+
+        return () => {
+            isActive = false;
+        };
+    }, [currentUserId]);
+
+    useEffect(() => {
+        let isActive = true;
+
+        async function loadReportedComments() {
+            if (!currentUserId) {
+                setReportedCommentIds({});
+                return;
+            }
+
+            const supabase = createClient();
+
+            const { data, error } = await supabase
+                .from("comment_reports")
+                .select("comment_id")
+                .eq("reporter_id", currentUserId);
+
+            if (!isActive) {
+                return;
+            }
+
+            if (error) {
+                console.error(
+                    "Şikâyet kayıtları alınamadı:",
+                    error.message
+                );
+
+                setReportedCommentIds({});
+                return;
+            }
+
+            const nextReportedComments: Record<
+                string,
+                boolean
+            > = {};
+
+            for (const item of data ?? []) {
+                nextReportedComments[item.comment_id] =
+                    true;
+            }
+
+            setReportedCommentIds(
+                nextReportedComments
+            );
+        }
+
+        void loadReportedComments();
+
+        return () => {
+            isActive = false;
+        };
+    }, [currentUserId]);
 
     function toggleTheme() {
         const nextTheme: Theme =
@@ -512,6 +686,285 @@ export default function TopicDetailPage() {
         });
     }
 
+    async function handleCommentReaction(
+        commentId: string,
+        reaction: 1 | -1
+    ) {
+        if (!currentUserId) {
+            router.push("/giris");
+            return;
+        }
+
+        if (reactionLoadingId === commentId) {
+            return;
+        }
+
+        setReactionLoadingId(commentId);
+
+        try {
+            const supabase = createClient();
+
+            const { data, error } = await supabase
+                .rpc("toggle_comment_reaction", {
+                    p_comment_id: commentId,
+                    p_reaction: reaction,
+                })
+                .single();
+
+            if (error || !data) {
+                console.error(
+                    "Yorum tepkisi kaydedilemedi:",
+                    error?.message
+                );
+
+                window.alert(
+                    language === "tr"
+                        ? "İşlem gerçekleştirilemedi. Lütfen tekrar dene."
+                        : "The action could not be completed. Please try again."
+                );
+
+                return;
+            }
+
+            const result =
+                data as unknown as ReactionResult;
+
+            const nextReaction: ReactionValue =
+                result.user_reaction === 1
+                    ? 1
+                    : result.user_reaction === -1
+                        ? -1
+                        : 0;
+
+            setComments((current) =>
+                current.map((comment) =>
+                    comment.id === commentId
+                        ? {
+                            ...comment,
+                            like_count:
+                                result.like_count ?? 0,
+                            dislike_count:
+                                result.dislike_count ?? 0,
+                        }
+                        : comment
+                )
+            );
+
+            setCommentReactions((current) => ({
+                ...current,
+                [commentId]: nextReaction,
+            }));
+        } catch (error) {
+            console.error(
+                "Beklenmeyen tepki hatası:",
+                error
+            );
+
+            window.alert(
+                language === "tr"
+                    ? "İşlem gerçekleştirilemedi. Lütfen tekrar dene."
+                    : "The action could not be completed. Please try again."
+            );
+        } finally {
+            setReactionLoadingId(null);
+        }
+    }
+
+    function openReportModal(
+        comment: CommentRow
+    ) {
+        if (!currentUserId) {
+            router.push("/giris");
+            return;
+        }
+
+        if (
+            currentUserId === comment.author_id ||
+            reportedCommentIds[comment.id]
+        ) {
+            return;
+        }
+
+        setReportModalComment(comment);
+        setReportReason("");
+        setReportDetails("");
+        setReportMessage(null);
+        setReportCompleted(false);
+    }
+
+    function closeReportModal() {
+        if (reportLoadingId) {
+            return;
+        }
+
+        setReportModalComment(null);
+        setReportReason("");
+        setReportDetails("");
+        setReportMessage(null);
+        setReportCompleted(false);
+    }
+
+    async function handleReportComment() {
+        const comment = reportModalComment;
+
+        if (!comment) {
+            return;
+        }
+
+        if (!currentUserId) {
+            router.push("/giris");
+            return;
+        }
+
+        if (!reportReason) {
+            setReportMessage("reason");
+            return;
+        }
+
+        if (reportLoadingId === comment.id) {
+            return;
+        }
+
+        setReportLoadingId(comment.id);
+        setReportMessage(null);
+
+        try {
+            const supabase = createClient();
+
+            const { error } = await supabase.rpc(
+                "submit_comment_report",
+                {
+                    p_comment_id: comment.id,
+                    p_reason: reportReason,
+                    p_details:
+                        reportDetails.trim() ||
+                        null,
+                }
+            );
+
+            if (error) {
+                console.error(
+                    "Yorum şikâyet edilemedi:",
+                    error.message
+                );
+
+                setReportMessage("error");
+                return;
+            }
+
+            setReportedCommentIds((current) => ({
+                ...current,
+                [comment.id]: true,
+            }));
+
+            setReportCompleted(true);
+        } catch (error) {
+            console.error(
+                "Beklenmeyen şikâyet hatası:",
+                error
+            );
+
+            setReportMessage("error");
+        } finally {
+            setReportLoadingId(null);
+        }
+    }
+
+    async function handleRemoveComment(
+        comment: CommentRow
+    ) {
+        if (!currentUserId) {
+            router.push("/giris");
+            return;
+        }
+
+        if (currentUserId !== comment.author_id) {
+            window.alert(
+                language === "tr"
+                    ? "Yalnızca kendi yorumunu kaldırabilirsin."
+                    : "You can only remove your own comment."
+            );
+
+            return;
+        }
+
+
+        if (removeLoadingId === comment.id) {
+            return;
+        }
+
+        setRemoveLoadingId(comment.id);
+
+        try {
+            const supabase = createClient();
+
+            const { error } = await supabase.rpc(
+                "soft_delete_comment",
+                {
+                    p_comment_id: comment.id,
+                }
+            );
+
+            if (error) {
+                console.error(
+                    "Yorum kaldırılamadı:",
+                    error.message
+                );
+
+                window.alert(
+                    language === "tr"
+                        ? "Yorum kaldırılamadı. Lütfen tekrar dene."
+                        : "The comment could not be removed. Please try again."
+                );
+
+                return;
+            }
+
+            setComments((current) =>
+                current.filter(
+                    (currentComment) =>
+                        currentComment.id !== comment.id
+                )
+            );
+
+            setTopic((current) =>
+                current
+                    ? {
+                        ...current,
+                        comment_count: Math.max(
+                            (current.comment_count ?? 0) - 1,
+                            0
+                        ),
+                    }
+                    : current
+            );
+
+            setCommentReactions((current) => {
+                const next = { ...current };
+                delete next[comment.id];
+                return next;
+            });
+
+            if (replyingTo?.id === comment.id) {
+                setReplyingTo(null);
+            }
+        } catch (error) {
+            console.error(
+                "Beklenmeyen yorum kaldırma hatası:",
+                error
+            );
+
+            window.alert(
+                language === "tr"
+                    ? "Yorum kaldırılamadı. Lütfen tekrar dene."
+                    : "The comment could not be removed. Please try again."
+            );
+        } finally {
+            setRemoveLoadingId(null);
+        }
+    }
+
+
     async function handleCommentSubmit(
         event: FormEvent<HTMLFormElement>
     ) {
@@ -561,10 +1014,11 @@ export default function TopicDetailPage() {
         created_at,
         parent_comment_id,
         like_count,
-        profiles (
-          display_name,
-          username
-        )
+        dislike_count,
+        profiles:profiles!topic_comments_author_id_fkey (
+  display_name,
+  username
+)
       `)
                 .single();
 
@@ -1023,7 +1477,22 @@ export default function TopicDetailPage() {
                                                 <div className={styles.commentActions}>
                                                     <button
                                                         type="button"
-                                                        className={styles.commentAction}
+                                                        className={`${styles.commentAction} ${commentReactions[comment.id] === 1
+                                                            ? styles.likeActive
+                                                            : ""
+                                                            }`}
+                                                        onClick={() =>
+                                                            void handleCommentReaction(
+                                                                comment.id,
+                                                                1
+                                                            )
+                                                        }
+                                                        disabled={
+                                                            reactionLoadingId === comment.id
+                                                        }
+                                                        aria-pressed={
+                                                            commentReactions[comment.id] === 1
+                                                        }
                                                         aria-label={
                                                             language === "tr"
                                                                 ? "Yorumu beğen"
@@ -1036,11 +1505,32 @@ export default function TopicDetailPage() {
                                                         }
                                                     >
                                                         <LikeIcon />
+
+                                                        {comment.like_count > 0 && (
+                                                            <small className={styles.actionCount}>
+                                                                {comment.like_count}
+                                                            </small>
+                                                        )}
                                                     </button>
 
                                                     <button
                                                         type="button"
-                                                        className={styles.commentAction}
+                                                        className={`${styles.commentAction} ${commentReactions[comment.id] === -1
+                                                            ? styles.dislikeActive
+                                                            : ""
+                                                            }`}
+                                                        onClick={() =>
+                                                            void handleCommentReaction(
+                                                                comment.id,
+                                                                -1
+                                                            )
+                                                        }
+                                                        disabled={
+                                                            reactionLoadingId === comment.id
+                                                        }
+                                                        aria-pressed={
+                                                            commentReactions[comment.id] === -1
+                                                        }
                                                         aria-label={
                                                             language === "tr"
                                                                 ? "Yorumu beğenme"
@@ -1053,6 +1543,12 @@ export default function TopicDetailPage() {
                                                         }
                                                     >
                                                         <DislikeIcon />
+
+                                                        {comment.dislike_count > 0 && (
+                                                            <small className={styles.actionCount}>
+                                                                {comment.dislike_count}
+                                                            </small>
+                                                        )}
                                                     </button>
 
                                                     <button
@@ -1075,27 +1571,58 @@ export default function TopicDetailPage() {
                                                         <ReplyIcon />
                                                     </button>
 
-                                                    <button
-                                                        type="button"
-                                                        className={`${styles.commentAction} ${styles.reportAction}`}
-                                                        aria-label={
-                                                            language === "tr"
-                                                                ? "Yorumu şikâyet et"
-                                                                : "Report comment"
-                                                        }
-                                                        title={
-                                                            language === "tr"
-                                                                ? "Şikâyet Et"
-                                                                : "Report"
-                                                        }
-                                                    >
-                                                        <ReportIcon />
-                                                    </button>
+                                                    {currentUserId !== comment.author_id && (
+                                                        <button
+                                                            type="button"
+                                                            className={`${styles.commentAction} ${styles.reportAction
+                                                                } ${reportedCommentIds[comment.id]
+                                                                    ? styles.reportedAction
+                                                                    : ""
+                                                                }`}
+                                                            onClick={() =>
+                                                                openReportModal(comment)
+                                                            }
+                                                            disabled={
+                                                                reportLoadingId === comment.id ||
+                                                                reportedCommentIds[comment.id]
+                                                            }
+                                                            aria-pressed={
+                                                                reportedCommentIds[comment.id] ??
+                                                                false
+                                                            }
+                                                            aria-label={
+                                                                reportedCommentIds[comment.id]
+                                                                    ? language === "tr"
+                                                                        ? "Yorum şikâyet edildi"
+                                                                        : "Comment reported"
+                                                                    : language === "tr"
+                                                                        ? "Yorumu şikâyet et"
+                                                                        : "Report comment"
+                                                            }
+                                                            title={
+                                                                reportedCommentIds[comment.id]
+                                                                    ? language === "tr"
+                                                                        ? "Şikâyet Edildi"
+                                                                        : "Reported"
+                                                                    : language === "tr"
+                                                                        ? "Şikâyet Et"
+                                                                        : "Report"
+                                                            }
+                                                        >
+                                                            <ReportIcon />
+                                                        </button>
+                                                    )}
 
                                                     {currentUserId === comment.author_id && (
                                                         <button
                                                             type="button"
                                                             className={`${styles.commentAction} ${styles.removeAction}`}
+                                                            onClick={() =>
+                                                                setRemoveConfirmComment(comment)
+                                                            }
+                                                            disabled={
+                                                                removeLoadingId === comment.id
+                                                            }
                                                             aria-label={
                                                                 language === "tr"
                                                                     ? "Yorumu kaldır"
@@ -1120,6 +1647,362 @@ export default function TopicDetailPage() {
                     </>
                 )}
             </div>
+
+            {reportModalComment && (
+                <div
+                    className={styles.modalBackdrop}
+                    onMouseDown={closeReportModal}
+                >
+                    <section
+                        className={`${styles.confirmModal} ${styles.reportModal}`}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="report-comment-title"
+                        onMouseDown={(event) =>
+                            event.stopPropagation()
+                        }
+                    >
+                        <div
+                            className={`${styles.confirmModalIcon} ${reportCompleted
+                                ? styles.reportSuccessIcon
+                                : styles.reportModalIcon
+                                }`}
+                        >
+                            <ReportIcon />
+                        </div>
+
+                        <span
+                            className={
+                                styles.confirmModalLabel
+                            }
+                        >
+                            {language === "tr"
+                                ? "TOPLULUK GÜVENLİĞİ"
+                                : "COMMUNITY SAFETY"}
+                        </span>
+
+                        {reportCompleted ? (
+                            <>
+                                <h2 id="report-comment-title">
+                                    {language === "tr"
+                                        ? "Şikâyetin iletildi"
+                                        : "Report submitted"}
+                                </h2>
+
+                                <p>
+                                    {language === "tr"
+                                        ? "Bildirimin moderasyon sistemine kaydedildi. İnceleme sonucunda gerekli işlem uygulanacaktır."
+                                        : "Your report has been recorded for moderation review."}
+                                </p>
+
+                                <div
+                                    className={`${styles.confirmModalActions} ${styles.reportSuccessActions}`
+                                    }
+                                >
+                                    <button
+                                        type="button"
+                                        className={
+                                            styles.confirmReportButton
+                                        }
+                                        onClick={closeReportModal}
+                                    >
+                                        {language === "tr"
+                                            ? "Tamam"
+                                            : "Done"}
+                                    </button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <h2 id="report-comment-title">
+                                    {language === "tr"
+                                        ? "Bu yorumu neden şikâyet ediyorsun?"
+                                        : "Why are you reporting this comment?"}
+                                </h2>
+
+                                <p>
+                                    {language === "tr"
+                                        ? "En uygun nedeni seç. Bildirimin yorum sahibine gösterilmez."
+                                        : "Select the most appropriate reason. Your report will not be shown to the comment author."}
+                                </p>
+
+                                <div
+                                    className={
+                                        styles.reportReasonGrid
+                                    }
+                                >
+                                    {[
+                                        {
+                                            value: "spam",
+                                            tr: "Spam",
+                                            en: "Spam",
+                                        },
+                                        {
+                                            value: "harassment",
+                                            tr: "Taciz veya zorbalık",
+                                            en: "Harassment",
+                                        },
+                                        {
+                                            value: "hate",
+                                            tr: "Nefret söylemi",
+                                            en: "Hate speech",
+                                        },
+                                        {
+                                            value: "illegal",
+                                            tr: "Yasadışı içerik",
+                                            en: "Illegal content",
+                                        },
+                                        {
+                                            value:
+                                                "personal_information",
+                                            tr: "Kişisel bilgi",
+                                            en: "Personal information",
+                                        },
+                                        {
+                                            value: "other",
+                                            tr: "Diğer",
+                                            en: "Other",
+                                        },
+                                    ].map((reason) => {
+                                        const value =
+                                            reason.value as ReportReason;
+
+                                        return (
+                                            <button
+                                                key={value}
+                                                type="button"
+                                                className={`${styles.reportReasonButton} ${reportReason ===
+                                                    value
+                                                    ? styles.reportReasonActive
+                                                    : ""
+                                                    }`}
+                                                aria-pressed={
+                                                    reportReason ===
+                                                    value
+                                                }
+                                                onClick={() => {
+                                                    setReportReason(
+                                                        value
+                                                    );
+
+                                                    setReportMessage(
+                                                        null
+                                                    );
+                                                }}
+                                            >
+                                                {language === "tr"
+                                                    ? reason.tr
+                                                    : reason.en}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+
+                                <label
+                                    className={
+                                        styles.reportDetailsLabel
+                                    }
+                                >
+                                    <span>
+                                        {language === "tr"
+                                            ? "Ek açıklama (isteğe bağlı)"
+                                            : "Additional details (optional)"}
+                                    </span>
+
+                                    <textarea
+                                        value={reportDetails}
+                                        maxLength={1000}
+                                        placeholder={
+                                            language === "tr"
+                                                ? "Moderasyon ekibine yardımcı olacak kısa bir açıklama yaz..."
+                                                : "Add a short explanation for the moderation team..."
+                                        }
+                                        onChange={(event) => {
+                                            setReportDetails(
+                                                event.target.value
+                                            );
+
+                                            setReportMessage(
+                                                null
+                                            );
+                                        }}
+                                    />
+
+                                    <small>
+                                        {reportDetails.length}
+                                        /1000
+                                    </small>
+                                </label>
+
+                                {reportMessage ===
+                                    "reason" && (
+                                        <p
+                                            className={
+                                                styles.reportFeedback
+                                            }
+                                        >
+                                            {language === "tr"
+                                                ? "Lütfen bir şikâyet nedeni seç."
+                                                : "Please select a report reason."}
+                                        </p>
+                                    )}
+
+                                {reportMessage ===
+                                    "error" && (
+                                        <p
+                                            className={
+                                                styles.reportFeedback
+                                            }
+                                        >
+                                            {language === "tr"
+                                                ? "Şikâyet gönderilemedi. Lütfen tekrar dene."
+                                                : "The report could not be submitted. Please try again."}
+                                        </p>
+                                    )}
+
+                                <div
+                                    className={
+                                        styles.confirmModalActions
+                                    }
+                                >
+                                    <button
+                                        type="button"
+                                        className={
+                                            styles.confirmCancelButton
+                                        }
+                                        onClick={
+                                            closeReportModal
+                                        }
+                                        disabled={
+                                            reportLoadingId ===
+                                            reportModalComment.id
+                                        }
+                                    >
+                                        {language === "tr"
+                                            ? "Vazgeç"
+                                            : "Cancel"}
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        className={
+                                            styles.confirmReportButton
+                                        }
+                                        disabled={
+                                            !reportReason ||
+                                            reportLoadingId ===
+                                            reportModalComment.id
+                                        }
+                                        onClick={() =>
+                                            void handleReportComment()
+                                        }
+                                    >
+                                        <ReportIcon />
+
+                                        {reportLoadingId ===
+                                            reportModalComment.id
+                                            ? language === "tr"
+                                                ? "Gönderiliyor..."
+                                                : "Submitting..."
+                                            : language === "tr"
+                                                ? "Şikâyeti Gönder"
+                                                : "Submit Report"}
+                                    </button>
+                                </div>
+                            </>
+                        )}
+                    </section>
+                </div>
+            )}
+
+            {removeConfirmComment && (
+                <div
+                    className={styles.modalBackdrop}
+                    onMouseDown={() =>
+                        setRemoveConfirmComment(null)
+                    }
+                >
+                    <section
+                        className={styles.confirmModal}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="remove-comment-title"
+                        onMouseDown={(event) =>
+                            event.stopPropagation()
+                        }
+                    >
+                        <div className={styles.confirmModalIcon}>
+                            <RemoveIcon />
+                        </div>
+
+                        <span className={styles.confirmModalLabel}>
+                            {language === "tr"
+                                ? "YORUM YÖNETİMİ"
+                                : "COMMENT MANAGEMENT"}
+                        </span>
+
+                        <h2 id="remove-comment-title">
+                            {language === "tr"
+                                ? "Yorumu kaldırmak istiyor musun?"
+                                : "Remove this comment?"}
+                        </h2>
+
+                        <p>
+                            {language === "tr"
+                                ? "Bu yorum toplulukta artık görünmeyecek. Kayıt, güvenlik ve moderasyon amacıyla sistemde korunacaktır."
+                                : "This comment will no longer be visible to the community. It will remain stored for security and moderation purposes."}
+                        </p>
+
+                        <div className={styles.confirmModalActions}>
+                            <button
+                                type="button"
+                                className={styles.confirmCancelButton}
+                                onClick={() =>
+                                    setRemoveConfirmComment(null)
+                                }
+                                disabled={
+                                    removeLoadingId ===
+                                    removeConfirmComment.id
+                                }
+                            >
+                                {language === "tr"
+                                    ? "Vazgeç"
+                                    : "Cancel"}
+                            </button>
+
+                            <button
+                                type="button"
+                                className={styles.confirmRemoveButton}
+                                disabled={
+                                    removeLoadingId ===
+                                    removeConfirmComment.id
+                                }
+                                onClick={() => {
+                                    const selectedComment =
+                                        removeConfirmComment;
+
+                                    void handleRemoveComment(
+                                        selectedComment
+                                    ).finally(() => {
+                                        setRemoveConfirmComment(null);
+                                    });
+                                }}
+                            >
+                                <RemoveIcon />
+
+                                {removeLoadingId ===
+                                    removeConfirmComment.id
+                                    ? language === "tr"
+                                        ? "Kaldırılıyor..."
+                                        : "Removing..."
+                                    : language === "tr"
+                                        ? "Yorumu Kaldır"
+                                        : "Remove Comment"}
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            )}
 
             <ForumFooter />
 
