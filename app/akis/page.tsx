@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import ForumFooter from "@/components/forum-footer";
+import { createClient } from "@/lib/supabase/client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -14,6 +15,7 @@ type Language = "tr" | "en";
 type Theme = "light" | "dark";
 
 type Post = {
+  id?: string;
   icon: string;
   iconClass: string;
   titleTr: string;
@@ -25,6 +27,30 @@ type Post = {
   timeEn: string;
   comments: string;
   views: string;
+};
+
+type TopicRow = {
+  id: string;
+  title: string;
+  created_at: string;
+  comment_count: number;
+  view_count: number;
+
+  categories: {
+    id: number;
+    slug: string;
+    name: string;
+
+    category_groups: {
+      slug: string;
+      name: string;
+    } | null;
+  } | null;
+
+  profiles: {
+    display_name: string | null;
+    username: string | null;
+  } | null;
 };
 
 const posts: Post[] = [
@@ -120,6 +146,162 @@ const posts: Post[] = [
     views: "410",
   },
 ];
+
+const categoryVisualMap: Record<
+  string,
+  {
+    icon: string;
+    iconClass: string;
+  }
+> = {
+  platformlar: {
+    icon: "◎",
+    iconClass: "social",
+  },
+
+  "icerik-uretimi": {
+    icon: "AI",
+    iconClass: "ai",
+  },
+
+  buyume: {
+    icon: "↗",
+    iconClass: "social",
+  },
+
+  "para-kazanma": {
+    icon: "₺",
+    iconClass: "business",
+  },
+
+  egitim: {
+    icon: "▶",
+    iconClass: "video",
+  },
+
+  yasal: {
+    icon: "§",
+    iconClass: "business",
+  },
+};
+
+const subcategoryEnglishMap: Record<
+  string,
+  string
+> = {
+  instagram: "Instagram",
+  tiktok: "TikTok",
+  youtube: "YouTube",
+  "yapay-zeka": "Artificial Intelligence",
+  "video-edit": "Video Editing",
+  "kamera-ekipman": "Camera & Equipment",
+  "thumbnail-kapak-tasarimi":
+    "Thumbnail & Cover Design",
+  seo: "SEO",
+  algoritmalar: "Algorithms",
+  "hashtag-anahtar-kelimeler":
+    "Hashtags & Keywords",
+  "viral-analizleri": "Viral Analysis",
+  "marka-is-birlikleri":
+    "Brand Collaborations",
+  ugc: "UGC",
+  affiliate: "Affiliate",
+  "youtube-para-kazanma":
+    "YouTube Monetization",
+  "tiktok-para-kazanma":
+    "TikTok Monetization",
+  "reklam-kurallari":
+    "Advertising Rules",
+  "vergi-mevzuati":
+    "Tax Regulations",
+  sozlesmeler: "Contracts",
+  "telif-haklari": "Copyright",
+};
+
+function formatRelativeTime(
+  value: string,
+  language: Language
+) {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return language === "tr"
+      ? "Az önce"
+      : "Just now";
+  }
+
+  const differenceInSeconds = Math.round(
+    (date.getTime() - Date.now()) / 1000
+  );
+
+  const formatter =
+    new Intl.RelativeTimeFormat(language, {
+      numeric: "auto",
+    });
+
+  const absoluteSeconds = Math.abs(
+    differenceInSeconds
+  );
+
+  if (absoluteSeconds < 60) {
+    return language === "tr"
+      ? "Az önce"
+      : "Just now";
+  }
+
+  const differenceInMinutes = Math.round(
+    differenceInSeconds / 60
+  );
+
+  if (Math.abs(differenceInMinutes) < 60) {
+    return formatter.format(
+      differenceInMinutes,
+      "minute"
+    );
+  }
+
+  const differenceInHours = Math.round(
+    differenceInMinutes / 60
+  );
+
+  if (Math.abs(differenceInHours) < 24) {
+    return formatter.format(
+      differenceInHours,
+      "hour"
+    );
+  }
+
+  const differenceInDays = Math.round(
+    differenceInHours / 24
+  );
+
+  if (Math.abs(differenceInDays) < 30) {
+    return formatter.format(
+      differenceInDays,
+      "day"
+    );
+  }
+
+  const differenceInMonths = Math.round(
+    differenceInDays / 30
+  );
+
+  if (Math.abs(differenceInMonths) < 12) {
+    return formatter.format(
+      differenceInMonths,
+      "month"
+    );
+  }
+
+  const differenceInYears = Math.round(
+    differenceInMonths / 12
+  );
+
+  return formatter.format(
+    differenceInYears,
+    "year"
+  );
+}
 
 const copy = {
   tr: {
@@ -413,6 +595,12 @@ export default function FeedPage() {
   const [theme, setTheme] = useState<Theme>("dark");
   const [shared, setShared] = useState(false);
 
+  const [topicPosts, setTopicPosts] =
+    useState<Post[]>([]);
+
+  const [topicsLoading, setTopicsLoading] =
+    useState(true);
+
   useEffect(() => {
     const savedLanguage = getForumLanguage();
 
@@ -433,6 +621,133 @@ export default function FeedPage() {
       document.documentElement.dataset.theme = "dark";
     }
   }, []);
+
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadTopics() {
+      setTopicsLoading(true);
+
+      const supabase = createClient();
+
+      const { data, error } = await supabase
+        .from("topics")
+        .select(`
+        id,
+        title,
+        created_at,
+        comment_count,
+        view_count,
+        categories (
+          id,
+          slug,
+          name,
+          category_groups (
+            slug,
+            name
+          )
+        ),
+        profiles (
+          display_name,
+          username
+        )
+      `)
+        .eq("status", "published")
+        .order("is_pinned", {
+          ascending: false,
+        })
+        .order("created_at", {
+          ascending: false,
+        })
+        .limit(20);
+
+      if (!isActive) {
+        return;
+      }
+
+      if (error) {
+        console.error(
+          "Akış konuları alınamadı:",
+          error.message
+        );
+
+        setTopicsLoading(false);
+        return;
+      }
+
+      const topicRows =
+        (data ?? []) as unknown as TopicRow[];
+
+      const nextPosts = topicRows.map(
+        (topic) => {
+          const groupSlug =
+            topic.categories?.category_groups
+              ?.slug ?? "";
+
+          const visual =
+            categoryVisualMap[groupSlug] ?? {
+              icon: "#",
+              iconClass: "social",
+            };
+
+          const categorySlug =
+            topic.categories?.slug ?? "";
+
+          const categoryName =
+            topic.categories?.name ??
+            (language === "tr"
+              ? "Genel"
+              : "General");
+
+          const authorName =
+            topic.profiles?.display_name?.trim() ||
+            topic.profiles?.username
+              ?.replace(/^@/, "")
+              .trim() ||
+            (language === "tr"
+              ? "ForumFenomen Üyesi"
+              : "ForumFenomen Member");
+
+          return {
+            id: topic.id,
+            icon: visual.icon,
+            iconClass: visual.iconClass,
+            titleTr: topic.title,
+            titleEn: topic.title,
+            categoryTr: categoryName,
+            categoryEn:
+              subcategoryEnglishMap[
+              categorySlug
+              ] ?? categoryName,
+            author: authorName,
+            timeTr: formatRelativeTime(
+              topic.created_at,
+              "tr"
+            ),
+            timeEn: formatRelativeTime(
+              topic.created_at,
+              "en"
+            ),
+            comments: String(
+              topic.comment_count ?? 0
+            ),
+            views: String(
+              topic.view_count ?? 0
+            ),
+          };
+        }
+      );
+
+      setTopicPosts(nextPosts);
+      setTopicsLoading(false);
+    }
+
+    void loadTopics();
+
+    return () => {
+      isActive = false;
+    };
+  }, [language]);
 
   const toggleTheme = () => {
     const nextTheme: Theme =
@@ -476,6 +791,11 @@ export default function FeedPage() {
     }
   };
   const t = copy[language];
+
+  const displayPosts =
+    topicPosts.length > 0
+      ? topicPosts
+      : posts;
 
   return (
     <main className="ff-feed-page">
@@ -565,7 +885,7 @@ export default function FeedPage() {
               <span>{t.heroAccent}</span>
             </h1>
 
-<div className="ff-hero-socials">
+            <div className="ff-hero-socials">
               <a
                 href="https://www.instagram.com/forumfenomen/"
                 target="_blank"
@@ -650,9 +970,15 @@ export default function FeedPage() {
             <button type="button">{t.seeAll} ›</button>
           </div>
 
-          <div className="ff-topic-list">
-            {posts.map((post) => (
-              <article className="ff-topic-card" key={post.titleTr}>
+          <div
+            className="ff-topic-list"
+            aria-busy={topicsLoading}
+          >
+            {displayPosts.map((post) => (
+              <article
+                className="ff-topic-card"
+                key={post.id ?? post.titleTr}
+              >
                 <div className={`ff-topic-icon ${post.iconClass}`}>
                   {post.icon}
                 </div>
