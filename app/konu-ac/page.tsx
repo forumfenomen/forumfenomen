@@ -181,8 +181,15 @@ const translations = {
     loadDraft: "Taslağı Yükle",
     preview: "Ön İzleme",
     publish: "Konuyu Yayınla",
+    publishing: "Yayınlanıyor...",
+    publishSuccess:
+      "Konu başarıyla yayınlandı.",
+    publishError:
+      "Konu yayınlanırken bir hata oluştu. Lütfen tekrar dene.",
+    sessionExpired:
+      "Oturumun bulunamadı. Konu yayınlamak için tekrar giriş yapmalısın.",
     publishingNote:
-      "Yayınlama işlemi üyelik sistemi bağlandıktan sonra aktif olacak.",
+      "Konu yayınlandığında ForumFenomen topluluğunda görünür.",
     savedMessage:
       "Taslak bu tarayıcıya başarıyla kaydedildi.",
     loadedMessage:
@@ -264,8 +271,15 @@ const translations = {
     loadDraft: "Load Draft",
     preview: "Preview",
     publish: "Publish Topic",
+    publishing: "Publishing...",
+    publishSuccess:
+      "The topic was published successfully.",
+    publishError:
+      "An error occurred while publishing the topic. Please try again.",
+    sessionExpired:
+      "Your session could not be found. Please sign in again to publish a topic.",
     publishingNote:
-      "Publishing will become active after the membership system is connected.",
+      "Once published, the topic will appear in the ForumFenomen community.",
     savedMessage:
       "The draft was successfully saved in this browser.",
     loadedMessage:
@@ -758,6 +772,85 @@ function getPlainTextFromHtml(html: string) {
     .replace(/\s+/g, " ")
     .trim();
 }
+
+function sanitizeTopicHtml(html: string) {
+  const parser = new DOMParser();
+  const documentNode = parser.parseFromString(
+    html,
+    "text/html"
+  );
+
+  const allowedTags = new Set([
+    "P",
+    "BR",
+    "STRONG",
+    "B",
+    "EM",
+    "I",
+    "H3",
+    "UL",
+    "OL",
+    "LI",
+    "BLOCKQUOTE",
+    "A",
+  ]);
+
+  documentNode.body
+    .querySelectorAll("*")
+    .forEach((element) => {
+      if (!allowedTags.has(element.tagName)) {
+        element.replaceWith(
+          ...Array.from(element.childNodes)
+        );
+
+        return;
+      }
+
+      Array.from(element.attributes).forEach(
+        (attribute) => {
+          const attributeName =
+            attribute.name.toLowerCase();
+
+          if (
+            element.tagName === "A" &&
+            attributeName === "href"
+          ) {
+            return;
+          }
+
+          element.removeAttribute(
+            attribute.name
+          );
+        }
+      );
+
+      if (element.tagName === "A") {
+        const href =
+          element.getAttribute("href")?.trim() ??
+          "";
+
+        if (
+          !href.startsWith("https://") &&
+          !href.startsWith("http://")
+        ) {
+          element.removeAttribute("href");
+        } else {
+          element.setAttribute(
+            "target",
+            "_blank"
+          );
+
+          element.setAttribute(
+            "rel",
+            "noopener noreferrer nofollow"
+          );
+        }
+      }
+    });
+
+  return documentNode.body.innerHTML.trim();
+}
+
 const editorEmojis = [
   "😀", "😁", "😂", "🤣", "😊", "😍", "🥰", "😎",
   "🤔", "😮", "😢", "😭", "😡", "🤯", "🥳", "🤩",
@@ -823,6 +916,12 @@ export default function CreateTopicPage() {
 
   const [loginNotice, setLoginNotice] =
     useState(false);
+
+  const [isPublishing, setIsPublishing] =
+    useState(false);
+
+  const [publishMessage, setPublishMessage] =
+    useState<"success" | "error" | null>(null);
 
   const [draftMessage, setDraftMessage] =
     useState<"saved" | "loaded" | null>(null);
@@ -1053,9 +1152,14 @@ export default function CreateTopicPage() {
   const contentValid =
     contentText.length >= 40;
 
+  const activeSubcategory =
+    activeCategory.subcategories.find(
+      (subcategory) =>
+        subcategory.id === selectedSubcategory
+    );
+
   const subcategoryValid =
-    activeCategory.subcategories.length === 0 ||
-    Boolean(selectedSubcategory);
+    Boolean(activeSubcategory?.databaseId);
 
   const completedSteps = [
     Boolean(selectedCategory),
@@ -1073,10 +1177,7 @@ export default function CreateTopicPage() {
     subcategoryValid;
 
   const activeSubcategoryLabel =
-    activeCategory.subcategories.find(
-      (subcategory) =>
-        subcategory.id === selectedSubcategory
-    )?.label[language];
+    activeSubcategory?.label[language];
 
   function toggleTheme() {
     const nextTheme: Theme =
@@ -1363,17 +1464,94 @@ export default function CreateTopicPage() {
     }
   }
 
-  function handlePublish() {
-    if (!canPublish) {
+  async function handlePublish() {
+    if (
+      !canPublish ||
+      !activeSubcategory?.databaseId ||
+      isPublishing
+    ) {
       return;
     }
 
-    setLoginNotice(true);
+    setIsPublishing(true);
+    setPublishMessage(null);
+    setLoginNotice(false);
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    try {
+      const supabase = createClient();
+
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        setLoginNotice(true);
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+
+        return;
+      }
+
+      const sanitizedContent =
+        sanitizeTopicHtml(content);
+
+      const { error } = await supabase
+        .from("topics")
+        .insert({
+          author_id: user.id,
+          category_id:
+            activeSubcategory.databaseId,
+          title: title.trim(),
+          content: sanitizedContent,
+        });
+
+      if (error) {
+        console.error(
+          "Konu yayınlama hatası:",
+          error.message
+        );
+
+        setPublishMessage("error");
+        return;
+      }
+
+      setPublishMessage("success");
+
+      window.localStorage.removeItem(
+        DRAFT_KEY
+      );
+
+      setHasSavedDraft(false);
+      setTitle("");
+      setContent("");
+      setTags([]);
+      setTagInput("");
+      setPollEnabled(false);
+      setPollOptions(["", ""]);
+      setAttachment(null);
+
+      if (editorRef.current) {
+        editorRef.current.innerHTML = "";
+      }
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    } catch (error) {
+      console.error(
+        "Beklenmeyen konu yayınlama hatası:",
+        error
+      );
+
+      setPublishMessage("error");
+    } finally {
+      setIsPublishing(false);
+    }
   }
 
   return (
@@ -1472,6 +1650,24 @@ export default function CreateTopicPage() {
             {draftMessage === "saved"
               ? t.savedMessage
               : t.loadedMessage}
+          </div>
+        )}
+
+        {publishMessage && (
+          <div
+            className={styles.draftMessage}
+            role="status"
+            aria-live="polite"
+          >
+            {publishMessage === "success" ? (
+              <CheckIcon />
+            ) : (
+              <InfoIcon />
+            )}
+
+            {publishMessage === "success"
+              ? t.publishSuccess
+              : t.publishError}
           </div>
         )}
 
@@ -2402,8 +2598,9 @@ export default function CreateTopicPage() {
               <button
                 type="button"
                 className={styles.publishButton}
-                disabled={!canPublish}
+                disabled={!canPublish || isPublishing}
                 onClick={handlePublish}
+                aria-busy={isPublishing}
                 style={
                   {
                     "--accent":
@@ -2412,7 +2609,10 @@ export default function CreateTopicPage() {
                 }
               >
                 <SendIcon />
-                {t.publish}
+
+                {isPublishing
+                  ? t.publishing
+                  : t.publish}
               </button>
 
               {!canPublish && (
