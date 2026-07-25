@@ -11,6 +11,10 @@ const activeItems = [
     label: "Genel Bakış",
   },
   {
+    href: "/admin/sikayetler",
+    label: "Şikâyetler",
+  },
+  {
     href: "/admin/kullanicilar",
     label: "Kullanıcılar",
   },
@@ -42,11 +46,6 @@ export default function AdminNav() {
           <span>{item.label}</span>
         </Link>
       ))}
-
-      <span className={styles.navDisabled}>
-        <span>Şikâyetler</span>
-        <small>YAKINDA</small>
-      </span>
 
       <span className={styles.navDisabled}>
         <span>Yorumlar</span>

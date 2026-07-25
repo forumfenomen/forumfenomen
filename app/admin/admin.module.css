@@ -971,369 +971,1086 @@
 /* ADMIN USERS PAGE V1 START */
 
 .onlineUsersBadge {
-  display: flex;
-  min-height: 40px;
+    display: flex;
+    min-height: 40px;
 
-  align-items: center;
+    align-items: center;
 
-  gap: 8px;
+    gap: 8px;
 
-  padding: 0 14px;
+    padding: 0 14px;
 
-  color: #73dcae;
+    color: #73dcae;
 
-  border:
-    1px solid rgba(89, 219, 167, 0.2);
-  border-radius: 12px;
+    border:
+        1px solid rgba(89, 219, 167, 0.2);
+    border-radius: 12px;
 
-  background:
-    rgba(67, 207, 150, 0.06);
+    background:
+        rgba(67, 207, 150, 0.06);
 
-  font-size: 10px;
-  font-weight: 750;
-  white-space: nowrap;
+    font-size: 10px;
+    font-weight: 750;
+    white-space: nowrap;
 }
 
 .onlineUsersDot {
-  width: 8px;
-  height: 8px;
+    width: 8px;
+    height: 8px;
 
-  border-radius: 999px;
+    border-radius: 999px;
 
-  background: #4fe5a0;
+    background: #4fe5a0;
 
-  box-shadow:
-    0 0 0 4px rgba(79, 229, 160, 0.1),
-    0 0 15px rgba(79, 229, 160, 0.55);
+    box-shadow:
+        0 0 0 4px rgba(79, 229, 160, 0.1),
+        0 0 15px rgba(79, 229, 160, 0.55);
 }
 
 .userSummaryGrid {
-  display: grid;
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
 
-  gap: 12px;
+    gap: 12px;
 }
 
 .userSummaryCard {
-  min-height: 105px;
+    min-height: 105px;
 
-  padding: 18px;
+    padding: 18px;
 
-  border:
-    1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 17px;
+    border:
+        1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 17px;
 
-  background:
-    rgba(255, 255, 255, 0.022);
+    background:
+        rgba(255, 255, 255, 0.022);
 }
 
 .userSummaryCard span {
-  color: #a5a7b2;
+    color: #a5a7b2;
 
-  font-size: 11px;
-  font-weight: 750;
+    font-size: 11px;
+    font-weight: 750;
 }
 
 .userSummaryCard strong {
-  display: block;
+    display: block;
 
-  margin-top: 14px;
+    margin-top: 14px;
 
-  color: #ffffff;
+    color: #ffffff;
 
-  font-size: 29px;
-  line-height: 1;
+    font-size: 29px;
+    line-height: 1;
 }
 
 .userList {
-  display: grid;
-  gap: 9px;
+    display: grid;
+    gap: 9px;
 }
 
 .userRow {
-  display: grid;
-  grid-template-columns:
-    minmax(0, 1fr) auto;
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr) auto;
 
-  align-items: center;
-  gap: 20px;
+    align-items: center;
+    gap: 20px;
 
-  min-height: 104px;
+    min-height: 104px;
 
-  padding: 15px 16px;
+    padding: 15px 16px;
 
-  border:
-    1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 16px;
+    border:
+        1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
 
-  background:
-    rgba(255, 255, 255, 0.016);
+    background:
+        rgba(255, 255, 255, 0.016);
 }
 
 .userIdentity {
-  display: flex;
-  min-width: 0;
+    display: flex;
+    min-width: 0;
 
-  align-items: center;
+    align-items: center;
 
-  gap: 13px;
+    gap: 13px;
 }
 
 .userAvatarLarge {
-  position: relative;
+    position: relative;
 
-  display: grid;
-  width: 52px;
-  height: 52px;
+    display: grid;
+    width: 52px;
+    height: 52px;
 
-  flex: 0 0 52px;
-  place-items: center;
+    flex: 0 0 52px;
+    place-items: center;
 
-  color: #ffffff;
+    color: #ffffff;
 
-  border:
-    1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+    border:
+        1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #d83fe7,
-      #596fff
-    );
+    background:
+        linear-gradient(135deg,
+            #d83fe7,
+            #596fff);
 
-  background-position: center;
-  background-size: cover;
+    background-position: center;
+    background-size: cover;
 
-  font-size: 15px;
-  font-weight: 850;
+    font-size: 15px;
+    font-weight: 850;
 }
 
 .presenceDot {
-  position: absolute;
-  right: -3px;
-  bottom: -3px;
+    position: absolute;
+    right: -3px;
+    bottom: -3px;
 
-  width: 13px;
-  height: 13px;
+    width: 13px;
+    height: 13px;
 
-  border:
-    3px solid #11111b;
-  border-radius: 999px;
+    border:
+        3px solid #11111b;
+    border-radius: 999px;
 }
 
 .presenceOnline {
-  background: #4fe5a0;
+    background: #4fe5a0;
 
-  box-shadow:
-    0 0 12px rgba(79, 229, 160, 0.7);
+    box-shadow:
+        0 0 12px rgba(79, 229, 160, 0.7);
 }
 
 .presenceOffline {
-  background: #555966;
+    background: #555966;
 }
 
 .userIdentityText {
-  min-width: 0;
+    min-width: 0;
 }
 
 .userNameLine {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 
-  gap: 8px;
+    gap: 8px;
 }
 
 .userNameLine strong {
-  max-width: 260px;
+    max-width: 260px;
 
-  overflow: hidden;
+    overflow: hidden;
 
-  color: #f3f2f6;
+    color: #f3f2f6;
 
-  font-size: 13px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+    font-size: 13px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .userIdentityText small {
-  display: block;
+    display: block;
 
-  margin-top: 5px;
+    margin-top: 5px;
 
-  color: #838692;
+    color: #838692;
 
-  font-size: 10px;
+    font-size: 10px;
 }
 
 .userIdentityText p {
-  margin: 7px 0 0;
+    margin: 7px 0 0;
 
-  font-size: 9.5px;
+    font-size: 9.5px;
 }
 
 .onlineText {
-  color: #62dca4;
-  font-weight: 750;
+    color: #62dca4;
+    font-weight: 750;
 }
 
 .lastSeenText {
-  color: #737682;
+    color: #737682;
 }
 
 .roleBadge {
-  display: inline-flex;
-  min-height: 22px;
+    display: inline-flex;
+    min-height: 22px;
 
-  align-items: center;
+    align-items: center;
 
-  padding: 0 8px;
+    padding: 0 8px;
 
-  border-radius: 999px;
+    border-radius: 999px;
 
-  font-size: 8px;
-  font-weight: 800;
+    font-size: 8px;
+    font-weight: 800;
 }
 
 .roleAdmin {
-  color: #ec85f2;
+    color: #ec85f2;
 
-  border:
-    1px solid rgba(222, 91, 235, 0.2);
+    border:
+        1px solid rgba(222, 91, 235, 0.2);
 
-  background:
-    rgba(214, 61, 228, 0.07);
+    background:
+        rgba(214, 61, 228, 0.07);
 }
 
 .roleModerator {
-  color: #83a9ff;
+    color: #83a9ff;
 
-  border:
-    1px solid rgba(90, 126, 255, 0.2);
+    border:
+        1px solid rgba(90, 126, 255, 0.2);
 
-  background:
-    rgba(71, 105, 238, 0.07);
+    background:
+        rgba(71, 105, 238, 0.07);
 }
 
 .roleUser {
-  color: #a2a5b0;
+    color: #a2a5b0;
 
-  border:
-    1px solid rgba(255, 255, 255, 0.08);
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
 
-  background:
-    rgba(255, 255, 255, 0.025);
+    background:
+        rgba(255, 255, 255, 0.025);
 }
 
 .userStats {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 
-  gap: 8px;
+    gap: 8px;
 }
 
 .userStatBox {
-  display: grid;
-  min-width: 67px;
-  min-height: 54px;
+    display: grid;
+    min-width: 67px;
+    min-height: 54px;
 
-  place-content: center;
+    place-content: center;
 
-  text-align: center;
+    text-align: center;
 
-  border:
-    1px solid rgba(255, 255, 255, 0.065);
-  border-radius: 12px;
+    border:
+        1px solid rgba(255, 255, 255, 0.065);
+    border-radius: 12px;
 
-  background:
-    rgba(255, 255, 255, 0.018);
+    background:
+        rgba(255, 255, 255, 0.018);
 }
 
 .userStatBox strong {
-  color: #ffffff;
+    color: #ffffff;
 
-  font-size: 16px;
+    font-size: 16px;
 }
 
 .userStatBox span {
-  margin-top: 4px;
+    margin-top: 4px;
 
-  color: #858894;
+    color: #858894;
 
-  font-size: 8px;
+    font-size: 8px;
 }
 
 .userJoined {
-  min-width: 145px;
+    min-width: 145px;
 
-  padding-left: 12px;
+    padding-left: 12px;
 
-  border-left:
-    1px solid rgba(255, 255, 255, 0.065);
+    border-left:
+        1px solid rgba(255, 255, 255, 0.065);
 }
 
 .userJoined span,
 .userJoined strong {
-  display: block;
+    display: block;
 }
 
 .userJoined span {
-  color: #737682;
+    color: #737682;
 
-  font-size: 8px;
+    font-size: 8px;
 }
 
 .userJoined strong {
-  margin-top: 6px;
+    margin-top: 6px;
 
-  color: #a7a9b3;
+    color: #a7a9b3;
 
-  font-size: 9px;
-  font-weight: 650;
+    font-size: 9px;
+    font-weight: 650;
 }
 
 @media (max-width: 760px) {
-  .userRow {
-    grid-template-columns: 1fr;
-  }
+    .userRow {
+        grid-template-columns: 1fr;
+    }
 
-  .userStats {
-    padding-left: 65px;
-  }
+    .userStats {
+        padding-left: 65px;
+    }
 }
 
 @media (max-width: 620px) {
-  .userSummaryGrid {
-    grid-template-columns: 1fr 1fr;
-  }
+    .userSummaryGrid {
+        grid-template-columns: 1fr 1fr;
+    }
 
-  .userRow {
-    padding: 14px;
-  }
+    .userRow {
+        padding: 14px;
+    }
 
-  .userStats {
-    display: grid;
-    grid-template-columns:
-      1fr 1fr;
+    .userStats {
+        display: grid;
+        grid-template-columns:
+            1fr 1fr;
 
-    padding-left: 0;
-  }
+        padding-left: 0;
+    }
 
-  .userJoined {
-    grid-column: 1 / -1;
+    .userJoined {
+        grid-column: 1 / -1;
 
-    padding:
-      10px 0 0;
+        padding:
+            10px 0 0;
 
-    border-top:
-      1px solid rgba(255, 255, 255, 0.065);
-    border-left: 0;
-  }
+        border-top:
+            1px solid rgba(255, 255, 255, 0.065);
+        border-left: 0;
+    }
 
-  .onlineUsersBadge {
-    white-space: normal;
-  }
+    .onlineUsersBadge {
+        white-space: normal;
+    }
 }
 
 /* ADMIN USERS PAGE V1 END */
+
+/* ADMIN REPORTS PAGE V1 START */
+
+.reportSummaryGrid {
+    display: grid;
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+.reportSummaryCard {
+    min-height: 105px;
+
+    padding: 17px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 17px;
+
+    background:
+        rgba(255, 255, 255, 0.022);
+}
+
+.reportSummaryCard span {
+    color: #a4a6b1;
+
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.reportSummaryCard strong {
+    display: block;
+
+    margin-top: 15px;
+
+    color: #ffffff;
+
+    font-size: 29px;
+    line-height: 1;
+}
+
+.adminReportList {
+    display: grid;
+    gap: 11px;
+}
+
+.adminReportCard {
+    padding: 17px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.065);
+    border-radius: 17px;
+
+    background:
+        rgba(255, 255, 255, 0.016);
+}
+
+.adminReportTop {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 18px;
+}
+
+.adminReportReason {
+    display: inline-flex;
+
+    margin-bottom: 8px;
+    padding: 6px 9px;
+
+    color: #e077e9;
+
+    border:
+        1px solid rgba(218, 79, 231, 0.18);
+    border-radius: 999px;
+
+    background:
+        rgba(211, 58, 228, 0.055);
+
+    font-size: 8px;
+    font-weight: 800;
+}
+
+.adminReportTop strong {
+    display: block;
+
+    color: #e8e7ed;
+
+    font-size: 12px;
+}
+
+.adminReportTopMeta {
+    text-align: right;
+}
+
+.adminReportTopMeta small {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #747783;
+
+    font-size: 8.5px;
+}
+
+.adminReportStatus {
+    display: inline-flex;
+
+    padding: 6px 9px;
+
+    border-radius: 999px;
+
+    font-size: 8px;
+    font-weight: 800;
+}
+
+.reportStatusPending {
+    color: #f0b968;
+
+    border:
+        1px solid rgba(240, 184, 99, 0.18);
+
+    background:
+        rgba(240, 179, 83, 0.06);
+}
+
+.reportStatusReviewing {
+    color: #80a9ff;
+
+    border:
+        1px solid rgba(89, 124, 255, 0.19);
+
+    background:
+        rgba(73, 102, 238, 0.06);
+}
+
+.reportStatusResolved {
+    color: #64dca4;
+
+    border:
+        1px solid rgba(89, 219, 167, 0.19);
+
+    background:
+        rgba(67, 207, 150, 0.06);
+}
+
+.reportStatusDismissed {
+    color: #9a9ca7;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    background:
+        rgba(255, 255, 255, 0.025);
+}
+
+.reportedCommentBox,
+.reportDetailsBox,
+.reportResolutionBox {
+    margin-top: 13px;
+    padding: 13px 14px;
+
+    border-radius: 13px;
+}
+
+.reportedCommentBox {
+    border:
+        1px solid rgba(255, 255, 255, 0.065);
+
+    background:
+        rgba(0, 0, 0, 0.13);
+}
+
+.reportedCommentHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+.reportedCommentHeader span {
+    color: #777a86;
+
+    font-size: 8px;
+    font-weight: 750;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+
+.reportedCommentHeader strong {
+    color: #aeb0ba;
+
+    font-size: 9px;
+}
+
+.reportedCommentBox p,
+.reportDetailsBox p,
+.reportResolutionBox p {
+    margin: 9px 0 0;
+
+    color: #d2d1d8;
+
+    font-size: 11px;
+    line-height: 1.65;
+    white-space: pre-wrap;
+}
+
+.reportTopicLink {
+    display: inline-flex;
+
+    margin-top: 10px;
+
+    color: #df70e8;
+
+    font-size: 9px;
+    font-weight: 750;
+    text-decoration: none;
+}
+
+.reportTopicLink:hover {
+    color: #f09af5;
+}
+
+.reportDetailsBox {
+    border:
+        1px solid rgba(99, 126, 255, 0.12);
+
+    background:
+        rgba(76, 99, 222, 0.035);
+}
+
+.reportResolutionBox {
+    border:
+        1px solid rgba(78, 215, 157, 0.13);
+
+    background:
+        rgba(67, 207, 150, 0.035);
+}
+
+.reportDetailsBox span,
+.reportResolutionBox span {
+    color: #858894;
+
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+}
+
+.reportResolutionBox small {
+    display: block;
+
+    margin-top: 9px;
+
+    color: #747783;
+
+    font-size: 8.5px;
+}
+
+.adminReportFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-top: 14px;
+    padding-top: 13px;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.055);
+}
+
+.adminReportFooter>span {
+    color: #747783;
+
+    font-size: 8.5px;
+}
+
+.reportActions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+
+    gap: 7px;
+}
+
+.reviewReportButton,
+.resolveReportButton,
+.dismissReportButton {
+    min-height: 35px;
+
+    padding: 0 11px;
+
+    border-radius: 10px;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.reviewReportButton {
+    color: #8eb0ff;
+
+    border:
+        1px solid rgba(91, 127, 255, 0.18);
+
+    background:
+        rgba(72, 102, 232, 0.055);
+}
+
+.resolveReportButton {
+    color: #68dda6;
+
+    border:
+        1px solid rgba(74, 215, 157, 0.19);
+
+    background:
+        rgba(67, 207, 150, 0.055);
+}
+
+.dismissReportButton {
+    color: #b1b3bd;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    background:
+        rgba(255, 255, 255, 0.025);
+}
+
+.reviewReportButton:disabled,
+.resolveReportButton:disabled,
+.dismissReportButton:disabled {
+    cursor: wait;
+    opacity: 0.55;
+}
+
+.reportClosedText {
+    color: #777a86;
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.adminModalOverlay {
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+
+    display: grid;
+    place-items: center;
+
+    padding: 18px;
+
+    background:
+        rgba(3, 3, 8, 0.78);
+
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+}
+
+.adminModal {
+    width: min(100%, 470px);
+
+    padding: 23px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 20px;
+
+    background:
+        #11111b;
+
+    box-shadow:
+        0 30px 100px rgba(0, 0, 0, 0.55);
+}
+
+.adminModalEyebrow {
+    color: #db68e6;
+
+    font-size: 8px;
+    font-weight: 850;
+    letter-spacing: 1.2px;
+}
+
+.adminModal h2 {
+    margin: 8px 0 0;
+
+    color: #ffffff;
+
+    font-size: 21px;
+}
+
+.adminModal>p {
+    margin: 10px 0 0;
+
+    color: #8f929e;
+
+    font-size: 11px;
+    line-height: 1.65;
+}
+
+.adminModalField {
+    display: block;
+
+    margin-top: 17px;
+}
+
+.adminModalField>span {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #c3c4cc;
+
+    font-size: 9px;
+    font-weight: 750;
+}
+
+.adminModalField textarea {
+    width: 100%;
+    min-height: 115px;
+
+    box-sizing: border-box;
+    resize: vertical;
+
+    padding: 12px 13px;
+
+    color: #f1f0f4;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 12px;
+    outline: none;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    font: inherit;
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+.adminModalField textarea:focus {
+    border-color:
+        rgba(215, 78, 229, 0.35);
+}
+
+.adminModalCounter {
+    margin-top: 6px;
+
+    color: #6e717d;
+
+    font-size: 8px;
+    text-align: right;
+}
+
+.adminModalError {
+    margin-top: 11px;
+    padding: 9px 10px;
+
+    color: #f18f9a;
+
+    border:
+        1px solid rgba(240, 100, 117, 0.15);
+    border-radius: 10px;
+
+    background:
+        rgba(232, 78, 98, 0.05);
+
+    font-size: 9px;
+}
+
+.adminModalActions {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    margin-top: 17px;
+}
+
+.adminModalCancel,
+.adminModalConfirm,
+.adminModalDismiss {
+    min-height: 39px;
+
+    padding: 0 14px;
+
+    border-radius: 11px;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.adminModalCancel {
+    color: #a8aab4;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    background:
+        rgba(255, 255, 255, 0.025);
+}
+
+.adminModalConfirm {
+    color: #ffffff;
+
+    border:
+        1px solid rgba(82, 217, 160, 0.25);
+
+    background:
+        linear-gradient(135deg,
+            #2cae77,
+            #3488bd);
+}
+
+.adminModalDismiss {
+    color: #ffffff;
+
+    border:
+        1px solid rgba(219, 88, 111, 0.24);
+
+    background:
+        linear-gradient(135deg,
+            #b9435d,
+            #793b75);
+}
+
+.adminModalCancel:disabled,
+.adminModalConfirm:disabled,
+.adminModalDismiss:disabled {
+    cursor: wait;
+    opacity: 0.6;
+}
+
+@media (max-width: 760px) {
+    .reportSummaryGrid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .adminReportTop,
+    .adminReportFooter {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .adminReportTopMeta {
+        text-align: left;
+    }
+
+    .reportActions {
+        justify-content: flex-start;
+    }
+}
+
+/* ADMIN REPORTS PAGE V1 END */
+
+/* ADMIN REPORTS FONT SIZE V2 START */
+
+/* Üstteki durum kartları */
+.reportSummaryCard span {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.reportSummaryCard strong {
+  font-size: 34px;
+}
+
+/* Şikâyet kartının üst kısmı */
+.adminReportReason {
+  padding: 7px 11px;
+
+  font-size: 10px;
+}
+
+.adminReportTop strong {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.adminReportStatus {
+  padding: 7px 11px;
+
+  font-size: 10px;
+}
+
+.adminReportTopMeta small {
+  margin-top: 8px;
+
+  font-size: 10px;
+}
+
+/* Şikâyet edilen yorum kutusu */
+.reportedCommentHeader span {
+  font-size: 10px;
+}
+
+.reportedCommentHeader strong {
+  font-size: 11px;
+}
+
+.reportedCommentBox p {
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* Konuya git bağlantısı */
+.reportTopicLink {
+  margin-top: 12px;
+
+  font-size: 11px;
+}
+
+/* Kullanıcı açıklaması ve yönetici notu */
+.reportDetailsBox span,
+.reportResolutionBox span {
+  font-size: 10px;
+}
+
+.reportDetailsBox p,
+.reportResolutionBox p {
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+
+.reportResolutionBox small {
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+/* Kartın alt kısmı */
+.adminReportFooter > span {
+  font-size: 10.5px;
+}
+
+/* İşlem butonları */
+.reviewReportButton,
+.resolveReportButton,
+.dismissReportButton {
+  min-height: 40px;
+
+  padding: 0 14px;
+
+  font-size: 10.5px;
+}
+
+/* Tamamlanmış işlem yazısı */
+.reportClosedText {
+  font-size: 11px;
+}
+
+/* Şikâyet işlem modalı */
+.adminModalEyebrow {
+  font-size: 9.5px;
+}
+
+.adminModal h2 {
+  font-size: 23px;
+}
+
+.adminModal > p {
+  font-size: 12.5px;
+}
+
+.adminModalField > span {
+  font-size: 11px;
+}
+
+.adminModalField textarea {
+  font-size: 12.5px;
+}
+
+.adminModalCounter {
+  font-size: 9.5px;
+}
+
+.adminModalError {
+  font-size: 10.5px;
+}
+
+.adminModalCancel,
+.adminModalConfirm,
+.adminModalDismiss {
+  min-height: 42px;
+
+  padding: 0 16px;
+
+  font-size: 10.5px;
+}
+
+@media (max-width: 620px) {
+  .adminReportTop strong {
+    font-size: 13px;
+  }
+
+  .reportedCommentBox p,
+  .reportDetailsBox p,
+  .reportResolutionBox p {
+    font-size: 12px;
+  }
+
+  .reviewReportButton,
+  .resolveReportButton,
+  .dismissReportButton {
+    font-size: 10px;
+  }
+}
+
+/* ADMIN REPORTS FONT SIZE V2 END */
