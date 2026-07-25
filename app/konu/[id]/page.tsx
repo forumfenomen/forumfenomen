@@ -1,6 +1,7 @@
 "use client";
 
 import ForumFooter from "@/components/forum-footer";
+import NotificationBell from "@/components/notification-bell";
 import SiteSearch from "@/components/site-search";
 import {
     getForumLanguage,
@@ -103,14 +104,6 @@ function SunIcon() {
     );
 }
 
-function BellIcon() {
-    return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9Z" />
-            <path d="M10 21h4" />
-        </svg>
-    );
-}
 
 function ArrowLeftIcon() {
     return (
@@ -1131,17 +1124,7 @@ export default function TopicDetailPage() {
                             )}
                         </button>
 
-                        <button
-                            type="button"
-                            className="ff-round-action"
-                            aria-label={
-                                language === "tr"
-                                    ? "Bildirimler"
-                                    : "Notifications"
-                            }
-                        >
-                            <BellIcon />
-                        </button>
+                        <NotificationBell />
 
                         <SiteSearch language={language} />
                     </div>

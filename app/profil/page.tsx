@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import ForumFooter from "@/components/forum-footer";
+import NotificationBell from "@/components/notification-bell";
 import SiteSearch from "@/components/site-search";
 import Image from "next/image";
 import Link from "next/link";
@@ -1303,19 +1304,7 @@ export default function ProfilePage() {
               )}
             </button>
 
-            <button
-              type="button"
-              className="ff-round-action"
-              aria-label={t.notificationTitle}
-              title={t.notificationTitle}
-              onClick={() =>
-                setActiveSection(
-                  "notifications"
-                )
-              }
-            >
-              <BellIcon />
-            </button>
+            <NotificationBell />
 
             <SiteSearch language={language} />
 

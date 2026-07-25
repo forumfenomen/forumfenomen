@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import ForumFooter from "@/components/forum-footer";
+import NotificationBell from "@/components/notification-bell";
 import SiteSearch from "@/components/site-search";
 import { createClient } from "@/lib/supabase/client";
 
@@ -368,14 +369,6 @@ function SearchIcon() {
   );
 }
 
-function BellIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z" />
-      <path d="M10 21h4" />
-    </svg>
-  );
-}
 
 function SunIcon() {
   return (
@@ -835,22 +828,8 @@ export default function FeedPage() {
                 <SunIcon />
               )}
             </button>
-            <button
-              type="button"
-              className="ff-round-action ff-notification-button"
-              aria-label={
-                language === "tr"
-                  ? "Bildirimler"
-                  : "Notifications"
-              }
-              title={
-                language === "tr"
-                  ? "Bildirimler"
-                  : "Notifications"
-              }
-            >
-              <BellIcon />
-            </button>
+            
+            <NotificationBell />
 
             <SiteSearch language={language} />
 

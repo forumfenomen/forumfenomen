@@ -1,0 +1,299 @@
+.wrapper {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+}
+
+.bellButton {
+  position: relative;
+
+  display: grid;
+  width: 39px;
+  height: 39px;
+
+  flex: 0 0 39px;
+  place-items: center;
+
+  padding: 0;
+
+  color: #b9bac4;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  cursor: pointer;
+}
+
+.bellButton:hover {
+  color: #ffffff;
+
+  border-color:
+    rgba(217, 78, 230, 0.23);
+
+  background:
+    rgba(211, 59, 227, 0.07);
+}
+
+.unreadBadge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+
+  display: grid;
+  min-width: 18px;
+  height: 18px;
+
+  place-items: center;
+
+  padding: 0 4px;
+
+  color: #ffffff;
+
+  border:
+    2px solid #090910;
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #db3ce7,
+      #596fff
+    );
+
+  font-size: 8px;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.panel {
+  position: absolute;
+  z-index: 5000;
+  top: calc(100% + 10px);
+  right: 0;
+
+  width: min(370px, calc(100vw - 24px));
+  max-height: min(520px, calc(100vh - 90px));
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
+
+  background:
+    rgba(16, 16, 27, 0.98);
+
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.5);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  padding: 16px;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.065);
+}
+
+.panelHeader span,
+.panelHeader strong {
+  display: block;
+}
+
+.panelHeader span {
+  color: #df65e8;
+
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 1.1px;
+}
+
+.panelHeader strong {
+  margin-top: 5px;
+
+  color: #f4f3f7;
+
+  font-size: 14px;
+}
+
+.panelHeader button {
+  padding: 7px 9px;
+
+  color: #a7a9b5;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 9px;
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  font-size: 8.5px;
+  font-weight: 750;
+
+  cursor: pointer;
+}
+
+.panelHeader button:hover {
+  color: #ffffff;
+}
+
+.panelHeader button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.notificationList {
+  max-height: 430px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.notificationItem {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 7px minmax(0, 1fr);
+
+  align-items: flex-start;
+  gap: 10px;
+
+  padding: 14px 16px;
+
+  color: inherit;
+
+  border: 0;
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.05);
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.notificationItem:last-child {
+  border-bottom: 0;
+}
+
+.notificationItem:hover {
+  background:
+    rgba(255, 255, 255, 0.025);
+}
+
+.unreadItem {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(211, 58, 228, 0.065),
+      rgba(82, 102, 255, 0.025)
+    );
+}
+
+.readItem {
+  background: transparent;
+}
+
+.notificationIndicator {
+  display: block;
+  width: 7px;
+  height: 7px;
+
+  margin-top: 5px;
+
+  border-radius: 999px;
+}
+
+.unreadItem
+  .notificationIndicator {
+  background: #de55e9;
+
+  box-shadow:
+    0 0 10px rgba(222, 85, 233, 0.55);
+}
+
+.readItem
+  .notificationIndicator {
+  background: #484b57;
+}
+
+.notificationContent {
+  min-width: 0;
+}
+
+.notificationContent strong {
+  display: block;
+
+  color: #efeff3;
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.notificationContent p {
+  margin: 6px 0 0;
+
+  color: #a0a2ad;
+
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+
+.notificationContent small {
+  display: block;
+
+  margin-top: 7px;
+
+  color: #6f727e;
+
+  font-size: 8.5px;
+}
+
+.readItem
+  .notificationContent strong {
+  color: #b4b6c0;
+}
+
+.readItem
+  .notificationContent p {
+  color: #7f828d;
+}
+
+.emptyState {
+  padding: 38px 18px;
+
+  color: #81848f;
+
+  font-size: 11px;
+  text-align: center;
+}
+
+@media (max-width: 620px) {
+  .panel {
+    position: fixed;
+    top: 68px;
+    right: 10px;
+    left: 10px;
+
+    width: auto;
+    max-height:
+      calc(100vh - 85px);
+  }
+
+  .notificationList {
+    max-height:
+      calc(100vh - 165px);
+  }
+}
