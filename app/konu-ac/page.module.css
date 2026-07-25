@@ -19,13 +19,13 @@
 }
 
 .shell {
-  width: min(calc(100% - 24px), 900px);
+  width: min(calc(100% - 24px), 820px);
   margin: 0 auto;
 }
 
 .shell :global(.ff-feed-header) {
   width: 100% !important;
-  margin-bottom: 10px !important;
+  margin-bottom: 10px;
 }
 
 .loginNotice {
@@ -610,8 +610,9 @@
   line-height: 1.3;
   text-align: center;
 
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  line-clamp: 2;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
 }
 
 .categoryGrid button:hover,

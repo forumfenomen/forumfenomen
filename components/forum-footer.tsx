@@ -48,11 +48,11 @@ export default function ForumFooter() {
 
   return (
     <footer
-      className={`${styles.footer} ${
-        pathname === "/akis"
+      className={`${styles.footer} ${pathname === "/akis"
           ? styles.homeFooter
           : ""
-      }`}
+        } 
+        }`}
     >
       <div className={styles.inner}>
         <div className={styles.brandArea}>

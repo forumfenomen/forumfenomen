@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import ForumFooter from "@/components/forum-footer";
-
+import SiteSearch from "@/components/site-search";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -223,14 +223,6 @@ function BellIcon() {
   );
 }
 
-function SearchIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="11" cy="11" r="6.5" />
-      <path d="m16 16 4 4" />
-    </svg>
-  );
-}
 
 function HomeIcon() {
   return (
@@ -469,8 +461,6 @@ export default function ProfilePage() {
   const [activeSection, setActiveSection] =
     useState<SectionId>("profile");
 
-  const [searchOpen, setSearchOpen] =
-    useState(false);
 
   const [editOpen, setEditOpen] =
     useState(false);
@@ -1327,39 +1317,11 @@ export default function ProfilePage() {
               <BellIcon />
             </button>
 
-            <button
-              type="button"
-              className={
-                searchOpen
-                  ? "ff-round-action active"
-                  : "ff-round-action"
-              }
-              aria-label={t.search}
-              title={t.search}
-              onClick={() =>
-                setSearchOpen(
-                  (current) => !current
-                )
-              }
-            >
-              <SearchIcon />
-            </button>
+            <SiteSearch language={language} />
+
           </div>
         </header>
 
-        {searchOpen && (
-          <div className={styles.searchPanel}>
-            <SearchIcon />
-
-            <input
-              autoFocus
-              type="search"
-              placeholder={
-                t.searchPlaceholder
-              }
-            />
-          </div>
-        )}
 
         {savedMessage && (
           <div className={styles.successMessage}>

@@ -1,12 +1,11 @@
 ﻿"use client";
 
 import ForumFooter from "@/components/forum-footer";
-
+import SiteSearch from "@/components/site-search";
 import Image from "next/image";
 import Link from "next/link";
 import {
   useEffect,
-  useMemo,
   useState,
   type CSSProperties,
   type ReactNode,
@@ -267,7 +266,10 @@ function ArticleCard({
   const t = text[language];
 
   return (
-    <article className={styles.articleCard}>
+    <article
+      data-blog-id={post.id}
+      className={styles.articleCard}
+    >
       <Cover post={post} />
 
       <div className={styles.articleCardBody}>
@@ -281,7 +283,7 @@ function ArticleCard({
         >
           {
             t.categoryNames[
-              post.category
+            post.category
             ]
           }
         </span>
@@ -314,11 +316,6 @@ export default function BlogPage() {
   const [category, setCategory] =
     useState<CategoryFilter>("all");
 
-  const [searchOpen, setSearchOpen] =
-    useState(false);
-
-  const [searchValue, setSearchValue] =
-    useState("");
 
   useEffect(() => {
     const savedLanguage =
@@ -343,6 +340,47 @@ export default function BlogPage() {
       resolvedTheme;
   }, []);
 
+  useEffect(() => {
+    function scrollToBlogPost() {
+      const prefix = "#blog-";
+      const hash = window.location.hash;
+
+      if (!hash.startsWith(prefix)) {
+        return;
+      }
+
+      const postId = decodeURIComponent(
+        hash.slice(prefix.length)
+      );
+
+      window.requestAnimationFrame(() => {
+        const target =
+          document.querySelector<HTMLElement>(
+            `[data-blog-id="${CSS.escape(postId)}"]`
+          );
+
+        target?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      });
+    }
+
+    scrollToBlogPost();
+
+    window.addEventListener(
+      "hashchange",
+      scrollToBlogPost
+    );
+
+    return () => {
+      window.removeEventListener(
+        "hashchange",
+        scrollToBlogPost
+      );
+    };
+  }, []);
+
   const t = text[language];
 
   const featuredMain =
@@ -358,47 +396,13 @@ export default function BlogPage() {
       )
       .slice(0, 2);
 
-  const filteredPosts = useMemo(() => {
-    const normalizedSearch =
-      searchValue
-        .trim()
-        .toLocaleLowerCase(
-          language === "tr"
-            ? "tr-TR"
-            : "en-US"
-        );
-
-    return blogPosts.filter((post) => {
-      const categoryMatch =
-        category === "all" ||
-        post.category === category;
-
-      const searchMatch =
-        !normalizedSearch ||
-        [
-          post.title[language],
-          post.excerpt[language],
-          post.author,
-          t.categoryNames[
-            post.category
-          ],
-        ]
-          .join(" ")
-          .toLocaleLowerCase(
-            language === "tr"
-              ? "tr-TR"
-              : "en-US"
-          )
-          .includes(normalizedSearch);
-
-      return categoryMatch && searchMatch;
-    });
-  }, [
-    category,
-    language,
-    searchValue,
-    t.categoryNames,
-  ]);
+  const filteredPosts =
+    category === "all"
+      ? blogPosts
+      : blogPosts.filter(
+        (post) =>
+          post.category === category
+      );
 
   const latestPosts =
     filteredPosts
@@ -479,44 +483,11 @@ export default function BlogPage() {
               <BellIcon />
             </button>
 
-            <button
-              type="button"
-              className={
-                searchOpen
-                  ? "ff-round-action active"
-                  : "ff-round-action"
-              }
-              onClick={() =>
-                setSearchOpen(
-                  (current) => !current
-                )
-              }
-              aria-label={t.search}
-            >
-              <SearchIcon />
-            </button>
+            <SiteSearch language={language} />
+
           </div>
         </header>
 
-        {searchOpen && (
-          <div className={styles.searchPanel}>
-            <SearchIcon />
-
-            <input
-              autoFocus
-              type="search"
-              value={searchValue}
-              onChange={(event) =>
-                setSearchValue(
-                  event.target.value
-                )
-              }
-              placeholder={
-                t.searchPlaceholder
-              }
-            />
-          </div>
-        )}
 
         <section className={styles.hero}>
           <div className={styles.heroContent}>
@@ -547,7 +518,10 @@ export default function BlogPage() {
           </div>
 
           <div className={styles.featuredGrid}>
-            <article className={styles.featuredMain}>
+            <article
+              data-blog-id={featuredMain.id}
+              className={styles.featuredMain}
+            >
               <Cover
                 post={featuredMain}
                 large
@@ -565,7 +539,7 @@ export default function BlogPage() {
                 >
                   {
                     t.categoryNames[
-                      featuredMain.category
+                    featuredMain.category
                     ]
                   }
                 </span>
@@ -573,7 +547,7 @@ export default function BlogPage() {
                 <h2>
                   {
                     featuredMain.title[
-                      language
+                    language
                     ]
                   }
                 </h2>
@@ -581,7 +555,7 @@ export default function BlogPage() {
                 <p>
                   {
                     featuredMain.excerpt[
-                      language
+                    language
                     ]
                   }
                 </p>
@@ -605,6 +579,7 @@ export default function BlogPage() {
               {featuredSide.map((post) => (
                 <article
                   key={post.id}
+                  data-blog-id={post.id}
                   className={styles.sideCard}
                 >
                   <Cover post={post} />
@@ -621,7 +596,7 @@ export default function BlogPage() {
                     >
                       {
                         t.categoryNames[
-                          post.category
+                        post.category
                         ]
                       }
                     </span>
@@ -705,6 +680,7 @@ export default function BlogPage() {
               (post, index) => (
                 <article
                   key={post.id}
+                  data-blog-id={post.id}
                   className={styles.quickCard}
                   style={
                     {
@@ -724,7 +700,7 @@ export default function BlogPage() {
                     <span>
                       {
                         t.categoryNames[
-                          post.category
+                        post.category
                         ]
                       }
                     </span>
@@ -765,6 +741,7 @@ export default function BlogPage() {
             {editorPosts.map((post) => (
               <article
                 key={post.id}
+                data-blog-id={post.id}
                 style={
                   {
                     "--accent":
@@ -775,7 +752,7 @@ export default function BlogPage() {
                 <span>
                   {
                     t.categoryNames[
-                      post.category
+                    post.category
                     ]
                   }
                 </span>

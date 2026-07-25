@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import ForumFooter from "@/components/forum-footer";
+import SiteSearch from "@/components/site-search";
 import { createClient } from "@/lib/supabase/client";
 
 import Image from "next/image";
@@ -591,7 +592,6 @@ function CommunityGraphic() {
 
 export default function FeedPage() {
   const [language, setLanguage] = useState<Language>("tr");
-  const [searchOpen, setSearchOpen] = useState(false);
   const [theme, setTheme] = useState<Theme>("dark");
   const [shared, setShared] = useState(false);
 
@@ -852,31 +852,10 @@ export default function FeedPage() {
               <BellIcon />
             </button>
 
-            <button
-              type="button"
-              className={
-                searchOpen
-                  ? "ff-round-action active"
-                  : "ff-round-action"
-              }
-              aria-label="Ara"
-              onClick={() => setSearchOpen((value) => !value)}
-            >
-              <SearchIcon />
-            </button>
+            <SiteSearch language={language} />
+
           </div>
         </header>
-
-        {searchOpen ? (
-          <div className="ff-search-panel">
-            <SearchIcon />
-            <input
-              type="search"
-              placeholder={t.search}
-              autoFocus
-            />
-          </div>
-        ) : null}
 
         <section className="ff-feed-hero">
           <div className="ff-feed-hero-copy">
@@ -976,6 +955,9 @@ export default function FeedPage() {
           >
             {displayPosts.map((post) => (
               <article
+                id={`topic-${post.id ??
+                  encodeURIComponent(post.titleTr)
+                  }`}
                 className="ff-topic-card"
                 key={post.id ?? post.titleTr}
               >
@@ -985,9 +967,23 @@ export default function FeedPage() {
 
                 <div className="ff-topic-main">
                   <h3>
-                    {language === "tr"
-                      ? post.titleTr
-                      : post.titleEn}
+                    {post.id ? (
+                      <Link
+                        href={`/konu/${post.id}`}
+                        style={{
+                          color: "inherit",
+                          textDecoration: "none",
+                        }}
+                      >
+                        {language === "tr"
+                          ? post.titleTr
+                          : post.titleEn}
+                      </Link>
+                    ) : (
+                      language === "tr"
+                        ? post.titleTr
+                        : post.titleEn
+                    )}
                   </h3>
 
                   <div className="ff-topic-meta">

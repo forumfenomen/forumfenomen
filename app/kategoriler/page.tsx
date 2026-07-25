@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import ForumFooter from "@/components/forum-footer";
-
+import SiteSearch from "@/components/site-search";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -55,7 +55,7 @@ type CategoryDefinition = {
 };
 
 type Topic = {
-  id: number;
+  id: number | string;
   category: CategoryId;
   subcategoryId: string;
   title: LocalizedText;
@@ -66,6 +66,31 @@ type Topic = {
   views: number;
   followed: boolean;
 };
+
+type TopicRow = {
+  id: string;
+  title: string;
+  created_at: string;
+  comment_count: number;
+  view_count: number;
+
+  categories: {
+    id: number;
+    slug: string;
+    name: string;
+
+    category_groups: {
+      slug: string;
+      name: string;
+    } | null;
+  } | null;
+
+  profiles: {
+    display_name: string | null;
+    username: string | null;
+  } | null;
+};
+
 type CategoryGroupRow = {
   id: number;
   slug: string;
@@ -950,6 +975,12 @@ export default function CategoriesPage() {
   const [categoryData, setCategoryData] =
     useState<CategoryDefinition[]>(categories);
 
+  const [topicData, setTopicData] =
+    useState<Topic[]>(topics);
+
+  const [topicsLoading, setTopicsLoading] =
+    useState(true);
+
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryId>("platforms");
 
@@ -959,11 +990,7 @@ export default function CategoriesPage() {
   const [activeTab, setActiveTab] =
     useState<TabId>("popular");
 
-  const [searchOpen, setSearchOpen] =
-    useState(false);
-
-  const [searchValue, setSearchValue] =
-    useState("");
+  
 
   useEffect(() => {
     const savedLanguage = getForumLanguage();
@@ -1143,6 +1170,165 @@ export default function CategoriesPage() {
     };
   }, []);
 
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadTopics() {
+      setTopicsLoading(true);
+
+      const supabase = createClient();
+
+      const { data, error } = await supabase
+        .from("topics")
+        .select(`
+        id,
+        title,
+        created_at,
+        comment_count,
+        view_count,
+        categories (
+          id,
+          slug,
+          name,
+          category_groups (
+            slug,
+            name
+          )
+        ),
+        profiles (
+          display_name,
+          username
+        )
+      `)
+        .eq("status", "published")
+        .order("is_pinned", {
+          ascending: false,
+        })
+        .order("created_at", {
+          ascending: false,
+        })
+        .limit(100);
+
+      if (!isActive) {
+        return;
+      }
+
+      if (error) {
+        console.error(
+          "Kategori konuları alınamadı:",
+          error.message
+        );
+
+        setTopicsLoading(false);
+        return;
+      }
+
+      const topicRows =
+        (data ?? []) as unknown as TopicRow[];
+
+      const nextTopics = topicRows.flatMap(
+        (topic) => {
+          const groupSlug =
+            topic.categories?.category_groups
+              ?.slug ?? "";
+
+          const categoryId =
+            categoryGroupMap[groupSlug];
+
+          const subcategorySlug =
+            topic.categories?.slug ?? "";
+
+          const subcategoryId =
+            subcategoryIdMap[
+            subcategorySlug
+            ] ?? subcategorySlug;
+
+          if (
+            !categoryId ||
+            !subcategoryId
+          ) {
+            return [];
+          }
+
+          const fallbackCategory =
+            categories.find(
+              (category) =>
+                category.id === categoryId
+            );
+
+          const fallbackSubcategory =
+            fallbackCategory?.subcategories.find(
+              (subcategory) =>
+                subcategory.id ===
+                subcategoryId
+            );
+
+          const createdAt =
+            new Date(
+              topic.created_at
+            ).getTime();
+
+          const ageHours =
+            Number.isNaN(createdAt)
+              ? 0
+              : Math.max(
+                0,
+                Math.floor(
+                  (Date.now() - createdAt) /
+                  (1000 * 60 * 60)
+                )
+              );
+
+          const categoryName =
+            topic.categories?.name ??
+            "Genel";
+
+          const authorName =
+            topic.profiles?.display_name?.trim() ||
+            topic.profiles?.username
+              ?.replace(/^@/, "")
+              .trim() ||
+            "ForumFenomen Üyesi";
+
+          return [
+            {
+              id: topic.id,
+              category: categoryId,
+              subcategoryId,
+              title: {
+                tr: topic.title,
+                en: topic.title,
+              },
+              tag: {
+                tr: categoryName,
+                en:
+                  fallbackSubcategory
+                    ?.label.en ??
+                  categoryName,
+              },
+              author: authorName,
+              ageHours,
+              comments:
+                topic.comment_count ?? 0,
+              views:
+                topic.view_count ?? 0,
+              followed: false,
+            },
+          ];
+        }
+      );
+
+      setTopicData(nextTopics);
+      setTopicsLoading(false);
+    }
+
+    void loadTopics();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
   const t = ui[language];
 
   const activeCategory =
@@ -1154,7 +1340,7 @@ export default function CategoriesPage() {
     categories[0];
 
   const visibleTopics = useMemo(() => {
-    let result = topics.filter(
+    let result = topicData.filter(
       (topic) =>
         topic.category === selectedCategory
     );
@@ -1167,31 +1353,7 @@ export default function CategoriesPage() {
       );
     }
 
-    const normalizedSearch =
-      searchValue.trim().toLocaleLowerCase(
-        language === "tr" ? "tr-TR" : "en-US"
-      );
-
-    if (normalizedSearch) {
-      result = result.filter((topic) => {
-        const searchableText = [
-          topic.title[language],
-          topic.tag[language],
-          topic.author,
-        ]
-          .join(" ")
-          .toLocaleLowerCase(
-            language === "tr"
-              ? "tr-TR"
-              : "en-US"
-          );
-
-        return searchableText.includes(
-          normalizedSearch
-        );
-      });
-    }
-
+    
     if (activeTab === "following") {
       result = result.filter(
         (topic) => topic.followed
@@ -1212,9 +1374,9 @@ export default function CategoriesPage() {
   }, [
     activeTab,
     language,
-    searchValue,
     selectedCategory,
     selectedSubcategory,
+    topicData,
   ]);
 
   function selectCategory(
@@ -1223,7 +1385,7 @@ export default function CategoriesPage() {
     setSelectedCategory(categoryId);
     setSelectedSubcategory(null);
     setActiveTab("popular");
-    setSearchValue("");
+    
   }
 
   function toggleTheme() {
@@ -1284,49 +1446,12 @@ export default function CategoriesPage() {
               <BellIcon />
             </button>
 
-            <button
-              type="button"
-              className={
-                searchOpen
-                  ? "ff-round-action active"
-                  : "ff-round-action"
-              }
-              onClick={() =>
-                setSearchOpen(
-                  (current) => !current
-                )
-              }
-              aria-label={t.search}
-              title={t.search}
-            >
-              <SearchIcon />
-            </button>
+            <SiteSearch language={language} />
+
           </div>
         </header>
 
-        {searchOpen && (
-          <div className="ff-category-search-panel">
-            <SearchIcon />
-
-            <input
-              autoFocus
-              type="search"
-              value={searchValue}
-              onChange={(event) =>
-                setSearchValue(
-                  event.target.value
-                )
-              }
-              placeholder={
-                t.searchPlaceholder
-              }
-              aria-label={
-                t.searchPlaceholder
-              }
-            />
-          </div>
-        )}
-
+        
         <section className="ff-category-intro">
           <div>
             <span className="ff-category-eyebrow">
@@ -1551,7 +1676,10 @@ export default function CategoriesPage() {
               </span>
             </div>
 
-            <div className="ff-category-topic-list">
+            <div
+              className="ff-category-topic-list"
+              aria-busy={topicsLoading}
+            >
               {visibleTopics.length > 0 ? (
                 visibleTopics.map(
                   (topic) => (

@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import ForumFooter from "@/components/forum-footer";
-
+import SiteSearch from "@/components/site-search";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -1597,14 +1597,8 @@ export default function CreateTopicPage() {
               <BellIcon />
             </button>
 
-            <Link
-              href="/akis"
-              className="ff-round-action"
-              aria-label={t.backHome}
-              title={t.backHome}
-            >
-              <CloseIcon />
-            </Link>
+            <SiteSearch language={language} />
+            
           </div>
         </header>
 

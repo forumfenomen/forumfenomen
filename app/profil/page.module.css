@@ -21,7 +21,7 @@
 
 .shell :global(.ff-feed-header) {
   width: 100% !important;
-  margin: 0 0 10px !important;
+  margin: 0 0 10px;
 }
 
 .searchPanel {

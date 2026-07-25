@@ -1,0 +1,1198 @@
+"use client";
+
+import ForumFooter from "@/components/forum-footer";
+import SiteSearch from "@/components/site-search";
+import {
+    getForumLanguage,
+    setForumLanguage,
+    type ForumLanguage,
+} from "@/lib/forumfenomen-language";
+import { createClient } from "@/lib/supabase/client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import {
+    useEffect,
+    useRef,
+    useState,
+    type FormEvent,
+} from "react";
+
+import styles from "./page.module.css";
+
+type Theme = "dark" | "light";
+
+type TopicDetailRow = {
+    id: string;
+    title: string;
+    content: string;
+    created_at: string;
+    comment_count: number;
+    view_count: number;
+
+    categories: {
+        slug: string;
+        name: string;
+
+        category_groups: {
+            slug: string;
+            name: string;
+        } | null;
+    } | null;
+
+    profiles: {
+        display_name: string | null;
+        username: string | null;
+    } | null;
+};
+
+type CommentRow = {
+    id: string;
+    author_id: string;
+    content: string;
+    created_at: string;
+    parent_comment_id: string | null;
+    like_count: number;
+
+    profiles: {
+        display_name: string | null;
+        username: string | null;
+    } | null;
+};
+
+function MoonIcon() {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 15.5A8 8 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z" />
+        </svg>
+    );
+}
+
+function SunIcon() {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+        </svg>
+    );
+}
+
+function BellIcon() {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9Z" />
+            <path d="M10 21h4" />
+        </svg>
+    );
+}
+
+function ArrowLeftIcon() {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m14 6-6 6 6 6" />
+        </svg>
+    );
+}
+
+function MessageIcon() {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 11.5a7.5 7.5 0 0 1-8 7.48A8.5 8.5 0 0 1 7.4 17.6L3 19l1.35-4.15A7.5 7.5 0 1 1 20 11.5Z" />
+        </svg>
+    );
+}
+
+function EyeIcon() {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M2.5 12s3.4-5.5 9.5-5.5 9.5 5.5 9.5 5.5-3.4 5.5-9.5 5.5S2.5 12 2.5 12Z" />
+            <circle cx="12" cy="12" r="2.5" />
+        </svg>
+    );
+}
+
+function HomeIcon() {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m3 11 9-8 9 8" />
+            <path d="M5.5 9.5V21h13V9.5" />
+            <path d="M9.5 21v-6h5v6" />
+        </svg>
+    );
+}
+
+function GridIcon() {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="2" />
+            <rect x="14" y="3" width="7" height="7" rx="2" />
+            <rect x="3" y="14" width="7" height="7" rx="2" />
+            <rect x="14" y="14" width="7" height="7" rx="2" />
+        </svg>
+    );
+}
+
+function BlogIcon() {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 3h9l4 4v14H6V3Z" />
+            <path d="M15 3v5h5M9 12h7M9 16h7" />
+        </svg>
+    );
+}
+
+function ProfileIcon() {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4.5 21c.7-4.3 3.2-6.5 7.5-6.5s6.8 2.2 7.5 6.5" />
+        </svg>
+    );
+}
+
+function LikeIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+        >
+            <path d="M7 10v11H3V10h4Z" />
+            <path d="M7 19c3 1.4 6 2 9 2h1.2a2.7 2.7 0 0 0 2.65-2.17l1.1-5.5A2.8 2.8 0 0 0 18.2 10H14l.7-3.1A3.15 3.15 0 0 0 12.2 3L7 10Z" />
+        </svg>
+    );
+}
+
+function DislikeIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+        >
+            <path d="M7 14V3H3v11h4Z" />
+            <path d="M7 5c3-1.4 6-2 9-2h1.2a2.7 2.7 0 0 1 2.65 2.17l1.1 5.5A2.8 2.8 0 0 1 18.2 14H14l.7 3.1a3.15 3.15 0 0 1-2.5 3.9L7 14Z" />
+        </svg>
+    );
+}
+
+function ReportIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+        >
+            <path d="M5 21V4" />
+            <path d="M5 5h11l-1.5 3L16 11H5" />
+        </svg>
+    );
+}
+
+function RemoveIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+        >
+            <path d="M4 7h16" />
+            <path d="M9 7V4h6v3" />
+            <path d="m7 7 1 14h8l1-14" />
+            <path d="M10 11v6M14 11v6" />
+        </svg>
+    );
+}
+
+function ReplyIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+        >
+            <path d="m9 7-5 5 5 5" />
+            <path d="M5 12h8a6 6 0 0 1 6 6v1" />
+        </svg>
+    );
+}
+
+export default function TopicDetailPage() {
+    const params = useParams<{
+        id: string;
+    }>();
+
+    const topicId =
+        typeof params.id === "string"
+            ? params.id
+            : "";
+
+    const [language, setLanguage] =
+        useState<ForumLanguage>("tr");
+
+    const [theme, setTheme] =
+        useState<Theme>("dark");
+
+    const [topic, setTopic] =
+        useState<TopicDetailRow | null>(null);
+
+    const [loading, setLoading] =
+        useState(true);
+
+    const [notFound, setNotFound] =
+        useState(false);
+
+    const [comments, setComments] =
+        useState<CommentRow[]>([]);
+
+    const [commentsLoading, setCommentsLoading] =
+        useState(true);
+
+    const [commentText, setCommentText] =
+        useState("");
+
+    const [commentSubmitting, setCommentSubmitting] =
+        useState(false);
+
+    const [commentMessage, setCommentMessage] =
+        useState<"login" | "error" | null>(null);
+
+    const [replyingTo, setReplyingTo] =
+        useState<CommentRow | null>(null);
+
+    const commentInputRef =
+        useRef<HTMLTextAreaElement | null>(null);
+
+    const [currentUserId, setCurrentUserId] =
+        useState<string | null>(null);
+
+    useEffect(() => {
+        const savedLanguage =
+            getForumLanguage();
+
+        setLanguage(savedLanguage);
+        setForumLanguage(savedLanguage);
+
+        const savedTheme =
+            window.localStorage.getItem(
+                "forumfenomen-theme"
+            );
+
+        const resolvedTheme: Theme =
+            savedTheme === "light"
+                ? "light"
+                : "dark";
+
+        setTheme(resolvedTheme);
+
+        document.documentElement.dataset.theme =
+            resolvedTheme;
+    }, []);
+
+    useEffect(() => {
+        const supabase = createClient();
+
+        let isActive = true;
+
+        async function loadCurrentUser() {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
+
+            if (isActive) {
+                setCurrentUserId(user?.id ?? null);
+            }
+        }
+
+        void loadCurrentUser();
+
+        const { data: authListener } =
+            supabase.auth.onAuthStateChange(
+                (_event, session) => {
+                    if (isActive) {
+                        setCurrentUserId(
+                            session?.user.id ?? null
+                        );
+                    }
+                }
+            );
+
+        return () => {
+            isActive = false;
+
+            authListener.subscription.unsubscribe();
+        };
+    }, []);
+
+    useEffect(() => {
+        let isActive = true;
+
+        async function loadTopic() {
+            if (!topicId) {
+                setNotFound(true);
+                setLoading(false);
+                return;
+            }
+
+            setLoading(true);
+            setNotFound(false);
+
+            const supabase = createClient();
+
+            const { data, error } = await supabase
+                .from("topics")
+                .select(`
+          id,
+          title,
+          content,
+          created_at,
+          comment_count,
+          view_count,
+          categories (
+            slug,
+            name,
+            category_groups (
+              slug,
+              name
+            )
+          ),
+          profiles (
+            display_name,
+            username
+          )
+        `)
+                .eq("id", topicId)
+                .eq("status", "published")
+                .maybeSingle();
+
+            if (!isActive) {
+                return;
+            }
+
+            if (error || !data) {
+                console.error(
+                    "Konu detayı alınamadı:",
+                    error?.message
+                );
+
+                setTopic(null);
+                setNotFound(true);
+                setLoading(false);
+                return;
+            }
+
+            setTopic(
+                data as unknown as TopicDetailRow
+            );
+
+            setLoading(false);
+        }
+
+        void loadTopic();
+
+        return () => {
+            isActive = false;
+        };
+    }, [topicId]);
+
+    useEffect(() => {
+        let isActive = true;
+
+        async function loadComments() {
+            if (!topicId) {
+                setComments([]);
+                setCommentsLoading(false);
+                return;
+            }
+
+            setCommentsLoading(true);
+
+            const supabase = createClient();
+
+            const { data, error } = await supabase
+                .from("topic_comments")
+                .select(`
+        id,
+        author_id,
+        content,
+        created_at,
+        parent_comment_id,
+        like_count,
+        profiles (
+          display_name,
+          username
+        )
+      `)
+                .eq("topic_id", topicId)
+                .eq("status", "published")
+                .order("created_at", {
+                    ascending: true,
+                });
+
+            if (!isActive) {
+                return;
+            }
+
+            if (error) {
+                console.error(
+                    "Yorumlar alınamadı:",
+                    error.message
+                );
+
+                setComments([]);
+                setCommentsLoading(false);
+                return;
+            }
+
+            setComments(
+                (data ?? []) as unknown as CommentRow[]
+            );
+
+            setCommentsLoading(false);
+        }
+
+        void loadComments();
+
+        return () => {
+            isActive = false;
+        };
+    }, [topicId]);
+
+    function toggleTheme() {
+        const nextTheme: Theme =
+            theme === "dark"
+                ? "light"
+                : "dark";
+
+        setTheme(nextTheme);
+
+        document.documentElement.dataset.theme =
+            nextTheme;
+
+        window.localStorage.setItem(
+            "forumfenomen-theme",
+            nextTheme
+        );
+    }
+
+    function getCommentAuthor(
+        comment: CommentRow
+    ) {
+        return (
+            comment.profiles?.display_name?.trim() ||
+            comment.profiles?.username
+                ?.replace(/^@/, "")
+                .trim() ||
+            (language === "tr"
+                ? "ForumFenomen Üyesi"
+                : "ForumFenomen Member")
+        );
+    }
+
+    function formatCommentDate(value: string) {
+        const date = new Date(value);
+
+        if (Number.isNaN(date.getTime())) {
+            return "";
+        }
+
+        return new Intl.DateTimeFormat(
+            language === "tr"
+                ? "tr-TR"
+                : "en-US",
+            {
+                dateStyle: "medium",
+                timeStyle: "short",
+            }
+        ).format(date);
+    }
+
+    function startReply(comment: CommentRow) {
+        setReplyingTo(comment);
+        setCommentMessage(null);
+
+        window.requestAnimationFrame(() => {
+            commentInputRef.current?.focus();
+        });
+    }
+
+    async function handleCommentSubmit(
+        event: FormEvent<HTMLFormElement>
+    ) {
+        event.preventDefault();
+
+        const normalizedComment =
+            commentText.trim();
+
+        if (
+            !normalizedComment ||
+            normalizedComment.length > 2000 ||
+            commentSubmitting
+        ) {
+            return;
+        }
+
+        setCommentSubmitting(true);
+        setCommentMessage(null);
+
+        try {
+            const supabase = createClient();
+
+            const {
+                data: { user },
+                error: userError,
+            } = await supabase.auth.getUser();
+
+            if (userError || !user) {
+                setCommentMessage("login");
+                return;
+            }
+
+            const { data, error } = await supabase
+                .from("topic_comments")
+                .insert({
+                    topic_id: topicId,
+                    author_id: user.id,
+                    parent_comment_id:
+                        replyingTo?.id ?? null,
+                    content: normalizedComment,
+                    status: "published",
+                })
+                .select(`
+        id,
+        author_id,
+        content,
+        created_at,
+        parent_comment_id,
+        like_count,
+        profiles (
+          display_name,
+          username
+        )
+      `)
+                .single();
+
+            if (error || !data) {
+                console.error(
+                    "Yorum eklenemedi:",
+                    error?.message
+                );
+
+                setCommentMessage("error");
+                return;
+            }
+
+            const newComment =
+                data as unknown as CommentRow;
+
+            setComments((current) => [
+                ...current,
+                newComment,
+            ]);
+
+            setTopic((current) =>
+                current
+                    ? {
+                        ...current,
+                        comment_count:
+                            (current.comment_count ?? 0) + 1,
+                    }
+                    : current
+            );
+
+            setCommentText("");
+            setReplyingTo(null);
+        } catch (error) {
+            console.error(
+                "Beklenmeyen yorum hatası:",
+                error
+            );
+
+            setCommentMessage("error");
+        } finally {
+            setCommentSubmitting(false);
+        }
+    }
+
+    const author =
+        topic?.profiles?.display_name?.trim() ||
+        topic?.profiles?.username
+            ?.replace(/^@/, "")
+            .trim() ||
+        (language === "tr"
+            ? "ForumFenomen Üyesi"
+            : "ForumFenomen Member");
+
+    const formattedDate = topic
+        ? new Intl.DateTimeFormat(
+            language === "tr"
+                ? "tr-TR"
+                : "en-US",
+            {
+                dateStyle: "long",
+                timeStyle: "short",
+            }
+        ).format(
+            new Date(topic.created_at)
+        )
+        : "";
+
+    const commentMap = new Map(
+        comments.map((comment) => [
+            comment.id,
+            comment,
+        ])
+    );
+
+    return (
+        <main className={styles.page}>
+            <div className={styles.shell}>
+                <header className="ff-feed-header">
+                    <Link
+                        href="/akis"
+                        className="ff-feed-logo-wrap"
+                        aria-label="ForumFenomen"
+                    >
+                        <Image
+                            className="ff-feed-logo"
+                            src="/forumfenomen-logo-transparent.png"
+                            alt="ForumFenomen"
+                            width={460}
+                            height={140}
+                            priority
+                        />
+                    </Link>
+
+                    <div className="ff-feed-header-actions">
+                        <button
+                            type="button"
+                            className="ff-round-action"
+                            onClick={toggleTheme}
+                            aria-label={
+                                language === "tr"
+                                    ? "Temayı değiştir"
+                                    : "Change theme"
+                            }
+                        >
+                            {theme === "dark" ? (
+                                <MoonIcon />
+                            ) : (
+                                <SunIcon />
+                            )}
+                        </button>
+
+                        <button
+                            type="button"
+                            className="ff-round-action"
+                            aria-label={
+                                language === "tr"
+                                    ? "Bildirimler"
+                                    : "Notifications"
+                            }
+                        >
+                            <BellIcon />
+                        </button>
+
+                        <SiteSearch language={language} />
+                    </div>
+                </header>
+
+                <Link
+                    href="/akis"
+                    className={styles.backLink}
+                >
+                    <ArrowLeftIcon />
+
+                    {language === "tr"
+                        ? "Akışa geri dön"
+                        : "Return to feed"}
+                </Link>
+
+                {loading && (
+                    <section className={styles.stateCard}>
+                        <span className={styles.loader} />
+
+                        <p>
+                            {language === "tr"
+                                ? "Konu yükleniyor..."
+                                : "Loading topic..."}
+                        </p>
+                    </section>
+                )}
+
+                {!loading && notFound && (
+                    <section className={styles.stateCard}>
+                        <h1>
+                            {language === "tr"
+                                ? "Konu bulunamadı"
+                                : "Topic not found"}
+                        </h1>
+
+                        <p>
+                            {language === "tr"
+                                ? "Bu konu kaldırılmış, gizlenmiş veya artık yayında olmayabilir."
+                                : "This topic may have been removed, hidden or unpublished."}
+                        </p>
+
+                        <Link href="/akis">
+                            {language === "tr"
+                                ? "Akışa Git"
+                                : "Go to Feed"}
+                        </Link>
+                    </section>
+                )}
+
+                {!loading && topic && (
+                    <>
+                        <article className={styles.topicCard}>
+                            <div className={styles.topicTop}>
+                                <span className={styles.categoryBadge}>
+                                    {topic.categories?.name ??
+                                        (language === "tr"
+                                            ? "Genel"
+                                            : "General")}
+                                </span>
+
+                                <span className={styles.date}>
+                                    {formattedDate}
+                                </span>
+                            </div>
+
+                            <h1>{topic.title}</h1>
+
+                            <div className={styles.authorRow}>
+                                <span className={styles.avatar}>
+                                    {author
+                                        .slice(0, 1)
+                                        .toLocaleUpperCase(
+                                            language === "tr"
+                                                ? "tr-TR"
+                                                : "en-US"
+                                        )}
+                                </span>
+
+                                <div>
+                                    <strong>{author}</strong>
+
+                                    <small>
+                                        {topic.categories
+                                            ?.category_groups?.name ??
+                                            "ForumFenomen"}
+                                    </small>
+                                </div>
+
+                                <div className={styles.stats}>
+                                    <span>
+                                        <MessageIcon />
+                                        {topic.comment_count ?? 0}
+                                    </span>
+
+                                    <span>
+                                        <EyeIcon />
+                                        {topic.view_count ?? 0}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div
+                                className={styles.content}
+                                dangerouslySetInnerHTML={{
+                                    __html: topic.content,
+                                }}
+                            />
+                        </article>
+
+                        <section className={styles.commentsCard}>
+                            <div className={styles.commentsHeader}>
+                                <div>
+                                    <span>
+                                        {language === "tr"
+                                            ? "TOPLULUK"
+                                            : "COMMUNITY"}
+                                    </span>
+
+                                    <h2>
+                                        {language === "tr"
+                                            ? `Yorumlar (${topic.comment_count ?? 0})`
+                                            : `Comments (${topic.comment_count ?? 0})`}
+                                    </h2>
+                                </div>
+                            </div>
+
+                            <form
+                                className={styles.commentForm}
+                                onSubmit={handleCommentSubmit}
+                            >
+                                {replyingTo && (
+                                    <div className={styles.replyingBox}>
+                                        <div>
+                                            <span>
+                                                {language === "tr"
+                                                    ? "YANITLANIYOR"
+                                                    : "REPLYING TO"}
+                                            </span>
+
+                                            <strong>
+                                                {getCommentAuthor(replyingTo)}
+                                            </strong>
+
+                                            <p>
+                                                {replyingTo.content.length > 160
+                                                    ? `${replyingTo.content.slice(
+                                                        0,
+                                                        160
+                                                    )}…`
+                                                    : replyingTo.content}
+                                            </p>
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => setReplyingTo(null)}
+                                            aria-label={
+                                                language === "tr"
+                                                    ? "Yanıtlamayı iptal et"
+                                                    : "Cancel reply"
+                                            }
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                )}
+
+                                <textarea
+                                    ref={commentInputRef}
+                                    value={commentText}
+                                    maxLength={2000}
+                                    onChange={(event) => {
+                                        setCommentText(event.target.value);
+                                        setCommentMessage(null);
+                                    }}
+                                    placeholder={
+                                        replyingTo
+                                            ? language === "tr"
+                                                ? `${getCommentAuthor(
+                                                    replyingTo
+                                                )} kullanıcısına yanıt yaz...`
+                                                : `Reply to ${getCommentAuthor(
+                                                    replyingTo
+                                                )}...`
+                                            : language === "tr"
+                                                ? "Bu konu hakkında fikrini paylaş..."
+                                                : "Share your thoughts about this topic..."
+                                    }
+                                />
+
+                                <div className={styles.commentFormFooter}>
+                                    <span>
+                                        {commentText.length}/2000
+                                    </span>
+
+                                    <button
+                                        type="submit"
+                                        disabled={
+                                            !commentText.trim() ||
+                                            commentSubmitting
+                                        }
+                                    >
+                                        {commentSubmitting
+                                            ? language === "tr"
+                                                ? "Gönderiliyor..."
+                                                : "Posting..."
+                                            : replyingTo
+                                                ? language === "tr"
+                                                    ? "Yanıtı Gönder"
+                                                    : "Post Reply"
+                                                : language === "tr"
+                                                    ? "Yorum Yap"
+                                                    : "Post Comment"}
+                                    </button>
+                                </div>
+
+                                {commentMessage === "login" && (
+                                    <p className={styles.commentFeedback}>
+                                        {language === "tr"
+                                            ? "Yorum yapmak için giriş yapmalısın. "
+                                            : "You must sign in to comment. "}
+
+                                        <Link href="/giris">
+                                            {language === "tr"
+                                                ? "Giriş yap"
+                                                : "Sign in"}
+                                        </Link>
+                                    </p>
+                                )}
+
+                                {commentMessage === "error" && (
+                                    <p className={styles.commentFeedback}>
+                                        {language === "tr"
+                                            ? "Yorum gönderilemedi. Lütfen tekrar dene."
+                                            : "The comment could not be posted. Please try again."}
+                                    </p>
+                                )}
+                            </form>
+
+                            <div className={styles.commentsList}>
+                                {commentsLoading ? (
+                                    <div className={styles.commentState}>
+                                        <span className={styles.loader} />
+
+                                        <p>
+                                            {language === "tr"
+                                                ? "Yorumlar yükleniyor..."
+                                                : "Loading comments..."}
+                                        </p>
+                                    </div>
+                                ) : comments.length === 0 ? (
+                                    <div className={styles.commentState}>
+                                        <MessageIcon />
+
+                                        <p>
+                                            {language === "tr"
+                                                ? "Henüz yorum yapılmamış. İlk yorumu sen yap."
+                                                : "There are no comments yet. Be the first to comment."}
+                                        </p>
+                                    </div>
+                                ) : (
+                                    comments.map((comment) => {
+                                        const parentComment =
+                                            comment.parent_comment_id
+                                                ? commentMap.get(
+                                                    comment.parent_comment_id
+                                                )
+                                                : null;
+
+                                        const commentAuthor =
+                                            getCommentAuthor(comment);
+
+                                        return (
+                                            <article
+                                                key={comment.id}
+                                                className={
+                                                    comment.parent_comment_id
+                                                        ? `${styles.commentItem} ${styles.commentReply}`
+                                                        : styles.commentItem
+                                                }
+                                            >
+                                                <div className={styles.commentHeader}>
+                                                    <span className={styles.commentAvatar}>
+                                                        {commentAuthor
+                                                            .slice(0, 1)
+                                                            .toLocaleUpperCase(
+                                                                language === "tr"
+                                                                    ? "tr-TR"
+                                                                    : "en-US"
+                                                            )}
+                                                    </span>
+
+                                                    <div>
+                                                        <strong>
+                                                            {commentAuthor}
+                                                        </strong>
+
+                                                        <small>
+                                                            {formatCommentDate(
+                                                                comment.created_at
+                                                            )}
+                                                        </small>
+                                                    </div>
+                                                </div>
+
+                                                {parentComment && (
+                                                    <blockquote
+                                                        className={styles.replyQuote}
+                                                    >
+                                                        <span>
+                                                            {getCommentAuthor(
+                                                                parentComment
+                                                            )}
+                                                        </span>
+
+                                                        <p>
+                                                            {parentComment.content.length >
+                                                                180
+                                                                ? `${parentComment.content.slice(
+                                                                    0,
+                                                                    180
+                                                                )}…`
+                                                                : parentComment.content}
+                                                        </p>
+                                                    </blockquote>
+                                                )}
+
+                                                <p className={styles.commentContent}>
+                                                    {comment.content}
+                                                </p>
+
+                                                <div className={styles.commentActions}>
+                                                    <button
+                                                        type="button"
+                                                        className={styles.commentAction}
+                                                        aria-label={
+                                                            language === "tr"
+                                                                ? "Yorumu beğen"
+                                                                : "Like comment"
+                                                        }
+                                                        title={
+                                                            language === "tr"
+                                                                ? "Beğen"
+                                                                : "Like"
+                                                        }
+                                                    >
+                                                        <LikeIcon />
+                                                    </button>
+
+                                                    <button
+                                                        type="button"
+                                                        className={styles.commentAction}
+                                                        aria-label={
+                                                            language === "tr"
+                                                                ? "Yorumu beğenme"
+                                                                : "Dislike comment"
+                                                        }
+                                                        title={
+                                                            language === "tr"
+                                                                ? "Beğenme"
+                                                                : "Dislike"
+                                                        }
+                                                    >
+                                                        <DislikeIcon />
+                                                    </button>
+
+                                                    <button
+                                                        type="button"
+                                                        className={styles.commentAction}
+                                                        onClick={() =>
+                                                            startReply(comment)
+                                                        }
+                                                        aria-label={
+                                                            language === "tr"
+                                                                ? "Yoruma yanıt ver"
+                                                                : "Reply to comment"
+                                                        }
+                                                        title={
+                                                            language === "tr"
+                                                                ? "Yanıtla"
+                                                                : "Reply"
+                                                        }
+                                                    >
+                                                        <ReplyIcon />
+                                                    </button>
+
+                                                    <button
+                                                        type="button"
+                                                        className={`${styles.commentAction} ${styles.reportAction}`}
+                                                        aria-label={
+                                                            language === "tr"
+                                                                ? "Yorumu şikâyet et"
+                                                                : "Report comment"
+                                                        }
+                                                        title={
+                                                            language === "tr"
+                                                                ? "Şikâyet Et"
+                                                                : "Report"
+                                                        }
+                                                    >
+                                                        <ReportIcon />
+                                                    </button>
+
+                                                    {currentUserId === comment.author_id && (
+                                                        <button
+                                                            type="button"
+                                                            className={`${styles.commentAction} ${styles.removeAction}`}
+                                                            aria-label={
+                                                                language === "tr"
+                                                                    ? "Yorumu kaldır"
+                                                                    : "Remove comment"
+                                                            }
+                                                            title={
+                                                                language === "tr"
+                                                                    ? "Yorumu Kaldır"
+                                                                    : "Remove Comment"
+                                                            }
+                                                        >
+                                                            <RemoveIcon />
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </article>
+                                        );
+                                    })
+                                )}
+                            </div>
+                        </section>
+                    </>
+                )}
+            </div>
+
+            <ForumFooter />
+
+            <nav
+                className="ff-bottom-nav"
+                aria-label={
+                    language === "tr"
+                        ? "Ana menü"
+                        : "Main menu"
+                }
+            >
+                <Link
+                    href="/akis"
+                    className="active"
+                    aria-current="page"
+                >
+                    <HomeIcon />
+
+                    <span>
+                        {language === "tr"
+                            ? "Ana Sayfa"
+                            : "Home"}
+                    </span>
+                </Link>
+
+                <Link href="/kategoriler">
+                    <GridIcon />
+
+                    <span>
+                        {language === "tr"
+                            ? "Kategoriler"
+                            : "Categories"}
+                    </span>
+                </Link>
+
+                <Link
+                    href="/konu-ac"
+                    className="ff-center-nav-button"
+                    aria-label={
+                        language === "tr"
+                            ? "Yeni konu aç"
+                            : "Create new topic"
+                    }
+                >
+                    <span className="ff-center-nav-glow" />
+
+                    <span className="ff-center-nav-image">
+                        <Image
+                            src="/forumfenomen-icon-master.png"
+                            alt=""
+                            width={1254}
+                            height={1254}
+                            unoptimized
+                        />
+                    </span>
+                </Link>
+
+                <Link href="/blog">
+                    <BlogIcon />
+
+                    <span>Blog</span>
+                </Link>
+
+                <Link href="/profil">
+                    <ProfileIcon />
+
+                    <span>
+                        {language === "tr"
+                            ? "Profil"
+                            : "Profile"}
+                    </span>
+                </Link>
+            </nav>
+        </main>
+    );
+}
