@@ -965,10 +965,7 @@ export default function FeedPage() {
   };
   const t = copy[language];
 
-  const displayPosts =
-    topicPosts.length > 0
-      ? topicPosts
-      : posts;
+  const displayPosts = topicPosts;
 
   return (
     <main className="ff-feed-page">
@@ -1112,114 +1109,125 @@ export default function FeedPage() {
             className="ff-topic-list"
             aria-busy={topicsLoading}
           >
-            {displayPosts.map((post) => (
-              <article
-                id={`topic-${post.id ??
-                  encodeURIComponent(post.titleTr)
-                  }`}
-                className="ff-topic-card"
-                key={post.id ?? post.titleTr}
-              >
-                <div className={`ff-topic-icon ${post.iconClass}`}>
-                  {post.icon}
-                </div>
+            {topicsLoading ? (
+              <div className="ff-topics-loading">
+                Güncel konular yükleniyor...
+              </div>
+            ) : displayPosts.length === 0 ? (
+              <div className="ff-topics-loading">
+                Henüz yayınlanmış konu bulunmuyor.
+              </div>
+            ) : (
+              displayPosts.map((post) => (
+                <article
+                                     
+                  id={`topic-${post.id ??
+                    encodeURIComponent(post.titleTr)
+                    }`}
+                  className="ff-topic-card"
+                  key={post.id ?? post.titleTr}
+                >
+                  <div className={`ff-topic-icon ${post.iconClass}`}>
+                    {post.icon}
+                  </div>
 
-                <div className="ff-topic-main">
-                  <h3>
-                    {post.id ? (
-                      <Link
-                        href={`/konu/${post.id}`}
-                        style={{
-                          color: "inherit",
-                          textDecoration: "none",
-                        }}
-                      >
-                        {language === "tr"
+                  <div className="ff-topic-main">
+                    <h3>
+                      {post.id ? (
+                        <Link
+                          href={`/konu/${post.id}`}
+                          style={{
+                            color: "inherit",
+                            textDecoration: "none",
+                          }}
+                        >
+                          {language === "tr"
+                            ? post.titleTr
+                            : post.titleEn}
+                        </Link>
+                      ) : (
+                        language === "tr"
                           ? post.titleTr
-                          : post.titleEn}
-                      </Link>
-                    ) : (
-                      language === "tr"
-                        ? post.titleTr
-                        : post.titleEn
-                    )}
-                  </h3>
+                          : post.titleEn
+                      )}
+                    </h3>
 
-                  <div className="ff-topic-meta">
-                    <span className={`ff-category ${post.iconClass}`}>
-                      {language === "tr"
-                        ? post.categoryTr
-                        : post.categoryEn}
+                    <div className="ff-topic-meta">
+                      <span className={`ff-category ${post.iconClass}`}>
+                        {language === "tr"
+                          ? post.categoryTr
+                          : post.categoryEn}
+                      </span>
+
+                      <span>{post.author}</span>
+                      <i>•</i>
+
+                      <span>
+                        {language === "tr"
+                          ? post.timeTr
+                          : post.timeEn}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    className={
+                      post.id &&
+                        savedTopicIds[post.id]
+                        ? "ff-bookmark-button saved"
+                        : "ff-bookmark-button"
+                    }
+                    disabled={
+                      !post.id ||
+                      savingTopicId === post.id
+                    }
+                    aria-pressed={
+                      post.id
+                        ? Boolean(savedTopicIds[post.id])
+                        : false
+                    }
+                    aria-label={
+                      post.id &&
+                        savedTopicIds[post.id]
+                        ? language === "tr"
+                          ? "Kaydı kaldır"
+                          : "Remove bookmark"
+                        : language === "tr"
+                          ? "Konuyu kaydet"
+                          : "Save topic"
+                    }
+                    title={
+                      post.id &&
+                        savedTopicIds[post.id]
+                        ? language === "tr"
+                          ? "Kaydedildi"
+                          : "Saved"
+                        : language === "tr"
+                          ? "Kaydet"
+                          : "Save"
+                    }
+                    onClick={() => {
+                      void toggleSavedTopic(post.id);
+                    }}
+                  >
+                    <BookmarkIcon />
+                  </button>
+
+                  <div className="ff-topic-stats">
+                    <span>
+                      <MessageIcon />
+                      {post.comments}
                     </span>
-
-                    <span>{post.author}</span>
-                    <i>•</i>
 
                     <span>
-                      {language === "tr"
-                        ? post.timeTr
-                        : post.timeEn}
+                      <EyeIcon />
+                      {post.views}
                     </span>
                   </div>
-                </div>
-
-                <button
-                  type="button"
-                  className={
-                    post.id &&
-                      savedTopicIds[post.id]
-                      ? "ff-bookmark-button saved"
-                      : "ff-bookmark-button"
-                  }
-                  disabled={
-                    !post.id ||
-                    savingTopicId === post.id
-                  }
-                  aria-pressed={
-                    post.id
-                      ? Boolean(savedTopicIds[post.id])
-                      : false
-                  }
-                  aria-label={
-                    post.id &&
-                      savedTopicIds[post.id]
-                      ? language === "tr"
-                        ? "Kaydı kaldır"
-                        : "Remove bookmark"
-                      : language === "tr"
-                        ? "Konuyu kaydet"
-                        : "Save topic"
-                  }
-                  title={
-                    post.id &&
-                      savedTopicIds[post.id]
-                      ? language === "tr"
-                        ? "Kaydedildi"
-                        : "Saved"
-                      : language === "tr"
-                        ? "Kaydet"
-                        : "Save"
-                  }
-                  onClick={() => {
-                    void toggleSavedTopic(post.id);
-                  }}
-                >
-                  <BookmarkIcon />
-                </button>
-
-                <div className="ff-topic-stats">
-                  <span>
-                    <MessageIcon />
-                    {post.comments}
-                  </span>
-
-                  <span>
-                    <EyeIcon />
-                    {post.views}
-                  </span>
-                </div>
-              </article>
-            ))}
+                </article>
+              ))
+              )}
           </div>
         </section>
 

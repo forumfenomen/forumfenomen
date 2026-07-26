@@ -1,0 +1,572 @@
+import Link from "next/link";
+
+import CommentModerationActions from "@/components/admin/comment-moderation-actions";
+import { createClient } from "@/lib/supabase/server";
+
+import styles from "../admin.module.css";
+
+type ProfileSummary = {
+    id: string;
+    display_name: string | null;
+    username: string | null;
+};
+
+type TopicSummary = {
+    id: string;
+    title: string;
+};
+
+type AdminComment = {
+    id: string;
+    content: string;
+    status: string;
+    topic_id: string;
+    author_id: string;
+    created_at: string;
+};
+
+type AdminCommentsPageProps = {
+    searchParams: Promise<{
+        status?: string;
+        search?: string;
+    }>;
+};
+
+function getProfileName(
+    profile: ProfileSummary | undefined
+) {
+    return (
+        profile?.display_name?.trim() ||
+        profile?.username
+            ?.replace(/^@/, "")
+            .trim() ||
+        "ForumFenomen Üyesi"
+    );
+}
+
+function formatDate(value: string) {
+    return new Intl.DateTimeFormat(
+        "tr-TR",
+        {
+            dateStyle: "medium",
+            timeStyle: "short",
+            timeZone: "Europe/Istanbul",
+        }
+    ).format(new Date(value));
+}
+
+export default async function AdminCommentsPage({
+    searchParams,
+}: AdminCommentsPageProps) {
+    const params = await searchParams;
+
+    const selectedStatus =
+        params.status === "published" ||
+            params.status === "hidden" ||
+            params.status === "banned"
+            ? params.status
+            : "all";
+
+    const searchText =
+        params.search?.trim() ?? "";
+
+    const supabase = await createClient();
+
+    let commentsQuery = supabase
+        .from("topic_comments")
+        .select(`
+  id,
+  content,
+  status,
+  topic_id,
+  author_id,
+  created_at
+`)
+        .order("created_at", {
+            ascending: false,
+        })
+        .limit(200);
+
+    if (selectedStatus !== "all") {
+        commentsQuery = commentsQuery.eq(
+            "status",
+            selectedStatus
+        );
+    }
+
+    if (searchText) {
+        commentsQuery = commentsQuery.ilike(
+            "content",
+            `%${searchText}%`
+        );
+    }
+
+    const [
+        commentsResult,
+        publishedCountResult,
+        hiddenCountResult,
+        bannedCountResult,
+    ] = await Promise.all([
+        commentsQuery,
+
+        supabase
+            .from("topic_comments")
+            .select("id", {
+                count: "exact",
+                head: true,
+            })
+            .eq("status", "published"),
+
+        supabase
+            .from("topic_comments")
+            .select("id", {
+                count: "exact",
+                head: true,
+            })
+            .eq("status", "hidden"),
+
+        supabase
+            .from("topic_comments")
+            .select("id", {
+                count: "exact",
+                head: true,
+            })
+            .eq("status", "banned"),
+    ]);
+
+    if (commentsResult.error) {
+        console.error(
+            "Yorumlar alınamadı:",
+            commentsResult.error.message
+        );
+    }
+
+    const comments =
+        (commentsResult.data ??
+            []) as AdminComment[];
+
+    const profileIds = Array.from(
+        new Set(
+            comments.map(
+                (comment) => comment.author_id
+            )
+        )
+    );
+
+    const topicIds = Array.from(
+        new Set(
+            comments.map(
+                (comment) => comment.topic_id
+            )
+        )
+    );
+
+    let profiles: ProfileSummary[] = [];
+    let topics: TopicSummary[] = [];
+
+    if (profileIds.length > 0) {
+        const profilesResult = await supabase
+            .from("profiles")
+            .select(`
+        id,
+        display_name,
+        username
+      `)
+            .in("id", profileIds);
+
+        if (profilesResult.error) {
+            console.error(
+                "Yorum kullanıcıları alınamadı:",
+                profilesResult.error.message
+            );
+        }
+
+        profiles =
+            (profilesResult.data ??
+                []) as ProfileSummary[];
+    }
+
+    if (topicIds.length > 0) {
+        const topicsResult = await supabase
+            .from("topics")
+            .select(`
+        id,
+        title
+      `)
+            .in("id", topicIds);
+
+        if (topicsResult.error) {
+            console.error(
+                "Yorum konuları alınamadı:",
+                topicsResult.error.message
+            );
+        }
+
+        topics =
+            (topicsResult.data ??
+                []) as TopicSummary[];
+    }
+
+    const profileMap = new Map(
+        profiles.map((profile) => [
+            profile.id,
+            profile,
+        ])
+    );
+
+    const topicMap = new Map(
+        topics.map((topic) => [
+            topic.id,
+            topic,
+        ])
+    );
+
+    const publishedCount =
+        publishedCountResult.count ?? 0;
+
+    const hiddenCount =
+        hiddenCountResult.count ?? 0;
+
+    const bannedCount =
+        bannedCountResult.count ?? 0;
+
+    const totalCount =
+        publishedCount +
+        hiddenCount +
+        bannedCount;
+
+    return (
+        <>
+            <header className={styles.pageHeader}>
+                <div>
+                    <span>İÇERİK YÖNETİMİ</span>
+
+                    <h1>Yorumlar</h1>
+
+                    <p>
+                        Forumdaki yorumları incele, gizle
+                        veya yeniden yayınla.
+                    </p>
+                </div>
+
+                <div className={styles.securityBadge}>
+                    ● Yetkili erişimi
+                </div>
+            </header>
+
+            <section
+                className={styles.reportSummaryGrid}
+            >
+                <Link
+                    href="/admin/yorumlar"
+                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${selectedStatus === "all"
+                            ? styles.commentSummaryActive
+                            : ""
+                        }`}
+                >
+                    <span>Toplam yorum</span>
+                    <strong>{totalCount}</strong>
+                </Link>
+
+                <Link
+                    href="/admin/yorumlar?status=published"
+                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${selectedStatus === "published"
+                            ? styles.commentSummaryActive
+                            : ""
+                        }`}
+                >
+                    <span>Yayındaki</span>
+                    <strong>{publishedCount}</strong>
+                </Link>
+
+                <Link
+                    href="/admin/yorumlar?status=hidden"
+                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${selectedStatus === "hidden"
+                            ? styles.commentSummaryActive
+                            : ""
+                        }`}
+                >
+                    <span>Gizlenen</span>
+                    <strong>{hiddenCount}</strong>
+                </Link>
+
+                <Link
+                    href="/admin/yorumlar?status=banned"
+                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${selectedStatus === "banned"
+                            ? styles.commentSummaryActive
+                            : ""
+                        }`}
+                >
+                    <span>Yasaklanan</span>
+                    <strong>{bannedCount}</strong>
+                </Link>
+            </section>
+
+            <section className={styles.panel}>
+                <div className={styles.panelHeader}>
+                    <div>
+                        <span>ARAMA VE FİLTRE</span>
+
+                        <h2>Yorumları Bul</h2>
+                    </div>
+
+                    <div className={styles.panelBadge}>
+                        Son 200 kayıt
+                    </div>
+                </div>
+
+                <form
+                    method="get"
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns:
+                            "minmax(220px, 1fr) 190px auto",
+                        gap: 12,
+                        alignItems: "end",
+                    }}
+                >
+                    <label
+                        style={{
+                            display: "grid",
+                            gap: 7,
+                        }}
+                    >
+                        <span
+                            style={{
+                                fontSize: 11,
+                                fontWeight: 700,
+                                opacity: 0.7,
+                            }}
+                        >
+                            Yorum içeriği
+                        </span>
+
+                        <input
+                            type="search"
+                            name="search"
+                            defaultValue={searchText}
+                            placeholder="Yorumlarda ara..."
+                            style={{
+                                minHeight: 44,
+                                padding: "0 14px",
+                                borderRadius: 12,
+                                border:
+                                    "1px solid rgba(255,255,255,0.12)",
+                                color: "inherit",
+                                background:
+                                    "rgba(255,255,255,0.05)",
+                            }}
+                        />
+                    </label>
+
+                    <label
+                        style={{
+                            display: "grid",
+                            gap: 7,
+                        }}
+                    >
+                        <span
+                            style={{
+                                fontSize: 11,
+                                fontWeight: 700,
+                                opacity: 0.7,
+                            }}
+                        >
+                            Durum
+                        </span>
+
+                        <select
+                            name="status"
+                            defaultValue={selectedStatus}
+                            style={{
+                                minHeight: 44,
+                                padding: "0 12px",
+                                borderRadius: 12,
+                                border:
+                                    "1px solid rgba(255,255,255,0.12)",
+                                color: "inherit",
+                                background: "#161521",
+                            }}
+                        >
+                            <option value="all">
+                                Tüm yorumlar
+                            </option>
+
+                            <option value="published">
+                                Yayındaki yorumlar
+                            </option>
+
+                            <option value="hidden">
+                                Gizlenen yorumlar
+                            </option>
+
+                            <option value="banned">
+                                Yasaklanan yorumlar
+                            </option>
+                        </select>
+                    </label>
+
+                    <button
+                        type="submit"
+                        className={styles.reviewReportButton}
+                        style={{ minHeight: 44 }}
+                    >
+                        Filtrele
+                    </button>
+                </form>
+            </section>
+
+            <section className={styles.panel}>
+                <div className={styles.panelHeader}>
+                    <div>
+                        <span>YORUM KAYITLARI</span>
+
+                        <h2>Tüm Yorumlar</h2>
+                    </div>
+
+                    <div className={styles.panelBadge}>
+                        {comments.length} yorum
+                    </div>
+                </div>
+
+                {comments.length === 0 ? (
+                    <div className={styles.emptyState}>
+                        Filtrelere uygun yorum bulunamadı.
+                    </div>
+                ) : (
+                    <div
+                        className={styles.adminReportList}
+                    >
+                        {comments.map((comment) => {
+                            const author =
+                                profileMap.get(
+                                    comment.author_id
+                                );
+
+                            const topic =
+                                topicMap.get(
+                                    comment.topic_id
+                                );
+
+                            const isPublished =
+                                comment.status === "published";
+
+                            const isHidden =
+                                comment.status === "hidden";
+
+                            const statusLabel =
+                                isPublished
+                                    ? "Yayında"
+                                    : isHidden
+                                        ? "Gizlendi"
+                                        : "Yasaklandı";
+
+                            const statusClass =
+                                isPublished
+                                    ? styles.commentStatusPublished
+                                    : isHidden
+                                        ? styles.commentStatusHidden
+                                        : styles.commentStatusBanned;
+
+                            return (
+                                <article
+                                    key={comment.id}
+                                    className={
+                                        styles.adminReportCard
+                                    }
+                                >
+                                    <div
+                                        className={
+                                            styles.adminReportTop
+                                        }
+                                    >
+                                        <div>
+                                            <span
+                                                className={
+                                                    styles.adminReportReason
+                                                }
+                                            >
+                                                YORUM
+                                            </span>
+
+                                            <strong>
+                                                {getProfileName(author)}
+                                            </strong>
+                                        </div>
+
+                                        <div
+                                            className={
+                                                styles.adminReportTopMeta
+                                            }
+                                        >
+                                            <span
+                                                className={`${styles.adminReportStatus} ${styles.commentStatusBadge} ${statusClass}`}
+                                            >
+                                                {statusLabel}
+                                            </span>
+
+                                            <small>
+                                                {formatDate(
+                                                    comment.created_at
+                                                )}
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        className={
+                                            styles.reportedCommentBox
+                                        }
+                                    >
+                                        <div
+                                            className={
+                                                styles.reportedCommentHeader
+                                            }
+                                        >
+                                            <span>Yorum içeriği</span>
+
+                                            <strong>
+                                                {getProfileName(author)}
+                                            </strong>
+                                        </div>
+
+                                        <p>{comment.content}</p>
+
+                                        {topic ? (
+                                            <Link
+                                                href={`/konu/${topic.id}#comment-${comment.id}`}
+                                                className={
+                                                    styles.reportTopicLink
+                                                }
+                                            >
+                                                Konuya git:{" "}
+                                                {topic.title}
+                                            </Link>
+                                        ) : null}
+                                    </div>
+
+                                    <div
+                                        className={
+                                            styles.adminReportFooter
+                                        }
+                                    >
+                                        <span
+                                            className={`${styles.commentFooterStatus} ${statusClass}`}
+                                        >
+                                            Durum: {statusLabel}
+                                        </span>
+
+                                        <CommentModerationActions
+                                            commentId={comment.id}
+                                            status={comment.status}
+                                        />
+                                    </div>
+                                </article>
+                            );
+                        })}
+                    </div>
+                )}
+            </section>
+        </>
+    );
+}

@@ -1,0 +1,184 @@
+.page {
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+
+  padding: 24px;
+
+  background:
+    radial-gradient(
+      circle at 25% 20%,
+      rgba(207, 54, 231, 0.12),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 78% 80%,
+      rgba(64, 96, 255, 0.1),
+      transparent 34%
+    ),
+    #03040a;
+}
+
+.card {
+  width: min(100%, 520px);
+
+  padding: 36px;
+
+  text-align: center;
+
+  border:
+    1px solid rgba(
+      255,
+      255,
+      255,
+      0.09
+    );
+  border-radius: 26px;
+
+  background:
+    rgba(12, 12, 22, 0.94);
+
+  box-shadow:
+    0 32px 100px
+      rgba(0, 0, 0, 0.55);
+}
+
+.icon {
+  display: grid;
+  width: 66px;
+  height: 66px;
+
+  margin: 0 auto 20px;
+
+  place-items: center;
+
+  color: #ffffff;
+
+  border:
+    1px solid rgba(
+      230,
+      83,
+      105,
+      0.35
+    );
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(230, 83, 105, 0.85),
+      rgba(147, 40, 70, 0.9)
+    );
+
+  font-size: 25px;
+  font-weight: 900;
+}
+
+.eyebrow {
+  color: #d25ce8;
+
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+}
+
+.card h1 {
+  margin: 10px 0 0;
+
+  color: #ffffff;
+
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+.description {
+  margin: 15px auto 0;
+
+  color: #aaa6b5;
+
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.infoBox {
+  display: grid;
+  gap: 6px;
+
+  margin-top: 16px;
+  padding: 14px 15px;
+
+  text-align: left;
+
+  border:
+    1px solid rgba(
+      255,
+      255,
+      255,
+      0.07
+    );
+  border-radius: 13px;
+
+  background:
+    rgba(255, 255, 255, 0.025);
+}
+
+.infoBox span {
+  color: #818492;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.infoBox strong {
+  color: #e5e1ea;
+
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.card form {
+  margin-top: 22px;
+}
+
+.card button {
+  width: 100%;
+  min-height: 46px;
+
+  color: #ffffff;
+
+  border:
+    1px solid rgba(
+      205,
+      73,
+      232,
+      0.3
+    );
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(203, 62, 229, 0.82),
+      rgba(77, 76, 246, 0.85)
+    );
+
+  font-size: 12px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+@media (max-width: 560px) {
+  .page {
+    padding: 14px;
+  }
+
+  .card {
+    padding: 28px 20px;
+    border-radius: 22px;
+  }
+
+  .card h1 {
+    font-size: 24px;
+  }
+}

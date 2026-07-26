@@ -589,6 +589,25 @@ export default function ProfilePage() {
   const [activeSection, setActiveSection] =
     useState<SectionId>("profile");
 
+  useEffect(() => {
+    const section =
+      new URLSearchParams(
+        window.location.search
+      ).get("section");
+
+    if (section === "followers") {
+      setActiveSection("followers");
+
+      requestAnimationFrame(() => {
+        document
+          .getElementById("profile-main-content")
+          ?.scrollIntoView({
+            block: "start",
+          });
+      });
+    }
+  }, []);
+
 
   const [editOpen, setEditOpen] =
     useState(false);

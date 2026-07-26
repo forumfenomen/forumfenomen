@@ -101,15 +101,12 @@ export default async function AdminPage() {
         supabase
             .from("topics")
             .select(`
-    id,
-    title,
-    comment_count,
-    status,
-    created_at
-  `)
-            .order("comment_count", {
-                ascending: false,
-            })
+id,
+title,
+comment_count,
+status,
+created_at
+`)
             .order("created_at", {
                 ascending: false,
             })

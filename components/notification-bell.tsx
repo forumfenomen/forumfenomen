@@ -116,6 +116,10 @@ export default function NotificationBell() {
 
   const router = useRouter();
 
+  useEffect(() => {
+    router.prefetch("/profil?section=followers");
+  }, [router]);
+
   const [supabase] = useState(() =>
     createClient()
   );
@@ -130,6 +134,9 @@ export default function NotificationBell() {
     useState(true);
 
   const [isMarkingAll, setIsMarkingAll] =
+    useState(false);
+
+  const [isClearingRead, setIsClearingRead] =
     useState(false);
 
   const [isAuthenticated, setIsAuthenticated] =
@@ -169,7 +176,7 @@ export default function NotificationBell() {
         .order("created_at", {
           ascending: false,
         })
-        .limit(20);
+        .limit(10);
 
       if (error) {
         console.error(
@@ -351,6 +358,12 @@ export default function NotificationBell() {
         !notification.is_read
     ).length;
 
+  const readCount =
+    notifications.filter(
+      (notification) =>
+        notification.is_read
+    ).length;
+
   const handleToggle = () => {
     const nextOpen = !isOpen;
 
@@ -364,6 +377,10 @@ export default function NotificationBell() {
   const getNotificationHref = (
     notification: NotificationRow
   ) => {
+    if (notification.type === "follow_request") {
+      return "/profil?section=followers";
+    }
+
     if (!notification.related_topic_id) {
       return null;
     }
@@ -459,6 +476,40 @@ export default function NotificationBell() {
     setIsMarkingAll(false);
   };
 
+  const handleClearRead = async () => {
+    if (
+      readCount === 0 ||
+      isClearingRead
+    ) {
+      return;
+    }
+
+    setIsClearingRead(true);
+
+    const { error } = await supabase.rpc(
+      "clear_read_notifications"
+    );
+
+    if (error) {
+      console.error(
+        "Okunmuş bildirimler temizlenemedi:",
+        error.message
+      );
+
+      setIsClearingRead(false);
+      return;
+    }
+
+    setNotifications((current) =>
+      current.filter(
+        (notification) =>
+          !notification.is_read
+      )
+    );
+
+    setIsClearingRead(false);
+  };
+
   if (!isAuthenticated) {
     return null;
   }
@@ -505,19 +556,42 @@ export default function NotificationBell() {
               </strong>
             </div>
 
-            {unreadCount > 0 ? (
-              <button
-                type="button"
-                disabled={isMarkingAll}
-                onClick={() => {
-                  void handleMarkAllRead();
-                }}
-              >
-                {isMarkingAll
-                  ? "İşleniyor..."
-                  : "Tümünü okundu yap"}
-              </button>
-            ) : null}
+            <div className={styles.headerActions}>
+              {unreadCount > 0 ? (
+                <button
+                  type="button"
+                  disabled={
+                    isMarkingAll ||
+                    isClearingRead
+                  }
+                  onClick={() => {
+                    void handleMarkAllRead();
+                  }}
+                >
+                  {isMarkingAll
+                    ? "İşleniyor..."
+                    : "Tümünü okundu yap"}
+                </button>
+              ) : null}
+
+              {readCount > 0 ? (
+                <button
+                  type="button"
+                  className={styles.clearReadButton}
+                  disabled={
+                    isClearingRead ||
+                    isMarkingAll
+                  }
+                  onClick={() => {
+                    void handleClearRead();
+                  }}
+                >
+                  {isClearingRead
+                    ? "Temizleniyor..."
+                    : "Okunanları temizle"}
+                </button>
+              ) : null}
+            </div>
           </div>
 
           <div
