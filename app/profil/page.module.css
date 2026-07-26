@@ -3107,3 +3107,753 @@
     min-width: 38px;
   }
 }
+
+.simpleList button:disabled {
+  cursor: default;
+  opacity: 0.62;
+}
+
+.simpleList button:disabled:hover {
+  transform: none;
+}
+
+.profileCommentItem {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 14px;
+}
+
+.commentListIcon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(165, 22, 244, 0.12);
+  color: #d946ef;
+}
+
+.commentListIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.profileCommentItem>div {
+  min-width: 0;
+}
+
+.profileCommentItem strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.profileCommentItem p {
+  margin: 0 0 8px;
+  line-height: 1.55;
+}
+
+.profileCommentItem small {
+  opacity: 0.7;
+}
+
+.profileCommentOpenButton {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 10px;
+  background: rgba(165, 22, 244, 0.1);
+  color: inherit;
+  cursor: pointer;
+}
+
+.profileCommentOpenButton svg {
+  width: 18px;
+  height: 18px;
+}
+
+.profileCommentDisabled {
+  opacity: 0.58;
+}
+
+@media (max-width: 640px) {
+  .profileCommentItem {
+    grid-template-columns: 36px minmax(0, 1fr) 34px;
+    gap: 10px;
+  }
+
+  .commentListIcon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .profileCommentOpenButton {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+.commentList .profileCommentItem {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 38px;
+  grid-template-areas: "icon content action";
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.commentList .profileCommentItem>.commentListIcon {
+  grid-area: icon;
+  align-self: start;
+}
+
+.commentList .profileCommentItem>div {
+  grid-area: content;
+  min-width: 0;
+}
+
+.commentList .profileCommentItem>.profileCommentOpenButton {
+  grid-area: action;
+  align-self: center;
+  justify-self: end;
+  margin: 0;
+}
+
+.commentList .profileCommentItem strong {
+  display: block;
+  margin: 0 0 6px;
+}
+
+.commentList .profileCommentItem p {
+  margin: 0 0 8px;
+  line-height: 1.5;
+}
+
+.commentList .profileCommentItem small {
+  display: block;
+  opacity: 0.72;
+}
+
+@media (max-width: 640px) {
+  .commentList .profileCommentItem {
+    grid-template-columns: 36px minmax(0, 1fr) 34px;
+    gap: 10px;
+  }
+}
+
+.commentList .commentListIcon {
+  background: rgba(165, 22, 244, 0.18);
+  color: #f0abfc;
+  border: 1px solid rgba(217, 70, 239, 0.28);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.12);
+}
+
+.commentList .commentListIcon svg {
+  stroke-width: 1.9;
+}
+
+.commentList .profileCommentOpenButton {
+  background: rgba(165, 22, 244, 0.16);
+  color: #e879f9;
+  border: 1px solid rgba(217, 70, 239, 0.24);
+}
+
+.commentList .profileCommentOpenButton:hover {
+  background: rgba(165, 22, 244, 0.24);
+  border-color: rgba(217, 70, 239, 0.42);
+}
+
+.commentList .profileCommentOpenButton svg {
+  stroke-width: 2;
+}
+
+.commentList .commentListIcon {
+  background:
+    linear-gradient(145deg,
+      rgba(168, 85, 247, 0.28),
+      rgba(126, 34, 206, 0.18));
+  color: #f5d0fe;
+  border: 1px solid rgba(217, 70, 239, 0.48);
+  box-shadow:
+    inset 0 0 12px rgba(236, 72, 153, 0.08),
+    0 0 14px rgba(168, 85, 247, 0.16);
+}
+
+.commentList .commentListIcon svg {
+  width: 21px;
+  height: 21px;
+  stroke: currentColor;
+  stroke-width: 2.15;
+  fill: none;
+  opacity: 1;
+}
+
+.commentList .profileCommentOpenButton {
+  background:
+    linear-gradient(145deg,
+      rgba(168, 85, 247, 0.34),
+      rgba(126, 34, 206, 0.22));
+  color: #f5d0fe;
+  border: 1px solid rgba(217, 70, 239, 0.5);
+  box-shadow:
+    inset 0 0 10px rgba(236, 72, 153, 0.08),
+    0 0 12px rgba(168, 85, 247, 0.14);
+}
+
+.commentList .profileCommentOpenButton:hover {
+  background:
+    linear-gradient(145deg,
+      rgba(192, 38, 211, 0.42),
+      rgba(126, 34, 206, 0.28));
+  border-color: rgba(232, 121, 249, 0.7);
+  transform: translateY(-1px);
+}
+
+.commentList .profileCommentOpenButton svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2.35;
+  fill: none;
+  opacity: 1;
+}
+
+.publicProfileBack {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 10px;
+  padding: 0 12px;
+  color: #aeb0bb;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  font-size: 10px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.publicProfileBack svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+}
+
+.publicProfileState,
+.publicProfileContent {
+  margin-bottom: 10px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  background: rgba(8, 8, 18, 0.86);
+}
+
+.publicProfileState {
+  min-height: 220px;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  color: #a3a5b0;
+}
+
+.publicProfileState h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 22px;
+}
+
+.publicProfileState p {
+  max-width: 430px;
+  margin: 9px 0 0;
+  line-height: 1.55;
+}
+
+.publicProfileContent {
+  min-height: 300px;
+}
+
+.publicFollowButton,
+.publicFollowingButton,
+.publicProfileOwnButton {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 15px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 760;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.publicFollowButton {
+  color: #ffffff;
+  border: 1px solid rgba(213, 56, 237, 0.48);
+  background:
+    linear-gradient(135deg,
+      rgba(218, 48, 232, 0.34),
+      rgba(54, 104, 255, 0.27));
+}
+
+.publicFollowingButton {
+  color: #a9e8d2;
+  border: 1px solid rgba(54, 213, 157, 0.32);
+  background: rgba(54, 213, 157, 0.1);
+}
+
+.publicProfileOwnButton {
+  color: #ffffff;
+  border: 1px solid rgba(213, 56, 237, 0.36);
+  background:
+    linear-gradient(135deg,
+      rgba(218, 48, 232, 0.18),
+      rgba(54, 104, 255, 0.15));
+}
+
+.publicFollowButton svg,
+.publicFollowingButton svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.publicFollowButton:disabled,
+.publicFollowingButton:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+:global(html[data-theme="light"]) .publicProfileBack,
+:global(html[data-theme="light"]) .publicProfileState,
+:global(html[data-theme="light"]) .publicProfileContent {
+  color: #626571;
+  border-color: rgba(42, 38, 62, 0.08);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+:global(html[data-theme="light"]) .publicProfileState h1 {
+  color: #25242d;
+}
+
+@media (max-width: 680px) {
+  .publicProfileBack {
+    min-height: 35px;
+    font-size: 9px;
+  }
+
+  .publicProfileContent,
+  .publicProfileState {
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .publicFollowButton,
+  .publicFollowingButton,
+  .publicProfileOwnButton {
+    min-height: 36px;
+    padding: 0 12px;
+    font-size: 9px;
+  }
+}
+
+.followingPersonRow {
+  grid-template-columns:
+    minmax(0, 1fr) auto !important;
+}
+
+.followingPersonLink {
+  display: grid;
+  grid-template-columns:
+    42px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.followingPersonText {
+  min-width: 0;
+}
+
+.followingPersonText strong,
+.followingPersonText small {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.personAvatar {
+  overflow: hidden;
+}
+
+.personAvatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.peopleList button.followingBadge {
+  font: inherit;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.peopleList button.followingBadge:hover {
+  color: #ffc0c8;
+  border-color:
+    rgba(255, 91, 109, 0.34);
+  background:
+    rgba(255, 73, 94, 0.1);
+}
+
+.peopleList button.followingBadge:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+@media (max-width: 680px) {
+  .followingPersonRow {
+    grid-template-columns:
+      minmax(0, 1fr) auto !important;
+  }
+
+  .followingPersonLink {
+    grid-template-columns:
+      39px minmax(0, 1fr);
+  }
+
+  .peopleList .followingPersonRow .followingBadge {
+    grid-column: auto;
+  }
+}
+
+.statsGrid button {
+  display: flex;
+  min-height: 72px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  color: inherit;
+
+  border: 0;
+  border-right:
+    1px solid rgba(255, 255, 255, 0.055);
+
+  background: transparent;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.statsGrid button:last-child {
+  border-right: 0;
+}
+
+.statsGrid button:hover {
+  background:
+    rgba(196, 54, 232, 0.07);
+}
+
+.statsGrid button:active {
+  transform: scale(0.98);
+}
+
+.statsGrid button strong {
+  color: #ffffff;
+  font-size: 19px;
+  line-height: 1;
+}
+
+.statsGrid button span {
+  color: #8f919d;
+  font-size: 9px;
+}
+
+.statsGrid button.activeProfileStat {
+  background:
+    linear-gradient(135deg,
+      rgba(209, 45, 229, 0.14),
+      rgba(52, 107, 255, 0.09));
+
+  box-shadow:
+    inset 0 -2px 0 rgba(219, 64, 236, 0.72);
+}
+
+:global(html[data-theme="light"]) .statsGrid button strong {
+  color: #25242d;
+}
+
+:global(html[data-theme="light"]) .statsGrid button:hover,
+:global(html[data-theme="light"]) .statsGrid button.activeProfileStat {
+  background:
+    rgba(196, 54, 232, 0.08);
+}
+
+@media (max-width: 680px) {
+  .statsGrid button {
+    min-height: 60px;
+  }
+
+  .statsGrid button strong {
+    font-size: 15px;
+  }
+
+  .statsGrid button span {
+    font-size: 8px;
+  }
+}
+
+.statsGrid button {
+  display: flex;
+  min-height: 72px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  color: inherit;
+
+  border: 0;
+  border-right:
+    1px solid rgba(255, 255, 255, 0.055);
+
+  background: transparent;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.statsGrid button:last-child {
+  border-right: 0;
+}
+
+.statsGrid button:hover {
+  background:
+    rgba(196, 54, 232, 0.07);
+}
+
+.statsGrid button:active {
+  transform: scale(0.98);
+}
+
+.statsGrid button strong {
+  color: #ffffff;
+  font-size: 19px;
+  line-height: 1;
+}
+
+.statsGrid button span {
+  color: #8f919d;
+  font-size: 9px;
+}
+
+.statsGrid button.activeProfileStat {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(209, 45, 229, 0.14),
+      rgba(52, 107, 255, 0.09)
+    );
+
+  box-shadow:
+    inset 0 -2px 0 rgba(219, 64, 236, 0.72);
+}
+
+:global(html[data-theme="light"])
+.statsGrid button strong {
+  color: #25242d;
+}
+
+:global(html[data-theme="light"])
+.statsGrid button:hover,
+:global(html[data-theme="light"])
+.statsGrid button.activeProfileStat {
+  background:
+    rgba(196, 54, 232, 0.08);
+}
+
+@media (max-width: 680px) {
+  .statsGrid button {
+    min-height: 60px;
+  }
+
+  .statsGrid button strong {
+    font-size: 15px;
+  }
+
+  .statsGrid button span {
+    font-size: 8px;
+  }
+}
+
+/* PUBLIC PROFILE COMMENT LIST FIX START */
+
+.publicProfileContent .commentList article {
+  display: grid !important;
+  grid-template-columns:
+    minmax(0, 1fr) 34px !important;
+
+  align-items: center !important;
+  gap: 14px !important;
+
+  width: 100% !important;
+  min-height: 96px !important;
+  padding: 16px !important;
+}
+
+.publicProfileContent .commentList article > div {
+  min-width: 0;
+  width: 100%;
+}
+
+.publicProfileContent .commentList article strong {
+  display: block;
+
+  overflow: hidden;
+
+  width: 100%;
+  margin-bottom: 7px;
+
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.publicProfileContent .commentList article p {
+  display: block;
+
+  overflow: hidden;
+
+  width: 100%;
+  margin: 0 0 9px !important;
+
+  font-size: 11px !important;
+  line-height: 1.55 !important;
+
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+}
+
+.publicProfileContent .commentList article small {
+  display: block;
+
+  color: #9295a1;
+  font-size: 9.5px;
+  line-height: 1.4;
+}
+
+.publicProfileContent .commentList article > a {
+  display: flex;
+  width: 34px;
+  height: 34px;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #d061dd;
+
+  border:
+    1px solid rgba(208, 97, 221, 0.22);
+  border-radius: 10px;
+
+  background:
+    rgba(208, 97, 221, 0.07);
+
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.publicProfileContent .commentList article > a:hover {
+  background:
+    rgba(208, 97, 221, 0.14);
+
+  transform: translateX(2px);
+}
+
+.publicProfileContent
+.commentList
+article
+> a
+svg {
+  display: block !important;
+
+  width: 16px !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  min-height: 16px !important;
+
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 1.8 !important;
+}
+
+:global(html[data-theme="light"])
+.publicProfileContent
+.commentList
+article
+small {
+  color: #696c78;
+}
+
+@media (max-width: 680px) {
+  .publicProfileContent .commentList article {
+    grid-template-columns:
+      minmax(0, 1fr) 30px !important;
+
+    gap: 9px !important;
+    min-height: 84px !important;
+    padding: 13px !important;
+  }
+
+  .publicProfileContent
+  .commentList
+  article
+  > a {
+    width: 30px;
+    height: 30px;
+  }
+
+  .publicProfileContent
+  .commentList
+  article
+  strong {
+    font-size: 11.5px !important;
+  }
+
+  .publicProfileContent
+  .commentList
+  article
+  p {
+    font-size: 9.8px !important;
+  }
+}
+
+/* PUBLIC PROFILE COMMENT LIST FIX END */

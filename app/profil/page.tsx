@@ -28,6 +28,7 @@ type SectionId =
   | "profile"
   | "topics"
   | "comments"
+  | "followers"
   | "following"
   | "saved"
   | "notifications"
@@ -68,12 +69,63 @@ type SavedTopicRow = {
   } | null;
 };
 
+type ProfileTopicRow = {
+  id: string;
+  title: string;
+  created_at: string;
+  comment_count: number;
+  status: string;
+
+  categories: {
+    name: string;
+  } | null;
+};
+
+type ProfileCommentRow = {
+  id: string;
+  content: string;
+  created_at: string;
+  topic_id: string;
+  status: string;
+
+  topics: {
+    id: string;
+    title: string;
+    status: string;
+  } | null;
+};
+
+type FollowedUserRow = {
+  following_id: string;
+  created_at: string;
+
+  profiles: {
+    id: string;
+    display_name: string | null;
+    username: string | null;
+    avatar_url: string | null;
+  } | null;
+};
+
+type FollowerUserRow = {
+  follower_id: string;
+  created_at: string;
+
+  profiles: {
+    id: string;
+    display_name: string | null;
+    username: string | null;
+    avatar_url: string | null;
+  } | null;
+};
+
 const translations = {
   tr: {
     pageTitle: "Profil",
     profile: "Profilim",
     topics: "Konularım",
     comments: "Yorumlarım",
+    followers: "Takipçilerim",
     following: "Takip Ettiklerim",
     saved: "Kaydedilen Konular",
     notifications: "Bildirimler",
@@ -106,6 +158,8 @@ const translations = {
       "Açtığın konuları görüntüle, düzenle ve gelen yorumları takip et.",
     commentsDescription:
       "Forumdaki diğer konulara yaptığın son yorumlar.",
+    followersDescription:
+      "Seni takip eden ForumFenomen kullanıcıları.",
     followingDescription:
       "Takip ettiğin kullanıcılar ve içerik başlıkları.",
     savedDescription:
@@ -152,6 +206,7 @@ const translations = {
     profile: "My Profile",
     topics: "My Topics",
     comments: "My Comments",
+    followers: "Followers",
     following: "Following",
     saved: "Saved Topics",
     notifications: "Notifications",
@@ -184,6 +239,8 @@ const translations = {
       "View and manage your topics and follow new replies.",
     commentsDescription:
       "Your latest comments on ForumFenomen topics.",
+    followersDescription:
+      "ForumFenomen users who follow you.",
     followingDescription:
       "Users and content categories you currently follow.",
     savedDescription:
@@ -537,6 +594,39 @@ export default function ProfilePage() {
     useState(true);
 
   const [removingSavedTopicId, setRemovingSavedTopicId] =
+    useState<string | null>(null);
+
+  const [profileTopics, setProfileTopics] =
+    useState<ProfileTopicRow[]>([]);
+
+  const [profileTopicsLoading, setProfileTopicsLoading] =
+    useState(true);
+
+  const [profileComments, setProfileComments] =
+    useState<ProfileCommentRow[]>([]);
+
+  const [profileCommentsLoading, setProfileCommentsLoading] =
+    useState(true);
+
+  const [followedUsers, setFollowedUsers] =
+    useState<FollowedUserRow[]>([]);
+
+  const [followerUsers, setFollowerUsers] =
+    useState<FollowerUserRow[]>([]);
+
+  const [followersLoading, setFollowersLoading] =
+    useState(true);
+
+  const [followsLoading, setFollowsLoading] =
+    useState(true);
+
+  const [followerCount, setFollowerCount] =
+    useState(0);
+
+  const [followingCount, setFollowingCount] =
+    useState(0);
+
+  const [unfollowingUserId, setUnfollowingUserId] =
     useState<string | null>(null);
 
   useEffect(() => {
@@ -1005,6 +1095,329 @@ export default function ProfilePage() {
     };
   }, []);
 
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadProfileTopics() {
+      const supabase = createClient();
+
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (userError || !user) {
+        setProfileTopics([]);
+        setProfileTopicsLoading(false);
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("topics")
+        .select(`
+        id,
+        title,
+        created_at,
+        comment_count,
+        status,
+        categories (
+          name
+        )
+      `)
+        .eq("author_id", user.id)
+        .order("created_at", {
+          ascending: false,
+        });
+
+      if (!isActive) {
+        return;
+      }
+
+      if (error) {
+        console.error(
+          "Profil konuları alınamadı:",
+          error.message
+        );
+
+        setProfileTopics([]);
+        setProfileTopicsLoading(false);
+        return;
+      }
+
+      setProfileTopics(
+        (data ?? []) as unknown as ProfileTopicRow[]
+      );
+
+      setProfileTopicsLoading(false);
+    }
+
+    void loadProfileTopics();
+
+    function handleWindowFocus() {
+      void loadProfileTopics();
+    }
+
+    window.addEventListener(
+      "focus",
+      handleWindowFocus
+    );
+
+    return () => {
+      isActive = false;
+
+      window.removeEventListener(
+        "focus",
+        handleWindowFocus
+      );
+    };
+  }, []);
+
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadProfileComments() {
+      const supabase = createClient();
+
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (userError || !user) {
+        setProfileComments([]);
+        setProfileCommentsLoading(false);
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("topic_comments")
+        .select(`
+        id,
+        content,
+        created_at,
+        topic_id,
+        status,
+        topics (
+          id,
+          title,
+          status
+        )
+      `)
+        .eq("author_id", user.id)
+        .order("created_at", {
+          ascending: false,
+        });
+
+      if (!isActive) {
+        return;
+      }
+
+      if (error) {
+        console.error(
+          "Profil yorumları alınamadı:",
+          error.message
+        );
+
+        setProfileComments([]);
+        setProfileCommentsLoading(false);
+        return;
+      }
+
+      setProfileComments(
+        (data ?? []) as unknown as ProfileCommentRow[]
+      );
+
+      setProfileCommentsLoading(false);
+    }
+
+    void loadProfileComments();
+
+    function handleWindowFocus() {
+      void loadProfileComments();
+    }
+
+    window.addEventListener(
+      "focus",
+      handleWindowFocus
+    );
+
+    return () => {
+      isActive = false;
+
+      window.removeEventListener(
+        "focus",
+        handleWindowFocus
+      );
+    };
+  }, []);
+
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadFollowData() {
+      const supabase = createClient();
+
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (userError || !user) {
+        setFollowedUsers([]);
+        setFollowerUsers([]);
+        setFollowerCount(0);
+        setFollowingCount(0);
+        setFollowsLoading(false);
+        setFollowersLoading(false);
+        return;
+      }
+
+      const [
+        followedUsersResult,
+        followerUsersResult,
+        followerCountResult,
+        followingCountResult,
+      ] = await Promise.all([
+        supabase
+          .from("user_follows")
+          .select(`
+          following_id,
+          created_at,
+          profiles:profiles!user_follows_following_id_fkey (
+            id,
+            display_name,
+            username,
+            avatar_url
+          )
+        `)
+          .eq("follower_id", user.id)
+          .order("created_at", {
+            ascending: false,
+          }),
+
+        supabase
+          .from("user_follows")
+          .select(`
+    follower_id,
+    created_at,
+    profiles:profiles!user_follows_follower_id_fkey (
+      id,
+      display_name,
+      username,
+      avatar_url
+    )
+  `)
+          .eq("following_id", user.id)
+          .order("created_at", {
+            ascending: false,
+          }),
+
+        supabase
+          .from("user_follows")
+          .select("follower_id", {
+            count: "exact",
+            head: true,
+          })
+          .eq("following_id", user.id),
+
+        supabase
+          .from("user_follows")
+          .select("following_id", {
+            count: "exact",
+            head: true,
+          })
+          .eq("follower_id", user.id),
+      ]);
+
+      if (!isActive) {
+        return;
+      }
+
+      if (
+        followedUsersResult.error ||
+        followerUsersResult.error ||
+        followerCountResult.error ||
+        followingCountResult.error
+      ) {
+        console.error(
+          "Takip bilgileri alınamadı:",
+          followedUsersResult.error?.message ??
+          followerUsersResult.error?.message ??
+          followerCountResult.error?.message ??
+          followingCountResult.error?.message
+        );
+
+        setFollowedUsers([]);
+        setFollowerUsers([]);
+        setFollowerCount(0);
+        setFollowingCount(0);
+        setFollowsLoading(false);
+        return;
+      }
+
+      const rows =
+        (followedUsersResult.data ??
+          []) as unknown as FollowedUserRow[];
+
+      setFollowedUsers(
+        rows.filter((item) => item.profiles)
+      );
+
+      const followerRows =
+        (followerUsersResult.data ??
+          []) as unknown as FollowerUserRow[];
+
+      setFollowerUsers(
+        followerRows.filter(
+          (item) => item.profiles
+        )
+      );
+
+      setFollowerCount(
+        followerCountResult.count ?? 0
+      );
+
+      setFollowingCount(
+        followingCountResult.count ?? 0
+      );
+
+      setFollowsLoading(false);
+      setFollowersLoading(false);
+    }
+
+    void loadFollowData();
+
+    function handleFollowDataRefresh() {
+      void loadFollowData();
+    }
+
+    window.addEventListener(
+      "focus",
+      handleFollowDataRefresh
+    );
+
+    return () => {
+      isActive = false;
+
+      window.removeEventListener(
+        "focus",
+        handleFollowDataRefresh
+      );
+    };
+  }, []);
+
   const t = translations[language];
 
   const profileInitials =
@@ -1025,17 +1438,22 @@ export default function ProfilePage() {
     {
       id: "topics",
       icon: <TopicIcon />,
-      count: 28,
+      count: profileTopics.length,
     },
     {
       id: "comments",
       icon: <CommentIcon />,
-      count: 164,
+      count: profileComments.length,
+    },
+    {
+      id: "followers",
+      icon: <UsersIcon />,
+      count: followerCount,
     },
     {
       id: "following",
       icon: <UsersIcon />,
-      count: 76,
+      count: followingCount,
     },
     {
       id: "saved",
@@ -1060,11 +1478,49 @@ export default function ProfilePage() {
     profile: t.profile,
     topics: t.topics,
     comments: t.comments,
+    followers: t.followers,
     following: t.following,
     saved: t.saved,
     notifications: t.notifications,
     settings: t.settings,
   };
+
+  function formatProfileTopicDate(
+    value: string
+  ) {
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return "";
+    }
+
+    return new Intl.DateTimeFormat(
+      language === "tr" ? "tr-TR" : "en-US",
+      {
+        dateStyle: "medium",
+        timeZone: "Europe/Istanbul",
+      }
+    ).format(date);
+  }
+
+  function formatProfileCommentDate(
+    value: string
+  ) {
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return "";
+    }
+
+    return new Intl.DateTimeFormat(
+      language === "tr" ? "tr-TR" : "en-US",
+      {
+        dateStyle: "medium",
+        timeStyle: "short",
+        timeZone: "Europe/Istanbul",
+      }
+    ).format(date);
+  }
 
   function formatNotificationDate(value: string) {
     const date = new Date(value);
@@ -1210,6 +1666,83 @@ export default function ProfilePage() {
       );
     } finally {
       setRemovingSavedTopicId(null);
+    }
+  }
+
+  async function unfollowUser(
+    followedUserId: string
+  ) {
+    if (
+      unfollowingUserId === followedUserId
+    ) {
+      return;
+    }
+
+    const previousUsers = followedUsers;
+    const previousCount = followingCount;
+
+    setUnfollowingUserId(followedUserId);
+
+    setFollowedUsers((current) =>
+      current.filter(
+        (item) =>
+          item.following_id !== followedUserId
+      )
+    );
+
+    setFollowingCount((current) =>
+      Math.max(0, current - 1)
+    );
+
+    try {
+      const supabase = createClient();
+
+      const { data, error } =
+        await supabase.rpc(
+          "toggle_user_follow",
+          {
+            p_following_id:
+              followedUserId,
+          }
+        );
+
+      if (error) {
+        console.error(
+          "Takip bırakma işlemi başarısız:",
+          error.message
+        );
+
+        setFollowedUsers(previousUsers);
+        setFollowingCount(previousCount);
+
+        window.alert(
+          language === "tr"
+            ? "Takip bırakma işlemi gerçekleştirilemedi."
+            : "The unfollow action could not be completed."
+        );
+
+        return;
+      }
+
+      if (data !== false) {
+        setFollowedUsers(previousUsers);
+        setFollowingCount(previousCount);
+
+        console.error(
+          "Beklenmeyen takip sonucu:",
+          data
+        );
+      }
+    } catch (error) {
+      console.error(
+        "Beklenmeyen takip bırakma hatası:",
+        error
+      );
+
+      setFollowedUsers(previousUsers);
+      setFollowingCount(previousCount);
+    } finally {
+      setUnfollowingUserId(null);
     }
   }
 
@@ -1441,24 +1974,92 @@ export default function ProfilePage() {
         </div>
 
         <div className={styles.simpleList}>
-          {sampleTopics[language].map(
-            (topic) => (
-              <button
-                type="button"
-                key={topic.title}
-              >
-                <span className={styles.simpleListIcon}>
-                  <TopicIcon />
-                </span>
+          {profileTopicsLoading ? (
+            <div className={styles.emptyState}>
+              <p>
+                {language === "tr"
+                  ? "Konuların yükleniyor..."
+                  : "Loading your topics..."}
+              </p>
+            </div>
+          ) : profileTopics.length === 0 ? (
+            <div className={styles.emptyState}>
+              <p>
+                {language === "tr"
+                  ? "Henüz açtığın bir konu bulunmuyor."
+                  : "You have not created any topics yet."}
+              </p>
+            </div>
+          ) : (
+            profileTopics.map((topic) => {
+              const categoryName =
+                topic.categories?.name ??
+                (language === "tr"
+                  ? "Genel"
+                  : "General");
 
-                <span>
-                  <strong>{topic.title}</strong>
-                  <small>{topic.meta}</small>
-                </span>
+              const commentText =
+                language === "tr"
+                  ? `${topic.comment_count ?? 0} yorum`
+                  : `${topic.comment_count ?? 0} comments`;
 
-                <ChevronIcon />
-              </button>
-            )
+              const statusText =
+                topic.status === "published"
+                  ? language === "tr"
+                    ? "Yayında"
+                    : "Published"
+                  : topic.status === "hidden"
+                    ? language === "tr"
+                      ? "Gizli"
+                      : "Hidden"
+                    : language === "tr"
+                      ? "Yayında değil"
+                      : "Unpublished";
+
+              return (
+                <button
+                  type="button"
+                  key={topic.id}
+                  onClick={() => {
+                    if (
+                      topic.status === "published"
+                    ) {
+                      window.location.assign(
+                        `/konu/${topic.id}`
+                      );
+                    }
+                  }}
+                  disabled={
+                    topic.status !== "published"
+                  }
+                >
+                  <span
+                    className={
+                      styles.simpleListIcon
+                    }
+                  >
+                    <TopicIcon />
+                  </span>
+
+                  <span>
+                    <strong>{topic.title}</strong>
+
+                    <small>
+                      {categoryName} · {commentText} ·{" "}
+                      {statusText} ·{" "}
+                      {formatProfileTopicDate(
+                        topic.created_at
+                      )}
+                    </small>
+                  </span>
+
+                  {topic.status ===
+                    "published" ? (
+                    <ChevronIcon />
+                  ) : null}
+                </button>
+              );
+            })
           )}
         </div>
       </>
@@ -1477,17 +2078,262 @@ export default function ProfilePage() {
         </div>
 
         <div className={styles.commentList}>
-          {sampleComments[language].map(
-            (comment) => (
-              <article key={comment.title}>
-                <CommentIcon />
+          {profileCommentsLoading ? (
+            <div className={styles.emptyState}>
+              <p>
+                {language === "tr"
+                  ? "Yorumların yükleniyor..."
+                  : "Loading your comments..."}
+              </p>
+            </div>
+          ) : profileComments.length === 0 ? (
+            <div className={styles.emptyState}>
+              <p>
+                {language === "tr"
+                  ? "Henüz yaptığın bir yorum bulunmuyor."
+                  : "You have not posted any comments yet."}
+              </p>
+            </div>
+          ) : (
+            profileComments.map((comment) => {
+              const topic = comment.topics;
 
-                <div>
-                  <strong>{comment.title}</strong>
-                  <p>{comment.text}</p>
-                </div>
-              </article>
-            )
+              const topicTitle =
+                topic?.title ??
+                (language === "tr"
+                  ? "Konu artık mevcut değil"
+                  : "Topic is no longer available");
+
+              const canOpen =
+                comment.status === "published" &&
+                topic?.status === "published";
+
+              const statusText =
+                comment.status === "published"
+                  ? language === "tr"
+                    ? "Yayında"
+                    : "Published"
+                  : comment.status === "hidden"
+                    ? language === "tr"
+                      ? "Gizli"
+                      : "Hidden"
+                    : language === "tr"
+                      ? "Kaldırıldı"
+                      : "Removed";
+
+              const preview =
+                comment.content.length > 220
+                  ? `${comment.content.slice(0, 220)}…`
+                  : comment.content;
+
+              return (
+                <article
+                  key={comment.id}
+                  className={
+                    canOpen
+                      ? styles.profileCommentItem
+                      : `${styles.profileCommentItem} ${styles.profileCommentDisabled}`
+                  }
+                >
+                  <span
+                    className={styles.commentListIcon}
+                  >
+                    <CommentIcon />
+                  </span>
+
+                  <div>
+                    <strong>{topicTitle}</strong>
+
+                    <p>{preview}</p>
+
+                    <small>
+                      {statusText} ·{" "}
+                      {formatProfileCommentDate(
+                        comment.created_at
+                      )}
+                    </small>
+                  </div>
+
+                  {canOpen ? (
+                    <button
+                      type="button"
+                      className={
+                        styles.profileCommentOpenButton
+                      }
+                      onClick={() => {
+                        window.location.assign(
+                          `/konu/${comment.topic_id}#comment-${comment.id}`
+                        );
+                      }}
+                      aria-label={
+                        language === "tr"
+                          ? "Yoruma git"
+                          : "Go to comment"
+                      }
+                      title={
+                        language === "tr"
+                          ? "Yoruma git"
+                          : "Go to comment"
+                      }
+                    >
+                      <ChevronIcon />
+                    </button>
+                  ) : null}
+                </article>
+              );
+            })
+          )}
+        </div>
+      </>
+    );
+  }
+
+  function renderFollowers() {
+    return (
+      <>
+        <div className={styles.contentHeading}>
+          <div>
+            <span>{t.profile}</span>
+            <h2>{t.followers}</h2>
+            <p>{t.followersDescription}</p>
+          </div>
+        </div>
+
+        <div className={styles.peopleList}>
+          {followersLoading ? (
+            <div className={styles.emptyState}>
+              <p>
+                {language === "tr"
+                  ? "Takipçilerin yükleniyor..."
+                  : "Loading followers..."}
+              </p>
+            </div>
+          ) : followerUsers.length === 0 ? (
+            <div className={styles.emptyState}>
+              <p>
+                {language === "tr"
+                  ? "Henüz takipçin bulunmuyor."
+                  : "You do not have any followers yet."}
+              </p>
+            </div>
+          ) : (
+            followerUsers.map((follow) => {
+              const person = follow.profiles;
+
+              if (!person) {
+                return null;
+              }
+
+              const cleanUsername =
+                person.username
+                  ?.trim()
+                  .replace(/^@/, "") ?? "";
+
+              const displayName =
+                person.display_name?.trim() ||
+                cleanUsername ||
+                (language === "tr"
+                  ? "ForumFenomen Üyesi"
+                  : "ForumFenomen Member");
+
+              const initials =
+                displayName
+                  .split(/\s+/)
+                  .filter(Boolean)
+                  .slice(0, 2)
+                  .map((part) =>
+                    part
+                      .charAt(0)
+                      .toLocaleUpperCase("tr-TR")
+                  )
+                  .join("") || "FF";
+
+              const profileUrl =
+                cleanUsername
+                  ? `/profil/${encodeURIComponent(
+                    cleanUsername
+                  )}`
+                  : null;
+
+              return (
+                <article
+                  key={follow.follower_id}
+                  className={
+                    styles.followingPersonRow
+                  }
+                >
+                  {profileUrl ? (
+                    <Link
+                      href={profileUrl}
+                      className={
+                        styles.followingPersonLink
+                      }
+                    >
+                      <span
+                        className={
+                          styles.personAvatar
+                        }
+                      >
+                        {person.avatar_url ? (
+                          <img
+                            src={person.avatar_url}
+                            alt={displayName}
+                            referrerPolicy="no-referrer"
+                          />
+                        ) : (
+                          initials
+                        )}
+                      </span>
+
+                      <span
+                        className={
+                          styles.followingPersonText
+                        }
+                      >
+                        <strong>
+                          {displayName}
+                        </strong>
+
+                        <small>
+                          {cleanUsername
+                            ? `@${cleanUsername}`
+                            : "@fenomen"}
+                        </small>
+                      </span>
+                    </Link>
+                  ) : (
+                    <>
+                      <span
+                        className={
+                          styles.personAvatar
+                        }
+                      >
+                        {initials}
+                      </span>
+
+                      <span>
+                        <strong>
+                          {displayName}
+                        </strong>
+                      </span>
+                    </>
+                  )}
+
+                  <Link
+                    href={
+                      profileUrl ?? "/profil"
+                    }
+                    className={
+                      styles.followingBadge
+                    }
+                  >
+                    {language === "tr"
+                      ? "Profili Gör"
+                      : "View Profile"}
+                  </Link>
+                </article>
+              );
+            })
           )}
         </div>
       </>
@@ -1495,24 +2341,6 @@ export default function ProfilePage() {
   }
 
   function renderFollowing() {
-    const people = [
-      {
-        name: "Selin",
-        user: "@selinicerik",
-        initials: "S",
-      },
-      {
-        name: "Emre",
-        user: "@emreyapayzeka",
-        initials: "E",
-      },
-      {
-        name: "Merve",
-        user: "@merveugc",
-        initials: "M",
-      },
-    ];
-
     return (
       <>
         <div className={styles.contentHeading}>
@@ -1524,23 +2352,156 @@ export default function ProfilePage() {
         </div>
 
         <div className={styles.peopleList}>
-          {people.map((person) => (
-            <article key={person.user}>
-              <span className={styles.personAvatar}>
-                {person.initials}
-              </span>
+          {followsLoading ? (
+            <div className={styles.emptyState}>
+              <p>
+                {language === "tr"
+                  ? "Takip ettiğin kullanıcılar yükleniyor..."
+                  : "Loading followed users..."}
+              </p>
+            </div>
+          ) : followedUsers.length === 0 ? (
+            <div className={styles.emptyState}>
+              <p>
+                {language === "tr"
+                  ? "Henüz kimseyi takip etmiyorsun."
+                  : "You are not following anyone yet."}
+              </p>
+            </div>
+          ) : (
+            followedUsers.map((follow) => {
+              const person = follow.profiles;
 
-              <div>
-                <strong>{person.name}</strong>
-                <small>{person.user}</small>
-              </div>
+              if (!person) {
+                return null;
+              }
 
-              <span className={styles.followingBadge}>
-                <CheckIcon />
-                {t.following}
-              </span>
-            </article>
-          ))}
+              const cleanUsername =
+                person.username
+                  ?.trim()
+                  .replace(/^@/, "") ?? "";
+
+              const displayName =
+                person.display_name?.trim() ||
+                cleanUsername ||
+                (language === "tr"
+                  ? "ForumFenomen Üyesi"
+                  : "ForumFenomen Member");
+
+              const initials =
+                displayName
+                  .split(/\s+/)
+                  .filter(Boolean)
+                  .slice(0, 2)
+                  .map((part) =>
+                    part
+                      .charAt(0)
+                      .toLocaleUpperCase("tr-TR")
+                  )
+                  .join("") || "FF";
+
+              const profileUrl =
+                cleanUsername
+                  ? `/profil/${encodeURIComponent(
+                    cleanUsername
+                  )}`
+                  : null;
+
+              return (
+                <article
+                  key={follow.following_id}
+                  className={
+                    styles.followingPersonRow
+                  }
+                >
+                  {profileUrl ? (
+                    <Link
+                      href={profileUrl}
+                      className={
+                        styles.followingPersonLink
+                      }
+                    >
+                      <span
+                        className={
+                          styles.personAvatar
+                        }
+                      >
+                        {person.avatar_url ? (
+                          <img
+                            src={person.avatar_url}
+                            alt={displayName}
+                            referrerPolicy="no-referrer"
+                          />
+                        ) : (
+                          initials
+                        )}
+                      </span>
+
+                      <span
+                        className={
+                          styles.followingPersonText
+                        }
+                      >
+                        <strong>
+                          {displayName}
+                        </strong>
+
+                        <small>
+                          {cleanUsername
+                            ? `@${cleanUsername}`
+                            : "@fenomen"}
+                        </small>
+                      </span>
+                    </Link>
+                  ) : (
+                    <>
+                      <span
+                        className={
+                          styles.personAvatar
+                        }
+                      >
+                        {initials}
+                      </span>
+
+                      <span>
+                        <strong>
+                          {displayName}
+                        </strong>
+                      </span>
+                    </>
+                  )}
+
+                  <button
+                    type="button"
+                    className={
+                      styles.followingBadge
+                    }
+                    disabled={
+                      unfollowingUserId ===
+                      follow.following_id
+                    }
+                    onClick={() => {
+                      void unfollowUser(
+                        follow.following_id
+                      );
+                    }}
+                    title={
+                      language === "tr"
+                        ? "Takibi bırak"
+                        : "Unfollow"
+                    }
+                  >
+                    <CheckIcon />
+
+                    {unfollowingUserId ===
+                      follow.following_id
+                      ? "..."
+                      : t.following}
+                  </button>
+                </article>
+              );
+            })
+          )}
         </div>
       </>
     );
@@ -1867,6 +2828,9 @@ export default function ProfilePage() {
       case "comments":
         return renderComments();
 
+      case "followers":
+        return renderFollowers();
+
       case "following":
         return renderFollowing();
 
@@ -2007,25 +2971,65 @@ export default function ProfilePage() {
           </div>
 
           <div className={styles.statsGrid}>
-            <article>
-              <strong>28</strong>
+            <button
+              type="button"
+              className={
+                activeSection === "topics"
+                  ? styles.activeProfileStat
+                  : undefined
+              }
+              onClick={() => {
+                setActiveSection("topics");
+              }}
+            >
+              <strong>{profileTopics.length}</strong>
               <span>{t.topicCount}</span>
-            </article>
+            </button>
 
-            <article>
-              <strong>164</strong>
+            <button
+              type="button"
+              className={
+                activeSection === "comments"
+                  ? styles.activeProfileStat
+                  : undefined
+              }
+              onClick={() => {
+                setActiveSection("comments");
+              }}
+            >
+              <strong>{profileComments.length}</strong>
               <span>{t.commentCount}</span>
-            </article>
+            </button>
 
-            <article>
-              <strong>2.3K</strong>
+            <button
+              type="button"
+              className={
+                activeSection === "followers"
+                  ? styles.activeProfileStat
+                  : undefined
+              }
+              onClick={() => {
+                setActiveSection("followers");
+              }}
+            >
+              <strong>{followerCount}</strong>
               <span>{t.followerCount}</span>
-            </article>
+            </button>
 
-            <article>
-              <strong>76</strong>
+            <button
+              type="button"
+              className={
+                activeSection === "following"
+                  ? styles.activeProfileStat
+                  : undefined
+              }
+              onClick={() => {
+                setActiveSection("following");
+              }}
+            >
+              <strong>{followingCount}</strong>
               <span>{t.followingCount}</span>
-            </article>
+            </button>
           </div>
         </section>
 
