@@ -629,9 +629,12 @@ export default function BlogPage() {
             <p>{t.adDescription}</p>
           </div>
 
-          <button type="button">
+          <Link
+            href="/iletisim"
+            className="ff-advertise-button"
+          >
             {t.advertise}
-          </button>
+          </Link>
         </aside>
 
         <section className={styles.section}>

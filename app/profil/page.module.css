@@ -5368,7 +5368,104 @@
   height: 44px !important;
 }
 
-.publicProfileReportButton {
-  padding-left: 16px;
-  padding-right: 16px;
+.usernameInputWrap {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 48px;
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.usernameInputWrap:focus-within {
+  border-color: rgba(219, 83, 244, 0.65);
+  box-shadow:
+    0 0 0 3px rgba(190, 55, 235, 0.1);
+}
+
+.usernameInputWrap > span {
+  flex: 0 0 auto;
+  padding: 0 0 0 14px;
+
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.usernameInputWrap input {
+  flex: 1;
+  width: auto;
+  min-width: 0;
+  min-height: 46px;
+  margin: 0;
+  padding: 0 14px 0 10px;
+
+  border: 0;
+  outline: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.usernameInputWrap input:focus {
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+}
+
+.usernameHelp,
+.temporaryUsernameNotice,
+.usernameError {
+  display: block;
+  width: 100%;
+  margin-top: 7px;
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.usernameHelp {
+  color: rgba(255, 255, 255, 0.46);
+}
+
+.temporaryUsernameNotice {
+  color: #d989f4;
+}
+
+.usernameError {
+  color: #ff7f92;
+  font-weight: 700;
+}
+
+.editPanel form > label {
+  align-self: start;
+}
+
+.editPanel form > label > input {
+  width: 100%;
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+  box-sizing: border-box;
+}
+
+.usernameInputWrap {
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+}
+
+.usernameInputWrap input {
+  height: 46px;
+  min-height: 46px;
+  max-height: 46px;
+}
+
+.usernameHelp,
+.temporaryUsernameNotice,
+.usernameError {
+  margin-bottom: 0;
 }

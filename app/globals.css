@@ -2856,14 +2856,21 @@ html[data-theme="light"] .ff-feed-page {
   font-size: 11px;
 }
 
-.ff-ad-banner button {
+.ff-ad-banner button,
+.ff-ad-banner .ff-advertise-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   min-height: 43px;
   border: 1px solid #d23de7;
   border-radius: 12px;
   padding: 0 20px;
+
   background: rgba(200, 41, 230, 0.07);
   color: #e94cf0;
   font-weight: 700;
+  text-decoration: none;
 }
 
 .ff-bottom-nav {
@@ -12897,8 +12904,7 @@ html[data-theme="light"] .ff-feed-header .ff-site-search-results {
 }
 
 .ff-category-topic:focus-visible {
-  outline: 2px solid
-    var(--category-accent, #df65e8);
+  outline: 2px solid var(--category-accent, #df65e8);
   outline-offset: 3px;
 }
 
@@ -12910,4 +12916,220 @@ html[data-theme="light"] .ff-feed-header .ff-site-search-results {
 
 .ff-center-nav-glow {
   transform: scale(0.88);
+}
+
+/* GEÇİCİ KULLANICI ADI HATIRLATMASI */
+
+.ff-username-reminder-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: grid;
+  place-items: center;
+
+  padding: 20px;
+
+  background: rgba(7, 6, 18, 0.76);
+  backdrop-filter: blur(12px);
+}
+
+.ff-username-reminder {
+  width: min(100%, 460px);
+  padding: 30px;
+
+  text-align: center;
+
+  border: 1px solid rgba(223, 91, 255, 0.28);
+  border-radius: 26px;
+
+  background:
+    radial-gradient(circle at top,
+      rgba(175, 42, 255, 0.18),
+      transparent 45%),
+    #100d1e;
+
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.5);
+}
+
+.ff-username-reminder-icon {
+  display: grid;
+  place-items: center;
+
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 18px;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(135deg,
+      rgba(239, 85, 233, 0.18),
+      rgba(112, 71, 255, 0.18));
+
+  box-shadow:
+    0 14px 32px rgba(169, 57, 255, 0.28);
+
+  overflow: hidden;
+}
+
+.ff-username-reminder-logo {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+}
+
+.ff-username-reminder-label {
+  display: block;
+  margin-bottom: 10px;
+
+  color: #dc71f5;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.ff-username-reminder h2 {
+  margin: 0;
+
+  color: #ffffff;
+  font-size: clamp(23px, 5vw, 30px);
+  line-height: 1.15;
+}
+
+.ff-temporary-username {
+  width: fit-content;
+  margin: 20px auto;
+  padding: 11px 18px;
+
+  color: #f188ff;
+  font-size: 18px;
+  font-weight: 850;
+
+  border: 1px solid rgba(225, 92, 255, 0.27);
+  border-radius: 999px;
+
+  background:
+    rgba(211, 68, 255, 0.08);
+}
+
+.ff-username-reminder p {
+  margin: 0 auto;
+
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.ff-username-reminder-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  margin-top: 24px;
+}
+
+.ff-username-reminder-actions button {
+  min-height: 46px;
+  padding: 0 16px;
+
+  border-radius: 13px;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.ff-username-settings-button {
+  color: #ffffff;
+
+  border: 0;
+
+  background:
+    linear-gradient(135deg,
+      #e34ee7,
+      #7049ff);
+}
+
+.ff-username-later-button {
+  color: rgba(255, 255, 255, 0.75);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  background:
+    rgba(255, 255, 255, 0.045);
+}
+
+.ff-username-later-button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.ff-username-reminder small {
+  display: block;
+  margin-top: 18px;
+
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+@media (max-width: 520px) {
+  .ff-username-reminder {
+    padding: 25px 20px;
+    border-radius: 22px;
+  }
+
+  .ff-username-reminder-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ff-advertise-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0;
+
+  min-width: 126px;
+  min-height: 44px;
+  padding: 0 20px !important;
+
+  border: 1px solid #d23de7 !important;
+  border-radius: 12px !important;
+
+  background: rgba(200, 41, 230, 0.07) !important;
+  color: #e94cf0 !important;
+
+  font-size: 15px;
+  font-weight: 700 !important;
+  line-height: 1;
+  text-decoration: none !important;
+  cursor: pointer;
+
+  transition:
+    transform 150ms ease,
+    background 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.ff-advertise-button:hover {
+  transform: translateY(-2px);
+  background: rgba(200, 41, 230, 0.15) !important;
+  border-color: #ef5bf4 !important;
+  box-shadow: 0 8px 22px rgba(210, 61, 231, 0.16);
+}
+
+.ff-advertise-button:active {
+  transform: translateY(0) scale(0.97);
+  background: rgba(200, 41, 230, 0.22) !important;
+  box-shadow: none;
+}
+
+.ff-advertise-button:focus-visible {
+  outline: 2px solid rgba(233, 76, 240, 0.75);
+  outline-offset: 3px;
 }

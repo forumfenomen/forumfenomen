@@ -3,6 +3,7 @@
 import ForumFooter from "@/components/forum-footer";
 import NotificationBell from "@/components/notification-bell";
 import SiteSearch from "@/components/site-search";
+import TemporaryUsernameReminder from "@/components/temporary-username-reminder";
 import { createClient } from "@/lib/supabase/client";
 
 import Image from "next/image";
@@ -969,6 +970,7 @@ export default function FeedPage() {
 
   return (
     <main className="ff-feed-page">
+      <TemporaryUsernameReminder />
       <div className="ff-feed-app">
         <header className="ff-feed-header">
           <div className="ff-feed-logo-wrap">
@@ -1120,7 +1122,7 @@ export default function FeedPage() {
             ) : (
               displayPosts.map((post) => (
                 <article
-                                     
+
                   id={`topic-${post.id ??
                     encodeURIComponent(post.titleTr)
                     }`}
@@ -1227,7 +1229,7 @@ export default function FeedPage() {
                   </div>
                 </article>
               ))
-              )}
+            )}
           </div>
         </section>
 
@@ -1261,7 +1263,12 @@ export default function FeedPage() {
             <p>{t.adText}</p>
           </div>
 
-          <button type="button">{t.advertise}</button>
+          <Link
+            href="/iletisim"
+            className="ff-advertise-button"
+          >
+            {t.advertise}
+          </Link>
         </section>
       </div>
 
@@ -1308,6 +1315,7 @@ export default function FeedPage() {
         </Link>
       </nav>
     </main>
+
   );
 }
 

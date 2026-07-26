@@ -634,6 +634,21 @@ export default function ProfilePage() {
   const [username, setUsername] =
     useState("@fenomen");
 
+  const [
+    originalUsername,
+    setOriginalUsername,
+  ] = useState("");
+
+  const [
+    usernameIsTemporary,
+    setUsernameIsTemporary,
+  ] = useState(false);
+
+  const [
+    usernameError,
+    setUsernameError,
+  ] = useState("");
+
   const [profileBio, setProfileBio] =
     useState("");
 
@@ -893,6 +908,7 @@ export default function ProfilePage() {
         .select(`
   display_name,
   username,
+  username_is_temporary,
   avatar_url,
   bio,
   interests,
@@ -941,10 +957,15 @@ export default function ProfilePage() {
           : fallbackName
       );
 
-      setUsername(
-        databaseUsername
-          ? `@${databaseUsername}`
-          : `@${fallbackUsername}`
+      const resolvedUsername =
+        databaseUsername || fallbackUsername;
+
+      setUsername(`@${resolvedUsername}`);
+
+      setOriginalUsername(resolvedUsername);
+
+      setUsernameIsTemporary(
+        profile?.username_is_temporary === true
       );
 
       setAvatarUrl(
@@ -2372,6 +2393,7 @@ export default function ProfilePage() {
       return;
     }
 
+    setUsernameError("");
     setIsSaving(true);
 
     try {
@@ -2390,12 +2412,29 @@ export default function ProfilePage() {
       const normalizedUsername = username
         .trim()
         .replace(/^@/, "")
-        .toLowerCase()
-        .replace(/[^a-z0-9._-]/g, "");
+        .toLowerCase();
 
       if (normalizedUsername.length < 3) {
-        window.alert(
+        setUsernameError(
           "Kullanıcı adı en az 3 karakter olmalıdır."
+        );
+        return;
+      }
+
+      if (normalizedUsername.length > 24) {
+        setUsernameError(
+          "Kullanıcı adı en fazla 24 karakter olabilir."
+        );
+        return;
+      }
+
+      if (
+        !/^[a-z0-9][a-z0-9_-]*[a-z0-9]$/.test(
+          normalizedUsername
+        )
+      ) {
+        setUsernameError(
+          "Kullanıcı adı yalnızca küçük harf, sayı, tire ve alt çizgi içerebilir."
         );
         return;
       }
@@ -2407,6 +2446,100 @@ export default function ProfilePage() {
       const normalizedBio =
         profileBio.trim().slice(0, 180);
 
+      const usernameChanged =
+        normalizedUsername !==
+        originalUsername.toLowerCase();
+
+      let savedUsername =
+        originalUsername;
+
+      if (usernameChanged) {
+        const {
+          data: changedUsername,
+          error: usernameUpdateError,
+        } = await supabase.rpc(
+          "change_username",
+          {
+            p_username: normalizedUsername,
+          }
+        );
+
+        if (usernameUpdateError) {
+          const errorMessage =
+            usernameUpdateError.message;
+
+          if (
+            errorMessage.includes(
+              "USERNAME_TAKEN"
+            )
+          ) {
+            setUsernameError(
+              "Bu kullanıcı adı daha önce alınmış."
+            );
+            return;
+          }
+
+          if (
+            errorMessage.includes(
+              "USERNAME_NOT_ALLOWED"
+            )
+          ) {
+            setUsernameError(
+              "Bu kullanıcı adı topluluk kurallarını ihlal ediyor."
+            );
+            return;
+          }
+
+          if (
+            errorMessage.includes(
+              "USERNAME_TOO_SHORT"
+            )
+          ) {
+            setUsernameError(
+              "Kullanıcı adı en az 3 karakter olmalıdır."
+            );
+            return;
+          }
+
+          if (
+            errorMessage.includes(
+              "USERNAME_TOO_LONG"
+            )
+          ) {
+            setUsernameError(
+              "Kullanıcı adı en fazla 24 karakter olabilir."
+            );
+            return;
+          }
+
+          if (
+            errorMessage.includes(
+              "USERNAME_INVALID_FORMAT"
+            )
+          ) {
+            setUsernameError(
+              "Kullanıcı adı yalnızca küçük harf, sayı, tire ve alt çizgi içerebilir."
+            );
+            return;
+          }
+
+          console.error(
+            "Kullanıcı adı değiştirilemedi:",
+            usernameUpdateError
+          );
+
+          setUsernameError(
+            "Kullanıcı adı değiştirilemedi. Lütfen tekrar dene."
+          );
+          return;
+        }
+
+        savedUsername =
+          typeof changedUsername === "string"
+            ? changedUsername
+            : normalizedUsername;
+      }
+
       const {
         data: updatedProfile,
         error: updateError,
@@ -2414,44 +2547,46 @@ export default function ProfilePage() {
         .from("profiles")
         .update({
           display_name: normalizedName,
-          username: normalizedUsername,
           bio: normalizedBio,
           interests: selectedInterests,
         })
         .eq("id", user.id)
         .select(
-          "display_name, username, bio, avatar_url, interests"
+          "display_name, username, bio, avatar_url, interests, username_is_temporary"
         )
         .single();
 
       if (updateError) {
-        if (updateError.code === "23505") {
-          window.alert(
-            "Bu kullanıcı adı başka bir kullanıcı tarafından kullanılıyor."
-          );
-          return;
-        }
-
         console.error(
           "Profil güncelleme hatası:",
           updateError
         );
 
         window.alert(
-          `Profil kaydedilemedi: ${updateError.message}`
+          "Profil bilgileri kaydedilemedi. Lütfen tekrar dene."
         );
         return;
       }
+
+      const finalUsername =
+        updatedProfile.username ||
+        savedUsername;
 
       setProfileName(
         updatedProfile.display_name
       );
 
       setUsername(
-        `@${updatedProfile.username.replace(
-          /^@/,
-          ""
-        )}`
+        `@${finalUsername.replace(/^@/, "")}`
+      );
+
+      setOriginalUsername(
+        finalUsername.replace(/^@/, "")
+      );
+
+      setUsernameIsTemporary(
+        updatedProfile.username_is_temporary ===
+        true
       );
 
       setProfileBio(
@@ -4227,16 +4362,55 @@ export default function ProfilePage() {
               <label>
                 <span>{t.username}</span>
 
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(event) =>
-                    setUsername(
-                      event.target.value
-                    )
-                  }
-                  required
-                />
+                <div className={styles.usernameInputWrap}>
+                  <span aria-hidden="true">@</span>
+
+                  <input
+                    type="text"
+                    value={username.replace(/^@/, "")}
+                    onChange={(event) => {
+                      setUsername(
+                        `@${event.target.value
+                          .toLowerCase()
+                          .replace(/[^a-z0-9_-]/g, "")
+                          .slice(0, 24)}`
+                      );
+
+                      setUsernameError("");
+                    }}
+                    minLength={3}
+                    maxLength={24}
+                    autoComplete="username"
+                    spellCheck={false}
+                    required
+                  />
+                </div>
+
+                <small className={styles.usernameHelp}>
+                  3–24 karakter. Yalnızca küçük
+                  harf, sayı, tire ve alt çizgi
+                  kullanabilirsin.
+                </small>
+
+                {usernameIsTemporary ? (
+                  <small
+                    className={
+                      styles.temporaryUsernameNotice
+                    }
+                  >
+                    Şu anda geçici bir kullanıcı adı
+                    kullanıyorsun.
+                  </small>
+                ) : null}
+
+                {usernameError ? (
+                  <small
+                    className={styles.usernameError}
+                    role="alert"
+                  >
+                    {usernameError}
+                  </small>
+                ) : null}
               </label>
 
               <label className={styles.fullField}>
@@ -4399,9 +4573,12 @@ export default function ProfilePage() {
               <p>{t.adDescription}</p>
             </div>
 
-            <button type="button">
+            <Link
+              href="/iletisim"
+              className="ff-advertise-button"
+            >
               {t.advertise}
-            </button>
+            </Link>
           </aside>
         )}
 
