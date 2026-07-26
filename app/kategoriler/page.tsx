@@ -983,7 +983,7 @@ export default function CategoriesPage() {
   const [activeTab, setActiveTab] =
     useState<TabId>("popular");
 
-  
+
 
   useEffect(() => {
     const savedLanguage = getForumLanguage();
@@ -1346,7 +1346,7 @@ export default function CategoriesPage() {
       );
     }
 
-    
+
     if (activeTab === "following") {
       result = result.filter(
         (topic) => topic.followed
@@ -1378,7 +1378,7 @@ export default function CategoriesPage() {
     setSelectedCategory(categoryId);
     setSelectedSubcategory(null);
     setActiveTab("popular");
-    
+
   }
 
   function toggleTheme() {
@@ -1437,7 +1437,7 @@ export default function CategoriesPage() {
           </div>
         </header>
 
-        
+
         <section className="ff-category-intro">
           <div>
             <span className="ff-category-eyebrow">
@@ -1669,9 +1669,11 @@ export default function CategoriesPage() {
               {visibleTopics.length > 0 ? (
                 visibleTopics.map(
                   (topic) => (
-                    <article
+                    <Link
                       key={topic.id}
+                      href={`/konu/${topic.id}`}
                       className="ff-category-topic"
+                      aria-label={`${topic.title[language]} konusunu aç`}
                     >
                       <div
                         className="ff-category-topic-icon"
@@ -1725,7 +1727,7 @@ export default function CategoriesPage() {
                           {topic.views}
                         </span>
                       </div>
-                    </article>
+                    </Link>
                   )
                 )
               ) : (

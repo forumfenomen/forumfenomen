@@ -4920,3 +4920,455 @@
   cursor: pointer;
 }
 
+/* SAVED TOPICS CLEAN FINAL START */
+
+.savedTopicRow {
+  position: relative;
+
+  display: block;
+
+  width: 100%;
+}
+
+.savedTopicLink {
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+}
+
+/* Konu kartının sağındaki eski ok */
+
+/* Kart içeriğine kaldırma butonu için boşluk */
+.savedTopicRow
+.savedTopicLink
+> button {
+  grid-template-columns:
+    39px minmax(0, 1fr) !important;
+
+  padding-right: 56px !important;
+}
+
+/* Küçük kaldırma butonu */
+.simpleList
+.savedTopicRow
+.removeSavedButton {
+  position: absolute !important;
+  z-index: 3;
+
+  top: 50% !important;
+  right: 12px !important;
+
+  display: grid !important;
+
+  width: 30px !important;
+  min-width: 30px !important;
+  max-width: 30px !important;
+
+  height: 30px !important;
+  min-height: 30px !important;
+  max-height: 30px !important;
+
+  place-items: center !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  color: #a7a9b4 !important;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 9px !important;
+
+  background:
+    rgba(255, 255, 255, 0.035) !important;
+
+  font-family: inherit;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  line-height: 1 !important;
+  text-align: center;
+
+  cursor: pointer;
+
+  transform:
+    translateY(-50%) !important;
+
+  transition:
+    color 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease,
+    transform 0.18s ease !important;
+}
+
+.simpleList
+.savedTopicRow
+.removeSavedButton:hover {
+  color: #ff9ca7 !important;
+
+  border-color:
+    rgba(239, 68, 68, 0.34) !important;
+
+  background:
+    rgba(239, 68, 68, 0.09) !important;
+
+  transform:
+    translateY(-50%)
+    scale(1.04) !important;
+}
+
+.simpleList
+.savedTopicRow
+.removeSavedButton:disabled {
+  cursor: wait;
+
+  opacity: 0.5;
+
+  transform:
+    translateY(-50%) !important;
+}
+
+@media (max-width: 640px) {
+  .savedTopicRow
+  .savedTopicLink
+  > button {
+    padding-right: 52px !important;
+  }
+
+  .simpleList
+  .savedTopicRow
+  .removeSavedButton {
+    right: 10px !important;
+
+    width: 29px !important;
+    min-width: 29px !important;
+    max-width: 29px !important;
+
+    height: 29px !important;
+    min-height: 29px !important;
+    max-height: 29px !important;
+  }
+}
+
+/* SAVED TOPICS CLEAN FINAL END */
+
+.simpleList
+.savedTopicRow
+.removeSavedButton svg {
+  display: block !important;
+
+  width: 14px !important;
+  height: 14px !important;
+
+  margin: 0 !important;
+
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+/* SAVED REMOVE ICON TRUE CENTER */
+
+.simpleList
+.savedTopicRow
+.removeSavedButton {
+  display: flex !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  grid-template-columns: none !important;
+  gap: 0 !important;
+
+  padding: 0 !important;
+  text-align: center !important;
+}
+
+.simpleList
+.savedTopicRow
+.removeSavedButton svg {
+  display: block !important;
+
+  width: 14px !important;
+  height: 14px !important;
+
+  flex: 0 0 14px !important;
+
+  margin: 0 !important;
+
+  transform: none !important;
+}
+
+/* PUBLIC PROFILE REPORT */
+
+.publicProfileReportButton {
+  min-height: 44px;
+  padding: 0 16px;
+
+  color: #ffb2bb;
+
+  border: 1px solid rgba(239, 68, 68, 0.24);
+  border-radius: 12px;
+
+  background: rgba(239, 68, 68, 0.07);
+
+  font-size: 12px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.publicProfileReportButton:hover {
+  color: #ffffff;
+  background: rgba(239, 68, 68, 0.13);
+}
+
+.profileReportBackdrop {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  padding: 18px;
+
+  background: rgba(2, 4, 12, 0.78);
+  backdrop-filter: blur(8px);
+}
+
+.profileReportModal {
+  width: min(100%, 520px);
+  max-height: calc(100vh - 36px);
+  overflow-y: auto;
+
+  padding: 22px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+
+  background: #0e1020;
+
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.45);
+}
+
+.profileReportHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.profileReportHeader span {
+  color: #ef78ff;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+}
+
+.profileReportHeader h2 {
+  margin: 5px 0 7px;
+  color: #ffffff;
+  font-size: 24px;
+}
+
+.profileReportHeader p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.profileReportHeader > button {
+  display: grid;
+  place-items: center;
+
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+
+  color: rgba(255, 255, 255, 0.72);
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.04);
+
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.profileReportField {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  margin-top: 14px;
+}
+
+.profileReportField > span {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.profileReportField select,
+.profileReportField textarea {
+  width: 100%;
+
+  color: #ffffff;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  outline: none;
+
+  background: rgba(0, 0, 0, 0.22);
+
+  font: inherit;
+}
+
+.profileReportField select {
+  min-height: 44px;
+  padding: 0 12px;
+}
+
+.profileReportField textarea {
+  min-height: 120px;
+  padding: 12px 13px 26px;
+  resize: vertical;
+}
+
+.profileReportField small {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 9px;
+}
+
+.profileReportError,
+.profileReportSuccess {
+  margin-top: 14px;
+  padding: 11px 13px;
+  border-radius: 11px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.profileReportError {
+  color: #ffb4bb;
+  border: 1px solid rgba(239, 68, 68, 0.23);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.profileReportSuccess {
+  color: #9ff0bc;
+  border: 1px solid rgba(34, 197, 94, 0.23);
+  background: rgba(34, 197, 94, 0.08);
+}
+
+.profileReportActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.profileReportActions button {
+  min-height: 42px;
+  padding: 0 15px;
+
+  border-radius: 11px;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.profileReportActions button:first-child {
+  color: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.profileReportActions button:last-child {
+  color: #ffffff;
+  border: 0;
+  background:
+    linear-gradient(
+      135deg,
+      #d837e5,
+      #6e65ff
+    );
+}
+
+.profileReportActions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+@media (max-width: 600px) {
+  .profileActions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .publicProfileReportButton {
+    width: 100%;
+  }
+
+  .profileReportActions {
+    flex-direction: column;
+  }
+
+  .profileReportActions button {
+    width: 100%;
+  }
+}
+
+/* PUBLIC PROFILE ACTION BUTTON ALIGNMENT */
+
+.profileActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.profileActions > a,
+.profileActions > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 44px;
+  height: 44px;
+
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+
+  box-sizing: border-box;
+  line-height: 1;
+}
+
+.publicFollowButton,
+.publicFollowingButton,
+.publicProfileOwnButton,
+.publicProfileReportButton {
+  min-height: 44px !important;
+  height: 44px !important;
+}
+
+.publicProfileReportButton {
+  padding-left: 16px;
+  padding-right: 16px;
+}

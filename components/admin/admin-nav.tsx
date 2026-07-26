@@ -1,17 +1,27 @@
 "use client";
 
 import Link from "next/link";
+
 import {
   useEffect,
   useState,
 } from "react";
+
 import { usePathname } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/client";
 
 import styles from "@/app/admin/admin.module.css";
 
-const activeItems = [
+type AdminNavItem = {
+  href: string;
+  label: string;
+  showPendingReports?: boolean;
+  showProfileReports?: boolean;
+  showNewContacts?: boolean;
+};
+
+const activeItems: AdminNavItem[] = [
   {
     href: "/admin",
     label: "Genel Bakış",
@@ -24,6 +34,7 @@ const activeItems = [
   {
     href: "/admin/kullanicilar",
     label: "Kullanıcılar",
+    showProfileReports: true,
   },
   {
     href: "/admin/konular",
@@ -41,7 +52,35 @@ const activeItems = [
     href: "/admin/forum-etkinlikleri",
     label: "Forum Etkinlikleri",
   },
+  {
+    href: "/admin/iletisim",
+    label: "İletişim",
+    showNewContacts: true,
+  },
 ];
+
+type ContactCounts = {
+  total_count: number | string;
+  new_count: number | string;
+  read_count: number | string;
+  replied_count: number | string;
+  closed_count: number | string;
+};
+
+type ProfileReportSummary = {
+  id: string;
+  status: string;
+};
+
+function normalizeCount(
+  value: number | string | null | undefined
+) {
+  const parsedValue = Number(value);
+
+  return Number.isFinite(parsedValue)
+    ? parsedValue
+    : 0;
+}
 
 export default function AdminNav() {
   const pathname = usePathname();
@@ -55,6 +94,16 @@ export default function AdminNav() {
     setPendingReportCount,
   ] = useState(0);
 
+  const [
+    profileReportCount,
+    setProfileReportCount,
+  ] = useState(0);
+
+  const [
+    newContactCount,
+    setNewContactCount,
+  ] = useState(0);
+
   const isActive = (href: string) => {
     if (href === "/admin") {
       return pathname === "/admin";
@@ -66,37 +115,104 @@ export default function AdminNav() {
   useEffect(() => {
     let isActiveEffect = true;
 
-    async function loadPendingReports() {
-      const { count, error } =
-        await supabase
+    async function loadAdminNotifications() {
+      const [
+        commentReportsResult,
+        profileReportsResult,
+        contactCountsResult,
+      ] = await Promise.all([
+        supabase
           .from("comment_reports")
           .select("id", {
             count: "exact",
             head: true,
           })
-          .eq("status", "pending");
+          .eq("status", "pending"),
 
-      if (
-        error ||
-        !isActiveEffect
-      ) {
-        if (error) {
-          console.error(
-            "Bekleyen şikâyet sayısı alınamadı:",
-            error.message
-          );
-        }
+        supabase.rpc(
+          "admin_list_profile_reports",
+          {
+            p_profile_id: null,
+            p_status: null,
+          }
+        ),
 
+        supabase
+          .rpc(
+            "admin_contact_message_counts"
+          )
+          .single(),
+      ]);
+
+      if (!isActiveEffect) {
         return;
       }
 
-      setPendingReportCount(count ?? 0);
+      if (commentReportsResult.error) {
+        console.error(
+          "Bekleyen yorum şikâyetleri alınamadı:",
+          commentReportsResult.error.message
+        );
+      }
+
+      if (profileReportsResult.error) {
+        console.error(
+          "Açık profil şikâyetleri alınamadı:",
+          profileReportsResult.error.message
+        );
+      }
+
+      if (contactCountsResult.error) {
+        console.error(
+          "Yeni iletişim mesajı sayısı alınamadı:",
+          contactCountsResult.error.message
+        );
+      }
+
+      const commentReportCount =
+        commentReportsResult.error
+          ? 0
+          : commentReportsResult.count ?? 0;
+
+      const profileReports =
+        (profileReportsResult.data ??
+          []) as ProfileReportSummary[];
+
+      const openProfileReportCount =
+        profileReports.filter(
+          (report) =>
+            report.status === "open" ||
+            report.status === "reviewing"
+        ).length;
+
+      const contactCounts =
+        contactCountsResult.data as
+        | ContactCounts
+        | null;
+
+      setPendingReportCount(
+        commentReportCount
+      );
+
+      setProfileReportCount(
+        profileReportsResult.error
+          ? 0
+          : openProfileReportCount
+      );
+
+      setNewContactCount(
+        contactCountsResult.error
+          ? 0
+          : normalizeCount(
+            contactCounts?.new_count
+          )
+      );
     }
 
-    void loadPendingReports();
+    void loadAdminNotifications();
 
     const channel = supabase
-      .channel("admin-pending-reports")
+      .channel("admin-sidebar-notifications")
       .on(
         "postgres_changes",
         {
@@ -105,27 +221,61 @@ export default function AdminNav() {
           table: "comment_reports",
         },
         () => {
-          void loadPendingReports();
+          void loadAdminNotifications();
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "profile_reports",
+        },
+        () => {
+          void loadAdminNotifications();
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "contact_messages",
+        },
+        () => {
+          void loadAdminNotifications();
         }
       )
       .subscribe((status) => {
         console.log(
-          "Admin şikâyet realtime durumu:",
+          "Admin menü bildirim durumu:",
           status
         );
 
         if (status === "SUBSCRIBED") {
-          void loadPendingReports();
+          void loadAdminNotifications();
         }
       });
 
-    const handleFocus = () => {
-      void loadPendingReports();
+    const handleRefreshNotifications = () => {
+      void loadAdminNotifications();
     };
 
     window.addEventListener(
       "focus",
-      handleFocus
+      handleRefreshNotifications
+    );
+
+    window.addEventListener(
+      "admin-notifications-refresh",
+      handleRefreshNotifications
+    );
+
+    const refreshInterval = window.setInterval(
+      () => {
+        void loadAdminNotifications();
+      },
+      5000
     );
 
     return () => {
@@ -133,8 +283,15 @@ export default function AdminNav() {
 
       window.removeEventListener(
         "focus",
-        handleFocus
+        handleRefreshNotifications
       );
+
+      window.removeEventListener(
+        "admin-notifications-refresh",
+        handleRefreshNotifications
+      );
+
+      window.clearInterval(refreshInterval);
 
       void supabase.removeChannel(channel);
     };
@@ -142,32 +299,49 @@ export default function AdminNav() {
 
   return (
     <nav className={styles.nav}>
-      {activeItems.map((item) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          className={`${styles.navLink} ${isActive(item.href)
-            ? styles.navActive
-            : ""
-            }`}
-        >
-          <span>{item.label}</span>
+      {activeItems.map((item) => {
+        const notificationCount =
+          item.showPendingReports
+            ? pendingReportCount
+            : item.showProfileReports
+              ? profileReportCount
+              : item.showNewContacts
+                ? newContactCount
+                : 0;
 
-          {item.showPendingReports &&
-            pendingReportCount > 0 ? (
-            <span
-              className={
-                styles.adminNavNotification
-              }
-              aria-label={`${pendingReportCount} bekleyen şikâyet`}
-            >
-              {pendingReportCount > 99
-                ? "99+"
-                : pendingReportCount}
-            </span>
-          ) : null}
-        </Link>
-      ))}
+        const notificationLabel =
+          item.showPendingReports
+            ? `${notificationCount} bekleyen içerik şikâyeti`
+            : item.showProfileReports
+              ? `${notificationCount} açık profil şikâyeti`
+              : `${notificationCount} yeni iletişim mesajı`;
+
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={`${styles.navLink} ${isActive(item.href)
+              ? styles.navActive
+              : ""
+              }`}
+          >
+            <span>{item.label}</span>
+
+            {notificationCount > 0 ? (
+              <span
+                className={
+                  styles.adminNavNotification
+                }
+                aria-label={notificationLabel}
+              >
+                {notificationCount > 99
+                  ? "99+"
+                  : notificationCount}
+              </span>
+            ) : null}
+          </Link>
+        );
+      })}
     </nav>
   );
 }

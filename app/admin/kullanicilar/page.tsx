@@ -1,6 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
-
+import Link from "next/link";
 import UserAccountActions from "@/components/admin/user-account-actions";
+import UserRoleActions from "@/components/admin/user-role-actions";
+
+import ProfileReportActions, {
+  type ProfileReport,
+} from "@/components/admin/profile-report-actions";
 
 import styles from "../admin.module.css";
 
@@ -14,6 +19,8 @@ type AdminUser = {
   last_seen_at: string | null;
   topic_count: number | string;
   comment_count: number | string;
+  profile_report_count: number | string;
+  open_profile_report_count: number | string;
 
   profile_visibility: string;
   followers_visibility: string;
@@ -30,6 +37,12 @@ type AdminUser = {
   moderated_by: string | null;
   moderated_at: string | null;
 };
+
+type UserFilter =
+  | "all"
+  | "online"
+  | "reported"
+  | "suspended";
 
 const ONLINE_LIMIT_MS = 2 * 60 * 1000;
 
@@ -91,22 +104,81 @@ function formatDate(value: string) {
   }).format(new Date(value));
 }
 
-export default async function AdminUsersPage() {
+export default async function AdminUsersPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    filtre?: string;
+  }>;
+}) {
+  const resolvedSearchParams =
+    await searchParams;
+
+  const requestedFilter =
+    resolvedSearchParams.filtre;
+
+  const activeFilter: UserFilter =
+    requestedFilter === "online" ||
+      requestedFilter === "reported" ||
+      requestedFilter === "suspended"
+      ? requestedFilter
+      : "all";
+
   const supabase = await createClient();
 
-  const { data, error } = await supabase.rpc(
-    "admin_list_users"
-  );
+  const [
+    usersResult,
+    reportsResult,
+  ] = await Promise.all([
+    supabase.rpc(
+      "admin_list_users"
+    ),
 
-  if (error) {
+    supabase.rpc(
+      "admin_list_profile_reports",
+      {
+        p_profile_id: null,
+        p_status: null,
+      }
+    ),
+  ]);
+
+  if (usersResult.error) {
     console.error(
       "Kullanıcılar alınamadı:",
-      error.message
+      usersResult.error.message
+    );
+  }
+
+  if (reportsResult.error) {
+    console.error(
+      "Profil şikâyetleri alınamadı:",
+      reportsResult.error.message
     );
   }
 
   const users =
-    (data ?? []) as unknown as AdminUser[];
+    (usersResult.data ??
+      []) as unknown as AdminUser[];
+
+  const profileReports =
+    (reportsResult.data ??
+      []) as unknown as ProfileReport[];
+
+  const reportsByProfileId =
+    profileReports.reduce<
+      Record<string, ProfileReport[]>
+    >((accumulator, report) => {
+      const currentReports =
+        accumulator[report.profile_id] ?? [];
+
+      currentReports.push(report);
+
+      accumulator[report.profile_id] =
+        currentReports;
+
+      return accumulator;
+    }, {});
 
   const now = Date.now();
 
@@ -123,6 +195,75 @@ export default async function AdminUsersPage() {
       now - lastSeenTime <= ONLINE_LIMIT_MS
     );
   }).length;
+
+  const reportedUserCount = users.filter(
+    (user) =>
+      getCount(user.open_profile_report_count) > 0
+  ).length;
+
+  const suspendedUserCount = users.filter(
+    (user) =>
+      user.account_status === "suspended"
+  ).length;
+
+  const filteredUsers = users.filter((user) => {
+    if (activeFilter === "all") {
+      return true;
+    }
+
+    if (activeFilter === "reported") {
+      return (
+        getCount(
+          user.open_profile_report_count
+        ) > 0
+      );
+    }
+
+    if (activeFilter === "suspended") {
+      return (
+        user.account_status === "suspended"
+      );
+    }
+
+    if (!user.last_seen_at) {
+      return false;
+    }
+
+    const lastSeenTime =
+      new Date(user.last_seen_at).getTime();
+
+    return (
+      now - lastSeenTime >= 0 &&
+      now - lastSeenTime <= ONLINE_LIMIT_MS
+    );
+  });
+
+  const userFilters = [
+    {
+      value: "all",
+      label: "Toplam kullanıcı",
+      count: users.length,
+      href: "/admin/kullanicilar",
+    },
+    {
+      value: "online",
+      label: "Şu anda çevrimiçi",
+      count: onlineUserCount,
+      href: "/admin/kullanicilar?filtre=online",
+    },
+    {
+      value: "reported",
+      label: "Şikâyet edilen",
+      count: reportedUserCount,
+      href: "/admin/kullanicilar?filtre=reported",
+    },
+    {
+      value: "suspended",
+      label: "Askıya alınan",
+      count: suspendedUserCount,
+      href: "/admin/kullanicilar?filtre=suspended",
+    },
+  ] as const;
 
   return (
     <>
@@ -145,42 +286,74 @@ export default async function AdminUsersPage() {
         </div>
       </header>
 
-      <section className={styles.userSummaryGrid}>
-        <article className={styles.userSummaryCard}>
-          <span>Toplam kullanıcı</span>
+      <nav
+        className={styles.userSummaryGrid}
+        aria-label="Kullanıcı filtreleri"
+      >
+        {userFilters.map((filter) => (
+          <Link
+            key={filter.value}
+            href={filter.href}
+            className={[
+              styles.userSummaryCard,
+              activeFilter === filter.value
+                ? styles.userSummaryCardActive
+                : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+          >
+            <span>{filter.label}</span>
 
-          <strong>{users.length}</strong>
-        </article>
-
-        <article className={styles.userSummaryCard}>
-          <span>Şu anda çevrimiçi</span>
-
-          <strong>{onlineUserCount}</strong>
-        </article>
-      </section>
+            <strong>{filter.count}</strong>
+          </Link>
+        ))}
+      </nav>
 
       <section className={styles.panel}>
         <div className={styles.panelHeader}>
           <div>
-            <span>KULLANICI LİSTESİ</span>
+            <span>
+              {activeFilter === "reported"
+                ? "ŞİKÂYET YÖNETİMİ"
+                : activeFilter === "suspended"
+                  ? "HESAP DENETİMİ"
+                  : activeFilter === "online"
+                    ? "AKTİF KULLANICILAR"
+                    : "KULLANICI LİSTESİ"}
+            </span>
 
-            <h2>Tüm Üyeler</h2>
+            <h2>
+              {activeFilter === "online"
+                ? "Çevrimiçi Üyeler"
+                : activeFilter === "reported"
+                  ? "Şikâyet Edilen Üyeler"
+                  : activeFilter === "suspended"
+                    ? "Askıya Alınan Üyeler"
+                    : "Tüm Üyeler"}
+            </h2>
           </div>
 
           <div className={styles.panelBadge}>
-            {users.length} kayıt
+            {filteredUsers.length} kayıt
           </div>
         </div>
 
-        {users.length === 0 ? (
+        {filteredUsers.length === 0 ? (
           <div className={styles.emptyState}>
             Kullanıcı bulunamadı.
           </div>
         ) : (
           <div className={styles.userList}>
-            {users.map((user) => {
+            {filteredUsers.map((user) => {
               const displayName =
                 getDisplayName(user);
+
+              const profileHref = user.username
+                ? `/profil/${encodeURIComponent(
+                  user.username.replace(/^@/, "")
+                )}`
+                : null;
 
               const lastSeenTime =
                 user.last_seen_at
@@ -195,6 +368,19 @@ export default async function AdminUsersPage() {
                 now - lastSeenTime <=
                 ONLINE_LIMIT_MS;
 
+              const openReportCount =
+                getCount(
+                  user.open_profile_report_count
+                );
+
+              const totalReportCount =
+                getCount(
+                  user.profile_report_count
+                );
+
+              const userProfileReports =
+                reportsByProfileId[user.id] ?? [];
+
               const roleClass =
                 user.role === "admin"
                   ? styles.roleAdmin
@@ -205,7 +391,14 @@ export default async function AdminUsersPage() {
               return (
                 <article
                   key={user.id}
-                  className={styles.userRow}
+                  className={[
+                    styles.userRow,
+                    openReportCount > 0
+                      ? styles.userRowReported
+                      : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
                 >
                   <div
                     className={
@@ -251,9 +444,16 @@ export default async function AdminUsersPage() {
                           styles.userNameLine
                         }
                       >
-                        <strong>
-                          {displayName}
-                        </strong>
+                        {profileHref ? (
+                          <Link
+                            href={profileHref}
+                            className={styles.adminUserProfileLink}
+                          >
+                            {displayName}
+                          </Link>
+                        ) : (
+                          <strong>{displayName}</strong>
+                        )}
 
                         <span
                           className={`${styles.roleBadge} ${roleClass}`}
@@ -273,6 +473,7 @@ export default async function AdminUsersPage() {
                           {accountStatusNames[user.account_status] ??
                             user.account_status}
                         </span>
+
                       </div>
 
                       <small>
@@ -283,6 +484,12 @@ export default async function AdminUsersPage() {
                           )}`
                           : "Kullanıcı adı yok"}
                       </small>
+
+                      {totalReportCount > 0 ? (
+                        <p className={styles.userReportHistory}>
+                          Toplam şikâyet geçmişi: {totalReportCount}
+                        </p>
+                      ) : null}
 
                       <p
                         className={
@@ -502,12 +709,27 @@ export default async function AdminUsersPage() {
                     </div>
                   </div>
 
-                  <UserAccountActions
-                    userId={user.id}
-                    displayName={displayName}
-                    accountStatus={user.account_status}
-                    isProtected={user.role === "admin"}
-                  />
+                  <div className={styles.userManagementBar}>
+                    <div className={styles.userManagementLeft}>
+                      <UserRoleActions
+                        userId={user.id}
+                        displayName={displayName}
+                        currentRole={user.role}
+                        isProtected={user.role === "admin"}
+                      />
+
+                      <ProfileReportActions
+                        reports={userProfileReports}
+                      />
+                    </div>
+
+                    <UserAccountActions
+                      userId={user.id}
+                      displayName={displayName}
+                      accountStatus={user.account_status}
+                      isProtected={user.role === "admin"}
+                    />
+                  </div>
                 </article>
               );
             })}

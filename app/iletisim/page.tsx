@@ -12,6 +12,8 @@ import {
   type ForumLanguage,
 } from "@/lib/forumfenomen-language";
 
+import { createClient } from "@/lib/supabase/client";
+
 import styles from "@/components/info-pages.module.css";
 
 type ContactSubject =
@@ -82,7 +84,13 @@ const copy = {
     send: "Mesajı Gönder",
 
     notice:
-      "Form başarıyla doğrulandı. Gerçek mesaj gönderim altyapısı bağlandığında bu buton mesajını doğrudan ForumFenomen ekibine iletecek.",
+      "Mesajın ForumFenomen ekibine başarıyla iletildi.",
+
+    sending: "Gönderiliyor...",
+    sendError:
+      "Mesaj gönderilemedi. Lütfen bilgilerini kontrol edip tekrar dene.",
+    rateLimit:
+      "Kısa sürede çok fazla mesaj gönderdin. Lütfen birkaç dakika sonra tekrar dene.",
 
     directMail: "Doğrudan e-posta gönder",
   },
@@ -142,7 +150,13 @@ const copy = {
     send: "Send Message",
 
     notice:
-      "The form was validated successfully. When the message infrastructure is connected, this button will send your message directly to the ForumFenomen team.",
+      "Your message was sent successfully to the ForumFenomen team.",
+
+    sending: "Sending...",
+    sendError:
+      "Your message could not be sent. Please check your details and try again.",
+    rateLimit:
+      "You sent too many messages in a short time. Please try again in a few minutes.",
 
     directMail: "Send email directly",
   },
@@ -167,13 +181,21 @@ export default function ContactPage() {
   const [submitted, setSubmitted] =
     useState(false);
 
+  const [submitting, setSubmitting] =
+    useState(false);
+
+  const [submitError, setSubmitError] =
+    useState<"general" | "rate-limit" | null>(
+      null
+    );
+
   useEffect(() => {
     setLanguage(getForumLanguage());
   }, []);
 
   const t = copy[language];
 
-  function handleSubmit(
+  async function handleSubmit(
     event: FormEvent<HTMLFormElement>
   ) {
     event.preventDefault();
@@ -182,21 +204,78 @@ export default function ContactPage() {
       !name.trim() ||
       !email.trim() ||
       !subject ||
-      !message.trim()
+      !message.trim() ||
+      submitting
     ) {
       return;
     }
 
-    setSubmitted(true);
+    setSubmitting(true);
+    setSubmitted(false);
+    setSubmitError(null);
 
-    window.setTimeout(() => {
-      setSubmitted(false);
-    }, 5000);
+    try {
+      const supabase = createClient();
+
+      const { error } = await supabase.rpc(
+        "submit_contact_message",
+        {
+          p_full_name: name.trim(),
+          p_email: email.trim(),
+          p_subject: subject,
+          p_message: message.trim(),
+          p_language: language,
+        }
+      );
+
+      if (error) {
+        console.error(
+          "İletişim mesajı gönderilemedi:",
+          error.message
+        );
+
+        if (
+          error.message.includes(
+            "CONTACT_RATE_LIMIT"
+          )
+        ) {
+          setSubmitError("rate-limit");
+        } else {
+          setSubmitError("general");
+        }
+
+        return;
+      }
+
+      setSubmitted(true);
+
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+
+      window.setTimeout(() => {
+        setSubmitted(false);
+      }, 6000);
+    } catch (error) {
+      console.error(
+        "Beklenmeyen iletişim formu hatası:",
+        error
+      );
+
+      setSubmitError("general");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   function clearNotice() {
     if (submitted) {
       setSubmitted(false);
+    }
+
+    if (submitError) {
+      setSubmitError(null);
     }
   }
 
@@ -375,8 +454,17 @@ export default function ContactPage() {
           <button
             type="submit"
             className={styles.submitButton}
+            disabled={
+              submitting ||
+              !name.trim() ||
+              !email.trim() ||
+              !subject ||
+              message.trim().length < 10
+            }
           >
-            {t.send}
+            {submitting
+              ? t.sending
+              : t.send}
           </button>
 
           {submitted && (
@@ -388,6 +476,19 @@ export default function ContactPage() {
               {t.notice}
             </div>
           )}
+
+          {submitError && (
+            <div
+              className={styles.formError}
+              role="alert"
+              aria-live="assertive"
+            >
+              {submitError === "rate-limit"
+                ? t.rateLimit
+                : t.sendError}
+            </div>
+          )}
+
         </form>
       </div>
     </InfoPageShell>

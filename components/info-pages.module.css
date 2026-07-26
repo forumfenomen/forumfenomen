@@ -1366,3 +1366,29 @@
 }
 
 /* CONTACT FINAL MOBILE SPACING V6 END */
+
+/* CONTACT FORM REAL SUBMIT STATES */
+
+.submitButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+  transform: none;
+}
+
+.formError {
+  margin-top: 12px;
+  padding: 12px 14px;
+
+  color: #ffadb6;
+
+  border:
+    1px solid rgba(239, 68, 68, 0.24);
+  border-radius: 12px;
+
+  background:
+    rgba(239, 68, 68, 0.075);
+
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+}

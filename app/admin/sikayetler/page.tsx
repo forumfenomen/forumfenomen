@@ -36,9 +36,16 @@ type AdminReport = {
   resolution_note: string | null;
   created_at: string;
   reported_comment:
-    | ReportComment
-    | null;
+  | ReportComment
+  | null;
 };
+
+type ReportFilter =
+  | "all"
+  | "pending"
+  | "reviewing"
+  | "resolved"
+  | "dismissed";
 
 const reasonNames: Record<string, string> = {
   spam: "Spam",
@@ -96,7 +103,27 @@ function getStatusClass(status: string) {
   return styles.reportStatusPending;
 }
 
-export default async function AdminReportsPage() {
+export default async function AdminReportsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    durum?: string;
+  }>;
+}) {
+  const resolvedSearchParams =
+    await searchParams;
+
+  const requestedFilter =
+    resolvedSearchParams.durum;
+
+  const activeFilter: ReportFilter =
+    requestedFilter === "pending" ||
+      requestedFilter === "reviewing" ||
+      requestedFilter === "resolved" ||
+      requestedFilter === "dismissed"
+      ? requestedFilter
+      : "all";
+
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -247,6 +274,47 @@ export default async function AdminReportsPage() {
       report.status === "dismissed"
   ).length;
 
+  const filteredReports =
+    activeFilter === "all"
+      ? reports
+      : reports.filter(
+        (report) =>
+          report.status === activeFilter
+      );
+
+  const reportFilters = [
+    {
+      value: "all",
+      label: "Tümü",
+      count: reports.length,
+      href: "/admin/sikayetler",
+    },
+    {
+      value: "pending",
+      label: "Bekleyen",
+      count: pendingCount,
+      href: "/admin/sikayetler?durum=pending",
+    },
+    {
+      value: "reviewing",
+      label: "İncelenen",
+      count: reviewingCount,
+      href: "/admin/sikayetler?durum=reviewing",
+    },
+    {
+      value: "resolved",
+      label: "İhlal doğrulandı",
+      count: resolvedCount,
+      href: "/admin/sikayetler?durum=resolved",
+    },
+    {
+      value: "dismissed",
+      label: "Reddedilen",
+      count: dismissedCount,
+      href: "/admin/sikayetler?durum=dismissed",
+    },
+  ] as const;
+
   return (
     <>
       <header className={styles.pageHeader}>
@@ -266,64 +334,79 @@ export default async function AdminReportsPage() {
         </div>
       </header>
 
-      <section
-        className={
-          styles.reportSummaryGrid
-        }
+      <nav
+        className={styles.reportSummaryGrid}
+        aria-label="Şikâyet filtreleri"
       >
-        <article
-          className={
-            styles.reportSummaryCard
-          }
-        >
-          <span>Bekleyen</span>
-          <strong>{pendingCount}</strong>
-        </article>
+        {reportFilters
+          .filter(
+            (filter) =>
+              filter.value !== "all"
+          )
+          .map((filter) => (
+            <Link
+              key={filter.value}
+              href={filter.href}
+              className={[
+                styles.reportSummaryCard,
+                activeFilter === filter.value
+                  ? styles.reportSummaryCardActive
+                  : "",
+              ]
+                .filter(Boolean)
+                .join(" ")}
+            >
+              <span>{filter.label}</span>
 
-        <article
-          className={
-            styles.reportSummaryCard
-          }
-        >
-          <span>İncelenen</span>
-          <strong>{reviewingCount}</strong>
-        </article>
+              <strong>{filter.count}</strong>
+            </Link>
+          ))}
+      </nav>
 
-        <article
-          className={
-            styles.reportSummaryCard
-          }
-        >
-          <span>İhlal doğrulandı</span>
-          <strong>{resolvedCount}</strong>
-        </article>
-
-        <article
-          className={
-            styles.reportSummaryCard
-          }
-        >
-          <span>Reddedilen</span>
-          <strong>{dismissedCount}</strong>
-        </article>
-      </section>
+      {activeFilter !== "all" ? (
+        <div className={styles.reportFilterReset}>
+          <Link href="/admin/sikayetler">
+            Tüm şikâyetleri göster
+          </Link>
+        </div>
+      ) : null}
 
       <section className={styles.panel}>
         <div className={styles.panelHeader}>
           <div>
-            <span>ŞİKÂYET KAYITLARI</span>
+            <span>
+              {activeFilter === "pending"
+                ? "BEKLEYEN KAYITLAR"
+                : activeFilter === "reviewing"
+                  ? "İNCELEMEDEKİ KAYITLAR"
+                  : activeFilter === "resolved"
+                    ? "DOĞRULANAN İHLALLER"
+                    : activeFilter === "dismissed"
+                      ? "REDDEDİLEN KAYITLAR"
+                      : "ŞİKÂYET KAYITLARI"}
+            </span>
 
-            <h2>Tüm Şikâyetler</h2>
+            <h2>
+              {activeFilter === "pending"
+                ? "Bekleyen Şikâyetler"
+                : activeFilter === "reviewing"
+                  ? "İncelenen Şikâyetler"
+                  : activeFilter === "resolved"
+                    ? "İhlali Doğrulanan Şikâyetler"
+                    : activeFilter === "dismissed"
+                      ? "Reddedilen Şikâyetler"
+                      : "Tüm Şikâyetler"}
+            </h2>
           </div>
 
           <div className={styles.panelBadge}>
-            {reports.length} kayıt
+            {filteredReports.length} kayıt
           </div>
         </div>
 
-        {reports.length === 0 ? (
+        {filteredReports.length === 0 ? (
           <div className={styles.emptyState}>
-            Henüz şikâyet bulunmuyor.
+            Bu filtreye uygun şikâyet bulunmuyor.
           </div>
         ) : (
           <div
@@ -331,7 +414,7 @@ export default async function AdminReportsPage() {
               styles.adminReportList
             }
           >
-            {reports.map((report) => {
+            {filteredReports.map((report) => {
               const comment =
                 report.reported_comment;
 
@@ -343,22 +426,22 @@ export default async function AdminReportsPage() {
               const commentAuthor =
                 comment
                   ? profileMap.get(
-                      comment.author_id
-                    )
+                    comment.author_id
+                  )
                   : undefined;
 
               const reviewer =
                 report.reviewed_by
                   ? profileMap.get(
-                      report.reviewed_by
-                    )
+                    report.reviewed_by
+                  )
                   : undefined;
 
               const topic =
                 comment
                   ? topicMap.get(
-                      comment.topic_id
-                    )
+                    comment.topic_id
+                  )
                   : undefined;
 
               return (
@@ -485,13 +568,13 @@ export default async function AdminReportsPage() {
                       <small>
                         {reviewer
                           ? `İşlemi yapan: ${getProfileName(
-                              reviewer
-                            )}`
+                            reviewer
+                          )}`
                           : "Yetkili kullanıcı"}
                         {report.reviewed_at
                           ? ` · ${formatDate(
-                              report.reviewed_at
-                            )}`
+                            report.reviewed_at
+                          )}`
                           : ""}
                       </small>
                     </div>

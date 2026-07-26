@@ -284,6 +284,24 @@ export default function PublicProfilePage() {
     const [followLoading, setFollowLoading] =
         useState(false);
 
+    const [reportOpen, setReportOpen] =
+        useState(false);
+
+    const [reportReason, setReportReason] =
+        useState("");
+
+    const [reportDetails, setReportDetails] =
+        useState("");
+
+    const [reportLoading, setReportLoading] =
+        useState(false);
+
+    const [reportSuccess, setReportSuccess] =
+        useState(false);
+
+    const [reportError, setReportError] =
+        useState<string | null>(null);
+
     const [
         followRequestStatus,
         setFollowRequestStatus,
@@ -828,6 +846,93 @@ export default function PublicProfilePage() {
         }
     }
 
+    async function handleProfileReport() {
+        if (!profile || reportLoading) {
+            return;
+        }
+
+        if (!currentUserId) {
+            router.push("/giris");
+            return;
+        }
+
+        if (currentUserId === profile.id) {
+            return;
+        }
+
+        if (!reportReason) {
+            setReportError(
+                language === "tr"
+                    ? "Lütfen bir şikâyet nedeni seç."
+                    : "Please select a report reason."
+            );
+
+            return;
+        }
+
+        setReportLoading(true);
+        setReportError(null);
+        setReportSuccess(false);
+
+        try {
+            const supabase = createClient();
+
+            const { error } = await supabase.rpc(
+                "submit_profile_report",
+                {
+                    p_profile_id: profile.id,
+                    p_reason: reportReason,
+                    p_details:
+                        reportDetails.trim() || null,
+                }
+            );
+
+            if (error) {
+                if (
+                    error.message.includes(
+                        "REPORT_ALREADY_EXISTS"
+                    )
+                ) {
+                    setReportError(
+                        language === "tr"
+                            ? "Bu profil için zaten açık bir şikâyetin bulunuyor."
+                            : "You already have an open report for this profile."
+                    );
+                } else {
+                    setReportError(
+                        language === "tr"
+                            ? "Şikâyet gönderilemedi."
+                            : "The report could not be submitted."
+                    );
+                }
+
+                return;
+            }
+
+            setReportSuccess(true);
+            setReportReason("");
+            setReportDetails("");
+
+            window.setTimeout(() => {
+                setReportOpen(false);
+                setReportSuccess(false);
+            }, 1800);
+        } catch (error) {
+            console.error(
+                "Profil şikâyeti gönderilemedi:",
+                error
+            );
+
+            setReportError(
+                language === "tr"
+                    ? "Beklenmeyen bir hata oluştu."
+                    : "An unexpected error occurred."
+            );
+        } finally {
+            setReportLoading(false);
+        }
+    }
+
     function formatTopicDate(
         value: string
     ) {
@@ -1250,11 +1355,7 @@ export default function PublicProfilePage() {
                                 </div>
                             </div>
 
-                            <div
-                                className={
-                                    styles.profileActions
-                                }
-                            >
+                            <div className={styles.profileActions}>
                                 {isOwnProfile ? (
                                     <Link
                                         href="/profil"
@@ -1267,34 +1368,57 @@ export default function PublicProfilePage() {
                                             : "Open My Profile"}
                                     </Link>
                                 ) : (
-                                    <button
-                                        type="button"
-                                        className={
-                                            isFollowing
-                                                ? styles.publicFollowingButton
-                                                : styles.publicFollowButton
-                                        }
-                                        disabled={followLoading}
-                                        onClick={() => {
-                                            void handleFollowToggle();
-                                        }}
-                                    >
-                                        {isFollowing ? (
-                                            <CheckIcon />
-                                        ) : (
-                                            <UserPlusIcon />
-                                        )}
+                                    <>
+                                        <button
+                                            type="button"
+                                            className={
+                                                isFollowing
+                                                    ? styles.publicFollowingButton
+                                                    : styles.publicFollowButton
+                                            }
+                                            disabled={followLoading}
+                                            onClick={() => {
+                                                void handleFollowToggle();
+                                            }}
+                                        >
+                                            {isFollowing ? (
+                                                <CheckIcon />
+                                            ) : (
+                                                <UserPlusIcon />
+                                            )}
 
-                                        {followLoading
-                                            ? "..."
-                                            : isFollowing
-                                                ? language === "tr"
-                                                    ? "Takip Ediliyor"
-                                                    : "Following"
-                                                : language === "tr"
-                                                    ? "Takip Et"
-                                                    : "Follow"}
-                                    </button>
+                                            {followLoading
+                                                ? "..."
+                                                : isFollowing
+                                                    ? language === "tr"
+                                                        ? "Takip Ediliyor"
+                                                        : "Following"
+                                                    : language === "tr"
+                                                        ? "Takip Et"
+                                                        : "Follow"}
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            className={
+                                                styles.publicProfileReportButton
+                                            }
+                                            onClick={() => {
+                                                if (!currentUserId) {
+                                                    router.push("/giris");
+                                                    return;
+                                                }
+
+                                                setReportOpen(true);
+                                                setReportError(null);
+                                                setReportSuccess(false);
+                                            }}
+                                        >
+                                            {language === "tr"
+                                                ? "Şikâyet Et"
+                                                : "Report"}
+                                        </button>
+                                    </>
                                 )}
                             </div>
 
@@ -1768,6 +1892,209 @@ export default function PublicProfilePage() {
                     </>
                 )}
             </div>
+
+            {reportOpen && profile ? (
+  <div
+    className={styles.profileReportBackdrop}
+    role="presentation"
+    onClick={() => {
+      if (!reportLoading) {
+        setReportOpen(false);
+      }
+    }}
+  >
+    <section
+      className={styles.profileReportModal}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="profile-report-title"
+      onClick={(event) => {
+        event.stopPropagation();
+      }}
+    >
+      <div className={styles.profileReportHeader}>
+        <div>
+          <span>
+            {language === "tr"
+              ? "GÜVENLİK"
+              : "SAFETY"}
+          </span>
+
+          <h2 id="profile-report-title">
+            {language === "tr"
+              ? "Şikâyet Et"
+              : "Report"}
+          </h2>
+
+          <p>
+            {language === "tr"
+              ? `${profileName} adlı kullanıcıyı neden şikâyet ettiğini belirt.`
+              : `Tell us why you are reporting ${profileName}.`}
+          </p>
+        </div>
+
+        <button
+          type="button"
+          aria-label={
+            language === "tr"
+              ? "Kapat"
+              : "Close"
+          }
+          disabled={reportLoading}
+          onClick={() => {
+            setReportOpen(false);
+          }}
+        >
+          ×
+        </button>
+      </div>
+
+      <label className={styles.profileReportField}>
+        <span>
+          {language === "tr"
+            ? "Şikâyet nedeni"
+            : "Report reason"}
+        </span>
+
+        <select
+          value={reportReason}
+          disabled={reportLoading}
+          onChange={(event) => {
+            setReportReason(event.target.value);
+            setReportError(null);
+          }}
+        >
+          <option value="">
+            {language === "tr"
+              ? "Bir neden seç"
+              : "Select a reason"}
+          </option>
+
+          <option value="spam">
+            {language === "tr"
+              ? "Spam veya yanıltıcı profil"
+              : "Spam or misleading profile"}
+          </option>
+
+          <option value="harassment">
+            {language === "tr"
+              ? "Taciz veya zorbalık"
+              : "Harassment or bullying"}
+          </option>
+
+          <option value="impersonation">
+            {language === "tr"
+              ? "Başkasını taklit etme"
+              : "Impersonation"}
+          </option>
+
+          <option value="illegal_content">
+            {language === "tr"
+              ? "Yasa dışı veya zararlı içerik"
+              : "Illegal or harmful content"}
+          </option>
+
+          <option value="other">
+            {language === "tr"
+              ? "Diğer"
+              : "Other"}
+          </option>
+        </select>
+      </label>
+
+      <label className={styles.profileReportField}>
+        <span>
+          {language === "tr"
+            ? "Açıklama"
+            : "Details"}
+        </span>
+
+        <textarea
+          value={reportDetails}
+          maxLength={2000}
+          disabled={reportLoading}
+          placeholder={
+            language === "tr"
+              ? "Durumu kısaca açıkla..."
+              : "Briefly describe the issue..."
+          }
+          onChange={(event) => {
+            setReportDetails(
+              event.target.value
+            );
+
+            setReportError(null);
+          }}
+        />
+
+        <small>
+          {reportDetails.length}/2000
+        </small>
+      </label>
+
+      {reportError ? (
+        <div
+          className={
+            styles.profileReportError
+          }
+          role="alert"
+        >
+          {reportError}
+        </div>
+      ) : null}
+
+      {reportSuccess ? (
+        <div
+          className={
+            styles.profileReportSuccess
+          }
+          role="status"
+        >
+          {language === "tr"
+            ? "Şikâyetin başarıyla gönderildi."
+            : "Your report was submitted successfully."}
+        </div>
+      ) : null}
+
+      <div
+        className={
+          styles.profileReportActions
+        }
+      >
+        <button
+          type="button"
+          disabled={reportLoading}
+          onClick={() => {
+            setReportOpen(false);
+          }}
+        >
+          {language === "tr"
+            ? "Vazgeç"
+            : "Cancel"}
+        </button>
+
+        <button
+          type="button"
+          disabled={
+            reportLoading ||
+            !reportReason
+          }
+          onClick={() => {
+            void handleProfileReport();
+          }}
+        >
+          {reportLoading
+            ? language === "tr"
+              ? "Gönderiliyor..."
+              : "Submitting..."
+            : language === "tr"
+              ? "Şikâyeti Gönder"
+              : "Submit Report"}
+        </button>
+      </div>
+    </section>
+  </div>
+) : null}
 
             <ForumFooter />
 

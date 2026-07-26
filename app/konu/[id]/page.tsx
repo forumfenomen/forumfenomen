@@ -755,6 +755,19 @@ export default function TopicDetailPage() {
         );
     }
 
+    function getCommentProfileHref(
+        comment: CommentRow
+    ) {
+        const username =
+            comment.profiles?.username
+                ?.replace(/^@/, "")
+                .trim();
+
+        return username
+            ? `/profil/${encodeURIComponent(username)}`
+            : null;
+    }
+
     function formatCommentDate(value: string) {
         const date = new Date(value);
 
@@ -1519,27 +1532,71 @@ export default function TopicDetailPage() {
                                                     .join(" ")}
                                             >
                                                 <div className={styles.commentHeader}>
-                                                    <span className={styles.commentAvatar}>
-                                                        {commentAuthor
-                                                            .slice(0, 1)
-                                                            .toLocaleUpperCase(
+                                                    {getCommentProfileHref(comment) ? (
+                                                        <Link
+                                                            href={getCommentProfileHref(comment)!}
+                                                            className={styles.commentAuthorLink}
+                                                            aria-label={
                                                                 language === "tr"
-                                                                    ? "tr-TR"
-                                                                    : "en-US"
-                                                            )}
-                                                    </span>
+                                                                    ? `${commentAuthor} profilini aç`
+                                                                    : `Open ${commentAuthor}'s profile`
+                                                            }
+                                                        >
+                                                            <span className={styles.commentAvatar}>
+                                                                {commentAuthor
+                                                                    .slice(0, 1)
+                                                                    .toLocaleUpperCase(
+                                                                        language === "tr"
+                                                                            ? "tr-TR"
+                                                                            : "en-US"
+                                                                    )}
+                                                            </span>
 
-                                                    <div>
-                                                        <strong>
-                                                            {commentAuthor}
-                                                        </strong>
+                                                            <span
+                                                                className={
+                                                                    styles.commentAuthorText
+                                                                }
+                                                            >
+                                                                <strong>
+                                                                    {commentAuthor}
+                                                                </strong>
 
-                                                        <small>
-                                                            {formatCommentDate(
-                                                                comment.created_at
-                                                            )}
-                                                        </small>
-                                                    </div>
+                                                                {comment.profiles?.username ? (
+                                                                    <span>
+                                                                        @
+                                                                        {comment.profiles.username.replace(
+                                                                            /^@/,
+                                                                            ""
+                                                                        )}
+                                                                    </span>
+                                                                ) : null}
+                                                            </span>
+                                                        </Link>
+                                                    ) : (
+                                                        <div
+                                                            className={
+                                                                styles.commentAuthorFallback
+                                                            }
+                                                        >
+                                                            <span className={styles.commentAvatar}>
+                                                                {commentAuthor
+                                                                    .slice(0, 1)
+                                                                    .toLocaleUpperCase(
+                                                                        language === "tr"
+                                                                            ? "tr-TR"
+                                                                            : "en-US"
+                                                                    )}
+                                                            </span>
+
+                                                            <strong>{commentAuthor}</strong>
+                                                        </div>
+                                                    )}
+
+                                                    <small className={styles.commentDate}>
+                                                        {formatCommentDate(
+                                                            comment.created_at
+                                                        )}
+                                                    </small>
                                                 </div>
 
                                                 {parentComment && (

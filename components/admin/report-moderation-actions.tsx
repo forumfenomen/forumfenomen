@@ -84,6 +84,12 @@ export default function ReportModerationActions({
     setResolutionNote("");
     setLoadingAction(null);
 
+    window.dispatchEvent(
+      new Event(
+        "admin-notifications-refresh"
+      )
+    );
+
     router.refresh();
   };
 
@@ -298,7 +304,7 @@ export default function ReportModerationActions({
                 {loadingAction
                   ? "İşleniyor..."
                   : modalStatus ===
-                      "resolved"
+                    "resolved"
                     ? "Sonuçlandır"
                     : "Şikâyeti reddet"}
               </button>

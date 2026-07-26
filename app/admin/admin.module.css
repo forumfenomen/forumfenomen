@@ -3913,41 +3913,41 @@
 
 .pageHeader h1,
 .panelHeader h2 {
-  color: #ffffff;
-  font-size: 32px;
-  font-weight: 800;
-  line-height: 1.16;
-  letter-spacing: -0.02em;
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.16;
+    letter-spacing: -0.02em;
 }
 
 .pageHeader p,
 .panelHeader p {
-  color: rgba(232, 235, 244, 0.88);
-  font-size: 15px;
-  line-height: 1.7;
+    color: rgba(232, 235, 244, 0.88);
+    font-size: 15px;
+    line-height: 1.7;
 }
 
-.pageHeader > div > span,
-.panelHeader > div > span {
-  color: #f066ff;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
+.pageHeader>div>span,
+.panelHeader>div>span {
+    color: #f066ff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
 }
 
 .panelBadge {
-  min-height: 38px;
-  padding: 0 14px;
-  color: #eef1f8;
-  font-size: 12px;
-  font-weight: 750;
-  border-radius: 999px;
+    min-height: 38px;
+    padding: 0 14px;
+    color: #eef1f8;
+    font-size: 12px;
+    font-weight: 750;
+    border-radius: 999px;
 }
 
 .emptyState {
-  color: rgba(230, 233, 242, 0.82);
-  font-size: 15px;
-  line-height: 1.65;
+    color: rgba(230, 233, 242, 0.82);
+    font-size: 15px;
+    line-height: 1.65;
 }
 
 /* Arama / filtre alanları */
@@ -3957,26 +3957,26 @@
 .filterBar select,
 .filterRow input,
 .filterRow select {
-  min-height: 46px;
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
+    min-height: 46px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .searchBar input::placeholder,
 .searchInput::placeholder,
 .filterBar input::placeholder,
 .filterRow input::placeholder {
-  color: rgba(210, 213, 224, 0.52);
+    color: rgba(210, 213, 224, 0.52);
 }
 
 .filterBar button,
 .filterRow button,
 .searchButton {
-  min-height: 44px;
-  padding: 0 16px;
-  font-size: 13px;
-  font-weight: 750;
+    min-height: 44px;
+    padding: 0 16px;
+    font-size: 13px;
+    font-weight: 750;
 }
 
 /* Filtre sekmeleri */
@@ -3984,17 +3984,17 @@
 .statusTabs button,
 .filterChips button,
 .statusFilterButton {
-  min-height: 36px;
-  padding: 0 14px;
-  font-size: 12px;
-  font-weight: 750;
-  color: rgba(240, 242, 248, 0.9);
+    min-height: 36px;
+    padding: 0 14px;
+    font-size: 12px;
+    font-weight: 750;
+    color: rgba(240, 242, 248, 0.9);
 }
 
 /* Kart genel metin */
 .panel article strong,
 .panel article h3 {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 .panel article p,
@@ -4002,8 +4002,8 @@
 .panel article span,
 .userIdentityText small,
 .userIdentityText p {
-  color: rgba(227, 231, 240, 0.86);
-  line-height: 1.65;
+    color: rgba(227, 231, 240, 0.86);
+    line-height: 1.65;
 }
 
 /* Konu listesi / yorum kartı / log kartı genel */
@@ -4011,28 +4011,28 @@
 .commentTitle,
 .logTitle,
 .reportTitle {
-  color: #ffffff;
-  font-size: 26px;
-  font-weight: 800;
-  line-height: 1.28;
+    color: #ffffff;
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.28;
 }
 
 .adminTopicExcerpt,
 .commentExcerpt,
 .logExcerpt,
 .reportExcerpt {
-  color: rgba(223, 227, 237, 0.84);
-  font-size: 14px;
-  line-height: 1.72;
+    color: rgba(223, 227, 237, 0.84);
+    font-size: 14px;
+    line-height: 1.72;
 }
 
 .adminTopicMeta,
 .commentMeta,
 .logMeta,
 .reportMeta {
-  color: rgba(191, 196, 209, 0.88);
-  font-size: 13px;
-  line-height: 1.55;
+    color: rgba(191, 196, 209, 0.88);
+    font-size: 13px;
+    line-height: 1.55;
 }
 
 /* Sağ üst rozetler */
@@ -4041,12 +4041,12 @@
 .logStatusBadge,
 .reportStatusBadge,
 .statusBadge {
-  min-height: 34px;
-  padding: 0 13px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 800;
-  line-height: 1;
+    min-height: 34px;
+    padding: 0 13px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1;
 }
 
 /* Tarih yazıları */
@@ -4054,9 +4054,9 @@
 .commentDate,
 .logDate,
 .reportDate {
-  color: rgba(202, 207, 221, 0.76);
-  font-size: 12px;
-  font-weight: 500;
+    color: rgba(202, 207, 221, 0.76);
+    font-size: 12px;
+    font-weight: 500;
 }
 
 /* Aksiyon butonları */
@@ -4065,89 +4065,1732 @@
 .reportActions button,
 .logActions button,
 .actionButtons button {
-  min-height: 38px;
-  padding: 0 14px;
-  font-size: 12px;
-  font-weight: 750;
+    min-height: 38px;
+    padding: 0 14px;
+    font-size: 12px;
+    font-weight: 750;
 }
 
 /* Kullanıcı sayfası */
 .userNameLine strong {
-  color: #ffffff;
-  font-size: 22px;
-  font-weight: 800;
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 800;
 }
 
 .userIdentityText small {
-  font-size: 13px;
+    font-size: 13px;
 }
 
 .onlineText,
 .lastSeenText {
-  font-size: 13px;
+    font-size: 13px;
 }
 
 .userStatBox strong {
-  color: #ffffff;
-  font-size: 24px;
-  font-weight: 800;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 800;
 }
 
 .userStatBox span,
 .userJoined span {
-  color: rgba(209, 214, 227, 0.8);
-  font-size: 12px;
+    color: rgba(209, 214, 227, 0.8);
+    font-size: 12px;
 }
 
 .userJoined strong {
-  color: #f1f3f8;
-  font-size: 14px;
-  font-weight: 700;
+    color: #f1f3f8;
+    font-size: 14px;
+    font-weight: 700;
 }
 
 /* USER PRIVACY COLORS RESTORE */
 
 .userPreferenceItem strong {
-  font-size: 11px !important;
-  font-weight: 800 !important;
-  opacity: 1 !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    opacity: 1 !important;
 }
 
 .preferencePublic,
 .preferenceEnabled {
-  color: #7fe6b8 !important;
+    color: #7fe6b8 !important;
 }
 
 .preferenceLimited {
-  color: #d58bfa !important;
+    color: #d58bfa !important;
 }
 
 .preferenceDisabled {
-  color: #f08d9a !important;
+    color: #f08d9a !important;
 }
 
 .userPreferenceItem span {
-  color: #a7aab6 !important;
-  font-size: 10px !important;
-  font-weight: 650 !important;
+    color: #a7aab6 !important;
+    font-size: 10px !important;
+    font-weight: 650 !important;
 }
 
 /* COMMENTS HEADER BADGE ALIGNMENT */
 
 .panelHeader {
-  align-items: center !important;
+    align-items: center !important;
 }
 
-.panelHeader > .panelBadge {
-  align-self: center !important;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
+.panelHeader>.panelBadge {
+    align-self: center !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 .panelHeader .panelBadge {
-  display: inline-flex !important;
-  min-height: 38px !important;
-  align-items: center !important;
-  justify-content: center !important;
-  line-height: 1 !important;
+    display: inline-flex !important;
+    min-height: 38px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+}
+
+/* USER ROLE ACTIONS START */
+
+.userRoleActions button {
+    min-height: 33px;
+    padding: 0 12px;
+
+    border-radius: 10px;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.userMakeModeratorButton {
+    color: #c79af1;
+
+    border:
+        1px solid rgba(190, 99, 232, 0.29);
+
+    background:
+        rgba(190, 99, 232, 0.08);
+}
+
+.userMakeModeratorButton:hover {
+    border-color:
+        rgba(190, 99, 232, 0.46);
+
+    background:
+        rgba(190, 99, 232, 0.14);
+}
+
+.userRemoveModeratorButton {
+    color: #f0c97c;
+
+    border:
+        1px solid rgba(229, 174, 69, 0.28);
+
+    background:
+        rgba(229, 174, 69, 0.08);
+}
+
+.userRemoveModeratorButton:hover {
+    border-color:
+        rgba(229, 174, 69, 0.45);
+
+    background:
+        rgba(229, 174, 69, 0.14);
+}
+
+.userRoleModalBackdrop {
+    position: fixed;
+    z-index: 10000;
+    inset: 0;
+
+    display: grid;
+    place-items: center;
+
+    padding: 20px;
+
+    background:
+        rgba(2, 3, 8, 0.78);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.userRoleModal {
+    width: min(100%, 510px);
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 21px;
+
+    background:
+        linear-gradient(145deg,
+            rgba(19, 18, 31, 0.99),
+            rgba(9, 10, 18, 0.99));
+
+    box-shadow:
+        0 35px 110px rgba(0, 0, 0, 0.62);
+}
+
+.userRoleModalHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+
+    padding: 18px 20px;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.065);
+}
+
+.userRoleModalHeader span {
+    color: #d35bea;
+
+    font-size: 9px;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+}
+
+.userRoleModalHeader h3 {
+    margin: 5px 0 0;
+
+    color: #ffffff;
+
+    font-size: 18px;
+    line-height: 1.25;
+}
+
+.userRoleModalHeader>button {
+    display: grid;
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+    place-items: center;
+
+    padding: 0;
+
+    color: #999ba7;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    font-size: 21px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.userRoleForm {
+    display: grid;
+    gap: 16px;
+
+    padding: 20px;
+}
+
+.userRoleForm>p {
+    margin: 0;
+
+    color: #aaa6b5;
+
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+.userRoleForm>p strong {
+    color: #f2eef8;
+}
+
+.userRoleForm label {
+    display: grid;
+    gap: 8px;
+}
+
+.userRoleForm label>span {
+    color: #d5d1dc;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.userRoleForm textarea {
+    width: 100%;
+    min-height: 112px;
+
+    resize: vertical;
+
+    padding: 12px 13px;
+
+    outline: none;
+
+    color: #f5f3f8;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 12px;
+
+    background:
+        rgba(3, 4, 10, 0.72);
+
+    font: inherit;
+    line-height: 1.55;
+}
+
+.userRoleForm textarea:focus {
+    border-color:
+        rgba(199, 70, 234, 0.5);
+
+    box-shadow:
+        0 0 0 3px rgba(199, 70, 234, 0.08);
+}
+
+.userRoleForm label small {
+    color: #777a87;
+
+    font-size: 9px;
+    text-align: right;
+}
+
+.userRoleError {
+    padding: 11px 12px;
+
+    color: #f0a0aa;
+
+    border:
+        1px solid rgba(237, 84, 104, 0.2);
+    border-radius: 11px;
+
+    background:
+        rgba(237, 84, 104, 0.07);
+
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.userRoleModalButtons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 9px;
+}
+
+.userRoleModalButtons button {
+    min-height: 39px;
+    padding: 0 14px;
+
+    border-radius: 11px;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.userRoleModalButtons button:disabled,
+.userRoleModalHeader button:disabled {
+    cursor: wait;
+    opacity: 0.55;
+}
+
+.userRoleCancelButton {
+    color: #aaaab5;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    background:
+        rgba(255, 255, 255, 0.025);
+}
+
+.userRoleConfirmButton {
+    color: #ffffff;
+
+    border:
+        1px solid rgba(190, 99, 232, 0.4);
+
+    background:
+        linear-gradient(135deg,
+            #bd5ee3,
+            #6e4de8);
+}
+
+.userRoleWarningButton {
+    color: #17120a;
+
+    border:
+        1px solid rgba(244, 194, 87, 0.45);
+
+    background:
+        linear-gradient(135deg,
+            #f2cd78,
+            #dba94e);
+}
+
+@media (max-width: 900px) {
+    .userRoleActions {
+        margin-top: 0;
+        padding-right: 0;
+    }
+}
+
+@media (max-width: 620px) {
+    .userRoleActions {
+        justify-content: stretch;
+    }
+
+    .userRoleActions button {
+        width: 100%;
+    }
+
+    .userRoleModalBackdrop {
+        padding: 12px;
+    }
+
+    .userRoleModalButtons {
+        flex-direction: column-reverse;
+    }
+
+    .userRoleModalButtons button {
+        width: 100%;
+    }
+}
+
+/* USER ROLE ACTIONS END */
+
+/* USER MANAGEMENT ACTION BAR FINAL */
+
+.userManagementBar {
+    display: flex;
+    grid-column: 1 / -1;
+
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    width: 100%;
+
+    margin: 2px 0 0;
+    padding: 13px 0 0;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.055);
+}
+
+.userRoleActions,
+.userAccountActions {
+    display: flex;
+
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+    pointer-events: auto;
+}
+
+.userRoleActions {
+    justify-content: flex-start;
+}
+
+.userAccountActions {
+    justify-content: flex-end;
+    margin-left: auto;
+}
+
+.userRoleActions button,
+.userAccountActions button {
+    display: inline-flex;
+    min-width: 112px;
+    min-height: 36px;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 14px;
+
+    border-radius: 10px;
+
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.userAccountProtected {
+    grid-column: auto;
+
+    margin: 0 0 0 auto;
+    padding: 0;
+
+    color: #777a86;
+
+    border: 0;
+
+    font-size: 10px;
+    font-weight: 650;
+    line-height: 1.4;
+    text-align: right;
+}
+
+@media (max-width: 900px) {
+    .userManagementBar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .userRoleActions,
+    .userAccountActions {
+        width: 100%;
+        margin-left: 0;
+        justify-content: flex-start;
+    }
+
+    .userAccountProtected {
+        width: 100%;
+        margin-left: 0;
+        text-align: left;
+    }
+}
+
+@media (max-width: 620px) {
+    .userManagementBar {
+        gap: 9px;
+    }
+
+    .userRoleActions,
+    .userAccountActions {
+        display: grid;
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .userRoleActions button,
+    .userAccountActions button {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+/* USER MANAGEMENT ACTION BAR FINAL END */
+
+/* USER NAME FULL WIDTH FIX */
+
+.userIdentityText {
+    min-width: 0;
+    flex: 1;
+}
+
+.userNameLine {
+    display: flex;
+    min-width: 0;
+
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.userNameLine>strong {
+    max-width: none !important;
+    min-width: 0;
+
+    overflow: visible !important;
+
+    color: #f3f2f6;
+
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.3;
+
+    white-space: normal !important;
+    text-overflow: clip !important;
+    overflow-wrap: anywhere;
+}
+
+.roleBadge,
+.accountStatusBadge {
+    flex: 0 0 auto;
+}
+
+/* ADMIN CONTACT MESSAGES */
+
+.contactStatsGrid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.contactStatsGrid article {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 104px;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.contactStatsGrid article span {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.contactStatsGrid article strong {
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.contactMessageList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.contactMessageCard {
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.contactMessageNew {
+    border-color: rgba(76, 201, 240, 0.32);
+    box-shadow:
+        0 0 0 1px rgba(76, 201, 240, 0.05),
+        0 12px 34px rgba(0, 0, 0, 0.16);
+}
+
+.contactMessageHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.contactMessageHeader>div {
+    min-width: 0;
+}
+
+.contactMessageHeader a {
+    display: inline-block;
+    margin-top: 6px;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 13px;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.contactMessageHeader a:hover {
+    color: #ffffff;
+}
+
+.contactMessageHeader time {
+    flex: 0 0 auto;
+    color: rgba(255, 255, 255, 0.42);
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.contactMessageIdentity {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.contactMessageIdentity strong {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.contactMessageIdentity span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 26px;
+    padding: 0 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.contactStatus_new {
+    color: #8be9fd;
+    border: 1px solid rgba(76, 201, 240, 0.28);
+    background: rgba(76, 201, 240, 0.1);
+}
+
+.contactStatus_read {
+    color: #d4d4d8;
+    border: 1px solid rgba(212, 212, 216, 0.18);
+    background: rgba(212, 212, 216, 0.07);
+}
+
+.contactStatus_replied {
+    color: #9ff0bc;
+    border: 1px solid rgba(34, 197, 94, 0.24);
+    background: rgba(34, 197, 94, 0.09);
+}
+
+.contactStatus_closed {
+    color: #ffb4bb;
+    border: 1px solid rgba(239, 68, 68, 0.22);
+    background: rgba(239, 68, 68, 0.08);
+}
+
+.contactMessageSubject {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 14px;
+}
+
+.contactMessageSubject span {
+    color: rgba(255, 255, 255, 0.42);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.contactMessageSubject strong {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+}
+
+.contactMessageBody {
+    margin-bottom: 18px;
+    padding: 16px;
+    color: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.18);
+    font-size: 14px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.contactMessageActions {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.contactMessageActionGrid {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 14px;
+}
+
+.contactMessageActionGrid label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.contactMessageActionGrid label>span {
+    color: rgba(255, 255, 255, 0.54);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.contactMessageActionGrid select,
+.contactMessageActionGrid textarea {
+    width: 100%;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    outline: none;
+    background: rgba(0, 0, 0, 0.2);
+    font: inherit;
+}
+
+.contactMessageActionGrid select {
+    min-height: 44px;
+    padding: 0 12px;
+}
+
+.contactMessageActionGrid textarea {
+    min-height: 92px;
+    padding: 12px;
+    resize: vertical;
+}
+
+.contactMessageActionGrid select:focus,
+.contactMessageActionGrid textarea:focus {
+    border-color: rgba(76, 201, 240, 0.42);
+}
+
+.contactMessageActionGrid small {
+    align-self: flex-end;
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 10px;
+}
+
+.contactMessageButtons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.contactMessageButtons button,
+.contactReplyButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 16px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.contactReplyButton {
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.contactReplyButton:hover {
+    background: rgba(255, 255, 255, 0.09);
+}
+
+.contactMessageButtons button {
+    color: #071014;
+    border: 0;
+    background: #8be9fd;
+}
+
+.contactMessageButtons button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.contactMessageError,
+.contactMessageSuccess {
+    padding: 11px 13px;
+    border-radius: 11px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.contactMessageError {
+    color: #ffb4bb;
+    border: 1px solid rgba(239, 68, 68, 0.22);
+    background: rgba(239, 68, 68, 0.08);
+}
+
+.contactMessageSuccess {
+    color: #9ff0bc;
+    border: 1px solid rgba(34, 197, 94, 0.22);
+    background: rgba(34, 197, 94, 0.08);
+}
+
+.contactEmptyState {
+    padding: 34px 20px;
+    text-align: center;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.contactEmptyState h2 {
+    margin: 0 0 8px;
+    color: #ffffff;
+    font-size: 18px;
+}
+
+.contactEmptyState p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+}
+
+@media (max-width: 1100px) {
+    .contactStatsGrid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+    .contactStatsGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .contactMessageHeader {
+        flex-direction: column;
+    }
+
+    .contactMessageHeader time {
+        white-space: normal;
+    }
+
+    .contactMessageActionGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .contactMessageButtons {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .contactMessageButtons button,
+    .contactReplyButton {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .contactStatsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .contactMessageCard {
+        padding: 15px;
+    }
+}
+
+/* ADMIN CONTACT MESSAGE FILTERS */
+
+.contactFilterBar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin: 0 0 18px;
+    padding: 4px 0;
+}
+
+.contactFilterButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    min-height: 38px;
+    padding: 0 13px;
+
+    color: rgba(255, 255, 255, 0.62);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 11px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    font-size: 11px;
+    font-weight: 750;
+    line-height: 1;
+    text-decoration: none;
+
+    transition:
+        border-color 160ms ease,
+        background 160ms ease,
+        color 160ms ease;
+}
+
+.contactFilterButton:hover {
+    color: #ffffff;
+    border-color: rgba(210, 71, 230, 0.28);
+    background: rgba(210, 71, 230, 0.07);
+}
+
+.contactFilterButton strong {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+
+    color: rgba(255, 255, 255, 0.82);
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 999px;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    font-size: 10px;
+    font-weight: 850;
+}
+
+.contactFilterButtonActive {
+    color: #ffffff;
+    border-color: rgba(210, 71, 230, 0.42);
+    background:
+        linear-gradient(135deg,
+            rgba(190, 35, 220, 0.22),
+            rgba(91, 78, 255, 0.14));
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+}
+
+.contactFilterButtonActive strong {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 600px) {
+    .contactFilterBar {
+        display: grid;
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .contactFilterButton {
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+
+/* CONTACT MESSAGE COMPACT LAYOUT */
+
+.contactMessageContentGrid {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr) minmax(430px, 0.9fr);
+    align-items: stretch;
+    gap: 18px;
+}
+
+.contactMessageContentLeft {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.contactMessageContentLeft .contactMessageBody {
+    flex: 1;
+    min-height: 142px;
+    margin-bottom: 0;
+}
+
+.contactMessageActions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+.contactMessageToolbar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.contactStatusField {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 145px;
+    gap: 7px;
+    min-width: 0;
+}
+
+.contactStatusField>span,
+.contactAdminNoteField>span {
+    color: rgba(255, 255, 255, 0.46);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.contactStatusField select {
+    width: 145px;
+    min-height: 42px;
+    padding: 0 11px;
+
+    color: #ffffff;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 11px;
+    outline: none;
+
+    background: rgba(0, 0, 0, 0.2);
+
+    font: inherit;
+    font-size: 13px;
+}
+
+.contactMessageToolbar .contactMessageButtons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    gap: 9px;
+}
+
+.contactMessageToolbar .contactMessageButtons button,
+.contactMessageToolbar .contactReplyButton {
+    min-height: 42px;
+    padding: 0 14px;
+    white-space: nowrap;
+}
+
+.contactAdminNoteField {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.contactAdminNoteField textarea {
+    width: 100%;
+    min-height: 94px;
+    flex: 1;
+    padding: 12px 13px 24px;
+
+    color: #ffffff;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    outline: none;
+
+    background: rgba(0, 0, 0, 0.2);
+
+    font: inherit;
+    font-size: 13px;
+    line-height: 1.55;
+
+    resize: vertical;
+}
+
+.contactAdminNoteField textarea:focus,
+.contactStatusField select:focus {
+    border-color: rgba(76, 201, 240, 0.42);
+}
+
+.contactAdminNoteField small {
+    position: absolute;
+    right: 9px;
+    bottom: 7px;
+
+    color: rgba(255, 255, 255, 0.34);
+    font-size: 9px;
+}
+
+@media (max-width: 1150px) {
+    .contactMessageContentGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .contactMessageContentLeft .contactMessageBody {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 720px) {
+    .contactMessageToolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .contactStatusField,
+    .contactStatusField select {
+        width: 100%;
+        flex-basis: auto;
+    }
+
+    .contactMessageToolbar .contactMessageButtons {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .contactMessageToolbar .contactMessageButtons button,
+    .contactMessageToolbar .contactReplyButton {
+        width: 100%;
+    }
+}
+
+/* CONTACT MESSAGE FINAL GRID ALIGNMENT */
+
+.contactMessageContentGrid {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1.05fr) minmax(440px, 0.95fr);
+    align-items: stretch;
+    gap: 18px;
+}
+
+.contactMessageContentGrid .contactMessageBody {
+    height: 100%;
+    min-height: 224px;
+    margin: 0;
+}
+
+.contactMessageActions {
+    position: static !important;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    min-width: 0;
+    height: 100%;
+
+    padding: 0 !important;
+}
+
+.contactMessageToolbar {
+    position: static !important;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 10px;
+
+    width: 100%;
+}
+
+.contactStatusField {
+    display: flex;
+    flex: 0 0 145px;
+    flex-direction: column;
+    gap: 7px;
+
+    width: 145px;
+}
+
+.contactStatusField select {
+    width: 145px;
+    min-height: 42px;
+}
+
+.contactMessageToolbar .contactMessageButtons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    gap: 9px;
+}
+
+.contactAdminNoteField {
+    position: relative;
+
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 7px;
+
+    min-height: 0;
+    margin: 0;
+}
+
+.contactAdminNoteField textarea {
+    flex: 1;
+
+    width: 100%;
+    min-height: 112px;
+    height: auto;
+
+    padding: 12px 13px 24px;
+}
+
+.contactMessageError,
+.contactMessageSuccess {
+    flex: 0 0 auto;
+    margin: 0;
+}
+
+@media (max-width: 1150px) {
+    .contactMessageContentGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .contactMessageContentGrid .contactMessageBody {
+        min-height: 140px;
+    }
+}
+
+@media (max-width: 720px) {
+    .contactMessageToolbar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .contactStatusField,
+    .contactStatusField select {
+        width: 100%;
+        flex-basis: auto;
+    }
+
+    .contactMessageToolbar .contactMessageButtons {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .contactMessageToolbar .contactMessageButtons button,
+    .contactMessageToolbar .contactReplyButton {
+        width: 100%;
+    }
+}
+
+/* ADMIN REPORTED USERS */
+
+.userRowReported {
+    border-color: rgba(239, 68, 68, 0.28);
+    box-shadow:
+        inset 3px 0 0 rgba(239, 68, 68, 0.55),
+        0 12px 34px rgba(0, 0, 0, 0.12);
+}
+
+.userReportBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 24px;
+    padding: 0 9px;
+
+    color: #ffb4bb;
+
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: 999px;
+
+    background: rgba(239, 68, 68, 0.09);
+
+    font-size: 9px;
+    font-weight: 850;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+
+/* ADMIN USER SUMMARY FILTERS */
+
+.userSummaryCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+
+    min-height: 104px;
+    padding: 18px;
+
+    color: inherit;
+    text-decoration: none;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    transition:
+        border-color 160ms ease,
+        background 160ms ease,
+        transform 160ms ease;
+}
+
+.userSummaryCard:hover {
+    transform: translateY(-1px);
+    border-color: rgba(210, 71, 230, 0.28);
+    background: rgba(210, 71, 230, 0.05);
+}
+
+.userSummaryCardActive {
+    border-color: rgba(210, 71, 230, 0.42);
+    background:
+        linear-gradient(135deg,
+            rgba(190, 35, 220, 0.16),
+            rgba(91, 78, 255, 0.08));
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+}
+
+/* PROFILE REPORT ADMIN BUTTON */
+
+.userManagementLeft {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.profileReportAdminWrapper {
+    position: relative;
+}
+
+.profileReportAdminButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 112px;
+    min-height: 38px;
+    padding: 0 14px;
+
+    color: #ffb4bb;
+
+    border: 1px solid rgba(239, 68, 68, 0.34);
+    border-radius: 10px;
+
+    background: rgba(239, 68, 68, 0.08);
+
+    font-size: 11px;
+    font-weight: 850;
+
+    cursor: pointer;
+}
+
+.profileReportAdminButton:hover {
+    color: #ffffff;
+    background: rgba(239, 68, 68, 0.14);
+}
+
+.profileReportAdminPanel {
+    position: absolute;
+    z-index: 50;
+    left: 0;
+    bottom: calc(100% + 10px);
+
+    width: min(640px, calc(100vw - 60px));
+    max-height: 560px;
+    overflow-y: auto;
+
+    padding: 18px;
+
+    border: 1px solid rgba(239, 68, 68, 0.22);
+    border-radius: 16px;
+
+    background: #0d0e17;
+
+    box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.48);
+}
+
+.profileReportAdminPanel>header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 15px;
+}
+
+.profileReportAdminPanel>header span {
+    color: #ff7f8c;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+}
+
+.profileReportAdminPanel>header h3 {
+    margin: 5px 0 0;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.profileReportAdminPanel>header>button {
+    display: grid;
+    place-items: center;
+
+    width: 32px;
+    height: 32px;
+
+    color: #ffffff;
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.profileReportAdminList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.profileReportAdminItem {
+    padding: 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 13px;
+
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.profileReportAdminMeta {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.profileReportAdminMeta>div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.profileReportAdminMeta span,
+.profileReportAdminReason span,
+.profileReportAdminFields label>span {
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 9px;
+    font-weight: 850;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.profileReportAdminMeta strong,
+.profileReportAdminReason strong {
+    color: #ffffff;
+    font-size: 13px;
+}
+
+.profileReportAdminMeta small,
+.profileReportAdminMeta time {
+    color: rgba(255, 255, 255, 0.42);
+    font-size: 10px;
+}
+
+.profileReportAdminReason {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.profileReportAdminDetails {
+    margin-bottom: 12px;
+    padding: 11px 12px;
+
+    color: rgba(255, 255, 255, 0.74);
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+
+    background: rgba(0, 0, 0, 0.18);
+
+    font-size: 12px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.profileReportAdminFields {
+    display: grid;
+    grid-template-columns: 160px minmax(0, 1fr);
+    gap: 10px;
+}
+
+.profileReportAdminFields label {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.profileReportAdminFields select,
+.profileReportAdminFields textarea {
+    width: 100%;
+
+    color: #ffffff;
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 10px;
+    outline: none;
+
+    background: rgba(0, 0, 0, 0.22);
+
+    font: inherit;
+}
+
+.profileReportAdminFields select {
+    min-height: 40px;
+    padding: 0 10px;
+}
+
+.profileReportAdminFields textarea {
+    min-height: 80px;
+    padding: 10px 11px 23px;
+    resize: vertical;
+}
+
+.profileReportAdminFields small {
+    position: absolute;
+    right: 8px;
+    bottom: 6px;
+
+    color: rgba(255, 255, 255, 0.32);
+    font-size: 8px;
+}
+
+.profileReportAdminSave {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 11px;
+}
+
+.profileReportAdminSave button {
+    min-height: 38px;
+    padding: 0 14px;
+
+    color: #ffffff;
+
+    border: 0;
+    border-radius: 10px;
+
+    background:
+        linear-gradient(135deg,
+            #d837e5,
+            #6e65ff);
+
+    font-size: 11px;
+    font-weight: 850;
+
+    cursor: pointer;
+}
+
+.profileReportAdminError {
+    margin-top: 10px;
+    padding: 9px 11px;
+
+    color: #ffb4bb;
+
+    border: 1px solid rgba(239, 68, 68, 0.22);
+    border-radius: 9px;
+
+    background: rgba(239, 68, 68, 0.08);
+
+    font-size: 11px;
+}
+
+@media (max-width: 760px) {
+    .profileReportAdminPanel {
+        position: fixed;
+        inset: 18px;
+
+        width: auto;
+        max-height: calc(100vh - 36px);
+    }
+
+    .profileReportAdminFields {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ADMIN USER PROFILE LINK */
+
+.adminUserProfileLink {
+  color: #ffffff;
+  font-size: inherit;
+  font-weight: 850;
+  line-height: inherit;
+  text-decoration: none;
+}
+
+.adminUserProfileLink:hover {
+  color: #ef78ff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.userReportHistory {
+  margin: 5px 0 0;
+
+  color: rgba(255, 255, 255, 0.46);
+
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+/* ADMIN REPORT FILTERS */
+
+.reportSummaryCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+
+  min-height: 104px;
+  padding: 18px;
+
+  color: inherit;
+  text-decoration: none;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.reportSummaryCard:hover {
+  transform: translateY(-1px);
+  border-color: rgba(210, 71, 230, 0.28);
+  background: rgba(210, 71, 230, 0.05);
+}
+
+.reportSummaryCardActive {
+  border-color: rgba(210, 71, 230, 0.44);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(190, 35, 220, 0.16),
+      rgba(91, 78, 255, 0.08)
+    );
+
+  box-shadow:
+    inset 0 0 0 1px
+      rgba(255, 255, 255, 0.025);
+}
+
+.reportFilterReset {
+  display: flex;
+  justify-content: flex-end;
+  margin: -6px 0 14px;
+}
+
+.reportFilterReset a {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 11px;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.reportFilterReset a:hover {
+  color: #ef78ff;
 }
