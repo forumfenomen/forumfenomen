@@ -24,6 +24,11 @@ import styles from "./page.module.css";
 
 type Theme = "dark" | "light";
 
+type VisibilityOption =
+  | "public"
+  | "followers"
+  | "following";
+
 type SectionId =
   | "profile"
   | "topics"
@@ -48,6 +53,7 @@ type NotificationRow = {
   related_report_id: string | null;
   related_topic_id: string | null;
   related_comment_id: string | null;
+  related_user_id: string | null;
   is_read: boolean;
   read_at: string | null;
   created_at: string;
@@ -117,6 +123,28 @@ type FollowerUserRow = {
     username: string | null;
     avatar_url: string | null;
   } | null;
+};
+
+type FollowRequestRow = {
+  id: string;
+  requester_id: string;
+  created_at: string;
+
+  profiles: {
+    id: string;
+    display_name: string | null;
+    username: string | null;
+    avatar_url: string | null;
+  } | null;
+};
+
+type ProfileActivity = {
+  id: string;
+  type: "topic" | "comment" | "saved" | "following";
+  title: string;
+  detail: string;
+  created_at: string;
+  href: string | null;
 };
 
 const translations = {
@@ -538,6 +566,19 @@ const sampleActivities = {
   ],
 };
 
+const INTEREST_OPTIONS = [
+  "Instagram",
+  "YouTube",
+  "TikTok",
+  "Yapay Zeka",
+  "İçerik Üretimi",
+  "UGC",
+  "Affiliate",
+  "Girişimcilik",
+  "E-Ticaret",
+  "SEO",
+] as const;
+
 export default function ProfilePage() {
   const [language, setLanguage] =
     useState<ForumLanguage>("tr");
@@ -558,6 +599,16 @@ export default function ProfilePage() {
   const [isSaving, setIsSaving] =
     useState(false);
 
+  const [
+    privacySaving,
+    setPrivacySaving,
+  ] = useState(false);
+
+  const [
+    privacySaved,
+    setPrivacySaved,
+  ] = useState(false);
+
   const [profileName, setProfileName] =
     useState("ForumFenomen Üyesi");
 
@@ -567,11 +618,54 @@ export default function ProfilePage() {
   const [profileBio, setProfileBio] =
     useState("");
 
+  const [selectedInterests, setSelectedInterests] =
+    useState<string[]>([]);
+
   const [avatarUrl, setAvatarUrl] =
     useState<string | null>(null);
 
   const [profileEmail, setProfileEmail] =
     useState("");
+
+  const [
+    emailNotificationsEnabled,
+    setEmailNotificationsEnabled,
+  ] = useState(true);
+
+  const [
+    pushNotificationsEnabled,
+    setPushNotificationsEnabled,
+  ] = useState(true);
+
+  const [
+    notificationSettingsSaving,
+    setNotificationSettingsSaving,
+  ] = useState(false);
+
+  const [
+    profileVisibility,
+    setProfileVisibility,
+  ] = useState<VisibilityOption>("public");
+
+  const [
+    followersVisibility,
+    setFollowersVisibility,
+  ] = useState<VisibilityOption>("public");
+
+  const [
+    followingVisibility,
+    setFollowingVisibility,
+  ] = useState<VisibilityOption>("public");
+
+  const [
+    commentsVisibility,
+    setCommentsVisibility,
+  ] = useState<VisibilityOption>("public");
+
+  const [
+    likesVisibility,
+    setLikesVisibility,
+  ] = useState<VisibilityOption>("public");
 
   const [isAuthenticated, setIsAuthenticated] =
     useState(false);
@@ -613,6 +707,21 @@ export default function ProfilePage() {
 
   const [followerUsers, setFollowerUsers] =
     useState<FollowerUserRow[]>([]);
+
+  const [
+    followRequests,
+    setFollowRequests,
+  ] = useState<FollowRequestRow[]>([]);
+
+  const [
+    followRequestsLoading,
+    setFollowRequestsLoading,
+  ] = useState(true);
+
+  const [
+    respondingFollowRequestId,
+    setRespondingFollowRequestId,
+  ] = useState<string | null>(null);
 
   const [followersLoading, setFollowersLoading] =
     useState(true);
@@ -762,9 +871,20 @@ export default function ProfilePage() {
         error: profileError,
       } = await supabase
         .from("profiles")
-        .select(
-          "display_name, username, avatar_url, bio"
-        )
+        .select(`
+  display_name,
+  username,
+  avatar_url,
+  bio,
+  interests,
+  profile_visibility,
+  followers_visibility,
+  following_visibility,
+  comments_visibility,
+  likes_visibility,
+  email_notifications,
+  push_notifications
+`)
         .eq("id", user.id)
         .maybeSingle();
 
@@ -816,6 +936,58 @@ export default function ProfilePage() {
       );
 
       setProfileBio(databaseBio);
+
+      setProfileVisibility(
+        profile?.profile_visibility === "followers" ||
+          profile?.profile_visibility === "following"
+          ? profile.profile_visibility
+          : "public"
+      );
+
+      setFollowersVisibility(
+        profile?.followers_visibility === "followers" ||
+          profile?.followers_visibility === "following"
+          ? profile.followers_visibility
+          : "public"
+      );
+
+      setFollowingVisibility(
+        profile?.following_visibility === "followers" ||
+          profile?.following_visibility === "following"
+          ? profile.following_visibility
+          : "public"
+      );
+
+      setCommentsVisibility(
+        profile?.comments_visibility === "followers" ||
+          profile?.comments_visibility === "following"
+          ? profile.comments_visibility
+          : "public"
+      );
+
+      setLikesVisibility(
+        profile?.likes_visibility === "followers" ||
+          profile?.likes_visibility === "following"
+          ? profile.likes_visibility
+          : "public"
+      );
+
+      setEmailNotificationsEnabled(
+        profile?.email_notifications !== false
+      );
+
+      setPushNotificationsEnabled(
+        profile?.push_notifications !== false
+      );
+
+      setSelectedInterests(
+        Array.isArray(profile?.interests)
+          ? profile.interests.filter(
+            (interest): interest is string =>
+              typeof interest === "string"
+          )
+          : []
+      );
     }
 
     void loadAuthenticatedUser();
@@ -863,6 +1035,7 @@ export default function ProfilePage() {
             related_report_id,
             related_comment_id,
             related_topic_id,
+            related_user_id,
             is_read,
             read_at,
             created_at
@@ -1418,7 +1591,182 @@ export default function ProfilePage() {
     };
   }, []);
 
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadFollowRequests() {
+      const supabase = createClient();
+
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (userError || !user) {
+        setFollowRequests([]);
+        setFollowRequestsLoading(false);
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("user_follow_requests")
+        .select(`
+        id,
+        requester_id,
+        created_at,
+        profiles:profiles!user_follow_requests_requester_id_fkey (
+          id,
+          display_name,
+          username,
+          avatar_url
+        )
+      `)
+        .eq("receiver_id", user.id)
+        .eq("status", "pending")
+        .order("created_at", {
+          ascending: false,
+        });
+
+      if (!isActive) {
+        return;
+      }
+
+      if (error) {
+        console.error(
+          "Takip istekleri alınamadı:",
+          error.message
+        );
+
+        setFollowRequests([]);
+        setFollowRequestsLoading(false);
+        return;
+      }
+
+      const rows =
+        (data ?? []) as unknown as FollowRequestRow[];
+
+      setFollowRequests(
+        rows.filter((item) => item.profiles)
+      );
+
+      setFollowRequestsLoading(false);
+    }
+
+    void loadFollowRequests();
+
+    function handleFollowRequestRefresh() {
+      void loadFollowRequests();
+    }
+
+    window.addEventListener(
+      "focus",
+      handleFollowRequestRefresh
+    );
+
+    return () => {
+      isActive = false;
+
+      window.removeEventListener(
+        "focus",
+        handleFollowRequestRefresh
+      );
+    };
+  }, []);
+
   const t = translations[language];
+
+  const recentActivities: ProfileActivity[] = [
+    ...profileTopics.map((topic) => ({
+      id: `topic-${topic.id}`,
+      type: "topic" as const,
+      title:
+        language === "tr"
+          ? "Yeni bir konu oluşturdun"
+          : "You created a new topic",
+      detail: topic.title,
+      created_at: topic.created_at,
+      href:
+        topic.status === "published"
+          ? `/konu/${topic.id}`
+          : null,
+    })),
+
+    ...profileComments.map((comment) => ({
+      id: `comment-${comment.id}`,
+      type: "comment" as const,
+      title:
+        language === "tr"
+          ? "Bir yorum yaptın"
+          : "You posted a comment",
+      detail:
+        comment.topics?.title ??
+        (language === "tr"
+          ? "Konu bulunamadı"
+          : "Topic unavailable"),
+      created_at: comment.created_at,
+      href:
+        comment.topics?.status === "published"
+          ? `/konu/${comment.topic_id}#comment-${comment.id}`
+          : null,
+    })),
+
+    ...savedTopics.map((savedTopic) => ({
+      id: `saved-${savedTopic.topic_id}`,
+      type: "saved" as const,
+      title:
+        language === "tr"
+          ? "Bir konuyu kaydettin"
+          : "You saved a topic",
+      detail:
+        savedTopic.topics?.title ??
+        (language === "tr"
+          ? "Konu bulunamadı"
+          : "Topic unavailable"),
+      created_at: savedTopic.created_at,
+      href:
+        savedTopic.topics?.status === "published"
+          ? `/konu/${savedTopic.topic_id}`
+          : null,
+    })),
+
+    ...followedUsers.map((follow) => {
+      const person = follow.profiles;
+
+      const displayName =
+        person?.display_name?.trim() ||
+        person?.username?.replace(/^@/, "").trim() ||
+        (language === "tr"
+          ? "ForumFenomen kullanıcısı"
+          : "ForumFenomen user");
+
+      const cleanUsername =
+        person?.username?.replace(/^@/, "").trim() ?? "";
+
+      return {
+        id: `following-${follow.following_id}`,
+        type: "following" as const,
+        title:
+          language === "tr"
+            ? "Bir kullanıcıyı takip ettin"
+            : "You followed a user",
+        detail: displayName,
+        created_at: follow.created_at,
+        href: cleanUsername
+          ? `/profil/${encodeURIComponent(cleanUsername)}`
+          : null,
+      };
+    }),
+  ]
+    .sort(
+      (first, second) =>
+        new Date(second.created_at).getTime() -
+        new Date(first.created_at).getTime()
+    )
+    .slice(0, 5);
 
   const profileInitials =
     profileName
@@ -1448,7 +1796,9 @@ export default function ProfilePage() {
     {
       id: "followers",
       icon: <UsersIcon />,
-      count: followerCount,
+      count:
+        followerCount +
+        followRequests.length,
     },
     {
       id: "following",
@@ -1578,9 +1928,75 @@ export default function ProfilePage() {
       )
     );
 
+    async function handleProfileNotificationClick(
+      notification: NotificationRow
+    ) {
+      if (!notification.is_read) {
+        await markNotificationRead(notification);
+      }
+
+      if (notification.type === "follow_request") {
+        setActiveSection("followers");
+
+        window.setTimeout(() => {
+          document
+            .getElementById("profile-main-content")
+            ?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+        }, 50);
+
+        return;
+      }
+
+      if (notification.related_topic_id) {
+        const commentHash =
+          notification.related_comment_id
+            ? `#comment-${notification.related_comment_id}`
+            : "";
+
+        window.location.href =
+          `/konu/${notification.related_topic_id}${commentHash}`;
+      }
+    }
+
     setUnreadNotificationCount((current) =>
       Math.max(0, current - 1)
     );
+  }
+
+  async function handleProfileNotificationClick(
+    notification: NotificationRow
+  ) {
+    if (!notification.is_read) {
+      await markNotificationRead(notification);
+    }
+
+    if (notification.type === "follow_request") {
+      setActiveSection("followers");
+
+      window.setTimeout(() => {
+        document
+          .getElementById("profile-main-content")
+          ?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+      }, 50);
+
+      return;
+    }
+
+    if (notification.related_topic_id) {
+      const commentHash =
+        notification.related_comment_id
+          ? `#comment-${notification.related_comment_id}`
+          : "";
+
+      window.location.href =
+        `/konu/${notification.related_topic_id}${commentHash}`;
+    }
   }
 
   async function markAllProfileNotificationsRead() {
@@ -1746,6 +2162,61 @@ export default function ProfilePage() {
     }
   }
 
+  async function respondFollowRequest(
+    requestId: string,
+    action: "accept" | "reject"
+  ) {
+    if (respondingFollowRequestId) {
+      return;
+    }
+
+    setRespondingFollowRequestId(requestId);
+
+    try {
+      const supabase = createClient();
+
+      const { data, error } = await supabase.rpc(
+        "respond_follow_request",
+        {
+          p_request_id: requestId,
+          p_action: action,
+        }
+      );
+
+      if (error) {
+        console.error(
+          "Takip isteği yanıtlanamadı:",
+          error.message
+        );
+
+        window.alert(
+          language === "tr"
+            ? "Takip isteği yanıtlanamadı."
+            : "The follow request could not be answered."
+        );
+
+        return;
+      }
+
+      setFollowRequests((current) =>
+        current.filter(
+          (request) => request.id !== requestId
+        )
+      );
+
+      if (data === "accepted") {
+        setFollowerCount((current) => current + 1);
+      }
+    } catch (error) {
+      console.error(
+        "Beklenmeyen takip isteği yanıt hatası:",
+        error
+      );
+    } finally {
+      setRespondingFollowRequestId(null);
+    }
+  }
+
   function toggleTheme() {
     const nextTheme: Theme =
       theme === "dark" ? "light" : "dark";
@@ -1759,6 +2230,105 @@ export default function ProfilePage() {
       "forumfenomen-theme",
       nextTheme
     );
+  }
+
+  function toggleLanguage() {
+    const nextLanguage: ForumLanguage =
+      language === "tr" ? "en" : "tr";
+
+    setLanguage(nextLanguage);
+    setForumLanguage(nextLanguage);
+
+    setProfileBio((current) => {
+      const oldDefault =
+        translations[language].bioDefault;
+
+      return current === oldDefault
+        ? translations[nextLanguage].bioDefault
+        : current;
+    });
+  }
+
+  async function updateNotificationSetting(
+    field:
+      | "email_notifications"
+      | "push_notifications",
+    nextValue: boolean
+  ) {
+    if (notificationSettingsSaving) {
+      return;
+    }
+
+    setNotificationSettingsSaving(true);
+
+    const previousEmailValue =
+      emailNotificationsEnabled;
+
+    const previousPushValue =
+      pushNotificationsEnabled;
+
+    if (field === "email_notifications") {
+      setEmailNotificationsEnabled(nextValue);
+    } else {
+      setPushNotificationsEnabled(nextValue);
+    }
+
+    try {
+      const supabase = createClient();
+
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        window.location.replace("/giris");
+        return;
+      }
+
+      const { error } = await supabase
+        .from("profiles")
+        .update({
+          [field]: nextValue,
+        })
+        .eq("id", user.id);
+
+      if (error) {
+        console.error(
+          "Bildirim ayarı kaydedilemedi:",
+          error.message
+        );
+
+        setEmailNotificationsEnabled(
+          previousEmailValue
+        );
+
+        setPushNotificationsEnabled(
+          previousPushValue
+        );
+
+        window.alert(
+          language === "tr"
+            ? "Bildirim ayarı kaydedilemedi."
+            : "Notification setting could not be saved."
+        );
+      }
+    } catch (error) {
+      console.error(
+        "Beklenmeyen bildirim ayarı hatası:",
+        error
+      );
+
+      setEmailNotificationsEnabled(
+        previousEmailValue
+      );
+
+      setPushNotificationsEnabled(
+        previousPushValue
+      );
+    } finally {
+      setNotificationSettingsSaving(false);
+    }
   }
 
   async function handleLogout() {
@@ -1827,10 +2397,11 @@ export default function ProfilePage() {
           display_name: normalizedName,
           username: normalizedUsername,
           bio: normalizedBio,
+          interests: selectedInterests,
         })
         .eq("id", user.id)
         .select(
-          "display_name, username, bio, avatar_url"
+          "display_name, username, bio, avatar_url, interests"
         )
         .single();
 
@@ -1866,6 +2437,12 @@ export default function ProfilePage() {
 
       setProfileBio(
         updatedProfile.bio ?? ""
+      );
+
+      setSelectedInterests(
+        Array.isArray(updatedProfile.interests)
+          ? updatedProfile.interests
+          : []
       );
 
       setAvatarUrl(
@@ -1922,10 +2499,19 @@ export default function ProfilePage() {
             <span>{t.interests}</span>
 
             <div className={styles.interestTags}>
-              <small>Instagram</small>
-              <small>Yapay Zeka</small>
-              <small>Girişimcilik</small>
-              <small>Affiliate</small>
+              {selectedInterests.length === 0 ? (
+                <small>
+                  {language === "tr"
+                    ? "Henüz ilgi alanı seçilmedi."
+                    : "No interests selected yet."}
+                </small>
+              ) : (
+                selectedInterests.map((interest) => (
+                  <small key={interest}>
+                    {interest}
+                  </small>
+                ))
+              )}
             </div>
           </article>
         </div>
@@ -1935,27 +2521,60 @@ export default function ProfilePage() {
         </div>
 
         <div className={styles.activityList}>
-          {sampleActivities[language].map(
-            (activity, index) => (
-              <article key={activity.title}>
-                <div className={styles.activityIcon}>
-                  {index === 0 ? (
-                    <TopicIcon />
-                  ) : index === 1 ? (
-                    <CommentIcon />
-                  ) : (
-                    <BookmarkIcon />
-                  )}
-                </div>
+          {recentActivities.length === 0 ? (
+            <div className={styles.emptyState}>
+              <p>
+                {language === "tr"
+                  ? "Henüz gösterilecek bir aktiviten bulunmuyor."
+                  : "There is no recent activity to display yet."}
+              </p>
+            </div>
+          ) : (
+            recentActivities.map((activity) => {
+              const activityIcon =
+                activity.type === "topic" ? (
+                  <TopicIcon />
+                ) : activity.type === "comment" ? (
+                  <CommentIcon />
+                ) : activity.type === "saved" ? (
+                  <BookmarkIcon />
+                ) : (
+                  <UsersIcon />
+                );
 
-                <div>
-                  <strong>{activity.title}</strong>
-                  <p>{activity.detail}</p>
-                </div>
+              const activityContent = (
+                <>
+                  <div className={styles.activityIcon}>
+                    {activityIcon}
+                  </div>
 
-                <time>{activity.time}</time>
-              </article>
-            )
+                  <div>
+                    <strong>{activity.title}</strong>
+                    <p>{activity.detail}</p>
+                  </div>
+
+                  <time>
+                    {formatProfileCommentDate(
+                      activity.created_at
+                    )}
+                  </time>
+                </>
+              );
+
+              return activity.href ? (
+                <Link
+                  key={activity.id}
+                  href={activity.href}
+                  className={styles.activityLink}
+                >
+                  {activityContent}
+                </Link>
+              ) : (
+                <article key={activity.id}>
+                  {activityContent}
+                </article>
+              );
+            })
           )}
         </div>
       </>
@@ -2199,6 +2818,156 @@ export default function ProfilePage() {
           </div>
         </div>
 
+        {followRequestsLoading ? (
+          <div className={styles.emptyState}>
+            <p>
+              {language === "tr"
+                ? "Takip istekleri yükleniyor..."
+                : "Loading follow requests..."}
+            </p>
+          </div>
+        ) : followRequests.length > 0 ? (
+          <section className={styles.followRequestsSection}>
+            <div className={styles.followRequestsHeading}>
+              <div>
+                <span>FORUMFENOMEN</span>
+
+                <h3>
+                  {language === "tr"
+                    ? "Gelen Takip İstekleri"
+                    : "Incoming Follow Requests"}
+                </h3>
+              </div>
+
+              <strong>{followRequests.length}</strong>
+            </div>
+
+            <div className={styles.followRequestsList}>
+              {followRequests.map((request) => {
+                const person = request.profiles;
+
+                if (!person) {
+                  return null;
+                }
+
+                const cleanUsername =
+                  person.username
+                    ?.trim()
+                    .replace(/^@/, "") ?? "";
+
+                const displayName =
+                  person.display_name?.trim() ||
+                  cleanUsername ||
+                  (language === "tr"
+                    ? "ForumFenomen Üyesi"
+                    : "ForumFenomen Member");
+
+                const initials =
+                  displayName
+                    .split(/\s+/)
+                    .filter(Boolean)
+                    .slice(0, 2)
+                    .map((part) =>
+                      part
+                        .charAt(0)
+                        .toLocaleUpperCase("tr-TR")
+                    )
+                    .join("") || "FF";
+
+                const isResponding =
+                  respondingFollowRequestId ===
+                  request.id;
+
+                return (
+                  <article
+                    key={request.id}
+                    className={styles.followRequestRow}
+                  >
+                    <Link
+                      href={
+                        cleanUsername
+                          ? `/profil/${encodeURIComponent(
+                            cleanUsername
+                          )}`
+                          : "#"
+                      }
+                      className={styles.followRequestPerson}
+                    >
+                      <span
+                        className={styles.personAvatar}
+                      >
+                        {person.avatar_url ? (
+                          <img
+                            src={person.avatar_url}
+                            alt={displayName}
+                            referrerPolicy="no-referrer"
+                          />
+                        ) : (
+                          initials
+                        )}
+                      </span>
+
+                      <span>
+                        <strong>{displayName}</strong>
+
+                        <small>
+                          {cleanUsername
+                            ? `@${cleanUsername}`
+                            : "@fenomen"}
+                        </small>
+                      </span>
+                    </Link>
+
+                    <div
+                      className={
+                        styles.followRequestActions
+                      }
+                    >
+                      <button
+                        type="button"
+                        disabled={isResponding}
+                        className={
+                          styles.acceptFollowRequestButton
+                        }
+                        onClick={() => {
+                          void respondFollowRequest(
+                            request.id,
+                            "accept"
+                          );
+                        }}
+                      >
+                        {isResponding
+                          ? "..."
+                          : language === "tr"
+                            ? "Kabul Et"
+                            : "Accept"}
+                      </button>
+
+                      <button
+                        type="button"
+                        disabled={isResponding}
+                        className={
+                          styles.rejectFollowRequestButton
+                        }
+                        onClick={() => {
+                          void respondFollowRequest(
+                            request.id,
+                            "reject"
+                          );
+                        }}
+                      >
+                        {language === "tr"
+                          ? "Reddet"
+                          : "Reject"}
+                      </button>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        ) : null}
+
         <div className={styles.peopleList}>
           {followersLoading ? (
             <div className={styles.emptyState}>
@@ -2208,7 +2977,8 @@ export default function ProfilePage() {
                   : "Loading followers..."}
               </p>
             </div>
-          ) : followerUsers.length === 0 ? (
+          ) : followerUsers.length === 0 &&
+            followRequests.length === 0 ? (
             <div className={styles.emptyState}>
               <p>
                 {language === "tr"
@@ -2677,21 +3447,13 @@ export default function ProfilePage() {
                     ? ""
                     : styles.unreadNotification
                 }
-                role={
-                  notification.is_read
-                    ? undefined
-                    : "button"
-                }
-                tabIndex={
-                  notification.is_read
-                    ? undefined
-                    : 0
-                }
-                onClick={() =>
-                  void markNotificationRead(
+                role="button"
+                tabIndex={0}
+                onClick={() => {
+                  void handleProfileNotificationClick(
                     notification
-                  )
-                }
+                  );
+                }}
                 onKeyDown={(event) => {
                   if (
                     event.key === "Enter" ||
@@ -2699,12 +3461,13 @@ export default function ProfilePage() {
                   ) {
                     event.preventDefault();
 
-                    void markNotificationRead(
+                    void handleProfileNotificationClick(
                       notification
                     );
                   }
                 }}
               >
+
                 <span
                   className={styles.notificationDot}
                   aria-hidden="true"
@@ -2736,6 +3499,92 @@ export default function ProfilePage() {
     );
   }
 
+  function getVisibilityLabel(
+    value: VisibilityOption
+  ) {
+    if (value === "followers") {
+      return language === "tr"
+        ? "Sadece Takipçilerim"
+        : "Followers Only";
+    }
+
+    if (value === "following") {
+      return language === "tr"
+        ? "Sadece Takip Ettiklerim"
+        : "People I Follow Only";
+    }
+
+    return language === "tr"
+      ? "Herkese Açık"
+      : "Public";
+  }
+
+  async function savePrivacySettings() {
+    if (privacySaving) {
+      return;
+    }
+
+    setPrivacySaving(true);
+    setPrivacySaved(false);
+
+    try {
+      const supabase = createClient();
+
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        window.location.replace("/giris");
+        return;
+      }
+
+      const { error } = await supabase
+        .from("profiles")
+        .update({
+          profile_visibility: profileVisibility,
+          followers_visibility:
+            followersVisibility,
+          following_visibility:
+            followingVisibility,
+          comments_visibility:
+            commentsVisibility,
+          likes_visibility:
+            likesVisibility,
+        })
+        .eq("id", user.id);
+
+      if (error) {
+        console.error(
+          "Gizlilik ayarları kaydedilemedi:",
+          error.message
+        );
+
+        window.alert(
+          language === "tr"
+            ? "Gizlilik ayarları kaydedilemedi."
+            : "Privacy settings could not be saved."
+        );
+
+        return;
+      }
+
+      setPrivacySaved(true);
+
+      window.setTimeout(() => {
+        setPrivacySaved(false);
+      }, 2500);
+    } catch (error) {
+      console.error(
+        "Beklenmeyen gizlilik ayarı hatası:",
+        error
+      );
+    } finally {
+      setPrivacySaving(false);
+    }
+  }
+
   function renderSettings() {
     return (
       <>
@@ -2751,36 +3600,317 @@ export default function ProfilePage() {
           <section>
             <h3>{t.accountSettings}</h3>
 
-            <button type="button">
+            <button
+              type="button"
+              disabled={notificationSettingsSaving}
+              onClick={() => {
+                void updateNotificationSetting(
+                  "email_notifications",
+                  !emailNotificationsEnabled
+                );
+              }}
+            >
               <span>
                 <strong>{t.emailNotifications}</strong>
                 <small>{profileEmail || "—"}</small>
               </span>
 
-              <span className={styles.switchActive} />
+              <span
+                className={
+                  emailNotificationsEnabled
+                    ? styles.switchActive
+                    : styles.switchInactive
+                }
+                aria-hidden="true"
+              />
             </button>
 
-            <button type="button">
+            <button
+              type="button"
+              disabled={notificationSettingsSaving}
+              onClick={() => {
+                void updateNotificationSetting(
+                  "push_notifications",
+                  !pushNotificationsEnabled
+                );
+              }}
+            >
               <span>
                 <strong>{t.pushNotifications}</strong>
-                <small>ForumFenomen</small>
+
+                <small>
+                  {pushNotificationsEnabled
+                    ? language === "tr"
+                      ? "Anlık bildirimler açık"
+                      : "Push notifications enabled"
+                    : language === "tr"
+                      ? "Anlık bildirimler kapalı"
+                      : "Push notifications disabled"}
+                </small>
               </span>
 
-              <span className={styles.switchActive} />
+              <span
+                className={
+                  pushNotificationsEnabled
+                    ? styles.switchActive
+                    : styles.switchInactive
+                }
+                aria-hidden="true"
+              />
             </button>
           </section>
 
-          <section>
+          <section className={styles.privacySettingsSection}>
             <h3>{t.privacySettings}</h3>
 
-            <button type="button">
+            <label className={styles.privacySettingRow}>
               <span>
-                <strong>{t.profileVisibility}</strong>
-                <small>{t.publicProfile}</small>
+                <strong>
+                  {language === "tr"
+                    ? "Profil Görünürlüğü"
+                    : "Profile Visibility"}
+                </strong>
+
+                <small>
+                  {getVisibilityLabel(
+                    profileVisibility
+                  )}
+                </small>
               </span>
 
-              <ChevronIcon />
-            </button>
+              <select
+                value={profileVisibility}
+                onChange={(event) =>
+                  setProfileVisibility(
+                    event.target
+                      .value as VisibilityOption
+                  )
+                }
+              >
+                <option value="public">
+                  {language === "tr"
+                    ? "Herkese Açık"
+                    : "Public"}
+                </option>
+
+                <option value="followers">
+                  {language === "tr"
+                    ? "Sadece Takipçilerim"
+                    : "Followers Only"}
+                </option>
+
+                <option value="following">
+                  {language === "tr"
+                    ? "Sadece Takip Ettiklerim"
+                    : "People I Follow Only"}
+                </option>
+              </select>
+            </label>
+
+            <label className={styles.privacySettingRow}>
+              <span>
+                <strong>
+                  {language === "tr"
+                    ? "Takipçilerim"
+                    : "My Followers"}
+                </strong>
+
+                <small>
+                  {getVisibilityLabel(
+                    followersVisibility
+                  )}
+                </small>
+              </span>
+
+              <select
+                value={followersVisibility}
+                onChange={(event) =>
+                  setFollowersVisibility(
+                    event.target
+                      .value as VisibilityOption
+                  )
+                }
+              >
+                <option value="public">
+                  {language === "tr"
+                    ? "Herkese Açık"
+                    : "Public"}
+                </option>
+
+                <option value="followers">
+                  {language === "tr"
+                    ? "Sadece Takipçilerim"
+                    : "Followers Only"}
+                </option>
+
+                <option value="following">
+                  {language === "tr"
+                    ? "Sadece Takip Ettiklerim"
+                    : "People I Follow Only"}
+                </option>
+              </select>
+            </label>
+
+            <label className={styles.privacySettingRow}>
+              <span>
+                <strong>
+                  {language === "tr"
+                    ? "Takip Ettiklerim"
+                    : "People I Follow"}
+                </strong>
+
+                <small>
+                  {getVisibilityLabel(
+                    followingVisibility
+                  )}
+                </small>
+              </span>
+
+              <select
+                value={followingVisibility}
+                onChange={(event) =>
+                  setFollowingVisibility(
+                    event.target
+                      .value as VisibilityOption
+                  )
+                }
+              >
+                <option value="public">
+                  {language === "tr"
+                    ? "Herkese Açık"
+                    : "Public"}
+                </option>
+
+                <option value="followers">
+                  {language === "tr"
+                    ? "Sadece Takipçilerim"
+                    : "Followers Only"}
+                </option>
+
+                <option value="following">
+                  {language === "tr"
+                    ? "Sadece Takip Ettiklerim"
+                    : "People I Follow Only"}
+                </option>
+              </select>
+            </label>
+
+            <label className={styles.privacySettingRow}>
+              <span>
+                <strong>
+                  {language === "tr"
+                    ? "Yorumlarım"
+                    : "My Comments"}
+                </strong>
+
+                <small>
+                  {getVisibilityLabel(
+                    commentsVisibility
+                  )}
+                </small>
+              </span>
+
+              <select
+                value={commentsVisibility}
+                onChange={(event) =>
+                  setCommentsVisibility(
+                    event.target
+                      .value as VisibilityOption
+                  )
+                }
+              >
+                <option value="public">
+                  {language === "tr"
+                    ? "Herkese Açık"
+                    : "Public"}
+                </option>
+
+                <option value="followers">
+                  {language === "tr"
+                    ? "Sadece Takipçilerim"
+                    : "Followers Only"}
+                </option>
+
+                <option value="following">
+                  {language === "tr"
+                    ? "Sadece Takip Ettiklerim"
+                    : "People I Follow Only"}
+                </option>
+              </select>
+            </label>
+
+            <label className={styles.privacySettingRow}>
+              <span>
+                <strong>
+                  {language === "tr"
+                    ? "Beğenilerim"
+                    : "My Likes"}
+                </strong>
+
+                <small>
+                  {getVisibilityLabel(
+                    likesVisibility
+                  )}
+                </small>
+              </span>
+
+              <select
+                value={likesVisibility}
+                onChange={(event) =>
+                  setLikesVisibility(
+                    event.target
+                      .value as VisibilityOption
+                  )
+                }
+              >
+                <option value="public">
+                  {language === "tr"
+                    ? "Herkese Açık"
+                    : "Public"}
+                </option>
+
+                <option value="followers">
+                  {language === "tr"
+                    ? "Sadece Takipçilerim"
+                    : "Followers Only"}
+                </option>
+
+                <option value="following">
+                  {language === "tr"
+                    ? "Sadece Takip Ettiklerim"
+                    : "People I Follow Only"}
+                </option>
+              </select>
+            </label>
+
+            <div className={styles.privacySaveRow}>
+              {privacySaved ? (
+                <span className={styles.privacySavedText}>
+                  <CheckIcon />
+
+                  {language === "tr"
+                    ? "Gizlilik ayarları kaydedildi."
+                    : "Privacy settings saved."}
+                </span>
+              ) : null}
+
+              <button
+                type="button"
+                className={styles.privacySaveButton}
+                disabled={privacySaving}
+                onClick={() => {
+                  void savePrivacySettings();
+                }}
+              >
+                {privacySaving
+                  ? language === "tr"
+                    ? "Kaydediliyor..."
+                    : "Saving..."
+                  : language === "tr"
+                    ? "Gizlilik Ayarlarını Kaydet"
+                    : "Save Privacy Settings"}
+              </button>
+            </div>
           </section>
 
           <section>
@@ -2802,7 +3932,10 @@ export default function ProfilePage() {
               <ChevronIcon />
             </button>
 
-            <button type="button">
+            <button
+              type="button"
+              onClick={toggleLanguage}
+            >
               <span>
                 <strong>{t.languageLabel}</strong>
                 <small>
@@ -3098,6 +4231,41 @@ export default function ProfilePage() {
                 />
               </label>
 
+              <div className={styles.fullField}>
+                <span>{t.interests}</span>
+
+                <div className={styles.interestTags}>
+                  {INTEREST_OPTIONS.map((interest) => {
+                    const isSelected =
+                      selectedInterests.includes(interest);
+
+                    return (
+                      <button
+                        key={interest}
+                        type="button"
+                        className={
+                          isSelected
+                            ? styles.interestTagActive
+                            : styles.interestTagButton
+                        }
+                        onClick={() => {
+                          setSelectedInterests((current) =>
+                            current.includes(interest)
+                              ? current.filter(
+                                (item) =>
+                                  item !== interest
+                              )
+                              : [...current, interest]
+                          );
+                        }}
+                      >
+                        {interest}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
               <div className={styles.formActions}>
                 <button
                   type="button"
@@ -3134,80 +4302,86 @@ export default function ProfilePage() {
           </section>
         )}
 
-        <div className={styles.profileLayout}>
-          <aside className={styles.profileSidebar}>
-            <nav className={styles.profileMenu}>
-              {menuItems.map((item) => (
-                <button
-                  type="button"
-                  key={item.id}
-                  className={
-                    activeSection === item.id
-                      ? styles.activeMenuItem
-                      : ""
-                  }
-                  onClick={() =>
-                    setActiveSection(item.id)
-                  }
-                >
-                  <span className={styles.menuIcon}>
-                    {item.icon}
+        {!editOpen && (
+
+          <div className={styles.profileLayout}>
+            <aside className={styles.profileSidebar}>
+              <nav className={styles.profileMenu}>
+                {menuItems.map((item) => (
+                  <button
+                    type="button"
+                    key={item.id}
+                    className={
+                      activeSection === item.id
+                        ? styles.activeMenuItem
+                        : ""
+                    }
+                    onClick={() =>
+                      setActiveSection(item.id)
+                    }
+                  >
+                    <span className={styles.menuIcon}>
+                      {item.icon}
+                    </span>
+
+                    <span>
+                      {sectionNames[item.id]}
+                    </span>
+
+                    {item.count !== undefined ? (
+                      <small>{item.count}</small>
+                    ) : (
+                      <ChevronIcon />
+                    )}
+                  </button>
+                ))}
+              </nav>
+
+              <section className={styles.levelCard}>
+                <div className={styles.levelHeading}>
+                  <div>
+                    <span>{t.level}</span>
+                    <strong>
+                      {t.levelNumber}
+                    </strong>
+                  </div>
+
+                  <span className={styles.levelNumber}>
+                    7
                   </span>
-
-                  <span>
-                    {sectionNames[item.id]}
-                  </span>
-
-                  {item.count !== undefined ? (
-                    <small>{item.count}</small>
-                  ) : (
-                    <ChevronIcon />
-                  )}
-                </button>
-              ))}
-            </nav>
-
-            <section className={styles.levelCard}>
-              <div className={styles.levelHeading}>
-                <div>
-                  <span>{t.level}</span>
-                  <strong>
-                    {t.levelNumber}
-                  </strong>
                 </div>
 
-                <span className={styles.levelNumber}>
-                  7
-                </span>
-              </div>
+                <div className={styles.progressTrack}>
+                  <span />
+                </div>
 
-              <div className={styles.progressTrack}>
-                <span />
-              </div>
+                <div className={styles.progressText}>
+                  <span>{t.levelProgress}</span>
+                  <strong>{t.points}</strong>
+                </div>
+              </section>
+            </aside>
 
-              <div className={styles.progressText}>
-                <span>{t.levelProgress}</span>
-                <strong>{t.points}</strong>
-              </div>
+            <section className={styles.profileContent}>
+              {renderSectionContent()}
             </section>
-          </aside>
-
-          <section className={styles.profileContent}>
-            {renderSectionContent()}
-          </section>
-        </div>
-
-        <aside className={styles.adBanner}>
-          <div>
-            <span>{t.adLabel}</span>
-            <h2>{t.adTitle}</h2>
-            <p>{t.adDescription}</p>
           </div>
+        )}
 
-          <button type="button">
-            {t.advertise}
-          </button>
-        </aside>
+        {!editOpen && (
+          <aside className={styles.adBanner}>
+            <div>
+              <span>{t.adLabel}</span>
+              <h2>{t.adTitle}</h2>
+              <p>{t.adDescription}</p>
+            </div>
+
+            <button type="button">
+              {t.advertise}
+            </button>
+          </aside>
+        )}
+
       </div>
 
       <ForumFooter />

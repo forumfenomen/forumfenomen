@@ -35,12 +35,23 @@ type PublicProfileTab =
     | "followers"
     | "following";
 
+type VisibilityOption =
+    | "public"
+    | "followers"
+    | "following";
+
 type PublicProfileRow = {
     id: string;
     display_name: string | null;
     username: string | null;
     avatar_url: string | null;
     bio: string | null;
+
+    profile_visibility: VisibilityOption;
+    followers_visibility: VisibilityOption;
+    following_visibility: VisibilityOption;
+    comments_visibility: VisibilityOption;
+    likes_visibility: VisibilityOption;
 };
 
 type PublicTopicRow = {
@@ -265,8 +276,25 @@ export default function PublicProfilePage() {
     const [isFollowing, setIsFollowing] =
         useState(false);
 
+    const [
+        ownerFollowsCurrentUser,
+        setOwnerFollowsCurrentUser,
+    ] = useState(false);
+
     const [followLoading, setFollowLoading] =
         useState(false);
+
+    const [
+        followRequestStatus,
+        setFollowRequestStatus,
+    ] = useState<
+        "none" | "pending" | "accepted" | "rejected"
+    >("none");
+
+    const [
+        followRequestLoading,
+        setFollowRequestLoading,
+    ] = useState(false);
 
     const [followerCount, setFollowerCount] =
         useState(0);
@@ -328,12 +356,17 @@ export default function PublicProfilePage() {
             } = await supabase
                 .from("profiles")
                 .select(`
-          id,
-          display_name,
-          username,
-          avatar_url,
-          bio
-        `)
+  id,
+  display_name,
+  username,
+  avatar_url,
+  bio,
+  profile_visibility,
+  followers_visibility,
+  following_visibility,
+  comments_visibility,
+  likes_visibility
+`)
                 .ilike("username", usernameParam)
                 .maybeSingle();
 
@@ -368,6 +401,8 @@ export default function PublicProfilePage() {
                 followingResult,
                 commentsResult,
                 currentFollowResult,
+                ownerFollowResult,
+                followRequestResult,
             ] = await Promise.all([
                 supabase
                     .from("topics")
@@ -494,6 +529,36 @@ export default function PublicProfilePage() {
                         data: null,
                         error: null,
                     }),
+
+                user
+                    ? supabase
+                        .from("user_follow_requests")
+                        .select("status")
+                        .eq("requester_id", user.id)
+                        .eq("receiver_id", publicProfile.id)
+                        .maybeSingle()
+                    : Promise.resolve({
+                        data: null,
+                        error: null,
+                    }),
+
+                user
+                    ? supabase
+                        .from("user_follows")
+                        .select("following_id")
+                        .eq(
+                            "follower_id",
+                            publicProfile.id
+                        )
+                        .eq(
+                            "following_id",
+                            user.id
+                        )
+                        .maybeSingle()
+                    : Promise.resolve({
+                        data: null,
+                        error: null,
+                    }),
             ]);
 
             if (!isActive) {
@@ -549,6 +614,32 @@ export default function PublicProfilePage() {
                 Boolean(currentFollowResult.data)
             );
 
+            setOwnerFollowsCurrentUser(
+                Boolean(ownerFollowResult.data)
+            );
+
+            const followRequestData =
+                followRequestResult.data as
+                | {
+                    status:
+                    | "pending"
+                    | "accepted"
+                    | "rejected";
+                }
+                | null;
+
+            if (
+                followRequestData?.status === "pending" ||
+                followRequestData?.status === "accepted" ||
+                followRequestData?.status === "rejected"
+            ) {
+                setFollowRequestStatus(
+                    followRequestData.status
+                );
+            } else {
+                setFollowRequestStatus("none");
+            }
+
             setNotFound(false);
             setLoading(false);
         }
@@ -575,6 +666,69 @@ export default function PublicProfilePage() {
             "forumfenomen-theme",
             nextTheme
         );
+    }
+
+    async function handleFollowRequest() {
+        if (!profile || followRequestLoading) {
+            return;
+        }
+
+        if (!currentUserId) {
+            router.push("/giris");
+            return;
+        }
+
+        if (currentUserId === profile.id) {
+            return;
+        }
+
+        setFollowRequestLoading(true);
+
+        try {
+            const supabase = createClient();
+
+            const { data, error } =
+                await supabase.rpc(
+                    "toggle_follow_request",
+                    {
+                        p_receiver_id: profile.id,
+                    }
+                );
+
+            if (error) {
+                console.error(
+                    "Takip isteği işlemi başarısız:",
+                    error.message
+                );
+
+                window.alert(
+                    language === "tr"
+                        ? "Takip isteği gerçekleştirilemedi."
+                        : "Follow request could not be completed."
+                );
+
+                return;
+            }
+
+            if (data === "pending") {
+                setFollowRequestStatus("pending");
+            } else {
+                setFollowRequestStatus("none");
+            }
+        } catch (error) {
+            console.error(
+                "Beklenmeyen takip isteği hatası:",
+                error
+            );
+
+            window.alert(
+                language === "tr"
+                    ? "Takip isteği sırasında bir hata oluştu."
+                    : "An error occurred during the follow request."
+            );
+        } finally {
+            setFollowRequestLoading(false);
+        }
     }
 
     async function handleFollowToggle() {
@@ -800,6 +954,52 @@ export default function PublicProfilePage() {
             currentUserId === profile.id
         );
 
+    function canViewVisibility(
+        visibility: VisibilityOption
+    ) {
+        if (isOwnProfile) {
+            return true;
+        }
+
+        if (visibility === "public") {
+            return true;
+        }
+
+        if (visibility === "followers") {
+            return isFollowing;
+        }
+
+        return ownerFollowsCurrentUser;
+    }
+
+    const canViewProfile =
+        profile
+            ? canViewVisibility(
+                profile.profile_visibility
+            )
+            : false;
+
+    const canViewComments =
+        profile
+            ? canViewVisibility(
+                profile.comments_visibility
+            )
+            : false;
+
+    const canViewFollowers =
+        profile
+            ? canViewVisibility(
+                profile.followers_visibility
+            )
+            : false;
+
+    const canViewFollowing =
+        profile
+            ? canViewVisibility(
+                profile.following_visibility
+            )
+            : false;
+
     return (
         <main className={styles.page}>
             <div className={styles.shell}>
@@ -883,6 +1083,81 @@ export default function PublicProfilePage() {
                                 ? "Bu kullanıcı kaldırılmış veya kullanıcı adını değiştirmiş olabilir."
                                 : "This user may have been removed or changed their username."}
                         </p>
+                    </section>
+                ) : !canViewProfile ? (
+                    <section
+                        className={
+                            styles.publicProfileState
+                        }
+                    >
+                        <div
+                            className={
+                                styles.privateProfileIcon
+                            }
+                            aria-hidden="true"
+                        >
+                            🔒
+                        </div>
+
+                        <h1>
+                            {language === "tr"
+                                ? "Bu profil gizli"
+                                : "This profile is private"}
+                        </h1>
+
+                        <p>
+                            {profile.profile_visibility ===
+                                "followers"
+                                ? language === "tr"
+                                    ? "Bu profili yalnızca takipçileri görüntüleyebilir."
+                                    : "Only followers can view this profile."
+                                : language === "tr"
+                                    ? "Bu profili yalnızca kullanıcının takip ettiği kişiler görüntüleyebilir."
+                                    : "Only people followed by this user can view this profile."}
+                        </p>
+
+                        {!currentUserId ? (
+                            <Link
+                                href="/giris"
+                                className={
+                                    styles.privateProfileButton
+                                }
+                            >
+                                {language === "tr"
+                                    ? "Giriş Yap"
+                                    : "Sign In"}
+                            </Link>
+                        ) : profile.profile_visibility ===
+                            "followers" ? (
+                            <button
+                                type="button"
+                                className={
+                                    followRequestStatus === "pending"
+                                        ? styles.publicFollowingButton
+                                        : styles.publicFollowButton
+                                }
+                                disabled={followRequestLoading}
+                                onClick={() => {
+                                    void handleFollowRequest();
+                                }}
+                            >
+                                {followRequestStatus === "pending" ? (
+                                    <CheckIcon />
+                                ) : (
+                                    <UserPlusIcon />
+                                )}
+
+                                {followRequestLoading
+                                    ? "..."
+                                    : followRequestStatus === "pending"
+                                        ? language === "tr"
+                                            ? "İstek Gönderildi"
+                                            : "Request Sent"
+                                        : language === "tr"
+                                            ? "Takip İsteği Gönder"
+                                            : "Send Follow Request"}
+                            </button>
+                        ) : null}
                     </section>
                 ) : (
                     <>

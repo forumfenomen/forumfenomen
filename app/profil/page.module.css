@@ -3674,25 +3674,20 @@
 
 .statsGrid button.activeProfileStat {
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(209, 45, 229, 0.14),
-      rgba(52, 107, 255, 0.09)
-    );
+      rgba(52, 107, 255, 0.09));
 
   box-shadow:
     inset 0 -2px 0 rgba(219, 64, 236, 0.72);
 }
 
-:global(html[data-theme="light"])
-.statsGrid button strong {
+:global(html[data-theme="light"]) .statsGrid button strong {
   color: #25242d;
 }
 
-:global(html[data-theme="light"])
-.statsGrid button:hover,
-:global(html[data-theme="light"])
-.statsGrid button.activeProfileStat {
+:global(html[data-theme="light"]) .statsGrid button:hover,
+:global(html[data-theme="light"]) .statsGrid button.activeProfileStat {
   background:
     rgba(196, 54, 232, 0.08);
 }
@@ -3726,7 +3721,7 @@
   padding: 16px !important;
 }
 
-.publicProfileContent .commentList article > div {
+.publicProfileContent .commentList article>div {
   min-width: 0;
   width: 100%;
 }
@@ -3769,7 +3764,7 @@
   line-height: 1.4;
 }
 
-.publicProfileContent .commentList article > a {
+.publicProfileContent .commentList article>a {
   display: flex;
   width: 34px;
   height: 34px;
@@ -3791,18 +3786,14 @@
     transform 0.18s ease;
 }
 
-.publicProfileContent .commentList article > a:hover {
+.publicProfileContent .commentList article>a:hover {
   background:
     rgba(208, 97, 221, 0.14);
 
   transform: translateX(2px);
 }
 
-.publicProfileContent
-.commentList
-article
-> a
-svg {
+.publicProfileContent .commentList article>a svg {
   display: block !important;
 
   width: 16px !important;
@@ -3815,11 +3806,7 @@ svg {
   stroke-width: 1.8 !important;
 }
 
-:global(html[data-theme="light"])
-.publicProfileContent
-.commentList
-article
-small {
+:global(html[data-theme="light"]) .publicProfileContent .commentList article small {
   color: #696c78;
 }
 
@@ -3833,27 +3820,1107 @@ small {
     padding: 13px !important;
   }
 
-  .publicProfileContent
-  .commentList
-  article
-  > a {
+  .publicProfileContent .commentList article>a {
     width: 30px;
     height: 30px;
   }
 
-  .publicProfileContent
-  .commentList
-  article
-  strong {
+  .publicProfileContent .commentList article strong {
     font-size: 11.5px !important;
   }
 
-  .publicProfileContent
-  .commentList
-  article
-  p {
+  .publicProfileContent .commentList article p {
     font-size: 9.8px !important;
   }
 }
 
 /* PUBLIC PROFILE COMMENT LIST FIX END */
+
+.activityLink {
+  display: grid;
+  grid-template-columns:
+    39px minmax(0, 1fr) auto;
+
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px;
+
+  color: inherit;
+  text-decoration: none;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+
+  background:
+    rgba(255, 255, 255, 0.018);
+
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.activityLink:hover {
+  background:
+    rgba(196, 54, 232, 0.07);
+
+  transform: translateY(-1px);
+}
+
+.activityLink strong {
+  display: block;
+
+  color: #f2f2f6;
+
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.activityLink p {
+  overflow: hidden;
+
+  margin: 4px 0 0;
+
+  color: #9da0ac;
+
+  font-size: 10.2px;
+  line-height: 1.5;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.activityLink time {
+  color: #9295a1;
+
+  font-size: 9.8px;
+  white-space: nowrap;
+}
+
+:global(html[data-theme="light"]) .activityLink {
+  border-color:
+    rgba(42, 38, 62, 0.07);
+
+  background:
+    rgba(45, 39, 68, 0.022);
+}
+
+:global(html[data-theme="light"]) .activityLink strong {
+  color: #25242d;
+}
+
+:global(html[data-theme="light"]) .activityLink p,
+:global(html[data-theme="light"]) .activityLink time {
+  color: #626571;
+}
+
+@media (max-width: 680px) {
+  .activityLink {
+    grid-template-columns:
+      34px minmax(0, 1fr);
+  }
+
+  .activityLink time {
+    grid-column: 2;
+    margin-top: 2px;
+  }
+}
+
+.interestTagButton,
+.interestTagActive {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 30px;
+  padding: 7px 12px;
+
+  color: #a7a9b4;
+  font-size: 10px;
+  font-weight: 650;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.interestTagButton:hover {
+  color: #ffffff;
+
+  border-color:
+    rgba(208, 97, 221, 0.24);
+
+  background:
+    rgba(208, 97, 221, 0.07);
+
+  transform: translateY(-1px);
+}
+
+.interestTagActive {
+  color: #ffffff;
+
+  border-color:
+    rgba(208, 97, 221, 0.42);
+
+  background:
+    linear-gradient(135deg,
+      rgba(208, 97, 221, 0.22),
+      rgba(82, 106, 255, 0.14));
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+:global(html[data-theme="light"]) .interestTagButton {
+  color: #626571;
+
+  border-color:
+    rgba(42, 38, 62, 0.09);
+
+  background:
+    rgba(45, 39, 68, 0.025);
+}
+
+:global(html[data-theme="light"]) .interestTagActive {
+  color: #2b2935;
+
+  border-color:
+    rgba(177, 62, 192, 0.28);
+
+  background:
+    rgba(196, 54, 232, 0.1);
+}
+
+@media (max-width: 680px) {
+
+  .interestTagButton,
+  .interestTagActive {
+    min-height: 28px;
+    padding: 6px 10px;
+
+    font-size: 9px;
+  }
+}
+
+/* PROFİL DÜZENLE - İLGİ ALANLARI HİZALAMA */
+
+.editPanel .interestTags {
+  display: grid !important;
+
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
+  align-items: stretch;
+  gap: 12px;
+
+  width: 100%;
+}
+
+.editPanel .interestTagButton,
+.editPanel .interestTagActive {
+  width: 100%;
+  min-height: 34px;
+
+  padding: 8px 10px;
+
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .editPanel .interestTags {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .editPanel .interestTags {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+.editPanel .formActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+
+  width: 100%;
+  margin-top: 20px;
+}
+
+.editPanel .formActions button {
+  min-height: 38px;
+  padding: 10px 18px;
+}
+
+@media (max-width: 560px) {
+  .editPanel .formActions {
+    gap: 10px;
+  }
+
+  .editPanel .formActions button {
+    padding: 9px 13px;
+  }
+}
+
+/* PROFILE PRIVACY SETTINGS START */
+
+.privacySettingsSection {
+  display: grid;
+  gap: 0;
+}
+
+.privacySettingRow {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr) minmax(170px, 230px);
+
+  align-items: center;
+  gap: 18px;
+
+  min-height: 66px;
+  padding: 12px 0;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.055);
+}
+
+.privacySettingRow:last-of-type {
+  border-bottom: 0;
+}
+
+.privacySettingRow>span {
+  min-width: 0;
+}
+
+.privacySettingRow strong {
+  display: block;
+
+  color: #f3f3f7;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.privacySettingRow small {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #888b97;
+  font-size: 9.5px;
+  line-height: 1.4;
+}
+
+.privacySettingRow select {
+  width: 100%;
+  min-height: 38px;
+  padding: 8px 34px 8px 12px;
+
+  color: #ececf2;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 650;
+
+  border:
+    1px solid rgba(208, 97, 221, 0.18);
+  border-radius: 11px;
+
+  outline: none;
+
+  background:
+    #12121b;
+
+  cursor: pointer;
+}
+
+.privacySettingRow select:focus {
+  border-color:
+    rgba(208, 97, 221, 0.52);
+
+  box-shadow:
+    0 0 0 3px rgba(208, 97, 221, 0.08);
+}
+
+.privacySaveRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+
+  padding-top: 18px;
+}
+
+.privacySaveButton {
+  display: inline-flex;
+  min-height: 39px;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 17px;
+
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 750;
+
+  border:
+    1px solid rgba(208, 97, 221, 0.4);
+  border-radius: 11px;
+
+  background:
+    linear-gradient(135deg,
+      rgba(205, 48, 228, 0.28),
+      rgba(73, 97, 255, 0.18));
+
+  cursor: pointer;
+}
+
+.privacySaveButton:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.privacySavedText {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  color: #73dfaa;
+  font-size: 9.5px;
+  font-weight: 650;
+}
+
+.privacySavedText svg {
+  width: 14px;
+  height: 14px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+:global(html[data-theme="light"]) .privacySettingRow {
+  border-bottom-color:
+    rgba(42, 38, 62, 0.07);
+}
+
+:global(html[data-theme="light"]) .privacySettingRow strong {
+  color: #272630;
+}
+
+:global(html[data-theme="light"]) .privacySettingRow small {
+  color: #666976;
+}
+
+:global(html[data-theme="light"]) .privacySettingRow select {
+  color: #292733;
+
+  border-color:
+    rgba(153, 60, 174, 0.18);
+
+  background:
+    #ffffff;
+}
+
+@media (max-width: 680px) {
+  .privacySettingRow {
+    grid-template-columns: 1fr;
+    gap: 9px;
+
+    padding: 14px 0;
+  }
+
+  .privacySaveRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .privacySaveButton {
+    width: 100%;
+  }
+
+  .privacySavedText {
+    justify-content: center;
+  }
+}
+
+/* PROFILE PRIVACY SETTINGS END */
+
+/* PRIVACY SELECT + SAVE BUTTON VISUAL FIX START */
+
+.privacySettingRow select {
+  min-height: 42px !important;
+  padding: 10px 38px 10px 14px !important;
+
+  color: #f5f5f8 !important;
+
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+
+  border:
+    1px solid rgba(208, 97, 221, 0.28) !important;
+
+  border-radius: 12px !important;
+
+  background:
+    linear-gradient(135deg,
+      rgba(20, 19, 30, 0.98),
+      rgba(27, 24, 40, 0.98)) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+
+  cursor: pointer;
+}
+
+.privacySettingRow select:hover {
+  border-color:
+    rgba(208, 97, 221, 0.5) !important;
+}
+
+.privacySettingRow select:focus {
+  border-color:
+    rgba(208, 97, 221, 0.75) !important;
+
+  box-shadow:
+    0 0 0 3px rgba(208, 97, 221, 0.1) !important;
+}
+
+.privacySettingRow select option {
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 650;
+
+  background: #14131e;
+}
+
+.privacySaveRow {
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 14px;
+
+  width: 100%;
+  padding-top: 20px !important;
+}
+
+.privacySaveButton {
+  display: inline-flex !important;
+
+  min-width: 190px;
+  min-height: 42px;
+
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 11px 18px !important;
+
+  color: #ffffff !important;
+
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+
+  border:
+    1px solid rgba(218, 70, 235, 0.65) !important;
+
+  border-radius: 12px !important;
+
+  background:
+    linear-gradient(135deg,
+      rgba(201, 48, 225, 0.95),
+      rgba(80, 91, 255, 0.88)) !important;
+
+  box-shadow:
+    0 8px 24px rgba(185, 55, 223, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+
+.privacySaveButton:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 10px 28px rgba(185, 55, 223, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+  filter: brightness(1.06);
+}
+
+.privacySaveButton:active {
+  transform: scale(0.98);
+}
+
+.privacySaveButton:disabled {
+  opacity: 0.58;
+
+  cursor: wait;
+
+  transform: none;
+}
+
+.privacySavedText {
+  color: #79e5b3 !important;
+
+  font-size: 10px !important;
+  font-weight: 700 !important;
+}
+
+:global(html[data-theme="light"]) .privacySettingRow select {
+  color: #2b2934 !important;
+
+  border-color:
+    rgba(166, 62, 186, 0.26) !important;
+
+  background:
+    linear-gradient(135deg,
+      #ffffff,
+      #f7f4fb) !important;
+}
+
+:global(html[data-theme="light"]) .privacySettingRow select option {
+  color: #25232d;
+
+  background: #ffffff;
+}
+
+@media (max-width: 680px) {
+  .privacySettingRow select {
+    font-size: 11px !important;
+  }
+
+  .privacySaveButton {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* PRIVACY SELECT + SAVE BUTTON VISUAL FIX END */
+
+/* PRIVACY SAVE ALIGNMENT FIX */
+
+.privacySaveRow {
+  display: grid !important;
+  grid-template-columns:
+    minmax(0, 1fr) minmax(170px, 230px) !important;
+
+  align-items: center;
+  gap: 18px;
+
+  width: 100%;
+  padding-top: 20px !important;
+}
+
+.privacySavedText {
+  justify-self: end;
+}
+
+.privacySaveButton {
+  grid-column: 2;
+
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 44px;
+
+  padding: 11px 15px !important;
+
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.01em;
+
+  border-radius: 12px !important;
+}
+
+@media (max-width: 680px) {
+  .privacySaveRow {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+
+  .privacySaveButton {
+    grid-column: 1;
+  }
+
+  .privacySavedText {
+    justify-self: center;
+  }
+}
+
+.privacySettingRow select {
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.privacySettingRow select:hover {
+  transform: translateY(-1px);
+}
+
+.privacySettingRow select:focus {
+  transform: translateY(-1px);
+}
+
+.privacySaveButton {
+  min-height: 42px !important;
+  height: 42px !important;
+
+  padding: 8px 14px !important;
+
+  font-size: 11.5px !important;
+}
+
+.privacySaveRow {
+  padding-top: 4px !important;
+}
+
+.privacySaveButton {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  text-align: center !important;
+}
+
+/* SETTINGS SWITCH START */
+
+.switchActive,
+.switchInactive {
+  position: relative;
+
+  display: inline-flex;
+  flex: 0 0 auto;
+
+  width: 38px;
+  height: 21px;
+
+  border-radius: 999px;
+
+  transition:
+    background 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.switchActive {
+  background:
+    linear-gradient(135deg,
+      #d440e8,
+      #5867ff);
+
+  box-shadow:
+    0 0 0 1px rgba(218, 78, 235, 0.2),
+    0 4px 14px rgba(186, 54, 225, 0.2);
+}
+
+.switchInactive {
+  background:
+    rgba(110, 111, 127, 0.22);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.switchActive::after,
+.switchInactive::after {
+  content: "";
+
+  position: absolute;
+  top: 3px;
+  left: 3px;
+
+  width: 15px;
+  height: 15px;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 2px 7px rgba(0, 0, 0, 0.25);
+
+  transition:
+    transform 0.22s ease;
+}
+
+.switchActive::after {
+  transform: translateX(17px);
+}
+
+.switchInactive::after {
+  transform: translateX(0);
+}
+
+.settingsGroups section>button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+/* SETTINGS SWITCH END */
+
+.privateProfileIcon {
+  display: flex;
+
+  width: 58px;
+  height: 58px;
+
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 14px;
+
+  font-size: 24px;
+
+  border: 1px solid
+    rgba(210, 77, 226, 0.22);
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(210, 77, 226, 0.12),
+      rgba(87, 101, 255, 0.12)
+    );
+}
+
+.privateProfileButton {
+  display: inline-flex;
+
+  min-height: 42px;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 18px;
+  padding: 10px 20px;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  text-decoration: none;
+
+  border: 1px solid
+    rgba(215, 74, 232, 0.58);
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #d13fe7,
+      #5967ff
+    );
+
+  box-shadow:
+    0 8px 24px
+      rgba(188, 55, 224, 0.2);
+}
+
+/* FOLLOW REQUESTS START */
+
+.followRequestsSection {
+  width: 100%;
+  margin-bottom: 22px;
+  padding: 18px;
+
+  border: 1px solid
+    rgba(205, 65, 226, 0.22);
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(198, 48, 220, 0.07),
+      rgba(77, 87, 255, 0.05)
+    );
+
+  box-shadow:
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.025);
+}
+
+.followRequestsHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 14px;
+}
+
+.followRequestsHeading > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.followRequestsHeading span {
+  color: #d65be4;
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.followRequestsHeading h3 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.followRequestsHeading > strong {
+  display: inline-flex;
+
+  width: 28px;
+  height: 28px;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  border: 1px solid
+    rgba(212, 73, 232, 0.34);
+
+  border-radius: 9px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(201, 50, 223, 0.28),
+      rgba(80, 91, 255, 0.24)
+    );
+}
+
+.followRequestsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.followRequestRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  min-height: 68px;
+  padding: 11px 12px;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.065);
+
+  border-radius: 13px;
+
+  background:
+    rgba(11, 10, 19, 0.52);
+}
+
+.followRequestPerson {
+  display: flex;
+  align-items: center;
+
+  min-width: 0;
+  gap: 11px;
+
+  color: inherit;
+  text-decoration: none;
+}
+
+.followRequestPerson > span:last-child {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  gap: 3px;
+}
+
+.followRequestPerson strong {
+  overflow: hidden;
+
+  color: #f6f4fb;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.followRequestPerson small {
+  color: #8e8c9f;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.followRequestActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  flex: 0 0 auto;
+}
+
+.acceptFollowRequestButton,
+.rejectFollowRequestButton {
+  display: inline-flex;
+
+  min-width: 76px;
+  min-height: 34px;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 7px 12px;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  border-radius: 9px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.16s ease,
+    filter 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.acceptFollowRequestButton {
+  color: #ffffff;
+
+  border: 1px solid
+    rgba(211, 68, 230, 0.58);
+
+  background:
+    linear-gradient(
+      135deg,
+      #d03de4,
+      #5967ff
+    );
+
+  box-shadow:
+    0 6px 18px
+      rgba(183, 49, 218, 0.18);
+}
+
+.rejectFollowRequestButton {
+  color: #d7d5df;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.11);
+
+  background:
+    rgba(255, 255, 255, 0.045);
+}
+
+.acceptFollowRequestButton:hover,
+.rejectFollowRequestButton:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.07);
+}
+
+.acceptFollowRequestButton:disabled,
+.rejectFollowRequestButton:disabled {
+  opacity: 0.55;
+  cursor: wait;
+  transform: none;
+}
+
+:global(html[data-theme="light"])
+.followRequestsSection {
+  border-color:
+    rgba(177, 55, 197, 0.2);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(199, 63, 219, 0.05),
+      rgba(86, 99, 255, 0.045)
+    );
+}
+
+:global(html[data-theme="light"])
+.followRequestRow {
+  border-color:
+    rgba(39, 33, 52, 0.08);
+
+  background:
+    rgba(255, 255, 255, 0.7);
+}
+
+:global(html[data-theme="light"])
+.followRequestsHeading h3,
+:global(html[data-theme="light"])
+.followRequestPerson strong {
+  color: #272431;
+}
+
+:global(html[data-theme="light"])
+.followRequestPerson small {
+  color: #777281;
+}
+
+@media (max-width: 680px) {
+  .followRequestsSection {
+    padding: 13px;
+  }
+
+  .followRequestRow {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .followRequestActions {
+    width: 100%;
+  }
+
+  .acceptFollowRequestButton,
+  .rejectFollowRequestButton {
+    flex: 1;
+  }
+}
+
+/* FOLLOW REQUESTS END */
+
+.notificationList article[role="button"] {
+  cursor: pointer;
+}
