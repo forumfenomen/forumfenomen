@@ -3700,6 +3700,7 @@
   cursor: not-allowed !important;
   opacity: 0.58;
   filter: saturate(0.7);
+  padding-right: 16px !important;
 }
 
 .uploadButtonDisabled:hover {
@@ -3710,17 +3711,33 @@
 .comingSoonBadge {
   margin-left: auto;
 
-  border: 1px solid rgba(220, 80, 255, 0.3);
-  border-radius: 999px;
+  min-width: 92px;
+  height: 38px;
 
-  padding: 6px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-  background: rgba(184, 45, 238, 0.12);
-  color: #e879f9;
+  border: 1px solid rgba(220, 80, 255, 0.34);
+  border-radius: 13px;
 
-  font-size: 11px;
-  font-weight: 750;
+  padding: 0 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(184, 45, 238, 0.18),
+      rgba(84, 67, 255, 0.12)
+    );
+
+  color: #ec8cff;
+
+  font-size: 12px;
+  font-weight: 780;
   line-height: 1;
 
   white-space: nowrap;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }

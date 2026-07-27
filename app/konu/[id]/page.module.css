@@ -1970,3 +1970,48 @@
         font-size: 9px;
     }
 }
+
+/* MOBILE REPORT MODAL SCROLL FIX */
+
+@media (max-width: 680px) {
+  .modalBackdrop {
+    position: fixed !important;
+    inset: 0 !important;
+
+    display: block !important;
+
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+
+    padding:
+      20px
+      14px
+      calc(28px + env(safe-area-inset-bottom)) !important;
+
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+
+  .reportModal {
+    position: relative !important;
+
+    width: 100% !important;
+    max-width: 540px !important;
+
+    max-height: none !important;
+
+    margin:
+      max(20px, env(safe-area-inset-top))
+      auto
+      30px !important;
+
+    overflow: visible !important;
+
+    transform: none !important;
+  }
+
+  .reportModal textarea {
+    touch-action: pan-y;
+  }
+}
