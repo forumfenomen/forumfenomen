@@ -2242,6 +2242,7 @@ export default function CreateTopicPage() {
                 type="file"
                 accept="image/png,image/jpeg,image/webp"
                 hidden
+                disabled
                 onChange={handleFileChange}
               />
 
@@ -2289,10 +2290,9 @@ export default function CreateTopicPage() {
               ) : (
                 <button
                   type="button"
-                  className={styles.uploadButton}
-                  onClick={() =>
-                    fileInputRef.current?.click()
-                  }
+                  className={`${styles.uploadButton} ${styles.uploadButtonDisabled}`}
+                  disabled
+                  aria-disabled="true"
                 >
                   <span>
                     <ImageIcon />
@@ -2308,7 +2308,9 @@ export default function CreateTopicPage() {
                     </small>
                   </div>
 
-                  <PlusIcon />
+                  <span className={styles.comingSoonBadge}>
+                    Yakında
+                  </span>
                 </button>
               )}
             </div>
