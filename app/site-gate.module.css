@@ -1,0 +1,145 @@
+.page {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: #ffffff;
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(136, 74, 255, 0.18),
+      transparent 38%
+    ),
+    #050505;
+}
+
+.card {
+  width: min(100%, 560px);
+  display: grid;
+  justify-items: center;
+  gap: 22px;
+  padding: 42px 32px;
+  text-align: center;
+  border: 1px solid
+    rgba(255, 255, 255, 0.1);
+  border-radius: 28px;
+  background:
+    rgba(255, 255, 255, 0.035);
+  box-shadow:
+    0 30px 100px
+    rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(18px);
+}
+
+.logo {
+  width: min(100%, 410px);
+  height: auto;
+  object-fit: contain;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(30px, 7vw, 48px);
+  line-height: 1.05;
+}
+
+.description {
+  max-width: 430px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.form {
+  width: 100%;
+  display: grid;
+  gap: 14px;
+  margin-top: 4px;
+}
+
+.label {
+  display: grid;
+  gap: 8px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  color: #ffffff;
+  font: inherit;
+  border: 1px solid
+    rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  outline: none;
+  background:
+    rgba(255, 255, 255, 0.055);
+}
+
+.input:focus {
+  border-color:
+    rgba(255, 255, 255, 0.45);
+}
+
+.button {
+  min-height: 52px;
+  padding: 0 20px;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  border: 0;
+  border-radius: 14px;
+  background:
+    linear-gradient(
+      135deg,
+      #7b3ff2,
+      #da3d8d
+    );
+}
+
+.button:hover {
+  filter: brightness(1.08);
+}
+
+.error {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #ffd4d4;
+  border: 1px solid
+    rgba(255, 90, 90, 0.25);
+  border-radius: 12px;
+  background:
+    rgba(255, 60, 60, 0.1);
+}
+
+.note {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 16px;
+  }
+
+  .card {
+    padding: 34px 20px;
+    border-radius: 22px;
+  }
+}
