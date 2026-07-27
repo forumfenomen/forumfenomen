@@ -78,7 +78,13 @@ export default async function AdminLayout({
             YÖNETİM PANELİ
           </span>
 
-          <AdminNav />
+          <AdminNav
+            role={
+              profile.role === "admin"
+                ? "admin"
+                : "moderator"
+            }
+          />
 
           <div className={styles.adminUser}>
             <span className={styles.adminAvatar}>

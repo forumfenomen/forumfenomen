@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { requireAdminAccess } from "@/lib/admin/require-admin-access";
 import Link from "next/link";
 import styles from "./admin.module.css";
 
@@ -56,7 +56,8 @@ function getReporterName(
 }
 
 export default async function AdminPage() {
-    const supabase = await createClient();
+    const { supabase } =
+        await requireAdminAccess();
 
     const [
         usersResult,

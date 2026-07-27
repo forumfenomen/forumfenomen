@@ -372,7 +372,7 @@ export default function PublicProfilePage() {
                 data: profileData,
                 error: profileError,
             } = await supabase
-                .from("profiles")
+                .from("public_profiles")
                 .select(`
   id,
   display_name,

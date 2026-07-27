@@ -199,7 +199,7 @@ export default async function AdminReportsPage({
 
   if (profileIds.length > 0) {
     const profilesResult = await supabase
-      .from("profiles")
+      .from("public_profiles")
       .select(`
         id,
         display_name,

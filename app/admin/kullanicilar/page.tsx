@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { requireAdminAccess } from "@/lib/admin/require-admin-access";
 import Link from "next/link";
 import UserAccountActions from "@/components/admin/user-account-actions";
 import UserRoleActions from "@/components/admin/user-role-actions";
@@ -111,6 +111,9 @@ export default async function AdminUsersPage({
     filtre?: string;
   }>;
 }) {
+  const { supabase } =
+    await requireAdminAccess();
+
   const resolvedSearchParams =
     await searchParams;
 
@@ -124,8 +127,7 @@ export default async function AdminUsersPage({
       ? requestedFilter
       : "all";
 
-  const supabase = await createClient();
-
+  
   const [
     usersResult,
     reportsResult,

@@ -222,7 +222,7 @@ export default async function AdminForumActivitiesPage({
   const { data: profileData } =
     profileIds.length > 0
       ? await supabase
-          .from("profiles")
+          .from("public_profiles")
           .select(
             "id, display_name, username"
           )

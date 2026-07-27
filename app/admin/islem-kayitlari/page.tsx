@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { createClient } from "@/lib/supabase/server";
+import { requireAdminAccess } from "@/lib/admin/require-admin-access";
 
 import styles from "../admin.module.css";
 
@@ -109,6 +109,9 @@ function getMetadataString(
 export default async function AdminLogsPage({
     searchParams,
 }: AdminLogsPageProps) {
+    const { supabase } =
+        await requireAdminAccess();
+
     const params = await searchParams;
 
     const selectedType =
@@ -119,8 +122,6 @@ export default async function AdminLogsPage({
 
     const searchText =
         params.search?.trim() ?? "";
-
-    const supabase = await createClient();
 
     let logsQuery = supabase
         .from("admin_action_logs")
@@ -202,7 +203,7 @@ export default async function AdminLogsPage({
 
     if (actorIds.length > 0) {
         const profilesResult = await supabase
-            .from("profiles")
+            .from("public_profiles")
             .select(`
         id,
         display_name,

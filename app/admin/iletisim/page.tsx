@@ -1,6 +1,6 @@
 import ContactMessageActions from "@/components/admin/contact-message-actions";
 
-import { createClient } from "@/lib/supabase/server";
+import { requireAdminAccess } from "@/lib/admin/require-admin-access";
 
 import Link from "next/link";
 
@@ -84,6 +84,9 @@ export default async function AdminContactPage({
         durum?: string;
     }>;
 }) {
+    const { supabase } =
+        await requireAdminAccess();
+
     const resolvedSearchParams =
         await searchParams;
 
@@ -98,7 +101,7 @@ export default async function AdminContactPage({
             ? requestedFilter
             : "all";
 
-    const supabase = await createClient();
+    
 
     const [
         messagesResult,
