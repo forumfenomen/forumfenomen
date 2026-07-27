@@ -15,6 +15,7 @@ import {
 import {
   getForumLanguage,
   setForumLanguage,
+  subscribeForumLanguage,
   type ForumLanguage,
 } from "@/lib/forumfenomen-language";
 
@@ -331,6 +332,12 @@ export default function BlogPage() {
 
     document.documentElement.dataset.theme =
       resolvedTheme;
+  }, []);
+
+  useEffect(() => {
+    return subscribeForumLanguage(
+      setLanguage
+    );
   }, []);
 
   useEffect(() => {

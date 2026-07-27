@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 import {
   getForumLanguage,
+  subscribeForumLanguage,
   type ForumLanguage,
 } from "@/lib/forumfenomen-language";
 
@@ -42,6 +43,10 @@ export default function ForumFooter() {
 
   useEffect(() => {
     setLanguage(getForumLanguage());
+
+    return subscribeForumLanguage(
+      setLanguage
+    );
   }, []);
 
   const t = copy[language];
@@ -49,8 +54,8 @@ export default function ForumFooter() {
   return (
     <footer
       className={`${styles.footer} ${pathname === "/akis"
-          ? styles.homeFooter
-          : ""
+        ? styles.homeFooter
+        : ""
         } 
         }`}
     >

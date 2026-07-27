@@ -9,6 +9,7 @@ import {
 import InfoPageShell from "@/components/info-page-shell";
 import {
   getForumLanguage,
+  subscribeForumLanguage,
   type ForumLanguage,
 } from "@/lib/forumfenomen-language";
 
@@ -112,6 +113,10 @@ export default function AboutPage() {
 
   useEffect(() => {
     setLanguage(getForumLanguage());
+
+    return subscribeForumLanguage(
+      setLanguage
+    );
   }, []);
 
   const t = copy[language];
