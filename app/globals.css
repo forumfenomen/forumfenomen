@@ -13244,3 +13244,60 @@ html[data-theme="light"] .ff-insight-grid span {
     line-height: 1.55 !important;
   }
 }
+
+/* FEATURED TOPIC MOBILE COMPACT STATS */
+
+@media (max-width: 680px) {
+  .ff-topic-card {
+    min-height: 104px !important;
+    padding: 12px 13px !important;
+  }
+
+  .ff-topic-main {
+    padding-right: 82px !important;
+  }
+
+  .ff-topic-main h3 {
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+    font-weight: 720 !important;
+  }
+
+  .ff-topic-meta {
+    margin-top: 7px !important;
+    font-size: 11.5px !important;
+    line-height: 1.4 !important;
+  }
+
+  .ff-category {
+    font-size: 10.5px !important;
+  }
+
+  .ff-bookmark-button {
+    top: 11px !important;
+    right: 12px !important;
+  }
+
+  .ff-topic-stats {
+    top: 39px !important;
+    right: 11px !important;
+    bottom: auto !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+
+    gap: 9px !important;
+  }
+
+  .ff-topic-stats span {
+    gap: 3px !important;
+    font-size: 10.5px !important;
+    line-height: 1 !important;
+  }
+
+  .ff-topic-stats svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+}
