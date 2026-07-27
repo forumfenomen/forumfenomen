@@ -5552,3 +5552,15 @@
     transform: none !important;
   }
 }
+
+/* PROFILE SECTION SCROLL POSITION */
+
+.profileLayout {
+  scroll-margin-top: 105px;
+}
+
+@media (max-width: 680px) {
+  .profileLayout {
+    scroll-margin-top: 88px;
+  }
+}

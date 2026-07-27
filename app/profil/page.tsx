@@ -598,7 +598,7 @@ export default function ProfilePage() {
     useState<SectionId>("profile");
 
   const profileContentRef =
-    useRef<HTMLElement | null>(null);
+    useRef<HTMLDivElement | null>(null);
 
   function openProfileSection(
     section: SectionId
@@ -4549,7 +4549,11 @@ export default function ProfilePage() {
 
         {!editOpen && (
 
-          <div className={styles.profileLayout}>
+          <div
+            ref={profileContentRef}
+            id="profile-main-content"
+            className={styles.profileLayout}
+          >
             <aside className={styles.profileSidebar}>
               <nav className={styles.profileMenu}>
                 {menuItems.map((item) => (
@@ -4606,6 +4610,12 @@ export default function ProfilePage() {
                 </div>
               </section>
             </aside>
+
+            <aside>...</aside>
+
+            <section className={styles.profileContent}>
+              {renderSectionContent()}
+            </section>
 
             <section
               ref={profileContentRef}
