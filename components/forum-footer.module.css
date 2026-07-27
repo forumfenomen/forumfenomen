@@ -685,3 +685,16 @@
 
 /* FOOTER ALWAYS DARK V13 END */
 
+/* MOBILE FOOTER WIDTH MATCH */
+
+@media (max-width: 680px) {
+  .footer {
+    width: calc(100% - 14px) !important;
+    max-width: 820px !important;
+
+    margin-left: auto !important;
+    margin-right: auto !important;
+
+    box-sizing: border-box !important;
+  }
+}
