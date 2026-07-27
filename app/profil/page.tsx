@@ -3628,7 +3628,7 @@ export default function ProfilePage() {
               </div>
             </article>
           ) : notifications.length === 0 ? (
-            <article>
+            <article className={styles.emptyNotification}>
               <div>
                 <strong>{t.empty}</strong>
               </div>

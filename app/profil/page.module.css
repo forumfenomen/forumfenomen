@@ -5564,3 +5564,105 @@
     scroll-margin-top: 88px;
   }
 }
+
+/* EMPTY NOTIFICATION MOBILE FIX */
+
+.emptyNotification {
+  display: block !important;
+  width: 100%;
+}
+
+.emptyNotification > div {
+  width: 100%;
+  min-width: 0;
+}
+
+.emptyNotification strong {
+  display: block;
+  width: 100%;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 680px) {
+  .emptyNotification strong {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+/* PROFILE MOBILE READABILITY FINAL */
+
+@media (max-width: 680px) {
+  /* Profil üst biyografi */
+  .profileText p {
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Profil Özeti ve bölüm açıklamaları */
+  .contentHeading p {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+  }
+
+  /* Kısa biyografi içeriği */
+  .summaryGrid p {
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Son aktiviteler */
+  .activityList p {
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+  }
+
+  .activityList time {
+    font-size: 11px !important;
+  }
+
+  /* Konu ve yardımcı bilgiler */
+  .simpleList small {
+    font-size: 11px !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Profildeki yorum metinleri */
+  .commentList p {
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+  }
+
+  .commentList small {
+    font-size: 11px !important;
+  }
+
+  /* Bildirim metinleri */
+  .notificationList p {
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+  }
+
+  .notificationList small {
+    font-size: 11px !important;
+  }
+
+  /* Ayar açıklamaları */
+  .settingsGroups small {
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* İlgi alanı etiketleri */
+  .interestTags small {
+    font-size: 10.5px !important;
+  }
+
+  /* Reklam açıklaması */
+  .adBanner p {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+}

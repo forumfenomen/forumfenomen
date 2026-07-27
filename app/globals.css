@@ -13194,3 +13194,53 @@ html[data-theme="light"] .ff-insight-grid strong {
 html[data-theme="light"] .ff-insight-grid span {
   color: #676273 !important;
 }
+
+/* GLOBAL MOBILE SECONDARY TEXT READABILITY FINAL */
+
+@media (max-width: 680px) {
+  /* Kategoriler ana açıklaması */
+  .ff-category-intro p {
+    font-size: 13.5px !important;
+    line-height: 1.58 !important;
+    font-weight: 500 !important;
+  }
+
+  /* Seçilen kategori açıklaması */
+  .ff-category-detail-heading p {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+    font-weight: 500 !important;
+  }
+
+  /* Konu adedi */
+  .ff-category-list-heading span {
+    font-size: 11.5px !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Konu kartlarının alt bilgileri */
+  .ff-category-topic-meta {
+    font-size: 11.5px !important;
+    line-height: 1.45 !important;
+  }
+
+  .ff-category-topic-tag {
+    font-size: 10.5px !important;
+  }
+
+  .ff-category-topic-stats {
+    font-size: 11px !important;
+  }
+
+  /* Eğitim duyurusu açıklaması */
+  .ff-education-announcement p {
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+  }
+
+  /* Genel reklam açıklamaları */
+  .ff-ad-banner p {
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+  }
+}
