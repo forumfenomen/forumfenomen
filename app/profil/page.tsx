@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   useEffect,
+  useRef,
   useState,
   type FormEvent,
   type ReactNode,
@@ -595,6 +596,24 @@ export default function ProfilePage() {
 
   const [activeSection, setActiveSection] =
     useState<SectionId>("profile");
+
+  const profileContentRef =
+    useRef<HTMLElement | null>(null);
+
+  function openProfileSection(
+    section: SectionId
+  ) {
+    setActiveSection(section);
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        profileContentRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      });
+    });
+  }
 
   useEffect(() => {
     const section =
@@ -4270,7 +4289,9 @@ export default function ProfilePage() {
             <button
               type="button"
               className={styles.settingsButton}
-              onClick={() => setActiveSection("settings")}
+              onClick={() =>
+                openProfileSection("settings")
+              }
               aria-label={t.settings}
               title={t.settings}
             >
@@ -4297,7 +4318,7 @@ export default function ProfilePage() {
                   : undefined
               }
               onClick={() => {
-                setActiveSection("topics");
+                openProfileSection("topics")
               }}
             >
               <strong>{profileTopics.length}</strong>
@@ -4312,7 +4333,7 @@ export default function ProfilePage() {
                   : undefined
               }
               onClick={() => {
-                setActiveSection("comments");
+                openProfileSection("comments")
               }}
             >
               <strong>{profileComments.length}</strong>
@@ -4327,7 +4348,7 @@ export default function ProfilePage() {
                   : undefined
               }
               onClick={() => {
-                setActiveSection("followers");
+                openProfileSection("followers");
               }}
             >
               <strong>{followerCount}</strong>
@@ -4342,7 +4363,7 @@ export default function ProfilePage() {
                   : undefined
               }
               onClick={() => {
-                setActiveSection("following");
+                openProfileSection("following");
               }}
             >
               <strong>{followingCount}</strong>
@@ -4541,7 +4562,7 @@ export default function ProfilePage() {
                         : ""
                     }
                     onClick={() =>
-                      setActiveSection(item.id)
+                      openProfileSection(item.id)
                     }
                   >
                     <span className={styles.menuIcon}>
