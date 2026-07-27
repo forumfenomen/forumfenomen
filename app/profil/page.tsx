@@ -4607,7 +4607,11 @@ export default function ProfilePage() {
               </section>
             </aside>
 
-            <section className={styles.profileContent}>
+            <section
+              ref={profileContentRef}
+              id="profile-main-content"
+              className={styles.profileContent}
+            >
               {renderSectionContent()}
             </section>
           </div>
