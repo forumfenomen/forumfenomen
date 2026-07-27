@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+
 import { useEffect, useState } from "react";
 
 import {
@@ -36,8 +36,7 @@ const copy = {
 } as const;
 
 export default function ForumFooter() {
-  const pathname = usePathname();
-
+  
   const [language, setLanguage] =
     useState<ForumLanguage>("tr");
 
@@ -52,13 +51,7 @@ export default function ForumFooter() {
   const t = copy[language];
 
   return (
-    <footer
-      className={`${styles.footer} ${pathname === "/akis"
-        ? styles.homeFooter
-        : ""
-        } 
-        }`}
-    >
+    <footer className={styles.footer}>
       <div className={styles.inner}>
         <div className={styles.brandArea}>
           <Image
