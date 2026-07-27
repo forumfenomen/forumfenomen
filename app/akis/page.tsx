@@ -72,7 +72,7 @@ const posts: Post[] = [
     views: "1,2 B",
   },
   {
-    icon: "◎",
+    icon: "instagram",
     iconClass: "social",
     titleTr: "Instagram algoritması artık nasıl çalışıyor?",
     titleEn: "How does the Instagram algorithm work now?",
@@ -98,7 +98,7 @@ const posts: Post[] = [
     views: "870",
   },
   {
-    icon: "▶",
+    icon: "youtube",
     iconClass: "video",
     titleTr: "YouTube’da büyümenin en etkili yolları",
     titleEn: "The most effective ways to grow on YouTube",
@@ -786,7 +786,14 @@ export default function FeedPage() {
 
           return {
             id: topic.id,
-            icon: visual.icon,
+            icon:
+              categorySlug === "instagram"
+                ? "instagram"
+                : categorySlug === "tiktok"
+                  ? "tiktok"
+                  : categorySlug === "youtube"
+                    ? "youtube"
+                    : visual.icon,
             iconClass: visual.iconClass,
             titleTr: topic.title,
             titleEn: topic.title,
@@ -1130,7 +1137,15 @@ export default function FeedPage() {
                   key={post.id ?? post.titleTr}
                 >
                   <div className={`ff-topic-icon ${post.iconClass}`}>
-                    {post.icon}
+                    {post.icon === "instagram" ? (
+                      <InstagramIcon />
+                    ) : post.icon === "tiktok" ? (
+                      <TikTokIcon />
+                    ) : post.icon === "youtube" ? (
+                      <YouTubeIcon />
+                    ) : (
+                      post.icon
+                    )}
                   </div>
 
                   <div className="ff-topic-main">

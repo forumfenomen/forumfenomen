@@ -13323,3 +13323,43 @@ html[data-theme="light"] .ff-insight-grid span {
     height: 12px !important;
   }
 }
+
+/* TOPIC INSTAGRAM ICON */
+
+.ff-topic-icon svg {
+  width: 25px;
+  height: 25px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 680px) {
+  .ff-topic-icon svg {
+    width: 23px;
+    height: 23px;
+  }
+}
+
+/* TOPIC PLATFORM ICONS */
+
+.ff-topic-icon.video svg {
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+.ff-topic-icon.social svg {
+  width: 25px;
+  height: 25px;
+}
+
+@media (max-width: 680px) {
+  .ff-topic-icon.social svg,
+  .ff-topic-icon.video svg {
+    width: 23px;
+    height: 23px;
+  }
+}
