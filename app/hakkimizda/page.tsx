@@ -19,40 +19,40 @@ const copy = {
     eyebrow: "ForumFenomen",
     title: "Hakkımızda",
     description:
-      "İçerik üreticilerinin fikirlerini, deneyimlerini ve bilgilerini güvenli bir toplulukta buluşturuyoruz.",
+      "İçerik üreticilerinin birbirinden öğrendiği, deneyimlerini paylaştığı ve birlikte büyüdüğü bir topluluk oluşturuyoruz.",
 
     cards: [
       {
         title: "Neden ForumFenomen?",
         text:
-          "Sosyal medya platformları hızla değişiyor. ForumFenomen, içerik üreticilerinin gerçek deneyimlerden öğrenebileceği kalıcı bir bilgi alanı oluşturmak için tasarlandı.",
-      },
-      {
-        title: "Kimler İçin?",
-        text:
-          "Yeni başlayanlardan profesyonel içerik üreticilerine, UGC üreticilerinden marka yöneticilerine kadar sosyal medya ekosistemindeki herkese açıktır.",
+          "Bir yerden başlamak zor, değil mi? O hissi çok iyi biliyoruz. İşte tam da bu yüzden içerik üreticilerinin birbirine destek olduğu, deneyimlerini paylaştığı ve birlikte büyüdüğü bir alan olan ForumFenomen’i kurduk. Hepimiz bir gün aynı soruların cevabını bulmak için saatlerce internette dolaştık. Şimdi ise Instagram’da, TikTok’ta ve YouTube’da içerik üreten ya da üretmeye başlamak isteyen herkesin kendini ait hissedebileceği bir buluşma noktası olmayı hedefliyoruz.",
       },
       {
         title: "Topluluk Yaklaşımımız",
         text:
-          "Saygılı tartışmayı, kaynak gösterilen bilgiyi, şeffaflığı ve üyelerin birbirine yardımcı olduğu sağlıklı bir topluluk kültürünü destekliyoruz.",
+          "Amacımız basit: Birbirimizden öğrenmek, deneyimlerimizi paylaşmak ve birlikte büyümek. Marka iş birliklerinin nasıl kurulduğundan algoritmaların nasıl işlediğine, video çekim ve kurgu tekniklerinden SEO ipuçlarına, yasal süreçlerden içerik üretiminin tüm inceliklerine kadar influencer dünyasına dair birçok konuyu birlikte konuşuyoruz. Bu platformda soru sormak, fikir paylaşmak ve birbirimize destek olmak en değerli şeylerden biri.",
+      },
+      {
+        title: "Kimler İçin?",
+        text:
+          "UGC üreticileri, influencer adayları, deneyimli içerik üreticileri ve dijital dünyada kendini geliştirmek isteyen herkes için buradayız. Çünkü burada seviye fark etmiyor; yeni başlayan da yıllardır bu işin içinde olan da aynı çatı altında buluşuyor. Önemli olan paylaşmaya ve birlikte büyümeye istekli olman. Unutma, sosyal medyadaki tatlı rekabet hepimize yeter. :)",
       },
       {
         title: "Gelecek Planımız",
         text:
-          "Forum yapısının ardından eğitim programları, içerik üretici araçları ve mobil uygulama deneyimi geliştirmeyi hedefliyoruz.",
+          "ForumFenomen’i yalnızca bir forum değil, içerik üreticilerinin birlikte geliştiği güçlü bir topluluk hâline getirmek istiyoruz. Zamanla daha fazla eğitim, rehber içerik, etkinlik ve faydalı kaynak sunarak içerik üreticilerinin ihtiyaç duyduğu ilk adreslerden biri olmayı hedefliyoruz.",
       },
     ],
 
-    valuesTitle: "Değerlerimiz",
+    valuesTitle: "Birlikte Yol Alalım",
     valuesText:
-      "ForumFenomen’de içeriklerin faydalı, anlaşılır, güvenli ve topluluğa değer katan nitelikte olmasını önemsiyoruz.",
+      "Sen bir şey öğrenirken belki de başkasına ilham olacaksın. Nitekim senin de paylaşacak, öğretecek ve katkı sağlayacak bir deneyimin var. Sen de aramıza katıl, birlikte yol alalım. ♥️",
 
     tags: [
       "Bilgi paylaşımı",
-      "Güvenli topluluk",
+      "Karşılıklı destek",
       "İçerik üretimi",
-      "Şeffaflık",
+      "Deneyim paylaşımı",
       "Birlikte büyüme",
     ],
 
@@ -64,40 +64,40 @@ const copy = {
     eyebrow: "ForumFenomen",
     title: "About Us",
     description:
-      "We bring creators' ideas, experiences and knowledge together in a safe community.",
+      "We are building a community where content creators learn from one another, share their experiences and grow together.",
 
     cards: [
       {
         title: "Why ForumFenomen?",
         text:
-          "Social platforms change quickly. ForumFenomen is designed to create a permanent knowledge space where creators can learn from real experiences.",
-      },
-      {
-        title: "Who Is It For?",
-        text:
-          "It is open to everyone in the social media ecosystem, from beginners and professional creators to UGC creators and brand managers.",
+          "Getting started is difficult, isn’t it? We know that feeling very well. That is exactly why we created ForumFenomen: a space where content creators support one another, share their experiences and grow together. At some point, all of us have spent hours searching online for answers to the same questions. Today, we aim to become a meeting place where everyone who creates content—or wants to start creating—on Instagram, TikTok or YouTube can feel that they belong.",
       },
       {
         title: "Our Community Approach",
         text:
-          "We support respectful discussion, sourced information, transparency and a healthy community culture where members help one another.",
+          "Our goal is simple: to learn from one another, share our experiences and grow together. From building brand partnerships and understanding algorithms to video production, editing techniques, SEO tips, legal processes and every detail of content creation, we discuss a wide range of topics from the creator world together. Asking questions, sharing ideas and supporting one another are among the things we value most on this platform.",
       },
       {
-        title: "Our Future",
+        title: "Who Is It For?",
         text:
-          "After the forum experience, we aim to develop training programs, creator tools and a mobile application.",
+          "We are here for UGC creators, aspiring influencers, experienced content creators and everyone who wants to grow in the digital world. Experience level does not matter here; beginners and people who have been in the industry for years meet under the same roof. What matters is your willingness to share and grow together. Remember, there is enough friendly competition on social media for all of us. :)",
+      },
+      {
+        title: "Our Future Plans",
+        text:
+          "We want ForumFenomen to become more than a forum: a strong community where content creators develop together. Over time, we aim to provide more training, guides, events and useful resources, and to become one of the first places creators turn to when they need support.",
       },
     ],
 
-    valuesTitle: "Our Values",
+    valuesTitle: "Let’s Move Forward Together",
     valuesText:
-      "We care about content being useful, understandable, safe and valuable to the community.",
+      "While you are learning something, you may inspire someone else. You also have experiences worth sharing, teaching and contributing. Join us and let’s move forward together. ♥️",
 
     tags: [
       "Knowledge sharing",
-      "Safe community",
+      "Mutual support",
       "Content creation",
-      "Transparency",
+      "Experience sharing",
       "Growing together",
     ],
 
