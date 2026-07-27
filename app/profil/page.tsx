@@ -24,6 +24,11 @@ import styles from "./page.module.css";
 
 type Theme = "dark" | "light";
 
+type ProfileRole =
+  | "user"
+  | "moderator"
+  | "admin";
+
 type VisibilityOption =
   | "public"
   | "followers"
@@ -167,8 +172,9 @@ const translations = {
     name: "Görünen Ad",
     username: "Kullanıcı Adı",
     bio: "Kısa Biyografi",
-    memberBadge: "Fenomen",
-    founderBadge: "Kurucu Üye",
+    memberBadge: "Üye",
+    moderatorBadge: "Moderatör",
+    adminBadge: "Yönetici",
     topicCount: "Konu",
     commentCount: "Yorum",
     followerCount: "Takipçi",
@@ -248,8 +254,9 @@ const translations = {
     name: "Display Name",
     username: "Username",
     bio: "Short Biography",
-    memberBadge: "Fenomen",
-    founderBadge: "Founding Member",
+    memberBadge: "Member",
+    moderatorBadge: "Moderator",
+    adminBadge: "Administrator",
     topicCount: "Topics",
     commentCount: "Comments",
     followerCount: "Followers",
@@ -631,6 +638,9 @@ export default function ProfilePage() {
   const [profileName, setProfileName] =
     useState("ForumFenomen Üyesi");
 
+  const [profileRole, setProfileRole] =
+    useState<ProfileRole>("user");
+
   const [username, setUsername] =
     useState("@fenomen");
 
@@ -908,6 +918,7 @@ export default function ProfilePage() {
         .select(`
   display_name,
   username,
+  role,
   username_is_temporary,
   avatar_url,
   bio,
@@ -955,6 +966,13 @@ export default function ProfilePage() {
           profile.display_name.trim()
           ? profile.display_name.trim()
           : fallbackName
+      );
+
+      setProfileRole(
+        profile?.role === "admin" ||
+          profile?.role === "moderator"
+          ? profile.role
+          : "user"
       );
 
       const resolvedUsername =
@@ -4211,10 +4229,6 @@ export default function ProfilePage() {
             <div className={styles.profileText}>
               <div className={styles.nameRow}>
                 <h1>{profileName}</h1>
-
-                <span className={styles.verifiedBadge}>
-                  <CheckIcon />
-                </span>
               </div>
 
               <span className={styles.username}>
@@ -4222,8 +4236,21 @@ export default function ProfilePage() {
               </span>
 
               <div className={styles.profileBadges}>
-                <span>{t.memberBadge}</span>
-                <span>{t.founderBadge}</span>
+                <span className={styles.memberRoleBadge}>
+                  {t.memberBadge}
+                </span>
+
+                {profileRole === "moderator" ? (
+                  <span className={styles.moderatorRoleBadge}>
+                    {t.moderatorBadge}
+                  </span>
+                ) : null}
+
+                {profileRole === "admin" ? (
+                  <span className={styles.adminRoleBadge}>
+                    {t.adminBadge}
+                  </span>
+                ) : null}
               </div>
 
               <p>{profileBio}</p>

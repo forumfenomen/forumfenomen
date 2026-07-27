@@ -29,6 +29,11 @@ import styles from "../page.module.css";
 
 type Theme = "dark" | "light";
 
+type ProfileRole =
+    | "user"
+    | "moderator"
+    | "admin";
+
 type PublicProfileTab =
     | "topics"
     | "comments"
@@ -46,6 +51,7 @@ type PublicProfileRow = {
     username: string | null;
     avatar_url: string | null;
     bio: string | null;
+    role: ProfileRole;
 
     profile_visibility: VisibilityOption;
     followers_visibility: VisibilityOption;
@@ -379,6 +385,7 @@ export default function PublicProfilePage() {
   username,
   avatar_url,
   bio,
+  role,
   profile_visibility,
   followers_visibility,
   following_visibility,
@@ -1314,20 +1321,8 @@ export default function PublicProfilePage() {
                                         styles.profileText
                                     }
                                 >
-                                    <div
-                                        className={
-                                            styles.nameRow
-                                        }
-                                    >
+                                    <div className={styles.nameRow}>
                                         <h1>{profileName}</h1>
-
-                                        <span
-                                            className={
-                                                styles.verifiedBadge
-                                            }
-                                        >
-                                            <CheckIcon />
-                                        </span>
                                     </div>
 
                                     <span
@@ -1338,12 +1333,36 @@ export default function PublicProfilePage() {
                                         {profileUsername}
                                     </span>
 
-                                    <div
-                                        className={
-                                            styles.profileBadges
-                                        }
-                                    >
-                                        <span>Fenomen</span>
+                                    <div className={styles.profileBadges}>
+                                        <span className={styles.memberRoleBadge}>
+                                            {language === "tr"
+                                                ? "Üye"
+                                                : "Member"}
+                                        </span>
+
+                                        {profile.role === "moderator" ? (
+                                            <span
+                                                className={
+                                                    styles.moderatorRoleBadge
+                                                }
+                                            >
+                                                {language === "tr"
+                                                    ? "Moderatör"
+                                                    : "Moderator"}
+                                            </span>
+                                        ) : null}
+
+                                        {profile.role === "admin" ? (
+                                            <span
+                                                className={
+                                                    styles.adminRoleBadge
+                                                }
+                                            >
+                                                {language === "tr"
+                                                    ? "Yönetici"
+                                                    : "Administrator"}
+                                            </span>
+                                        ) : null}
                                     </div>
 
                                     <p>
@@ -1894,207 +1913,207 @@ export default function PublicProfilePage() {
             </div>
 
             {reportOpen && profile ? (
-  <div
-    className={styles.profileReportBackdrop}
-    role="presentation"
-    onClick={() => {
-      if (!reportLoading) {
-        setReportOpen(false);
-      }
-    }}
-  >
-    <section
-      className={styles.profileReportModal}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="profile-report-title"
-      onClick={(event) => {
-        event.stopPropagation();
-      }}
-    >
-      <div className={styles.profileReportHeader}>
-        <div>
-          <span>
-            {language === "tr"
-              ? "GÜVENLİK"
-              : "SAFETY"}
-          </span>
+                <div
+                    className={styles.profileReportBackdrop}
+                    role="presentation"
+                    onClick={() => {
+                        if (!reportLoading) {
+                            setReportOpen(false);
+                        }
+                    }}
+                >
+                    <section
+                        className={styles.profileReportModal}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="profile-report-title"
+                        onClick={(event) => {
+                            event.stopPropagation();
+                        }}
+                    >
+                        <div className={styles.profileReportHeader}>
+                            <div>
+                                <span>
+                                    {language === "tr"
+                                        ? "GÜVENLİK"
+                                        : "SAFETY"}
+                                </span>
 
-          <h2 id="profile-report-title">
-            {language === "tr"
-              ? "Şikâyet Et"
-              : "Report"}
-          </h2>
+                                <h2 id="profile-report-title">
+                                    {language === "tr"
+                                        ? "Şikâyet Et"
+                                        : "Report"}
+                                </h2>
 
-          <p>
-            {language === "tr"
-              ? `${profileName} adlı kullanıcıyı neden şikâyet ettiğini belirt.`
-              : `Tell us why you are reporting ${profileName}.`}
-          </p>
-        </div>
+                                <p>
+                                    {language === "tr"
+                                        ? `${profileName} adlı kullanıcıyı neden şikâyet ettiğini belirt.`
+                                        : `Tell us why you are reporting ${profileName}.`}
+                                </p>
+                            </div>
 
-        <button
-          type="button"
-          aria-label={
-            language === "tr"
-              ? "Kapat"
-              : "Close"
-          }
-          disabled={reportLoading}
-          onClick={() => {
-            setReportOpen(false);
-          }}
-        >
-          ×
-        </button>
-      </div>
+                            <button
+                                type="button"
+                                aria-label={
+                                    language === "tr"
+                                        ? "Kapat"
+                                        : "Close"
+                                }
+                                disabled={reportLoading}
+                                onClick={() => {
+                                    setReportOpen(false);
+                                }}
+                            >
+                                ×
+                            </button>
+                        </div>
 
-      <label className={styles.profileReportField}>
-        <span>
-          {language === "tr"
-            ? "Şikâyet nedeni"
-            : "Report reason"}
-        </span>
+                        <label className={styles.profileReportField}>
+                            <span>
+                                {language === "tr"
+                                    ? "Şikâyet nedeni"
+                                    : "Report reason"}
+                            </span>
 
-        <select
-          value={reportReason}
-          disabled={reportLoading}
-          onChange={(event) => {
-            setReportReason(event.target.value);
-            setReportError(null);
-          }}
-        >
-          <option value="">
-            {language === "tr"
-              ? "Bir neden seç"
-              : "Select a reason"}
-          </option>
+                            <select
+                                value={reportReason}
+                                disabled={reportLoading}
+                                onChange={(event) => {
+                                    setReportReason(event.target.value);
+                                    setReportError(null);
+                                }}
+                            >
+                                <option value="">
+                                    {language === "tr"
+                                        ? "Bir neden seç"
+                                        : "Select a reason"}
+                                </option>
 
-          <option value="spam">
-            {language === "tr"
-              ? "Spam veya yanıltıcı profil"
-              : "Spam or misleading profile"}
-          </option>
+                                <option value="spam">
+                                    {language === "tr"
+                                        ? "Spam veya yanıltıcı profil"
+                                        : "Spam or misleading profile"}
+                                </option>
 
-          <option value="harassment">
-            {language === "tr"
-              ? "Taciz veya zorbalık"
-              : "Harassment or bullying"}
-          </option>
+                                <option value="harassment">
+                                    {language === "tr"
+                                        ? "Taciz veya zorbalık"
+                                        : "Harassment or bullying"}
+                                </option>
 
-          <option value="impersonation">
-            {language === "tr"
-              ? "Başkasını taklit etme"
-              : "Impersonation"}
-          </option>
+                                <option value="impersonation">
+                                    {language === "tr"
+                                        ? "Başkasını taklit etme"
+                                        : "Impersonation"}
+                                </option>
 
-          <option value="illegal_content">
-            {language === "tr"
-              ? "Yasa dışı veya zararlı içerik"
-              : "Illegal or harmful content"}
-          </option>
+                                <option value="illegal_content">
+                                    {language === "tr"
+                                        ? "Yasa dışı veya zararlı içerik"
+                                        : "Illegal or harmful content"}
+                                </option>
 
-          <option value="other">
-            {language === "tr"
-              ? "Diğer"
-              : "Other"}
-          </option>
-        </select>
-      </label>
+                                <option value="other">
+                                    {language === "tr"
+                                        ? "Diğer"
+                                        : "Other"}
+                                </option>
+                            </select>
+                        </label>
 
-      <label className={styles.profileReportField}>
-        <span>
-          {language === "tr"
-            ? "Açıklama"
-            : "Details"}
-        </span>
+                        <label className={styles.profileReportField}>
+                            <span>
+                                {language === "tr"
+                                    ? "Açıklama"
+                                    : "Details"}
+                            </span>
 
-        <textarea
-          value={reportDetails}
-          maxLength={2000}
-          disabled={reportLoading}
-          placeholder={
-            language === "tr"
-              ? "Durumu kısaca açıkla..."
-              : "Briefly describe the issue..."
-          }
-          onChange={(event) => {
-            setReportDetails(
-              event.target.value
-            );
+                            <textarea
+                                value={reportDetails}
+                                maxLength={2000}
+                                disabled={reportLoading}
+                                placeholder={
+                                    language === "tr"
+                                        ? "Durumu kısaca açıkla..."
+                                        : "Briefly describe the issue..."
+                                }
+                                onChange={(event) => {
+                                    setReportDetails(
+                                        event.target.value
+                                    );
 
-            setReportError(null);
-          }}
-        />
+                                    setReportError(null);
+                                }}
+                            />
 
-        <small>
-          {reportDetails.length}/2000
-        </small>
-      </label>
+                            <small>
+                                {reportDetails.length}/2000
+                            </small>
+                        </label>
 
-      {reportError ? (
-        <div
-          className={
-            styles.profileReportError
-          }
-          role="alert"
-        >
-          {reportError}
-        </div>
-      ) : null}
+                        {reportError ? (
+                            <div
+                                className={
+                                    styles.profileReportError
+                                }
+                                role="alert"
+                            >
+                                {reportError}
+                            </div>
+                        ) : null}
 
-      {reportSuccess ? (
-        <div
-          className={
-            styles.profileReportSuccess
-          }
-          role="status"
-        >
-          {language === "tr"
-            ? "Şikâyetin başarıyla gönderildi."
-            : "Your report was submitted successfully."}
-        </div>
-      ) : null}
+                        {reportSuccess ? (
+                            <div
+                                className={
+                                    styles.profileReportSuccess
+                                }
+                                role="status"
+                            >
+                                {language === "tr"
+                                    ? "Şikâyetin başarıyla gönderildi."
+                                    : "Your report was submitted successfully."}
+                            </div>
+                        ) : null}
 
-      <div
-        className={
-          styles.profileReportActions
-        }
-      >
-        <button
-          type="button"
-          disabled={reportLoading}
-          onClick={() => {
-            setReportOpen(false);
-          }}
-        >
-          {language === "tr"
-            ? "Vazgeç"
-            : "Cancel"}
-        </button>
+                        <div
+                            className={
+                                styles.profileReportActions
+                            }
+                        >
+                            <button
+                                type="button"
+                                disabled={reportLoading}
+                                onClick={() => {
+                                    setReportOpen(false);
+                                }}
+                            >
+                                {language === "tr"
+                                    ? "Vazgeç"
+                                    : "Cancel"}
+                            </button>
 
-        <button
-          type="button"
-          disabled={
-            reportLoading ||
-            !reportReason
-          }
-          onClick={() => {
-            void handleProfileReport();
-          }}
-        >
-          {reportLoading
-            ? language === "tr"
-              ? "Gönderiliyor..."
-              : "Submitting..."
-            : language === "tr"
-              ? "Şikâyeti Gönder"
-              : "Submit Report"}
-        </button>
-      </div>
-    </section>
-  </div>
-) : null}
+                            <button
+                                type="button"
+                                disabled={
+                                    reportLoading ||
+                                    !reportReason
+                                }
+                                onClick={() => {
+                                    void handleProfileReport();
+                                }}
+                            >
+                                {reportLoading
+                                    ? language === "tr"
+                                        ? "Gönderiliyor..."
+                                        : "Submitting..."
+                                    : language === "tr"
+                                        ? "Şikâyeti Gönder"
+                                        : "Submit Report"}
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            ) : null}
 
             <ForumFooter />
 

@@ -349,7 +349,7 @@
   font-weight: 800;
 }
 
-.profileBadges span:first-child {
+.profileBadges .memberRoleBadge {
   color: #f390f2;
 
   border:
@@ -359,7 +359,7 @@
     rgba(217, 49, 229, 0.1);
 }
 
-.profileBadges span:last-child {
+.profileBadges .moderatorRoleBadge {
   color: #8fb8ff;
 
   border:
@@ -367,6 +367,16 @@
 
   background:
     rgba(66, 108, 240, 0.09);
+}
+
+.profileBadges .adminRoleBadge {
+  color: #ffd98a;
+
+  border:
+    1px solid rgba(255, 194, 74, 0.32);
+
+  background:
+    rgba(255, 177, 36, 0.1);
 }
 
 .profileText p {
@@ -4940,9 +4950,7 @@
 /* Konu kartının sağındaki eski ok */
 
 /* Kart içeriğine kaldırma butonu için boşluk */
-.savedTopicRow
-.savedTopicLink
-> button {
+.savedTopicRow .savedTopicLink>button {
   grid-template-columns:
     39px minmax(0, 1fr) !important;
 
@@ -4950,9 +4958,7 @@
 }
 
 /* Küçük kaldırma butonu */
-.simpleList
-.savedTopicRow
-.removeSavedButton {
+.simpleList .savedTopicRow .removeSavedButton {
   position: absolute !important;
   z-index: 3;
 
@@ -5001,9 +5007,7 @@
     transform 0.18s ease !important;
 }
 
-.simpleList
-.savedTopicRow
-.removeSavedButton:hover {
+.simpleList .savedTopicRow .removeSavedButton:hover {
   color: #ff9ca7 !important;
 
   border-color:
@@ -5013,13 +5017,10 @@
     rgba(239, 68, 68, 0.09) !important;
 
   transform:
-    translateY(-50%)
-    scale(1.04) !important;
+    translateY(-50%) scale(1.04) !important;
 }
 
-.simpleList
-.savedTopicRow
-.removeSavedButton:disabled {
+.simpleList .savedTopicRow .removeSavedButton:disabled {
   cursor: wait;
 
   opacity: 0.5;
@@ -5029,15 +5030,11 @@
 }
 
 @media (max-width: 640px) {
-  .savedTopicRow
-  .savedTopicLink
-  > button {
+  .savedTopicRow .savedTopicLink>button {
     padding-right: 52px !important;
   }
 
-  .simpleList
-  .savedTopicRow
-  .removeSavedButton {
+  .simpleList .savedTopicRow .removeSavedButton {
     right: 10px !important;
 
     width: 29px !important;
@@ -5052,9 +5049,7 @@
 
 /* SAVED TOPICS CLEAN FINAL END */
 
-.simpleList
-.savedTopicRow
-.removeSavedButton svg {
+.simpleList .savedTopicRow .removeSavedButton svg {
   display: block !important;
 
   width: 14px !important;
@@ -5071,9 +5066,7 @@
 
 /* SAVED REMOVE ICON TRUE CENTER */
 
-.simpleList
-.savedTopicRow
-.removeSavedButton {
+.simpleList .savedTopicRow .removeSavedButton {
   display: flex !important;
 
   align-items: center !important;
@@ -5086,9 +5079,7 @@
   text-align: center !important;
 }
 
-.simpleList
-.savedTopicRow
-.removeSavedButton svg {
+.simpleList .savedTopicRow .removeSavedButton svg {
   display: block !important;
 
   width: 14px !important;
@@ -5183,7 +5174,7 @@
   line-height: 1.6;
 }
 
-.profileReportHeader > button {
+.profileReportHeader>button {
   display: grid;
   place-items: center;
 
@@ -5212,7 +5203,7 @@
   margin-top: 14px;
 }
 
-.profileReportField > span {
+.profileReportField>span {
   color: rgba(255, 255, 255, 0.58);
   font-size: 11px;
   font-weight: 800;
@@ -5303,11 +5294,9 @@
   color: #ffffff;
   border: 0;
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #d837e5,
-      #6e65ff
-    );
+      #6e65ff);
 }
 
 .profileReportActions button:disabled {
@@ -5343,8 +5332,8 @@
   gap: 10px;
 }
 
-.profileActions > a,
-.profileActions > button {
+.profileActions>a,
+.profileActions>button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -5386,7 +5375,7 @@
     0 0 0 3px rgba(190, 55, 235, 0.1);
 }
 
-.usernameInputWrap > span {
+.usernameInputWrap>span {
   flex: 0 0 auto;
   padding: 0 0 0 14px;
 
@@ -5440,11 +5429,11 @@
   font-weight: 700;
 }
 
-.editPanel form > label {
+.editPanel form>label {
   align-self: start;
 }
 
-.editPanel form > label > input {
+.editPanel form>label>input {
   width: 100%;
   height: 48px;
   min-height: 48px;
