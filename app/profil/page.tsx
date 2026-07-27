@@ -4586,42 +4586,11 @@ export default function ProfilePage() {
                 ))}
               </nav>
 
-              <section className={styles.levelCard}>
-                <div className={styles.levelHeading}>
-                  <div>
-                    <span>{t.level}</span>
-                    <strong>
-                      {t.levelNumber}
-                    </strong>
-                  </div>
 
-                  <span className={styles.levelNumber}>
-                    7
-                  </span>
-                </div>
-
-                <div className={styles.progressTrack}>
-                  <span />
-                </div>
-
-                <div className={styles.progressText}>
-                  <span>{t.levelProgress}</span>
-                  <strong>{t.points}</strong>
-                </div>
-              </section>
             </aside>
 
-            <aside>...</aside>
 
             <section className={styles.profileContent}>
-              {renderSectionContent()}
-            </section>
-
-            <section
-              ref={profileContentRef}
-              id="profile-main-content"
-              className={styles.profileContent}
-            >
               {renderSectionContent()}
             </section>
           </div>
