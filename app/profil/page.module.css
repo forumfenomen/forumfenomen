@@ -5458,3 +5458,40 @@
 .usernameError {
   margin-bottom: 0;
 }
+
+/* OWN PROFILE MOBILE ACTIONS FIX */
+
+@media (max-width: 600px) {
+  .profileHero
+    .profileActions:has(.logoutButton) {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+
+    grid-column: 1 / -1;
+
+    display: flex !important;
+    width: 100% !important;
+
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+
+    gap: 8px !important;
+    margin: -3px 0 0 !important;
+  }
+
+  .profileHero
+    .profileActions:has(.logoutButton)
+    .editButton,
+  .profileHero
+    .profileActions:has(.logoutButton)
+    .settingsButton {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+
+    flex: 0 0 38px !important;
+  }
+}
