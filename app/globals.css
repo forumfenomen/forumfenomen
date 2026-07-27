@@ -13176,3 +13176,21 @@ html[data-theme="light"]
     box-sizing: border-box !important;
   }
 }
+
+/* LIGHT THEME INSIGHT CARDS FIX */
+
+html[data-theme="light"] .ff-insight-grid article {
+  border-color: rgba(92, 70, 140, 0.16) !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+
+  box-shadow:
+    0 8px 22px rgba(58, 45, 92, 0.06) !important;
+}
+
+html[data-theme="light"] .ff-insight-grid strong {
+  color: #24212e !important;
+}
+
+html[data-theme="light"] .ff-insight-grid span {
+  color: #676273 !important;
+}
