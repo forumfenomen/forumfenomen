@@ -84,6 +84,7 @@ type CommentRow = {
     profiles: {
         display_name: string | null;
         username: string | null;
+        avatar_url: string | null;
     } | null;
 };
 
@@ -520,13 +521,8 @@ export default function TopicDetailPage() {
         created_at,
         parent_comment_id,
         like_count,
-        dislike_count,
-        profiles:profiles!topic_comments_author_id_fkey (
-  display_name,
-  username
-  
-)
-      `)
+        dislike_count
+    `)
                 .eq("topic_id", topicId)
                 .eq("status", "published")
                 .order("created_at", {
@@ -548,8 +544,59 @@ export default function TopicDetailPage() {
                 return;
             }
 
+            const commentRows =
+                (data ?? []) as Omit<CommentRow, "profiles">[];
+
+            const authorIds = [
+                ...new Set(
+                    commentRows.map((comment) => comment.author_id)
+                ),
+            ];
+
+            let profileMap = new Map<
+                string,
+                CommentRow["profiles"]
+            >();
+
+            if (authorIds.length > 0) {
+                const {
+                    data: profileData,
+                    error: profileError,
+                } = await supabase
+                    .from("public_profiles")
+                    .select(`
+            id,
+            display_name,
+            username,
+            avatar_url
+        `)
+                    .in("id", authorIds);
+
+                if (profileError) {
+                    console.error(
+                        "Yorum profilleri alınamadı:",
+                        profileError.message
+                    );
+                } else {
+                    profileMap = new Map(
+                        (profileData ?? []).map((profile) => [
+                            profile.id,
+                            {
+                                display_name: profile.display_name,
+                                username: profile.username,
+                                avatar_url: profile.avatar_url,
+                            },
+                        ])
+                    );
+                }
+            }
+
             setComments(
-                (data ?? []) as unknown as CommentRow[]
+                commentRows.map((comment) => ({
+                    ...comment,
+                    profiles:
+                        profileMap.get(comment.author_id) ?? null,
+                }))
             );
 
             setCommentsLoading(false);
@@ -1159,19 +1206,14 @@ export default function TopicDetailPage() {
                     status: "published",
                 })
                 .select(`
-        id,
-        author_id,
-        content,
-        created_at,
-        parent_comment_id,
-        like_count,
-        dislike_count,
-        profiles:profiles!topic_comments_author_id_fkey (
-  display_name,
-  username
-  
-)
-      `)
+    id,
+    author_id,
+    content,
+    created_at,
+    parent_comment_id,
+    like_count,
+    dislike_count
+`)
                 .single();
 
             if (error || !data) {
@@ -1184,8 +1226,35 @@ export default function TopicDetailPage() {
                 return;
             }
 
-            const newComment =
-                data as unknown as CommentRow;
+            const insertedComment =
+                data as Omit<CommentRow, "profiles">;
+
+            const {
+                data: authorProfile,
+            } = await supabase
+                .from("public_profiles")
+                .select(`
+        id,
+        display_name,
+        username,
+        avatar_url
+    `)
+                .eq("id", insertedComment.author_id)
+                .maybeSingle();
+
+            const newComment: CommentRow = {
+                ...insertedComment,
+                profiles: authorProfile
+                    ? {
+                        display_name:
+                            authorProfile.display_name,
+                        username:
+                            authorProfile.username,
+                        avatar_url:
+                            authorProfile.avatar_url,
+                    }
+                    : null,
+            };
 
             setComments((current) => [
                 newComment,
@@ -1636,13 +1705,20 @@ export default function TopicDetailPage() {
                                                             }
                                                         >
                                                             <span className={styles.commentAvatar}>
-                                                                {commentAuthor
-                                                                    .slice(0, 1)
-                                                                    .toLocaleUpperCase(
-                                                                        language === "tr"
-                                                                            ? "tr-TR"
-                                                                            : "en-US"
-                                                                    )}
+                                                                {comment.profiles?.avatar_url ? (
+                                                                    <img
+                                                                        src={comment.profiles.avatar_url}
+                                                                        alt=""
+                                                                    />
+                                                                ) : (
+                                                                    commentAuthor
+                                                                        .slice(0, 1)
+                                                                        .toLocaleUpperCase(
+                                                                            language === "tr"
+                                                                                ? "tr-TR"
+                                                                                : "en-US"
+                                                                        )
+                                                                )}
                                                             </span>
 
                                                             <span
@@ -1672,13 +1748,20 @@ export default function TopicDetailPage() {
                                                             }
                                                         >
                                                             <span className={styles.commentAvatar}>
-                                                                {commentAuthor
-                                                                    .slice(0, 1)
-                                                                    .toLocaleUpperCase(
-                                                                        language === "tr"
-                                                                            ? "tr-TR"
-                                                                            : "en-US"
-                                                                    )}
+                                                                {comment.profiles?.avatar_url ? (
+                                                                    <img
+                                                                        src={comment.profiles.avatar_url}
+                                                                        alt=""
+                                                                    />
+                                                                ) : (
+                                                                    commentAuthor
+                                                                        .slice(0, 1)
+                                                                        .toLocaleUpperCase(
+                                                                            language === "tr"
+                                                                                ? "tr-TR"
+                                                                                : "en-US"
+                                                                        )
+                                                                )}
                                                             </span>
 
                                                             <strong>{commentAuthor}</strong>
