@@ -3924,3 +3924,106 @@
 }
 
 /* CREATE TOPIC MOBILE READABILITY V8 END */
+
+/* CREATE TOPIC DESKTOP READABILITY V9 START */
+
+.sectionLabel h3 {
+  font-size: 17px !important;
+  line-height: 1.3 !important;
+}
+
+.sectionLabel p {
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+}
+
+.categoryGrid strong {
+  font-size: 13px !important;
+}
+
+.categoryGrid small {
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+}
+
+.subcategoryList button {
+  font-size: 13px !important;
+}
+
+.inputShell input,
+.tagForm input {
+  font-size: 14px !important;
+}
+
+.editorShell textarea {
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+}
+
+.editorFooter {
+  font-size: 11px !important;
+}
+
+.tagList button {
+  font-size: 12px !important;
+}
+
+.uploadButton strong {
+  font-size: 14px !important;
+}
+
+.uploadButton small {
+  font-size: 11px !important;
+  line-height: 1.4 !important;
+}
+
+.comingSoonBadge {
+  font-size: 11px !important;
+}
+
+.educationNote p {
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+}
+
+.selectedCategoryBadge {
+  font-size: 12px !important;
+}
+
+.sidebarCard span,
+.sidebarCard small,
+.sidebarCard p {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
+.sidebarCard strong,
+.sidebarCard h3 {
+  font-size: 14px !important;
+}
+
+.progressList li {
+  font-size: 12px !important;
+}
+
+.draftCard p {
+  font-size: 12px !important;
+  line-height: 1.55 !important;
+}
+
+.draftCard button {
+  font-size: 12px !important;
+}
+
+/* CREATE TOPIC DESKTOP READABILITY V9 END */
+/* CREATE TOPIC MOBILE CLEANUP V10 START */
+
+@media (max-width: 680px) {
+  .panelHeading,
+  .guidelinesCard,
+  .progressCard {
+    display: none !important;
+  }
+}
+
+/* CREATE TOPIC MOBILE CLEANUP V10 END */
