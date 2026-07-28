@@ -13363,3 +13363,12 @@ html[data-theme="light"] .ff-insight-grid span {
     height: 23px;
   }
 }
+
+/* MOBILE SEARCH INPUT ZOOM FIX START */
+@media (max-width: 680px) {
+  .ff-site-search-input input,
+  .ff-feed-header .ff-site-search-input input {
+    font-size: 16px !important;
+  }
+}
+/* MOBILE SEARCH INPUT ZOOM FIX END */

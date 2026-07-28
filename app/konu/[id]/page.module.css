@@ -2060,9 +2060,9 @@
 
 /* Masaüstü konu başlığı dengesi */
 .topicCard h1 {
-    font-size: clamp(26px, 3.2vw, 36px);
-    line-height: 1.16;
-    letter-spacing: -0.8px;
+    font-size: 28px !important;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
 }
 
 /* Konu sahibi profil bağlantısı */
