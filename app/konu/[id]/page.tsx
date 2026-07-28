@@ -880,7 +880,29 @@ export default function TopicDetailPage() {
         setCommentMessage(null);
 
         window.requestAnimationFrame(() => {
-            commentInputRef.current?.focus();
+            const input = commentInputRef.current;
+
+            if (!input) {
+                return;
+            }
+
+            input.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            });
+
+            window.setTimeout(() => {
+                input.focus({
+                    preventScroll: true,
+                });
+
+                window.setTimeout(() => {
+                    input.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                    });
+                }, 300);
+            }, 180);
         });
     }
 

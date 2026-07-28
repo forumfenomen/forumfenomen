@@ -959,6 +959,7 @@ const topics: Topic[] = [
 ];
 
 export default function CategoriesPage() {
+  
   const [language, setLanguage] =
     useState<ForumLanguage>("tr");
 
@@ -982,6 +983,54 @@ export default function CategoriesPage() {
 
   const [activeTab, setActiveTab] =
     useState<TabId>("popular");
+
+      useEffect(() => {
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const groupSlug =
+    params.get("group");
+
+  const categorySlug =
+    params.get("category");
+
+  if (!groupSlug) {
+    return;
+  }
+
+  const targetGroup =
+    categoryData.find(
+      (category) =>
+        category.slug === groupSlug
+    );
+
+  if (!targetGroup) {
+    return;
+  }
+
+  setSelectedCategory(
+    targetGroup.id
+  );
+
+  setActiveTab("popular");
+
+  if (!categorySlug) {
+    setSelectedSubcategory(null);
+    return;
+  }
+
+  const targetSubcategory =
+    targetGroup.subcategories.find(
+      (subcategory) =>
+        subcategory.slug === categorySlug
+    );
+
+  setSelectedSubcategory(
+    targetSubcategory?.id ?? null
+  );
+}, [categoryData]);
 
 
 

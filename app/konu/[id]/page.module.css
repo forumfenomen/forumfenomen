@@ -2240,3 +2240,23 @@
 }
 
 /* COMMENT PROFILE AVATAR V27 END */
+
+/* TOPIC TITLE SMALLER FINAL V30 START */
+
+.topicCard h1 {
+  max-width: 700px !important;
+  font-size: clamp(23px, 3.2vw, 34px) !important;
+  line-height: 1.18 !important;
+  letter-spacing: -0.7px !important;
+}
+
+@media (max-width: 680px) {
+  .topicCard h1 {
+    margin-top: 14px !important;
+    font-size: 22px !important;
+    line-height: 1.22 !important;
+    letter-spacing: -0.4px !important;
+  }
+}
+
+/* TOPIC TITLE SMALLER FINAL V30 END */

@@ -432,6 +432,11 @@ export default function NotificationBell() {
     setIsOpen(false);
 
     if (href) {
+      if (notification.related_comment_id) {
+        window.location.assign(href);
+        return;
+      }
+
       router.push(href);
     }
   };
