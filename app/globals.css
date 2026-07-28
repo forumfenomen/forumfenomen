@@ -13403,3 +13403,21 @@ html[data-theme="light"] .ff-insight-grid span {
 }
 
 /* GLOBAL MOBILE FORM ZOOM FIX END */
+
+/* MOBILE KEYBOARD NAV HIDE V10 START */
+
+@media (max-width: 680px) {
+  body:has(
+    input:focus,
+    textarea:focus,
+    select:focus,
+    [contenteditable="true"]:focus
+  ) .ff-bottom-nav {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(120%) !important;
+  }
+}
+
+/* MOBILE KEYBOARD NAV HIDE V10 END */
