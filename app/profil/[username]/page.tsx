@@ -330,6 +330,16 @@ export default function PublicProfilePage() {
         useState(0);
 
     useEffect(() => {
+        window.requestAnimationFrame(() => {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "auto",
+            });
+        });
+    }, [usernameParam]);
+
+    useEffect(() => {
         const savedLanguage =
             getForumLanguage();
 
@@ -1452,7 +1462,7 @@ export default function PublicProfilePage() {
                                     </Link>
                                 ) : (
                                     <>
-                                                                                
+
                                     </>
                                 )}
                             </div>
@@ -1814,6 +1824,7 @@ export default function PublicProfilePage() {
                                                     {personDetails.profileUrl ? (
                                                         <Link
                                                             href={personDetails.profileUrl}
+                                                            scroll={true}
                                                             className={styles.followingBadge}
                                                         >
                                                             {language === "tr"
@@ -1910,6 +1921,7 @@ export default function PublicProfilePage() {
                                                     {personDetails.profileUrl ? (
                                                         <Link
                                                             href={personDetails.profileUrl}
+                                                            scroll={true}
                                                             className={styles.followingBadge}
                                                         >
                                                             {language === "tr"

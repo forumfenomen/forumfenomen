@@ -21,6 +21,7 @@ type NotificationRow = {
   related_report_id: string | null;
   related_comment_id: string | null;
   related_topic_id: string | null;
+  related_user_id: string | null;
   is_read: boolean;
   read_at: string | null;
   created_at: string;
@@ -169,6 +170,7 @@ export default function NotificationBell() {
           related_report_id,
           related_comment_id,
           related_topic_id,
+          related_user_id,
           is_read,
           read_at,
           created_at
@@ -374,9 +376,41 @@ export default function NotificationBell() {
     }
   };
 
-  const getNotificationHref = (
+  const getNotificationHref = async (
     notification: NotificationRow
-  ) => {
+  ): Promise<string | null> => {
+    if (
+      notification.type === "user_followed" &&
+      notification.related_user_id
+    ) {
+      const { data: profileData, error } =
+        await supabase
+          .from("public_profiles")
+          .select("username")
+          .eq("id", notification.related_user_id)
+          .maybeSingle();
+
+      if (error) {
+        console.error(
+          "Takip eden kullanıcının profili alınamadı:",
+          error.message
+        );
+
+        return "/profil?section=followers";
+      }
+
+      const username =
+        profileData?.username
+          ?.trim()
+          .replace(/^@/, "");
+
+      if (username) {
+        return `/profil/${encodeURIComponent(username)}`;
+      }
+
+      return "/profil?section=followers";
+    }
+
     if (notification.type === "follow_request") {
       return "/profil?section=followers";
     }
@@ -397,7 +431,7 @@ export default function NotificationBell() {
     notification: NotificationRow
   ) => {
     const href =
-      getNotificationHref(notification);
+      await getNotificationHref(notification);
 
     if (!notification.is_read) {
       const { error } = await supabase.rpc(
