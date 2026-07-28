@@ -330,14 +330,34 @@ export default function PublicProfilePage() {
         useState(0);
 
     useEffect(() => {
-        window.requestAnimationFrame(() => {
+        if (loading) {
+            return;
+        }
+
+        const resetScroll = () => {
             window.scrollTo({
                 top: 0,
                 left: 0,
                 behavior: "auto",
             });
-        });
-    }, [usernameParam]);
+
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        };
+
+        resetScroll();
+
+        const frameId =
+            window.requestAnimationFrame(resetScroll);
+
+        const timeoutId =
+            window.setTimeout(resetScroll, 150);
+
+        return () => {
+            window.cancelAnimationFrame(frameId);
+            window.clearTimeout(timeoutId);
+        };
+    }, [usernameParam, loading]);
 
     useEffect(() => {
         const savedLanguage =
@@ -1179,65 +1199,76 @@ export default function PublicProfilePage() {
                             : "Return to feed"}
                     </Link>
 
-                    {profile && currentUserId !== profile.id && (
+                    {profile && (
                         <div className={styles.publicProfileTopActions}>
-                            <button
-                                type="button"
-                                className={
-                                    isFollowing
-                                        ? styles.publicCompactFollowingButton
-                                        : styles.publicCompactFollowButton
-                                }
-                                disabled={followLoading}
-                                onClick={() => {
-                                    void handleFollowToggle();
-                                }}
-                            >
-                                {isFollowing ? (
-                                    <CheckIcon />
-                                ) : (
-                                    <UserPlusIcon />
-                                )}
+                            {currentUserId === profile.id ? (
+                                <Link
+                                    href="/profil"
+                                    className={styles.publicCompactOwnProfileButton}
+                                >
+                                    Profilime Git
+                                </Link>
+                            ) : (
+                                <>
+                                    <button
+                                        type="button"
+                                        className={
+                                            isFollowing
+                                                ? styles.publicCompactFollowingButton
+                                                : styles.publicCompactFollowButton
+                                        }
+                                        disabled={followLoading}
+                                        onClick={() => {
+                                            void handleFollowToggle();
+                                        }}
+                                    >
+                                        {isFollowing ? (
+                                            <CheckIcon />
+                                        ) : (
+                                            <UserPlusIcon />
+                                        )}
 
-                                <span>
-                                    {followLoading
-                                        ? "..."
-                                        : isFollowing
-                                            ? language === "tr"
-                                                ? "Takiptesin"
-                                                : "Following"
-                                            : language === "tr"
-                                                ? "Takip Et"
-                                                : "Follow"}
-                                </span>
-                            </button>
+                                        <span>
+                                            {followLoading
+                                                ? "..."
+                                                : isFollowing
+                                                    ? language === "tr"
+                                                        ? "Takiptesin"
+                                                        : "Following"
+                                                    : language === "tr"
+                                                        ? "Takip Et"
+                                                        : "Follow"}
+                                        </span>
+                                    </button>
 
-                            <button
-                                type="button"
-                                className={styles.publicCompactFlagButton}
-                                title={
-                                    language === "tr"
-                                        ? "Profili şikâyet et"
-                                        : "Report profile"
-                                }
-                                aria-label={
-                                    language === "tr"
-                                        ? "Profili şikâyet et"
-                                        : "Report profile"
-                                }
-                                onClick={() => {
-                                    if (!currentUserId) {
-                                        router.push("/giris");
-                                        return;
-                                    }
+                                    <button
+                                        type="button"
+                                        className={styles.publicCompactFlagButton}
+                                        title={
+                                            language === "tr"
+                                                ? "Profili şikâyet et"
+                                                : "Report profile"
+                                        }
+                                        aria-label={
+                                            language === "tr"
+                                                ? "Profili şikâyet et"
+                                                : "Report profile"
+                                        }
+                                        onClick={() => {
+                                            if (!currentUserId) {
+                                                router.push("/giris");
+                                                return;
+                                            }
 
-                                    setReportOpen(true);
-                                    setReportError(null);
-                                    setReportSuccess(false);
-                                }}
-                            >
-                                <span aria-hidden="true">⚑</span>
-                            </button>
+                                            setReportOpen(true);
+                                            setReportError(null);
+                                            setReportSuccess(false);
+                                        }}
+                                    >
+                                        <span aria-hidden="true">⚑</span>
+                                    </button>
+                                </>
+                            )}
                         </div>
                     )}
                 </div>
@@ -1448,25 +1479,7 @@ export default function PublicProfilePage() {
                                 </div>
                             </div>
 
-                            <div className={styles.profileActions}>
-                                {isOwnProfile ? (
-                                    <Link
-                                        href="/profil"
-                                        className={
-                                            styles.publicProfileOwnButton
-                                        }
-                                    >
-                                        {language === "tr"
-                                            ? "Profilime Git"
-                                            : "Open My Profile"}
-                                    </Link>
-                                ) : (
-                                    <>
-
-                                    </>
-                                )}
-                            </div>
-
+                            
                             <div
                                 className={
                                     styles.statsGrid

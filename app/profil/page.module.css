@@ -6002,3 +6002,38 @@
 }
 
 /* PUBLIC PROFILE TOP BAR VISIBILITY FIX V2 END */
+
+.publicCompactOwnProfileButton {
+  display: inline-flex !important;
+  min-height: 36px !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  padding: 0 13px !important;
+
+  border: 1px solid rgba(216, 92, 255, 0.55) !important;
+  border-radius: 12px !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(216, 92, 255, 0.18),
+      rgba(0, 195, 255, 0.12)
+    ) !important;
+
+  color: #ffffff !important;
+
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 680px) {
+  .publicCompactOwnProfileButton {
+    min-height: 34px !important;
+    padding: 0 11px !important;
+    font-size: 10.5px !important;
+  }
+}
