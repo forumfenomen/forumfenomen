@@ -12,6 +12,11 @@
   padding: 0;
 }
 
+.bellButton svg {
+  display: block;
+  transform: translateY(1px);
+}
+
 .bellButton:hover {
   color: #ffffff;
 }

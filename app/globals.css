@@ -13372,3 +13372,21 @@ html[data-theme="light"] .ff-insight-grid span {
   }
 }
 /* MOBILE SEARCH INPUT ZOOM FIX END */
+
+/* MOBILE HEADER ICON SIZE V9 START */
+
+@media (max-width: 680px) {
+  .ff-round-action svg {
+    width: 19px !important;
+    height: 19px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .ff-round-action svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+/* MOBILE HEADER ICON SIZE V9 END */

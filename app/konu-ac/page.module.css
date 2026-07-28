@@ -3835,3 +3835,92 @@
 }
 
 /* MOBILE UPLOAD FINAL FIX V7 END */
+
+/* CREATE TOPIC MOBILE READABILITY V8 START */
+
+@media (max-width: 680px) {
+  .heroContent > span {
+    font-size: 11px !important;
+  }
+
+  .hero h1 {
+    font-size: 30px !important;
+    line-height: 1.08;
+  }
+
+  .hero p {
+    font-size: 14px !important;
+    line-height: 1.55;
+  }
+
+  .panelHeading > div:first-child > span {
+    font-size: 10px !important;
+  }
+
+  .panelHeading h2 {
+    font-size: 22px !important;
+  }
+
+  .panelHeading p {
+    font-size: 13px !important;
+    line-height: 1.5;
+  }
+
+  .sectionLabel h3 {
+    font-size: 16px !important;
+  }
+
+  .sectionLabel p {
+    font-size: 12px !important;
+    line-height: 1.5;
+  }
+
+  .categoryGrid strong {
+    font-size: 12px !important;
+  }
+
+  .categoryGrid small {
+    font-size: 10px !important;
+    line-height: 1.35;
+  }
+
+  .subcategoryList button {
+    font-size: 12px !important;
+  }
+
+  .inputShell input,
+  .tagForm input {
+    font-size: 16px !important;
+  }
+
+  .editorShell textarea {
+    font-size: 16px !important;
+    line-height: 1.65;
+  }
+
+  .editorFooter {
+    font-size: 10px !important;
+  }
+
+  .tagList button {
+    font-size: 11px !important;
+  }
+
+  .uploadButton strong {
+    font-size: 13px !important;
+  }
+
+  .uploadButton small {
+    font-size: 10px !important;
+  }
+
+  .educationNote p {
+    font-size: 12px !important;
+  }
+
+  .selectedCategoryBadge {
+    font-size: 11px !important;
+  }
+}
+
+/* CREATE TOPIC MOBILE READABILITY V8 END */
