@@ -1223,6 +1223,19 @@ export default function TopicDetailPage() {
             ? "ForumFenomen Üyesi"
             : "ForumFenomen Member");
 
+
+    const topicAuthorUsername =
+        topic?.profiles?.username
+            ?.replace(/^@/, "")
+            .trim() || null;
+
+    const topicAuthorProfileHref =
+        topicAuthorUsername
+            ? `/profil/${encodeURIComponent(
+                topicAuthorUsername
+            )}`
+            : null;
+
     const formattedDate = topic
         ? new Intl.DateTimeFormat(
             language === "tr"
@@ -1351,25 +1364,59 @@ export default function TopicDetailPage() {
                             <h1>{topic.title}</h1>
 
                             <div className={styles.authorRow}>
-                                <span className={styles.avatar}>
-                                    {author
-                                        .slice(0, 1)
-                                        .toLocaleUpperCase(
+                                {topicAuthorProfileHref ? (
+                                    <Link
+                                        href={topicAuthorProfileHref}
+                                        className={styles.topicAuthorLink}
+                                        aria-label={
                                             language === "tr"
-                                                ? "tr-TR"
-                                                : "en-US"
-                                        )}
-                                </span>
+                                                ? `${author} profilini aç`
+                                                : `Open ${author}'s profile`
+                                        }
+                                    >
+                                        <span className={styles.avatar}>
+                                            {author
+                                                .slice(0, 1)
+                                                .toLocaleUpperCase(
+                                                    language === "tr"
+                                                        ? "tr-TR"
+                                                        : "en-US"
+                                                )}
+                                        </span>
 
-                                <div>
-                                    <strong>{author}</strong>
+                                        <span className={styles.topicAuthorText}>
+                                            <strong>{author}</strong>
 
-                                    <small>
-                                        {topic.categories
-                                            ?.category_groups?.name ??
-                                            "ForumFenomen"}
-                                    </small>
-                                </div>
+                                            <small>
+                                                {topic.categories
+                                                    ?.category_groups?.name ??
+                                                    "ForumFenomen"}
+                                            </small>
+                                        </span>
+                                    </Link>
+                                ) : (
+                                    <div className={styles.topicAuthorFallback}>
+                                        <span className={styles.avatar}>
+                                            {author
+                                                .slice(0, 1)
+                                                .toLocaleUpperCase(
+                                                    language === "tr"
+                                                        ? "tr-TR"
+                                                        : "en-US"
+                                                )}
+                                        </span>
+
+                                        <span className={styles.topicAuthorText}>
+                                            <strong>{author}</strong>
+
+                                            <small>
+                                                {topic.categories
+                                                    ?.category_groups?.name ??
+                                                    "ForumFenomen"}
+                                            </small>
+                                        </span>
+                                    </div>
+                                )}
 
                                 <div className={styles.stats}>
                                     <span>

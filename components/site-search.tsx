@@ -38,9 +38,16 @@ type TopicRow = {
     } | null;
 };
 
+type ProfileRow = {
+    id: string;
+    display_name: string | null;
+    username: string | null;
+    avatar_url: string | null;
+};
+
 type SearchResult = {
     id: string;
-    type: "topic" | "blog";
+    type: "topic" | "blog" | "profile";
     title: string;
     subtitle: string;
     href: string;
@@ -150,6 +157,12 @@ export default function SiteSearch({
 
     const [topicRows, setTopicRows] =
         useState<TopicRow[]>([]);
+
+    const [profileRows, setProfileRows] =
+        useState<ProfileRow[]>([]);
+
+    const [profilesLoading, setProfilesLoading] =
+        useState(false);
 
     const [loading, setLoading] =
         useState(false);
@@ -277,6 +290,66 @@ export default function SiteSearch({
         };
     }, [open]);
 
+    const normalizedSearch =
+        normalizeSearchText(searchValue);
+
+    useEffect(() => {
+        if (!open || normalizedSearch.length < 2) {
+            setProfileRows([]);
+            setProfilesLoading(false);
+            return;
+        }
+
+        let isActive = true;
+
+        const timeoutId = window.setTimeout(
+            async () => {
+                setProfilesLoading(true);
+
+                const supabase = createClient();
+
+                const { data, error } = await supabase.rpc(
+                    "search_public_profiles",
+                    {
+                        p_query: searchValue.trim(),
+                        p_limit: 10,
+                    }
+                );
+
+                if (!isActive) {
+                    return;
+                }
+
+                if (error) {
+                    console.error(
+                        "Kullanıcı araması yapılamadı:",
+                        error.message
+                    );
+
+                    setProfileRows([]);
+                    setProfilesLoading(false);
+                    return;
+                }
+
+                setProfileRows(
+                    (data ?? []) as ProfileRow[]
+                );
+
+                setProfilesLoading(false);
+            },
+            250
+        );
+
+        return () => {
+            isActive = false;
+            window.clearTimeout(timeoutId);
+        };
+    }, [
+        open,
+        normalizedSearch,
+        searchValue,
+    ]);
+
     const allResults = useMemo(() => {
         const topicResults: SearchResult[] =
             topicRows.map((topic) => {
@@ -332,13 +405,66 @@ export default function SiteSearch({
             });
 
 
+        const profileResults: SearchResult[] =
+            profileRows
+                .filter((profile) =>
+                    Boolean(profile.username?.trim())
+                )
+                .map((profile) => {
+                    const username =
+                        profile.username!
+                            .replace(/^@/, "")
+                            .trim();
 
-        return topicResults;
+                    const displayName =
+                        profile.display_name?.trim() ||
+                        username;
 
-    }, [language, topicRows]);
+                    const initial =
+                        displayName
+                            .slice(0, 1)
+                            .toLocaleUpperCase(
+                                language === "tr"
+                                    ? "tr-TR"
+                                    : "en-US"
+                            ) || "Ü";
 
-    const normalizedSearch =
-        normalizeSearchText(searchValue);
+                    return {
+                        id: `profile-${profile.id}`,
+                        type: "profile",
+                        title: displayName,
+                        subtitle:
+                            language === "tr"
+                                ? `Kullanıcı · @${username}`
+                                : `User · @${username}`,
+                        href:
+                            `/profil/${encodeURIComponent(
+                                username
+                            )}`,
+                        icon: initial,
+                        iconClass: "social",
+                        searchText: normalizeSearchText(
+                            [
+                                displayName,
+                                username,
+                                `@${username}`,
+                            ].join(" ")
+                        ),
+                    };
+                });
+
+        return [
+            ...profileResults,
+            ...topicResults,
+        ];
+
+    }, [
+        language,
+        profileRows,
+        topicRows,
+    ]);
+
+
 
     const searchResults = useMemo(() => {
         if (normalizedSearch.length < 2) {
@@ -459,9 +585,9 @@ export default function SiteSearch({
                         <div
                             className="ff-site-search-results"
                             aria-live="polite"
-                            aria-busy={loading}
+                            aria-busy={loading || profilesLoading}
                         >
-                            {loading ? (
+                            {loading || profilesLoading ? (
                                 <div className="ff-site-search-hint">
                                     <span className="ff-site-search-loader" />
 
@@ -510,8 +636,8 @@ export default function SiteSearch({
 
                                     <span>
                                         {language === "tr"
-                                            ? "Eşleşen konu veya blog yazısı bulunamadı."
-                                            : "No matching topic or blog post was found."}
+                                            ? "Eşleşen konu veya kullanıcı bulunamadı."
+                                            : "No matching topic or user was found."}
                                     </span>
                                 </div>
                             )}

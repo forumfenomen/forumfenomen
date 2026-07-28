@@ -2055,3 +2055,65 @@
 }
 
 /* MOBILE TOPIC DETAIL FONT BALANCE V24 END */
+
+/* TOPIC TITLE AND AUTHOR LINK V25 START */
+
+/* Masaüstü konu başlığı dengesi */
+.topicCard h1 {
+    font-size: clamp(26px, 3.2vw, 36px);
+    line-height: 1.16;
+    letter-spacing: -0.8px;
+}
+
+/* Konu sahibi profil bağlantısı */
+.topicAuthorLink,
+.topicAuthorFallback {
+    display: inline-flex;
+    min-width: 0;
+
+    align-items: center;
+    gap: 10px;
+}
+
+.topicAuthorLink {
+    color: inherit;
+    border-radius: 14px;
+    text-decoration: none;
+
+    transition:
+        transform 160ms ease,
+        opacity 160ms ease;
+}
+
+.topicAuthorLink:hover {
+    transform: translateY(-1px);
+}
+
+.topicAuthorLink:hover .avatar {
+    box-shadow:
+        0 0 18px rgba(215, 59, 235, 0.22);
+}
+
+.topicAuthorLink:hover strong {
+    color: #e879f0;
+}
+
+.topicAuthorText {
+    display: block;
+    min-width: 0;
+}
+
+.topicAuthorText strong,
+.topicAuthorText small {
+    display: block;
+}
+
+@media (max-width: 680px) {
+    .topicCard h1 {
+        font-size: 24px !important;
+        line-height: 1.18;
+        letter-spacing: -0.6px;
+    }
+}
+
+/* TOPIC TITLE AND AUTHOR LINK V25 END */
