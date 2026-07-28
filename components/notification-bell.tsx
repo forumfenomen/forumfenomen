@@ -521,7 +521,11 @@ export default function NotificationBell() {
     >
       <button
         type="button"
-        className={styles.bellButton}
+        className={
+          isOpen
+            ? `ff-round-action active ${styles.bellButton}`
+            : `ff-round-action ${styles.bellButton}`
+        }
         aria-label="Bildirimleri aç"
         aria-expanded={isOpen}
         onClick={handleToggle}
