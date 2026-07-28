@@ -5704,69 +5704,6 @@
   }
 }
 
-/* MOBILE PUBLIC PROFILE ACTIONS V1 START */
-
-.publicProfileReportButton svg {
-    width: 16px;
-    height: 16px;
-
-    flex: 0 0 16px;
-
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-@media (max-width: 680px) {
-    .profileActions {
-        display: grid !important;
-        grid-template-columns:
-            minmax(0, 1fr)
-            46px !important;
-
-        width: 100% !important;
-        gap: 9px !important;
-
-        margin-top: 11px !important;
-    }
-
-    .publicFollowButton,
-    .publicFollowingButton {
-        width: 100% !important;
-        min-width: 0 !important;
-        min-height: 42px !important;
-
-        justify-content: center !important;
-
-        padding: 0 14px !important;
-    }
-
-    .publicProfileReportButton {
-        display: inline-flex !important;
-        width: 46px !important;
-        min-width: 46px !important;
-        min-height: 42px !important;
-
-        align-items: center !important;
-        justify-content: center !important;
-
-        padding: 0 !important;
-        border-radius: 13px !important;
-    }
-
-    .publicProfileReportButton span {
-        display: none !important;
-    }
-
-    .publicProfileReportButton svg {
-        width: 18px;
-        height: 18px;
-    }
-}
-
-/* MOBILE PUBLIC PROFILE ACTIONS V1 END */
 
 /* PUBLIC PROFILE TOP ACTIONS */
 
@@ -5933,3 +5870,135 @@
     0 0 5px rgba(94, 231, 168, 0.35)
   );
 }
+
+/* OWN PROFILE ACTION POSITION FIX */
+
+@media (max-width: 680px) {
+  .profileActions {
+    width: auto;
+    margin: 0;
+  }
+
+  .publicProfileOwnButton {
+    display: inline-flex;
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 34px;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 11px;
+
+    font-size: 10px;
+    white-space: nowrap;
+  }
+}
+
+/* PUBLIC PROFILE TOP BAR VISIBILITY FIX V2 START */
+
+.publicProfileTopBar {
+  display: flex !important;
+  position: relative !important;
+  width: 100% !important;
+  min-height: 42px !important;
+
+  align-items: center !important;
+  justify-content: space-between !important;
+
+  gap: 10px !important;
+
+  margin: 12px 0 !important;
+  padding: 0 !important;
+
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow: visible !important;
+
+  z-index: 20 !important;
+}
+
+.publicProfileTopActions {
+  display: flex !important;
+  position: relative !important;
+
+  align-items: center !important;
+  justify-content: flex-end !important;
+
+  gap: 7px !important;
+
+  margin-left: auto !important;
+
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  z-index: 21 !important;
+}
+
+.publicCompactFollowButton,
+.publicCompactFollowingButton {
+  display: inline-flex !important;
+  min-height: 36px !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  gap: 6px !important;
+
+  padding: 0 12px !important;
+
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.publicCompactFlagButton {
+  display: grid !important;
+  width: 36px !important;
+  height: 36px !important;
+
+  flex: 0 0 36px !important;
+  place-items: center !important;
+
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+@media (max-width: 680px) {
+  .publicProfileTopBar {
+    display: flex !important;
+    min-height: 38px !important;
+
+    margin: 9px 0 10px !important;
+  }
+
+  .publicProfileBack {
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
+
+    margin: 0 !important;
+  }
+
+  .publicProfileTopActions {
+    display: flex !important;
+    flex: 0 0 auto !important;
+
+    margin-left: auto !important;
+  }
+
+  .publicCompactFollowButton,
+  .publicCompactFollowingButton {
+    min-height: 34px !important;
+    padding: 0 10px !important;
+
+    font-size: 10.5px !important;
+    white-space: nowrap !important;
+  }
+
+  .publicCompactFlagButton {
+    width: 34px !important;
+    height: 34px !important;
+    flex-basis: 34px !important;
+  }
+}
+
+/* PUBLIC PROFILE TOP BAR VISIBILITY FIX V2 END */
