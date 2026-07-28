@@ -1157,16 +1157,80 @@ export default function PublicProfilePage() {
                     </div>
                 </header>
 
-                <Link
-                    href="/akis"
-                    className={styles.publicProfileBack}
-                >
-                    <ArrowLeftIcon />
+                <div className={styles.publicProfileTopBar}>
+                    <Link
+                        href="/akis"
+                        className={styles.publicProfileBack}
+                    >
+                        <ArrowLeftIcon />
 
-                    {language === "tr"
-                        ? "Akışa geri dön"
-                        : "Return to feed"}
-                </Link>
+                        {language === "tr"
+                            ? "Akışa geri dön"
+                            : "Return to feed"}
+                    </Link>
+
+                    {profile && currentUserId !== profile.id && (
+                        <div className={styles.publicProfileTopActions}>
+                            <button
+                                type="button"
+                                className={
+                                    isFollowing
+                                        ? styles.publicCompactFollowingButton
+                                        : styles.publicCompactFollowButton
+                                }
+                                disabled={followLoading}
+                                onClick={() => {
+                                    void handleFollowToggle();
+                                }}
+                            >
+                                {isFollowing ? (
+                                    <CheckIcon />
+                                ) : (
+                                    <UserPlusIcon />
+                                )}
+
+                                <span>
+                                    {followLoading
+                                        ? "..."
+                                        : isFollowing
+                                            ? language === "tr"
+                                                ? "Takiptesin"
+                                                : "Following"
+                                            : language === "tr"
+                                                ? "Takip Et"
+                                                : "Follow"}
+                                </span>
+                            </button>
+
+                            <button
+                                type="button"
+                                className={styles.publicCompactFlagButton}
+                                title={
+                                    language === "tr"
+                                        ? "Profili şikâyet et"
+                                        : "Report profile"
+                                }
+                                aria-label={
+                                    language === "tr"
+                                        ? "Profili şikâyet et"
+                                        : "Report profile"
+                                }
+                                onClick={() => {
+                                    if (!currentUserId) {
+                                        router.push("/giris");
+                                        return;
+                                    }
+
+                                    setReportOpen(true);
+                                    setReportError(null);
+                                    setReportSuccess(false);
+                                }}
+                            >
+                                <span aria-hidden="true">⚑</span>
+                            </button>
+                        </div>
+                    )}
+                </div>
 
                 {loading ? (
                     <section
@@ -1388,75 +1452,7 @@ export default function PublicProfilePage() {
                                     </Link>
                                 ) : (
                                     <>
-                                        <button
-                                            type="button"
-                                            className={
-                                                isFollowing
-                                                    ? styles.publicFollowingButton
-                                                    : styles.publicFollowButton
-                                            }
-                                            disabled={followLoading}
-                                            onClick={() => {
-                                                void handleFollowToggle();
-                                            }}
-                                        >
-                                            {isFollowing ? (
-                                                <CheckIcon />
-                                            ) : (
-                                                <UserPlusIcon />
-                                            )}
-
-                                            {followLoading
-                                                ? "..."
-                                                : isFollowing
-                                                    ? language === "tr"
-                                                        ? "Takip Ediliyor"
-                                                        : "Following"
-                                                    : language === "tr"
-                                                        ? "Takip Et"
-                                                        : "Follow"}
-                                        </button>
-
-                                        <button
-                                            type="button"
-                                            className={
-                                                styles.publicProfileReportButton
-                                            }
-                                            onClick={() => {
-                                                if (!currentUserId) {
-                                                    router.push("/giris");
-                                                    return;
-                                                }
-
-                                                setReportOpen(true);
-                                                setReportError(null);
-                                                setReportSuccess(false);
-                                            }}
-                                            aria-label={
-                                                language === "tr"
-                                                    ? "Profili şikâyet et"
-                                                    : "Report profile"
-                                            }
-                                            title={
-                                                language === "tr"
-                                                    ? "Şikâyet Et"
-                                                    : "Report"
-                                            }
-                                        >
-                                            <svg
-                                                viewBox="0 0 24 24"
-                                                aria-hidden="true"
-                                            >
-                                                <path d="M5 21V4" />
-                                                <path d="M5 5h11l-1.5 3L16 11H5" />
-                                            </svg>
-
-                                            <span>
-                                                {language === "tr"
-                                                    ? "Şikâyet Et"
-                                                    : "Report"}
-                                            </span>
-                                        </button>
+                                                                                
                                     </>
                                 )}
                             </div>

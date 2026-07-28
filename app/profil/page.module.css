@@ -5767,3 +5767,151 @@
 }
 
 /* MOBILE PUBLIC PROFILE ACTIONS V1 END */
+
+/* PUBLIC PROFILE TOP ACTIONS */
+
+.publicProfileTopBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.publicProfileTopBar .publicProfileBack {
+  margin-bottom: 0;
+}
+
+.publicProfileTopActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.publicCompactFollowButton,
+.publicCompactFollowingButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  min-height: 38px;
+  padding: 0 13px;
+
+  border-radius: 12px;
+  border: 1px solid rgba(214, 72, 235, 0.25);
+
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.publicCompactFollowButton {
+  color: #ffffff;
+  background: rgba(176, 48, 232, 0.11);
+}
+
+.publicCompactFollowButton:hover:not(:disabled) {
+  border-color: rgba(214, 72, 235, 0.42);
+  background: rgba(191, 63, 236, 0.18);
+}
+
+.publicCompactFollowingButton {
+  color: #95f0c2;
+  border-color: rgba(79, 214, 157, 0.3);
+  background: rgba(58, 194, 132, 0.1);
+}
+
+.publicCompactFollowingButton:hover:not(:disabled) {
+  border-color: rgba(79, 214, 157, 0.45);
+  background: rgba(58, 194, 132, 0.16);
+}
+
+.publicCompactFollowButton svg,
+.publicCompactFollowingButton svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+}
+
+.publicCompactFlagButton {
+  display: grid;
+  place-items: center;
+
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+
+  padding: 0;
+
+  color: #ff8dbf;
+
+  border: 1px solid rgba(255, 95, 150, 0.23);
+  border-radius: 12px;
+
+  background: rgba(255, 85, 136, 0.07);
+
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.publicCompactFlagButton:hover {
+  color: #ffd7e8;
+  border-color: rgba(255, 95, 150, 0.42);
+  background: rgba(255, 85, 136, 0.14);
+}
+
+.publicCompactFlagButton span {
+  display: block;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 680px) {
+  .publicProfileTopBar {
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .publicCompactFollowButton,
+  .publicCompactFollowingButton {
+    min-height: 35px;
+    padding: 0 11px;
+    font-size: 11px;
+    border-radius: 11px;
+  }
+
+  .publicCompactFollowButton svg,
+  .publicCompactFollowingButton svg {
+    width: 14px;
+    height: 14px;
+    flex: 0 0 14px;
+  }
+
+  .publicCompactFlagButton {
+    width: 35px;
+    height: 35px;
+    flex: 0 0 35px;
+    border-radius: 11px;
+  }
+
+  .publicCompactFlagButton span {
+    font-size: 15px;
+  }
+}
