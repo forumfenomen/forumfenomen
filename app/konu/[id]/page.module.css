@@ -2130,3 +2130,34 @@
 }
 
 /* TOPIC TITLE AND AUTHOR LINK V25 END */
+
+/* TOPIC DETAIL CATEGORY BADGE SIZE V12 START */
+
+.categoryBadge {
+  min-height: 38px !important;
+  padding: 0 15px !important;
+
+  font-size: 13px !important;
+  font-weight: 750 !important;
+  line-height: 1 !important;
+}
+
+.date {
+  font-size: 11px !important;
+  line-height: 1.4 !important;
+}
+
+@media (max-width: 680px) {
+  .categoryBadge {
+    min-height: 36px !important;
+    padding: 0 13px !important;
+
+    font-size: 12px !important;
+  }
+
+  .topicTop {
+    gap: 10px !important;
+  }
+}
+
+/* TOPIC DETAIL CATEGORY BADGE SIZE V12 END */

@@ -13390,3 +13390,16 @@ html[data-theme="light"] .ff-insight-grid span {
 }
 
 /* MOBILE HEADER ICON SIZE V9 END */
+
+/* GLOBAL MOBILE FORM ZOOM FIX START */
+
+@media (max-width: 680px) {
+  input,
+  textarea,
+  select,
+  [contenteditable="true"] {
+    font-size: 16px !important;
+  }
+}
+
+/* GLOBAL MOBILE FORM ZOOM FIX END */

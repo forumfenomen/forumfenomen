@@ -4027,3 +4027,31 @@
 }
 
 /* CREATE TOPIC MOBILE CLEANUP V10 END */
+
+/* CREATE TOPIC DESKTOP UPLOAD FIX V11 START */
+
+@media (min-width: 681px) {
+  .uploadButton.uploadButtonDisabled {
+    grid-template-columns:
+      42px
+      minmax(0, 1fr)
+      auto !important;
+
+    gap: 12px !important;
+    padding: 12px 14px !important;
+  }
+
+  .uploadButton .comingSoonBadge {
+    width: auto !important;
+    min-width: 112px !important;
+    height: 38px !important;
+
+    margin-left: auto !important;
+    padding: 0 16px !important;
+
+    font-size: 11px !important;
+    white-space: nowrap !important;
+  }
+}
+
+/* CREATE TOPIC DESKTOP UPLOAD FIX V11 END */
