@@ -5915,3 +5915,21 @@
     font-size: 15px;
   }
 }
+
+/* FOLLOW ICON COLOR FIX */
+
+.publicCompactFollowButton svg {
+  color: #d85cff !important;
+  stroke: currentColor !important;
+  filter: drop-shadow(
+    0 0 5px rgba(216, 92, 255, 0.45)
+  );
+}
+
+.publicCompactFollowingButton svg {
+  color: #5ee7a8 !important;
+  stroke: currentColor !important;
+  filter: drop-shadow(
+    0 0 5px rgba(94, 231, 168, 0.35)
+  );
+}

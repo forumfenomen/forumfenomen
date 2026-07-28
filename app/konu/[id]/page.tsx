@@ -876,33 +876,36 @@ export default function TopicDetailPage() {
     }
 
     function startReply(comment: CommentRow) {
-        setReplyingTo(comment);
-        setCommentMessage(null);
+    setReplyingTo(comment);
+    setCommentMessage(null);
+
+    window.setTimeout(() => {
+        const input = commentInputRef.current;
+
+        if (!input) {
+            return;
+        }
+
+        const commentForm =
+            input.closest("form") ?? input;
+
+        const top =
+            commentForm.getBoundingClientRect().top +
+            window.scrollY -
+            150;
+
+        window.scrollTo({
+            top: Math.max(top, 0),
+            behavior: "smooth",
+        });
 
         window.setTimeout(() => {
-            const input = commentInputRef.current;
-
-            if (!input) {
-                return;
-            }
-
-            const top =
-                input.getBoundingClientRect().top +
-                window.scrollY -
-                110;
-
-            window.scrollTo({
-                top: Math.max(top, 0),
-                behavior: "smooth",
+            input.focus({
+                preventScroll: true,
             });
-
-            window.setTimeout(() => {
-                input.focus({
-                    preventScroll: true,
-                });
-            }, 450);
-        }, 100);
-    }
+        }, 500);
+    }, 120);
+}
 
     async function handleCommentReaction(
         commentId: string,
