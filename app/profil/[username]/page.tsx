@@ -1432,10 +1432,30 @@ export default function PublicProfilePage() {
                                                 setReportError(null);
                                                 setReportSuccess(false);
                                             }}
+                                            aria-label={
+                                                language === "tr"
+                                                    ? "Profili şikâyet et"
+                                                    : "Report profile"
+                                            }
+                                            title={
+                                                language === "tr"
+                                                    ? "Şikâyet Et"
+                                                    : "Report"
+                                            }
                                         >
-                                            {language === "tr"
-                                                ? "Şikâyet Et"
-                                                : "Report"}
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                aria-hidden="true"
+                                            >
+                                                <path d="M5 21V4" />
+                                                <path d="M5 5h11l-1.5 3L16 11H5" />
+                                            </svg>
+
+                                            <span>
+                                                {language === "tr"
+                                                    ? "Şikâyet Et"
+                                                    : "Report"}
+                                            </span>
                                         </button>
                                     </>
                                 )}

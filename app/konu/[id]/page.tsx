@@ -879,31 +879,29 @@ export default function TopicDetailPage() {
         setReplyingTo(comment);
         setCommentMessage(null);
 
-        window.requestAnimationFrame(() => {
+        window.setTimeout(() => {
             const input = commentInputRef.current;
 
             if (!input) {
                 return;
             }
 
-            input.scrollIntoView({
+            const top =
+                input.getBoundingClientRect().top +
+                window.scrollY -
+                110;
+
+            window.scrollTo({
+                top: Math.max(top, 0),
                 behavior: "smooth",
-                block: "center",
             });
 
             window.setTimeout(() => {
                 input.focus({
                     preventScroll: true,
                 });
-
-                window.setTimeout(() => {
-                    input.scrollIntoView({
-                        behavior: "smooth",
-                        block: "center",
-                    });
-                }, 300);
-            }, 180);
-        });
+            }, 450);
+        }, 100);
     }
 
     async function handleCommentReaction(
