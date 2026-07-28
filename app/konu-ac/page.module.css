@@ -4055,3 +4055,17 @@
 }
 
 /* CREATE TOPIC DESKTOP UPLOAD FIX V11 END */
+
+/* CREATE TOPIC IOS ZOOM FINAL FIX V12 START */
+
+@media (max-width: 680px) {
+  .inputShell input,
+  .tagForm input,
+  .editorShell textarea,
+  .pollOptions input {
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+  }
+}
+
+/* CREATE TOPIC IOS ZOOM FINAL FIX V12 END */

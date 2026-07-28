@@ -84,6 +84,7 @@ type CommentRow = {
     profiles: {
         display_name: string | null;
         username: string | null;
+        avatar_url: string | null;
     } | null;
 };
 
@@ -524,6 +525,7 @@ export default function TopicDetailPage() {
         profiles:profiles!topic_comments_author_id_fkey (
   display_name,
   username
+  avatar_url
 )
       `)
                 .eq("topic_id", topicId)
@@ -1168,6 +1170,7 @@ export default function TopicDetailPage() {
         profiles:profiles!topic_comments_author_id_fkey (
   display_name,
   username
+  avatar_url
 )
       `)
                 .single();
@@ -1634,13 +1637,20 @@ export default function TopicDetailPage() {
                                                             }
                                                         >
                                                             <span className={styles.commentAvatar}>
-                                                                {commentAuthor
-                                                                    .slice(0, 1)
-                                                                    .toLocaleUpperCase(
-                                                                        language === "tr"
-                                                                            ? "tr-TR"
-                                                                            : "en-US"
-                                                                    )}
+                                                                {comment.profiles?.avatar_url ? (
+                                                                    <img
+                                                                        src={comment.profiles.avatar_url}
+                                                                        alt=""
+                                                                    />
+                                                                ) : (
+                                                                    commentAuthor
+                                                                        .slice(0, 1)
+                                                                        .toLocaleUpperCase(
+                                                                            language === "tr"
+                                                                                ? "tr-TR"
+                                                                                : "en-US"
+                                                                        )
+                                                                )}
                                                             </span>
 
                                                             <span
