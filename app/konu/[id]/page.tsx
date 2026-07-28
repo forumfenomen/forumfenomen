@@ -529,7 +529,7 @@ export default function TopicDetailPage() {
                 .eq("topic_id", topicId)
                 .eq("status", "published")
                 .order("created_at", {
-                    ascending: true,
+                    ascending: false,
                 });
 
             if (!isActive) {
@@ -1186,8 +1186,8 @@ export default function TopicDetailPage() {
                 data as unknown as CommentRow;
 
             setComments((current) => [
-                ...current,
                 newComment,
+                ...current,
             ]);
 
             setTopic((current) =>
@@ -1356,9 +1356,23 @@ export default function TopicDetailPage() {
                                             : "General")}
                                 </span>
 
-                                <span className={styles.date}>
-                                    {formattedDate}
-                                </span>
+                                <div className={styles.topicMeta}>
+                                    <span className={styles.date}>
+                                        {formattedDate}
+                                    </span>
+
+                                    <div className={styles.stats}>
+                                        <span>
+                                            <MessageIcon />
+                                            {topic.comment_count ?? 0}
+                                        </span>
+
+                                        <span>
+                                            <EyeIcon />
+                                            {topic.view_count ?? 0}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
 
                             <h1>{topic.title}</h1>
@@ -1418,17 +1432,6 @@ export default function TopicDetailPage() {
                                     </div>
                                 )}
 
-                                <div className={styles.stats}>
-                                    <span>
-                                        <MessageIcon />
-                                        {topic.comment_count ?? 0}
-                                    </span>
-
-                                    <span>
-                                        <EyeIcon />
-                                        {topic.view_count ?? 0}
-                                    </span>
-                                </div>
                             </div>
 
                             <div

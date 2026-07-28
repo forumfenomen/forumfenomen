@@ -2161,3 +2161,67 @@
 }
 
 /* TOPIC DETAIL CATEGORY BADGE SIZE V12 END */
+
+/* TOPIC HEADER LAYOUT V26 START */
+
+.topicTop {
+  align-items: flex-start !important;
+}
+
+.topicMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 7px;
+  margin-left: auto;
+}
+
+.topicMeta .stats {
+  width: auto;
+  margin: 0;
+  gap: 11px;
+}
+
+.topicMeta .stats span {
+  font-size: 11px;
+}
+
+.topicMeta .stats svg {
+  width: 15px;
+  height: 15px;
+}
+
+.topicCard h1 {
+  font-size: clamp(27px, 4.4vw, 41px) !important;
+}
+
+@media (max-width: 680px) {
+  .topicTop {
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+  }
+
+  .topicMeta {
+    flex: 0 0 auto;
+    align-items: flex-end;
+  }
+
+  .date {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .topicMeta .stats {
+    width: auto !important;
+    margin: 0 !important;
+  }
+
+  .topicCard h1 {
+    font-size: 27px !important;
+    line-height: 1.15 !important;
+  }
+}
+
+/* TOPIC HEADER LAYOUT V26 END */
