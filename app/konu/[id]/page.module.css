@@ -1908,14 +1908,12 @@
     transform: translateY(-1px);
 }
 
-.commentAuthorLink:hover
-.commentAvatar {
+.commentAuthorLink:hover .commentAvatar {
     border-color:
         rgba(218, 74, 235, 0.42);
 
     box-shadow:
-        0 0 16px
-        rgba(212, 58, 228, 0.18);
+        0 0 16px rgba(212, 58, 228, 0.18);
 }
 
 .commentAuthorText {
@@ -1937,7 +1935,7 @@
     text-overflow: ellipsis;
 }
 
-.commentAuthorText > span {
+.commentAuthorText>span {
     color: #85818f;
 
     font-size: 10px;
@@ -1945,8 +1943,7 @@
     line-height: 1.3;
 }
 
-.commentAuthorLink:hover
-.commentAuthorText strong {
+.commentAuthorLink:hover .commentAuthorText strong {
     color: #e879f0;
 }
 
@@ -1974,44 +1971,87 @@
 /* MOBILE REPORT MODAL SCROLL FIX */
 
 @media (max-width: 680px) {
-  .modalBackdrop {
-    position: fixed !important;
-    inset: 0 !important;
+    .modalBackdrop {
+        position: fixed !important;
+        inset: 0 !important;
 
-    display: block !important;
+        display: block !important;
 
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
 
-    padding:
-      20px
-      14px
-      calc(28px + env(safe-area-inset-bottom)) !important;
+        padding:
+            20px 14px calc(28px + env(safe-area-inset-bottom)) !important;
 
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-  }
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+    }
 
-  .reportModal {
-    position: relative !important;
+    .reportModal {
+        position: relative !important;
 
-    width: 100% !important;
-    max-width: 540px !important;
+        width: 100% !important;
+        max-width: 540px !important;
 
-    max-height: none !important;
+        max-height: none !important;
 
-    margin:
-      max(20px, env(safe-area-inset-top))
-      auto
-      30px !important;
+        margin:
+            max(20px, env(safe-area-inset-top)) auto 30px !important;
 
-    overflow: visible !important;
+        overflow: visible !important;
 
-    transform: none !important;
-  }
+        transform: none !important;
+    }
 
-  .reportModal textarea {
-    touch-action: pan-y;
-  }
+    .reportModal textarea {
+        touch-action: pan-y;
+    }
 }
+
+/* MOBILE TOPIC DETAIL FONT BALANCE V24 START */
+
+@media (max-width: 680px) {
+
+    /* Sarı çizili: konu başlığı küçülsün */
+    .topicCard h1 {
+        font-size: 24px !important;
+        line-height: 1.18;
+        letter-spacing: -0.6px;
+    }
+
+    /* Kırmızı çizili: konu tarihi büyüsün */
+    .date {
+        font-size: 11px !important;
+        line-height: 1.4;
+    }
+
+    /* Kırmızı çizili: yazarın altındaki kategori büyüsün */
+    .authorRow small {
+        font-size: 13px !important;
+        line-height: 1.4;
+    }
+
+    /* Kırmızı çizili: konu metni büyüsün */
+    .content,
+    .content p,
+    .content li {
+        font-size: 16px !important;
+        line-height: 1.72 !important;
+    }
+
+    /* Kırmızı çizili: TOPLULUK etiketi büyüsün */
+    .commentsHeader span {
+        font-size: 10px !important;
+        line-height: 1.3;
+        letter-spacing: 1.3px;
+    }
+
+    /* Sarı çizili: Yorumlar başlığı küçülsün */
+    .commentsHeader h2 {
+        font-size: 17px !important;
+        line-height: 1.3;
+    }
+}
+
+/* MOBILE TOPIC DETAIL FONT BALANCE V24 END */
