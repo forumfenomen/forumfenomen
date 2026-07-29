@@ -1803,11 +1803,13 @@
   }
 
   .profileMenu {
-    position: relative;
-
     display: flex;
+    align-items: center;
 
     gap: 5px;
+
+    width: 100%;
+
     overflow-x: auto;
     overflow-y: hidden;
 
@@ -1822,19 +1824,25 @@
     display: none;
   }
 
+
+
   .profileMenu button {
     display: flex;
     min-width: max-content;
     min-height: 40px;
 
     flex: 0 0 auto;
+    align-items: center;
     scroll-snap-align: start;
 
     gap: 6px;
 
     padding: 0 10px;
 
-    font-size: 8.5px;
+    border-radius: 13px;
+
+    font-size: 9.5px;
+    font-weight: 680;
   }
 
   .menuIcon {
@@ -5527,37 +5535,6 @@
   margin-bottom: 0;
 }
 
-/* OWN PROFILE MOBILE ACTIONS FIX */
-
-@media (max-width: 600px) {
-  .profileHero .profileActions:has(.logoutButton) {
-    position: static !important;
-    top: auto !important;
-    right: auto !important;
-
-    grid-column: 1 / -1;
-
-    display: flex !important;
-    width: 100% !important;
-
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-
-    gap: 8px !important;
-    margin: -3px 0 0 !important;
-  }
-
-  .profileHero .profileActions:has(.logoutButton) .editButton,
-  .profileHero .profileActions:has(.logoutButton) .settingsButton {
-    width: 38px !important;
-    height: 38px !important;
-    min-width: 38px !important;
-    min-height: 38px !important;
-
-    flex: 0 0 38px !important;
-  }
-}
 
 /* OWN PROFILE MOBILE ACTIONS FIX */
 
@@ -5581,13 +5558,32 @@
   }
 
   .profileHero .profileActions:has(.logoutButton) .editButton,
-  .profileHero .profileActions:has(.logoutButton) .settingsButton {
-    width: 38px !important;
-    height: 38px !important;
-    min-width: 38px !important;
-    min-height: 38px !important;
+  .profileHero .profileActions:has(.logoutButton) .settingsButton,
+  .profileHero .profileActions:has(.logoutButton) .logoutButton {
+    display: grid !important;
 
-    flex: 0 0 38px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+
+    flex: 0 0 36px !important;
+    place-items: center !important;
+
+    padding: 0 !important;
+    line-height: 0 !important;
+  }
+
+  .profileHero .profileActions:has(.logoutButton) .editButton svg,
+  .profileHero .profileActions:has(.logoutButton) .settingsButton svg,
+  .profileHero .profileActions:has(.logoutButton) .logoutButton svg {
+    display: block !important;
+
+    width: 18px !important;
+    height: 18px !important;
+
+    margin: 0 !important;
+    transform: none !important;
   }
 
   .profileHero .profileActions:has(.logoutButton) .editButton {
@@ -6125,7 +6121,8 @@
 
 .profileMenuWrap {
   position: relative;
-  min-width: 0;
+  width: 100%;
+  overflow: hidden;
 }
 
 .profileMenuArrow {
@@ -6142,13 +6139,13 @@
 
   .profileMenuArrow {
     position: absolute;
-    top: 50%;
-    right: 8px;
+    top: 6px;
+    right: 6px;
     z-index: 10;
 
     display: grid;
-    width: 32px;
-    height: 36px;
+    width: 34px;
+    height: 40px;
 
     place-items: center;
 
@@ -6167,7 +6164,7 @@
     box-shadow:
       0 6px 16px rgba(0, 0, 0, 0.2);
 
-    transform: translateY(-50%);
+
 
     pointer-events: none;
 
@@ -6195,13 +6192,11 @@
 
   0%,
   100% {
-    transform:
-      translateY(-50%) translateX(0);
+    transform: translateX(0);
   }
 
   50% {
-    transform:
-      translateY(-50%) translateX(3px);
+    transform: translateX(3px);
   }
 }
 
