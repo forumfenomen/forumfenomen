@@ -526,7 +526,7 @@ export default function TopicDetailPage() {
                 .eq("topic_id", topicId)
                 .eq("status", "published")
                 .order("created_at", {
-                    ascending: false,
+                    ascending: true,
                 });
 
             if (!isActive) {

@@ -1031,6 +1031,27 @@ export default function CategoriesPage() {
     setSelectedSubcategory(
       targetSubcategory?.id ?? null
     );
+
+    const resetScroll = () => {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "auto",
+  });
+
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+};
+
+resetScroll();
+
+window.requestAnimationFrame(() => {
+  resetScroll();
+});
+
+window.setTimeout(resetScroll, 100);
+window.setTimeout(resetScroll, 300);
+
   }, [categoryData]);
 
 

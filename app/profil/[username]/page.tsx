@@ -330,6 +330,10 @@ export default function PublicProfilePage() {
         useState(0);
 
     useEffect(() => {
+        if (loading) {
+            return;
+        }
+
         const resetScroll = () => {
             window.scrollTo({
                 top: 0,
@@ -343,23 +347,17 @@ export default function PublicProfilePage() {
 
         resetScroll();
 
-        const firstFrameId =
+        const frameId =
             window.requestAnimationFrame(resetScroll);
 
-        const secondFrameId =
-            window.requestAnimationFrame(() => {
-                window.requestAnimationFrame(resetScroll);
-            });
-
         const timeoutId =
-            window.setTimeout(resetScroll, 200);
+            window.setTimeout(resetScroll, 150);
 
         return () => {
-            window.cancelAnimationFrame(firstFrameId);
-            window.cancelAnimationFrame(secondFrameId);
+            window.cancelAnimationFrame(frameId);
             window.clearTimeout(timeoutId);
         };
-    }, [usernameParam]);
+    }, [usernameParam, loading]);
 
     useEffect(() => {
         const savedLanguage =
@@ -393,6 +391,10 @@ export default function PublicProfilePage() {
                 setLoading(false);
                 return;
             }
+
+            setLoading(true);
+            setNotFound(false);
+            setActiveTab("topics");
 
             const supabase = createClient();
 
