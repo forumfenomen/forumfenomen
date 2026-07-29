@@ -4069,3 +4069,11 @@
 }
 
 /* CREATE TOPIC IOS ZOOM FINAL FIX V12 END */
+
+@media (max-width: 680px) {
+  .saveButton,
+  .loadButton,
+  .previewButton {
+    display: none !important;
+  }
+}
