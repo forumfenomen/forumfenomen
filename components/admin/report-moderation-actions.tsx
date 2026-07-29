@@ -10,6 +10,7 @@ import styles from "@/app/admin/admin.module.css";
 type ReportModerationActionsProps = {
   reportId: string;
   status: string;
+  reportType?: "comment" | "topic";
 };
 
 type ClosingStatus =
@@ -24,7 +25,9 @@ type LoadingAction =
 export default function ReportModerationActions({
   reportId,
   status,
+  reportType = "comment",
 }: ReportModerationActionsProps) {
+
   const router = useRouter();
 
   const [supabase] = useState(() =>
@@ -56,8 +59,13 @@ export default function ReportModerationActions({
     setLoadingAction(nextStatus);
     setErrorMessage(null);
 
+    const moderationFunction =
+      reportType === "topic"
+        ? "moderate_topic_report"
+        : "moderate_comment_report";
+
     const { error } = await supabase.rpc(
-      "moderate_comment_report",
+      moderationFunction,
       {
         p_report_id: reportId,
         p_status: nextStatus,
@@ -151,7 +159,7 @@ export default function ReportModerationActions({
   return (
     <>
       <div className={styles.reportActions}>
-        {status === "pending" ? (
+        {status === "pending" || status === "open" ? (
           <button
             type="button"
             className={styles.reviewReportButton}

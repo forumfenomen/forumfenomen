@@ -136,29 +136,54 @@ export default function AdminNav({
     let isActiveEffect = true;
 
     async function loadAdminNotifications() {
-      const commentReportsResult =
-        await supabase
+      const [
+        commentReportsResult,
+        topicReportsResult,
+      ] = await Promise.all([
+        supabase
           .from("comment_reports")
           .select("id", {
             count: "exact",
             head: true,
           })
-          .eq("status", "pending");
+          .eq("status", "pending"),
+
+        supabase
+          .from("topic_reports")
+          .select("id", {
+            count: "exact",
+            head: true,
+          })
+          .eq("status", "open"),
+      ]);
 
       if (!isActiveEffect) {
         return;
       }
 
-      if (commentReportsResult.error) {
-        console.error(
-          "Bekleyen yorum şikâyetleri alınamadı:",
-          commentReportsResult.error.message
-        );
+      if (
+        commentReportsResult.error ||
+        topicReportsResult.error
+      ) {
+        if (commentReportsResult.error) {
+          console.error(
+            "Bekleyen yorum şikâyetleri alınamadı:",
+            commentReportsResult.error.message
+          );
+        }
+
+        if (topicReportsResult.error) {
+          console.error(
+            "Bekleyen konu şikâyetleri alınamadı:",
+            topicReportsResult.error.message
+          );
+        }
 
         setPendingReportCount(0);
       } else {
         setPendingReportCount(
-          commentReportsResult.count ?? 0
+          (commentReportsResult.count ?? 0) +
+          (topicReportsResult.count ?? 0)
         );
       }
 
@@ -253,6 +278,17 @@ export default function AdminNav({
           event: "*",
           schema: "public",
           table: "comment_reports",
+        },
+        () => {
+          void loadAdminNotifications();
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "topic_reports",
         },
         () => {
           void loadAdminNotifications();
@@ -359,11 +395,10 @@ export default function AdminNav({
           <Link
             key={item.href}
             href={item.href}
-            className={`${styles.navLink} ${
-              isActive(item.href)
-                ? styles.navActive
-                : ""
-            }`}
+            className={`${styles.navLink} ${isActive(item.href)
+              ? styles.navActive
+              : ""
+              }`}
           >
             <span>{item.label}</span>
 

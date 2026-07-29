@@ -14,6 +14,8 @@ type ProfileSummary = {
 type TopicSummary = {
   id: string;
   title: string;
+  status: string;
+  author_id: string;
 };
 
 type ReportComment = {
@@ -24,7 +26,7 @@ type ReportComment = {
   author_id: string;
 };
 
-type AdminReport = {
+type CommentReportRow = {
   id: string;
   reporter_id: string;
   comment_id: string;
@@ -35,9 +37,35 @@ type AdminReport = {
   reviewed_at: string | null;
   resolution_note: string | null;
   created_at: string;
-  reported_comment:
-  | ReportComment
-  | null;
+  reported_comment: ReportComment | null;
+};
+
+type TopicReportRow = {
+  id: string;
+  reporter_id: string;
+  topic_id: string;
+  reason: string;
+  details: string | null;
+  status: string;
+  reviewed_by: string | null;
+  reviewed_at: string | null;
+  resolution_note: string | null;
+  created_at: string;
+};
+
+type AdminReport = {
+  id: string;
+  reporter_id: string;
+  reason: string;
+  details: string | null;
+  status: string;
+  reviewed_by: string | null;
+  reviewed_at: string | null;
+  resolution_note: string | null;
+  created_at: string;
+  reportType: "comment" | "topic";
+  topic_id: string | null;
+  reported_comment: ReportComment | null;
 };
 
 type ReportFilter =
@@ -58,6 +86,7 @@ const reasonNames: Record<string, string> = {
 };
 
 const statusNames: Record<string, string> = {
+  open: "Bekliyor",
   pending: "Bekliyor",
   reviewing: "İnceleniyor",
   resolved: "İhlal doğrulandı",
@@ -85,6 +114,13 @@ function formatDate(value: string) {
       timeZone: "Europe/Istanbul",
     }
   ).format(new Date(value));
+}
+
+function isPendingStatus(status: string) {
+  return (
+    status === "pending" ||
+    status === "open"
+  );
 }
 
 function getStatusClass(status: string) {
@@ -118,57 +154,189 @@ export default async function AdminReportsPage({
 
   const activeFilter: ReportFilter =
     requestedFilter === "pending" ||
-      requestedFilter === "reviewing" ||
-      requestedFilter === "resolved" ||
-      requestedFilter === "dismissed"
+    requestedFilter === "reviewing" ||
+    requestedFilter === "resolved" ||
+    requestedFilter === "dismissed"
       ? requestedFilter
       : "all";
 
   const supabase = await createClient();
 
-  const { data, error } = await supabase
-    .from("comment_reports")
-    .select(`
-      id,
-      reporter_id,
-      comment_id,
-      reason,
-      details,
-      status,
-      reviewed_by,
-      reviewed_at,
-      resolution_note,
-      created_at,
-      reported_comment:topic_comments!comment_reports_comment_id_fkey (
+  const [
+    commentReportsResult,
+    topicReportsResult,
+  ] = await Promise.all([
+    supabase
+      .from("comment_reports")
+      .select(`
         id,
-        content,
+        reporter_id,
+        comment_id,
+        reason,
+        details,
         status,
-        topic_id,
-        author_id
-      )
-    `)
-    .order("created_at", {
-      ascending: false,
-    });
+        reviewed_by,
+        reviewed_at,
+        resolution_note,
+        created_at,
+        reported_comment:topic_comments!comment_reports_comment_id_fkey (
+          id,
+          content,
+          status,
+          topic_id,
+          author_id
+        )
+      `)
+      .order("created_at", {
+        ascending: false,
+      }),
 
-  if (error) {
+    supabase
+      .from("topic_reports")
+      .select(`
+        id,
+        reporter_id,
+        topic_id,
+        reason,
+        details,
+        status,
+        reviewed_by,
+        reviewed_at,
+        resolution_note,
+        created_at
+      `)
+      .order("created_at", {
+        ascending: false,
+      }),
+  ]);
+
+  if (commentReportsResult.error) {
     console.error(
-      "Şikâyetler alınamadı:",
-      error.message
+      "Yorum şikâyetleri alınamadı:",
+      commentReportsResult.error.message
     );
   }
 
-  const reports =
-    (data ?? []) as unknown as AdminReport[];
+  if (topicReportsResult.error) {
+    console.error(
+      "Konu şikâyetleri alınamadı:",
+      topicReportsResult.error.message
+    );
+  }
+
+  const commentReports =
+    (commentReportsResult.data ??
+      []) as unknown as CommentReportRow[];
+
+  const topicReports =
+    (topicReportsResult.data ??
+      []) as unknown as TopicReportRow[];
+
+  const reports: AdminReport[] = [
+    ...commentReports.map(
+      (report): AdminReport => ({
+        id: report.id,
+        reporter_id: report.reporter_id,
+        reason: report.reason,
+        details: report.details,
+        status: report.status,
+        reviewed_by: report.reviewed_by,
+        reviewed_at: report.reviewed_at,
+        resolution_note:
+          report.resolution_note,
+        created_at: report.created_at,
+        reportType: "comment",
+        topic_id:
+          report.reported_comment
+            ?.topic_id ?? null,
+        reported_comment:
+          report.reported_comment,
+      })
+    ),
+
+    ...topicReports.map(
+      (report): AdminReport => ({
+        id: report.id,
+        reporter_id: report.reporter_id,
+        reason: report.reason,
+        details: report.details,
+        status: report.status,
+        reviewed_by: report.reviewed_by,
+        reviewed_at: report.reviewed_at,
+        resolution_note:
+          report.resolution_note,
+        created_at: report.created_at,
+        reportType: "topic",
+        topic_id: report.topic_id,
+        reported_comment: null,
+      })
+    ),
+  ].sort(
+    (firstReport, secondReport) =>
+      new Date(
+        secondReport.created_at
+      ).getTime() -
+      new Date(
+        firstReport.created_at
+      ).getTime()
+  );
+
+  const topicIds = Array.from(
+    new Set(
+      reports
+        .map((report) => report.topic_id)
+        .filter(
+          (id): id is string =>
+            typeof id === "string"
+        )
+    )
+  );
+
+  let topics: TopicSummary[] = [];
+
+  if (topicIds.length > 0) {
+    const topicsResult = await supabase
+      .from("topics")
+      .select(`
+        id,
+        title,
+        status,
+        author_id
+      `)
+      .in("id", topicIds);
+
+    if (topicsResult.error) {
+      console.error(
+        "Şikâyet konuları alınamadı:",
+        topicsResult.error.message
+      );
+    }
+
+    topics =
+      (topicsResult.data ??
+        []) as TopicSummary[];
+  }
+
+  const topicMap = new Map(
+    topics.map((topic) => [
+      topic.id,
+      topic,
+    ])
+  );
 
   const profileIds = Array.from(
     new Set(
       reports.flatMap((report) => {
+        const topic = report.topic_id
+          ? topicMap.get(report.topic_id)
+          : undefined;
+
         const ids = [
           report.reporter_id,
           report.reviewed_by,
           report.reported_comment
             ?.author_id,
+          topic?.author_id,
         ];
 
         return ids.filter(
@@ -179,23 +347,7 @@ export default async function AdminReportsPage({
     )
   );
 
-  const topicIds = Array.from(
-    new Set(
-      reports
-        .map(
-          (report) =>
-            report.reported_comment
-              ?.topic_id
-        )
-        .filter(
-          (id): id is string =>
-            typeof id === "string"
-        )
-    )
-  );
-
   let profiles: ProfileSummary[] = [];
-  let topics: TopicSummary[] = [];
 
   if (profileIds.length > 0) {
     const profilesResult = await supabase
@@ -219,27 +371,6 @@ export default async function AdminReportsPage({
         []) as ProfileSummary[];
   }
 
-  if (topicIds.length > 0) {
-    const topicsResult = await supabase
-      .from("topics")
-      .select(`
-        id,
-        title
-      `)
-      .in("id", topicIds);
-
-    if (topicsResult.error) {
-      console.error(
-        "Şikâyet konuları alınamadı:",
-        topicsResult.error.message
-      );
-    }
-
-    topics =
-      (topicsResult.data ??
-        []) as TopicSummary[];
-  }
-
   const profileMap = new Map(
     profiles.map((profile) => [
       profile.id,
@@ -247,16 +378,9 @@ export default async function AdminReportsPage({
     ])
   );
 
-  const topicMap = new Map(
-    topics.map((topic) => [
-      topic.id,
-      topic,
-    ])
-  );
-
   const pendingCount = reports.filter(
     (report) =>
-      report.status === "pending"
+      isPendingStatus(report.status)
   ).length;
 
   const reviewingCount = reports.filter(
@@ -277,10 +401,14 @@ export default async function AdminReportsPage({
   const filteredReports =
     activeFilter === "all"
       ? reports
-      : reports.filter(
-        (report) =>
-          report.status === activeFilter
-      );
+      : reports.filter((report) =>
+          activeFilter === "pending"
+            ? isPendingStatus(
+                report.status
+              )
+            : report.status ===
+              activeFilter
+        );
 
   const reportFilters = [
     {
@@ -324,8 +452,8 @@ export default async function AdminReportsPage({
           <h1>Şikâyetler</h1>
 
           <p>
-            Kullanıcı şikâyetlerini incele,
-            sonuçlandır veya reddet.
+            Yorum ve konu şikâyetlerini
+            incele, sonuçlandır veya reddet.
           </p>
         </div>
 
@@ -349,7 +477,8 @@ export default async function AdminReportsPage({
               href={filter.href}
               className={[
                 styles.reportSummaryCard,
-                activeFilter === filter.value
+                activeFilter ===
+                filter.value
                   ? styles.reportSummaryCardActive
                   : "",
               ]
@@ -364,7 +493,11 @@ export default async function AdminReportsPage({
       </nav>
 
       {activeFilter !== "all" ? (
-        <div className={styles.reportFilterReset}>
+        <div
+          className={
+            styles.reportFilterReset
+          }
+        >
           <Link href="/admin/sikayetler">
             Tüm şikâyetleri göster
           </Link>
@@ -377,11 +510,14 @@ export default async function AdminReportsPage({
             <span>
               {activeFilter === "pending"
                 ? "BEKLEYEN KAYITLAR"
-                : activeFilter === "reviewing"
+                : activeFilter ===
+                    "reviewing"
                   ? "İNCELEMEDEKİ KAYITLAR"
-                  : activeFilter === "resolved"
+                  : activeFilter ===
+                      "resolved"
                     ? "DOĞRULANAN İHLALLER"
-                    : activeFilter === "dismissed"
+                    : activeFilter ===
+                        "dismissed"
                       ? "REDDEDİLEN KAYITLAR"
                       : "ŞİKÂYET KAYITLARI"}
             </span>
@@ -389,11 +525,14 @@ export default async function AdminReportsPage({
             <h2>
               {activeFilter === "pending"
                 ? "Bekleyen Şikâyetler"
-                : activeFilter === "reviewing"
+                : activeFilter ===
+                    "reviewing"
                   ? "İncelenen Şikâyetler"
-                  : activeFilter === "resolved"
+                  : activeFilter ===
+                      "resolved"
                     ? "İhlali Doğrulanan Şikâyetler"
-                    : activeFilter === "dismissed"
+                    : activeFilter ===
+                        "dismissed"
                       ? "Reddedilen Şikâyetler"
                       : "Tüm Şikâyetler"}
             </h2>
@@ -406,7 +545,8 @@ export default async function AdminReportsPage({
 
         {filteredReports.length === 0 ? (
           <div className={styles.emptyState}>
-            Bu filtreye uygun şikâyet bulunmuyor.
+            Bu filtreye uygun şikâyet
+            bulunmuyor.
           </div>
         ) : (
           <div
@@ -414,191 +554,229 @@ export default async function AdminReportsPage({
               styles.adminReportList
             }
           >
-            {filteredReports.map((report) => {
-              const comment =
-                report.reported_comment;
+            {filteredReports.map(
+              (report) => {
+                const comment =
+                  report.reported_comment;
 
-              const reporter =
-                profileMap.get(
-                  report.reporter_id
-                );
+                const topic =
+                  report.topic_id
+                    ? topicMap.get(
+                        report.topic_id
+                      )
+                    : undefined;
 
-              const commentAuthor =
-                comment
-                  ? profileMap.get(
-                    comment.author_id
-                  )
-                  : undefined;
+                const reporter =
+                  profileMap.get(
+                    report.reporter_id
+                  );
 
-              const reviewer =
-                report.reviewed_by
-                  ? profileMap.get(
-                    report.reviewed_by
-                  )
-                  : undefined;
+                const contentAuthorId =
+                  report.reportType ===
+                  "comment"
+                    ? comment?.author_id
+                    : topic?.author_id;
 
-              const topic =
-                comment
-                  ? topicMap.get(
-                    comment.topic_id
-                  )
-                  : undefined;
+                const contentAuthor =
+                  contentAuthorId
+                    ? profileMap.get(
+                        contentAuthorId
+                      )
+                    : undefined;
 
-              return (
-                <article
-                  key={report.id}
-                  className={
-                    styles.adminReportCard
-                  }
-                >
-                  <div
+                const reviewer =
+                  report.reviewed_by
+                    ? profileMap.get(
+                        report.reviewed_by
+                      )
+                    : undefined;
+
+                return (
+                  <article
+                    key={`${report.reportType}-${report.id}`}
                     className={
-                      styles.adminReportTop
-                    }
-                  >
-                    <div>
-                      <span
-                        className={
-                          styles.adminReportReason
-                        }
-                      >
-                        {reasonNames[
-                          report.reason
-                        ] ?? report.reason}
-                      </span>
-
-                      <strong>
-                        Şikâyet eden:{" "}
-                        {getProfileName(
-                          reporter
-                        )}
-                      </strong>
-                    </div>
-
-                    <div
-                      className={
-                        styles.adminReportTopMeta
-                      }
-                    >
-                      <span
-                        className={`${styles.adminReportStatus} ${getStatusClass(
-                          report.status
-                        )}`}
-                      >
-                        {statusNames[
-                          report.status
-                        ] ?? report.status}
-                      </span>
-
-                      <small>
-                        {formatDate(
-                          report.created_at
-                        )}
-                      </small>
-                    </div>
-                  </div>
-
-                  <div
-                    className={
-                      styles.reportedCommentBox
+                      styles.adminReportCard
                     }
                   >
                     <div
                       className={
-                        styles.reportedCommentHeader
+                        styles.adminReportTop
                       }
                     >
-                      <span>
-                        Şikâyet edilen yorum
-                      </span>
+                      <div>
+                        <span
+                          className={
+                            styles.adminReportReason
+                          }
+                        >
+                          {report.reportType ===
+                          "topic"
+                            ? "KONU ŞİKÂYETİ"
+                            : "YORUM ŞİKÂYETİ"}
+                          {" · "}
+                          {reasonNames[
+                            report.reason
+                          ] ?? report.reason}
+                        </span>
 
-                      <strong>
-                        {getProfileName(
-                          commentAuthor
-                        )}
-                      </strong>
-                    </div>
+                        <strong>
+                          Şikâyet eden:{" "}
+                          {getProfileName(
+                            reporter
+                          )}
+                        </strong>
+                      </div>
 
-                    <p>
-                      {comment?.content ??
-                        "Yorum içeriği bulunamadı."}
-                    </p>
-
-                    {topic ? (
-                      <Link
-                        href={`/konu/${topic.id}`}
+                      <div
                         className={
-                          styles.reportTopicLink
+                          styles.adminReportTopMeta
                         }
                       >
-                        Konuya git:{" "}
-                        {topic.title}
-                      </Link>
-                    ) : null}
-                  </div>
+                        <span
+                          className={`${styles.adminReportStatus} ${getStatusClass(
+                            report.status
+                          )}`}
+                        >
+                          {statusNames[
+                            report.status
+                          ] ?? report.status}
+                        </span>
 
-                  {report.details ? (
-                    <div
-                      className={
-                        styles.reportDetailsBox
-                      }
-                    >
-                      <span>
-                        Kullanıcının açıklaması
-                      </span>
-
-                      <p>{report.details}</p>
+                        <small>
+                          {formatDate(
+                            report.created_at
+                          )}
+                        </small>
+                      </div>
                     </div>
-                  ) : null}
 
-                  {report.resolution_note ? (
                     <div
                       className={
-                        styles.reportResolutionBox
+                        styles.reportedCommentBox
                       }
                     >
-                      <span>
-                        Yönetici işlem notu
-                      </span>
+                      <div
+                        className={
+                          styles.reportedCommentHeader
+                        }
+                      >
+                        <span>
+                          {report.reportType ===
+                          "topic"
+                            ? "Şikâyet edilen konu"
+                            : "Şikâyet edilen yorum"}
+                        </span>
+
+                        <strong>
+                          {getProfileName(
+                            contentAuthor
+                          )}
+                        </strong>
+                      </div>
 
                       <p>
-                        {report.resolution_note}
+                        {report.reportType ===
+                        "topic"
+                          ? topic?.title ??
+                            "Konu bulunamadı."
+                          : comment?.content ??
+                            "Yorum içeriği bulunamadı."}
                       </p>
 
-                      <small>
-                        {reviewer
-                          ? `İşlemi yapan: ${getProfileName(
-                            reviewer
-                          )}`
-                          : "Yetkili kullanıcı"}
-                        {report.reviewed_at
-                          ? ` · ${formatDate(
-                            report.reviewed_at
-                          )}`
-                          : ""}
-                      </small>
+                      {topic ? (
+                        <Link
+                          href={`/konu/${topic.id}`}
+                          className={
+                            styles.reportTopicLink
+                          }
+                        >
+                          {report.reportType ===
+                          "topic"
+                            ? "Konuyu aç"
+                            : `Konuya git: ${topic.title}`}
+                        </Link>
+                      ) : null}
                     </div>
-                  ) : null}
 
-                  <div
-                    className={
-                      styles.adminReportFooter
-                    }
-                  >
-                    <span>
-                      Yorum durumu:{" "}
-                      {comment?.status ??
-                        "bulunamadı"}
-                    </span>
+                    {report.details ? (
+                      <div
+                        className={
+                          styles.reportDetailsBox
+                        }
+                      >
+                        <span>
+                          Kullanıcının açıklaması
+                        </span>
 
-                    <ReportModerationActions
-                      reportId={report.id}
-                      status={report.status}
-                    />
-                  </div>
-                </article>
-              );
-            })}
+                        <p>
+                          {report.details}
+                        </p>
+                      </div>
+                    ) : null}
+
+                    {report.resolution_note ? (
+                      <div
+                        className={
+                          styles.reportResolutionBox
+                        }
+                      >
+                        <span>
+                          Yönetici işlem notu
+                        </span>
+
+                        <p>
+                          {
+                            report.resolution_note
+                          }
+                        </p>
+
+                        <small>
+                          {reviewer
+                            ? `İşlemi yapan: ${getProfileName(
+                                reviewer
+                              )}`
+                            : "Yetkili kullanıcı"}
+
+                          {report.reviewed_at
+                            ? ` · ${formatDate(
+                                report.reviewed_at
+                              )}`
+                            : ""}
+                        </small>
+                      </div>
+                    ) : null}
+
+                    <div
+                      className={
+                        styles.adminReportFooter
+                      }
+                    >
+                      <span>
+                        {report.reportType ===
+                        "topic"
+                          ? "Konu durumu"
+                          : "Yorum durumu"}
+                        :{" "}
+                        {report.reportType ===
+                        "topic"
+                          ? topic?.status ??
+                            "bulunamadı"
+                          : comment?.status ??
+                            "bulunamadı"}
+                      </span>
+
+                      <ReportModerationActions
+                        reportId={report.id}
+                        status={report.status}
+                        reportType={
+                          report.reportType
+                        }
+                      />
+                    </div>
+                  </article>
+                );
+              }
+            )}
           </div>
         )}
       </section>

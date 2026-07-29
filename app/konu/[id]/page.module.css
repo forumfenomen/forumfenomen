@@ -2331,18 +2331,61 @@
 
 @media (max-width: 680px) {
     .authorRow {
+        display: flex;
         align-items: center;
+        flex-wrap: nowrap;
+        gap: 8px;
+    }
+
+    .topicAuthorLink,
+    .topicAuthorFallback {
+        min-width: 0;
+        flex: 1 1 auto;
+    }
+
+    .topicAuthorText {
+        min-width: 0;
+    }
+
+    .topicAuthorText strong,
+    .topicAuthorText small {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .topicActions {
-        width: 100%;
+        width: auto;
+        flex: 0 0 auto;
 
-        justify-content: flex-start;
+        justify-content: flex-end;
+        flex-wrap: nowrap;
 
-        margin: 5px 0 0 52px;
+        gap: 5px;
+
+        margin: 0 0 0 auto;
     }
 
     .topicActions .commentAction {
-        flex-basis: 38px;
+        width: 32px;
+        min-width: 32px;
+        height: 32px;
+        min-height: 32px;
+
+        flex: 0 0 32px;
+
+        padding: 0;
+        border-radius: 9px;
+    }
+
+    .topicActions .commentAction svg {
+        width: 13px;
+        height: 13px;
+
+        flex-basis: 13px;
+    }
+
+    .topicActions .actionCount {
+        font-size: 8px;
     }
 }
