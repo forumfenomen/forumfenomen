@@ -13682,3 +13682,41 @@ html[data-theme="light"] .ff-insight-grid button.active {
       rgba(94, 83, 221, 0.1)
     );
 }
+
+/* ANA AKIŞ FİLTRELERİ MOBİL YAZI DÜZELTMESİ */
+
+.ff-insight-grid button {
+  align-content: center;
+}
+
+.ff-insight-grid button strong {
+  display: block;
+  overflow: hidden;
+
+  white-space: normal !important;
+  text-overflow: ellipsis;
+
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+}
+
+.ff-insight-grid button span {
+  display: block;
+  margin-top: 2px;
+}
+
+@media (max-width: 680px) {
+  .ff-insight-grid {
+    grid-template-columns:
+      repeat(4, minmax(135px, 1fr));
+  }
+
+  .ff-insight-grid button {
+    min-width: 135px;
+    padding: 12px 11px;
+  }
+
+  .ff-insight-grid button strong {
+    font-size: 10.5px !important;
+  }
+}
