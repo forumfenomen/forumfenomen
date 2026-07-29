@@ -13683,10 +13683,27 @@ html[data-theme="light"] .ff-insight-grid button.active {
     );
 }
 
-/* ANA AKIŞ FİLTRELERİ MOBİL YAZI DÜZELTMESİ */
+/* ANA AKIŞ FİLTRELERİ */
+
+.ff-insight-grid {
+  overflow: visible;
+}
 
 .ff-insight-grid button {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   align-content: center;
+
+  transform: none;
+  -webkit-transform: none;
+}
+
+.ff-insight-grid button:hover,
+.ff-insight-grid button:active,
+.ff-insight-grid button:focus {
+  transform: none;
+  -webkit-transform: none;
 }
 
 .ff-insight-grid button strong {
@@ -13705,48 +13722,8 @@ html[data-theme="light"] .ff-insight-grid button.active {
   margin-top: 2px;
 }
 
-@media (max-width: 680px) {
-  .ff-insight-grid {
-    grid-template-columns:
-      repeat(5, minmax(135px, 1fr));
-  }
-
-  .ff-insight-grid button {
-    min-width: 135px;
-    padding: 12px 11px;
-  }
-
-  .ff-insight-grid button strong {
-    font-size: 10.5px !important;
-  }
-}
-
-/* AKIŞ FİLTRE KARTI AKTİF ÇİZGİ */
-
-.ff-insight-grid {
-  overflow: visible;
-}
-
-.ff-insight-grid button {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-
-  transform: none;
-  -webkit-transform: none;
-}
-
-.ff-insight-grid button:hover,
-.ff-insight-grid button:active,
-.ff-insight-grid button:focus {
-  transform: none;
-  -webkit-transform: none;
-}
-
 .ff-insight-grid button.active {
-  position: relative;
   z-index: 5;
-  overflow: hidden;
 }
 
 .ff-insight-grid button.active::before {
@@ -13776,7 +13753,53 @@ html[data-theme="light"] .ff-insight-grid button.active {
 
   z-index: 10;
   pointer-events: none;
+}
 
-  transform: none;
-  -webkit-transform: none;
+@media (max-width: 768px) {
+  .ff-feed-page,
+  .ff-feed-app {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  .ff-insight-grid {
+    display: grid;
+
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 135px;
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 0 14px 8px;
+
+    scroll-snap-type: x proximity;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .ff-insight-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ff-insight-grid button {
+    width: 135px;
+    min-width: 135px;
+    max-width: 135px;
+    padding: 12px 11px;
+
+    scroll-snap-align: start;
+  }
+
+  .ff-insight-grid button strong {
+    font-size: 10.5px !important;
+  }
 }
