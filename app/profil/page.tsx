@@ -10,6 +10,7 @@ import {
   useRef,
   useState,
   type FormEvent,
+  type MouseEvent,
   type ReactNode,
 } from "react";
 
@@ -2307,6 +2308,21 @@ export default function ProfilePage() {
       "forumfenomen-theme",
       nextTheme
     );
+  }
+
+  function handleBottomNavigation(
+    event: MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) {
+    if (window.location.pathname === href) {
+      event.preventDefault();
+
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
   }
 
   function toggleLanguage() {
@@ -4622,12 +4638,25 @@ export default function ProfilePage() {
         className="ff-bottom-nav"
         aria-label="ForumFenomen"
       >
-        <Link href="/akis">
+        <Link
+          href="/akis"
+          onClick={(event) =>
+            handleBottomNavigation(event, "/akis")
+          }
+        >
           <HomeIcon />
           <span>{t.home}</span>
         </Link>
 
-        <Link href="/kategoriler">
+        <Link
+          href="/kategoriler"
+          onClick={(event) =>
+            handleBottomNavigation(
+              event,
+              "/kategoriler"
+            )
+          }
+        >
           <GridIcon />
           <span>{t.categories}</span>
         </Link>
@@ -4651,7 +4680,12 @@ export default function ProfilePage() {
           </span>
         </Link>
 
-        <Link href="/blog">
+        <Link
+          href="/blog"
+          onClick={(event) =>
+            handleBottomNavigation(event, "/blog")
+          }
+        >
           <BlogIcon />
           <span>{t.blog}</span>
         </Link>
@@ -4664,6 +4698,9 @@ export default function ProfilePage() {
               : "active"
           }
           aria-current="page"
+          onClick={(event) =>
+            handleBottomNavigation(event, "/profil")
+          }
         >
           <UserIcon />
           <span>{t.profileNav}</span>

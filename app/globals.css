@@ -2647,39 +2647,50 @@ html[data-theme="light"] .ff-feed-page {
   width: 68px;
   height: 68px;
   place-items: center;
+  overflow: hidden;
   border-radius: 15px;
   font-size: 27px;
   font-weight: 800;
 }
 
+.ff-topic-icon.ai,
+.ff-topic-icon.social,
+.ff-topic-icon.game,
+.ff-topic-icon.video,
+.ff-topic-icon.business {
+  border: 1px solid rgba(202, 103, 235, 0.18);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(123, 64, 167, 0.11),
+      rgba(35, 29, 56, 0.18)
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 7px 17px rgba(0, 0, 0, 0.18);
+}
+
 .ff-topic-icon.ai {
-  background: rgba(105, 22, 196, 0.24);
-  color: #9d42ff;
+  color: #a969df;
 }
 
 .ff-topic-icon.social {
-  background:
-    linear-gradient(135deg,
-      #ff8a23,
-      #f3269e 50%,
-      #7547ff);
-  color: #ffffff;
+  color: #d776e8;
   font-size: 37px;
 }
 
 .ff-topic-icon.game {
-  background: rgba(77, 48, 203, 0.24);
-  color: #8a54ff;
+  color: #8f79dd;
 }
 
 .ff-topic-icon.video {
-  background: rgba(230, 15, 32, 0.23);
-  color: #ff2639;
+  color: #d36f9c;
 }
 
 .ff-topic-icon.business {
-  background: rgba(32, 155, 27, 0.17);
-  color: #50df38;
+  color: #b96fd2;
   font-size: 39px;
 }
 
@@ -13421,3 +13432,87 @@ html[data-theme="light"] .ff-insight-grid span {
 }
 
 /* MOBILE KEYBOARD NAV HIDE V10 END */
+
+/* CATEGORY TOPICS USE HOME CARD STYLE START */
+
+.ff-category-topic-list {
+  display: grid !important;
+  gap: 11px !important;
+}
+
+.ff-category-feed-topic {
+  width: 100%;
+}
+
+.ff-category-feed-icon {
+  color: var(--category-accent) !important;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--category-accent) 18%,
+      rgba(255, 255, 255, 0.025)
+    ) !important;
+}
+
+.ff-category-feed-icon svg {
+  width: 31px;
+  height: 31px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ff-category-feed-tag {
+  color:
+    color-mix(
+      in srgb,
+      var(--category-accent) 78%,
+      #ffffff
+    ) !important;
+
+  border:
+    1px solid
+    color-mix(
+      in srgb,
+      var(--category-accent) 27%,
+      transparent
+    );
+
+  background:
+    color-mix(
+      in srgb,
+      var(--category-accent) 13%,
+      transparent
+    ) !important;
+}
+
+html[data-theme="light"] .ff-category-feed-tag {
+  color:
+    color-mix(
+      in srgb,
+      var(--category-accent) 75%,
+      #18151f
+    ) !important;
+}
+
+@media (max-width: 680px) {
+  .ff-category-feed-topic {
+    min-height: 108px !important;
+  }
+
+  .ff-category-feed-icon {
+    width: 54px !important;
+    height: 54px !important;
+  }
+
+  .ff-category-feed-icon svg {
+    width: 27px !important;
+    height: 27px !important;
+  }
+}
+
+/* CATEGORY TOPICS USE HOME CARD STYLE END */

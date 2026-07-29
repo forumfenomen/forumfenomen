@@ -10,6 +10,7 @@ import {
   useMemo,
   useState,
   type CSSProperties,
+  type MouseEvent,
   type ReactNode,
 } from "react";
 
@@ -959,7 +960,7 @@ const topics: Topic[] = [
 ];
 
 export default function CategoriesPage() {
-  
+
   const [language, setLanguage] =
     useState<ForumLanguage>("tr");
 
@@ -984,53 +985,53 @@ export default function CategoriesPage() {
   const [activeTab, setActiveTab] =
     useState<TabId>("popular");
 
-      useEffect(() => {
-  const params =
-    new URLSearchParams(
-      window.location.search
+  useEffect(() => {
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const groupSlug =
+      params.get("group");
+
+    const categorySlug =
+      params.get("category");
+
+    if (!groupSlug) {
+      return;
+    }
+
+    const targetGroup =
+      categoryData.find(
+        (category) =>
+          category.slug === groupSlug
+      );
+
+    if (!targetGroup) {
+      return;
+    }
+
+    setSelectedCategory(
+      targetGroup.id
     );
 
-  const groupSlug =
-    params.get("group");
+    setActiveTab("popular");
 
-  const categorySlug =
-    params.get("category");
+    if (!categorySlug) {
+      setSelectedSubcategory(null);
+      return;
+    }
 
-  if (!groupSlug) {
-    return;
-  }
+    const targetSubcategory =
+      targetGroup.subcategories.find(
+        (subcategory) =>
+          subcategory.slug === categorySlug
+      );
 
-  const targetGroup =
-    categoryData.find(
-      (category) =>
-        category.slug === groupSlug
+    setSelectedSubcategory(
+      targetSubcategory?.id ?? null
     );
-
-  if (!targetGroup) {
-    return;
-  }
-
-  setSelectedCategory(
-    targetGroup.id
-  );
-
-  setActiveTab("popular");
-
-  if (!categorySlug) {
-    setSelectedSubcategory(null);
-    return;
-  }
-
-  const targetSubcategory =
-    targetGroup.subcategories.find(
-      (subcategory) =>
-        subcategory.slug === categorySlug
-    );
-
-  setSelectedSubcategory(
-    targetSubcategory?.id ?? null
-  );
-}, [categoryData]);
+  }, [categoryData]);
 
 
 
@@ -1445,6 +1446,21 @@ export default function CategoriesPage() {
       nextTheme;
   }
 
+  function handleBottomNavigation(
+    event: MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) {
+    if (window.location.pathname === href) {
+      event.preventDefault();
+
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
+  }
+
   return (
     <main className="ff-categories-page">
       <div className="ff-categories-shell">
@@ -1716,69 +1732,72 @@ export default function CategoriesPage() {
               aria-busy={topicsLoading}
             >
               {visibleTopics.length > 0 ? (
-                visibleTopics.map(
-                  (topic) => (
-                    <Link
-                      key={topic.id}
-                      href={`/konu/${topic.id}`}
-                      className="ff-category-topic"
-                      aria-label={`${topic.title[language]} konusunu aç`}
+                visibleTopics.map((topic) => (
+                  <article
+                    key={topic.id}
+                    className="ff-topic-card ff-category-feed-topic"
+                  >
+                    <div
+                      className="ff-topic-icon ff-category-feed-icon"
+                      style={
+                        {
+                          "--category-accent":
+                            activeCategory.accent,
+                        } as CSSProperties
+                      }
                     >
-                      <div
-                        className="ff-category-topic-icon"
-                        style={
-                          {
-                            "--category-accent":
-                              activeCategory.accent,
-                          } as CSSProperties
-                        }
-                      >
-                        {activeCategory.icon}
-                      </div>
+                      {activeCategory.icon}
+                    </div>
 
-                      <div className="ff-category-topic-content">
-                        <h3>
-                          {
-                            topic.title[
-                            language
-                            ]
-                          }
-                        </h3>
+                    <div className="ff-topic-main">
+                      <h3>
+                        <Link
+                          href={`/konu/${topic.id}`}
+                          style={{
+                            color: "inherit",
+                            textDecoration: "none",
+                          }}
+                        >
+                          {topic.title[language]}
+                        </Link>
+                      </h3>
 
-                        <div className="ff-category-topic-meta">
-                          <span className="ff-category-topic-tag">
+                      <div className="ff-topic-meta">
+                        <span
+                          className="ff-category ff-category-feed-tag"
+                          style={
                             {
-                              topic.tag[
-                              language
-                              ]
-                            }
-                          </span>
-
-                          <span>
-                            {topic.author}
-                          </span>
-
-                          <span>
-                            {topic.ageHours}{" "}
-                            {t.hoursAgo}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="ff-category-topic-stats">
-                        <span>
-                          <CommentIcon />
-                          {topic.comments}
+                              "--category-accent":
+                                activeCategory.accent,
+                            } as CSSProperties
+                          }
+                        >
+                          {topic.tag[language]}
                         </span>
 
+                        <span>{topic.author}</span>
+
+                        <i>•</i>
+
                         <span>
-                          <EyeIcon />
-                          {topic.views}
+                          {topic.ageHours} {t.hoursAgo}
                         </span>
                       </div>
-                    </Link>
-                  )
-                )
+                    </div>
+
+                    <div className="ff-topic-stats">
+                      <span>
+                        <CommentIcon />
+                        {topic.comments}
+                      </span>
+
+                      <span>
+                        <EyeIcon />
+                        {topic.views}
+                      </span>
+                    </div>
+                  </article>
+                ))
               ) : (
                 <div className="ff-category-empty">
                   <SearchIcon />
@@ -1797,7 +1816,12 @@ export default function CategoriesPage() {
         className="ff-bottom-nav"
         aria-label="ForumFenomen"
       >
-        <Link href="/akis">
+        <Link
+          href="/akis"
+          onClick={(event) =>
+            handleBottomNavigation(event, "/akis")
+          }
+        >
           <HomeIcon />
           <span>{t.home}</span>
         </Link>
@@ -1806,6 +1830,12 @@ export default function CategoriesPage() {
           href="/kategoriler"
           className="active"
           aria-current="page"
+          onClick={(event) =>
+            handleBottomNavigation(
+              event,
+              "/kategoriler"
+            )
+          }
         >
           <GridIcon />
           <span>{t.categories}</span>
@@ -1830,12 +1860,22 @@ export default function CategoriesPage() {
           </span>
         </Link>
 
-        <Link href="/blog">
+        <Link
+          href="/blog"
+          onClick={(event) =>
+            handleBottomNavigation(event, "/blog")
+          }
+        >
           <BlogIcon />
           <span>{t.blog}</span>
         </Link>
 
-        <Link href="/profil">
+        <Link
+          href="/profil"
+          onClick={(event) =>
+            handleBottomNavigation(event, "/profil")
+          }
+        >
           <UserIcon />
           <span>{t.profile}</span>
         </Link>

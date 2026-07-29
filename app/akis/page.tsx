@@ -9,7 +9,11 @@ import { createClient } from "@/lib/supabase/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+  type MouseEvent,
+} from "react";
 import {
   getForumLanguage,
   setForumLanguage,
@@ -975,6 +979,21 @@ export default function FeedPage() {
 
   const displayPosts = topicPosts;
 
+  function handleBottomNavigation(
+    event: MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) {
+    if (window.location.pathname === href) {
+      event.preventDefault();
+
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
+  }
+
   return (
     <main className="ff-feed-page">
       <TemporaryUsernameReminder />
@@ -1291,12 +1310,23 @@ export default function FeedPage() {
 
 
       <nav className="ff-bottom-nav" aria-label="Ana menü">
-        <Link href="/akis" className="active">
+        <Link
+          href="/akis"
+          className="active"
+          onClick={(event) =>
+            handleBottomNavigation(event, "/akis")
+          }
+        >
           <HomeIcon />
           <span>{t.home}</span>
         </Link>
 
-        <Link href="/kategoriler">
+        <Link
+          href="/kategoriler"
+          onClick={(event) =>
+            handleBottomNavigation(event, "/kategoriler")
+          }
+        >
           <GridIcon />
           <span>{t.categories}</span>
         </Link>
@@ -1319,12 +1349,22 @@ export default function FeedPage() {
           </span>
         </Link>
 
-        <Link href="/blog">
+        <Link
+          href="/blog"
+          onClick={(event) =>
+            handleBottomNavigation(event, "/blog")
+          }
+        >
           <BlogIcon />
           <span>{t.blog}</span>
         </Link>
 
-        <Link href="/profil">
+        <Link
+          href="/profil"
+          onClick={(event) =>
+            handleBottomNavigation(event, "/profil")
+          }
+        >
           <ProfileIcon />
           <span>{t.profile}</span>
         </Link>
