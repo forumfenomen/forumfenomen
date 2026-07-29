@@ -330,10 +330,6 @@ export default function PublicProfilePage() {
         useState(0);
 
     useEffect(() => {
-        if (loading) {
-            return;
-        }
-
         const resetScroll = () => {
             window.scrollTo({
                 top: 0,
@@ -347,17 +343,23 @@ export default function PublicProfilePage() {
 
         resetScroll();
 
-        const frameId =
+        const firstFrameId =
             window.requestAnimationFrame(resetScroll);
 
+        const secondFrameId =
+            window.requestAnimationFrame(() => {
+                window.requestAnimationFrame(resetScroll);
+            });
+
         const timeoutId =
-            window.setTimeout(resetScroll, 150);
+            window.setTimeout(resetScroll, 200);
 
         return () => {
-            window.cancelAnimationFrame(frameId);
+            window.cancelAnimationFrame(firstFrameId);
+            window.cancelAnimationFrame(secondFrameId);
             window.clearTimeout(timeoutId);
         };
-    }, [usernameParam, loading]);
+    }, [usernameParam]);
 
     useEffect(() => {
         const savedLanguage =
@@ -1479,7 +1481,7 @@ export default function PublicProfilePage() {
                                 </div>
                             </div>
 
-                            
+
                             <div
                                 className={
                                     styles.statsGrid
