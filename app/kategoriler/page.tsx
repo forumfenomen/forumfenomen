@@ -8,6 +8,7 @@ import Link from "next/link";
 import {
   useEffect,
   useMemo,
+  useRef,
   useState,
   type CSSProperties,
   type MouseEvent,
@@ -985,6 +986,9 @@ export default function CategoriesPage() {
   const [activeTab, setActiveTab] =
     useState<TabId>("popular");
 
+  const categoryDetailRef =
+    useRef<HTMLElement | null>(null);
+
   useEffect(() => {
     const params =
       new URLSearchParams(
@@ -1017,41 +1021,43 @@ export default function CategoriesPage() {
 
     setActiveTab("popular");
 
-    if (!categorySlug) {
+    if (categorySlug) {
+      const targetSubcategory =
+        targetGroup.subcategories.find(
+          (subcategory) =>
+            subcategory.slug === categorySlug
+        );
+
+      setSelectedSubcategory(
+        targetSubcategory?.id ?? null
+      );
+    } else {
       setSelectedSubcategory(null);
-      return;
     }
 
-    const targetSubcategory =
-      targetGroup.subcategories.find(
-        (subcategory) =>
-          subcategory.slug === categorySlug
-      );
+    const scrollTimer =
+      window.setTimeout(() => {
+        const target =
+          categoryDetailRef.current;
 
-    setSelectedSubcategory(
-      targetSubcategory?.id ?? null
-    );
+        if (!target) {
+          return;
+        }
 
-    const resetScroll = () => {
-  window.scrollTo({
-    top: 0,
-    left: 0,
-    behavior: "auto",
-  });
+        const targetTop =
+          target.getBoundingClientRect().top +
+          window.scrollY -
+          18;
 
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
-};
+        window.scrollTo({
+          top: Math.max(targetTop, 0),
+          behavior: "smooth",
+        });
+      }, 180);
 
-resetScroll();
-
-window.requestAnimationFrame(() => {
-  resetScroll();
-});
-
-window.setTimeout(resetScroll, 100);
-window.setTimeout(resetScroll, 300);
-
+    return () => {
+      window.clearTimeout(scrollTimer);
+    };
   }, [categoryData]);
 
 
@@ -1586,7 +1592,9 @@ window.setTimeout(resetScroll, 300);
         </section>
 
         <section
+          ref={categoryDetailRef}
           className="ff-category-detail"
+          
           style={
             {
               "--category-accent":
