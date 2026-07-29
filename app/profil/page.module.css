@@ -6037,3 +6037,81 @@
     font-size: 10.5px !important;
   }
 }
+
+/* PROFILE LIGHT THEME CONTRAST FIX */
+
+:global(html[data-theme="light"]) .profileHero .statsGrid {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.055);
+}
+
+:global(html[data-theme="light"]) .profileHero .statsGrid button,
+:global(html[data-theme="light"]) .profileHero .statsGrid article {
+  border-right-color: rgba(255, 255, 255, 0.09);
+}
+
+:global(html[data-theme="light"]) .profileHero .statsGrid strong,
+:global(html[data-theme="light"]) .profileHero .statsGrid button strong {
+  color: #ffffff !important;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.28);
+}
+
+:global(html[data-theme="light"]) .profileHero .statsGrid span,
+:global(html[data-theme="light"]) .profileHero .statsGrid button span {
+  color: #c9cbd5 !important;
+}
+
+:global(html[data-theme="light"]) .profileHero .statsGrid button:hover,
+:global(html[data-theme="light"]) .profileHero .statsGrid button.activeProfileStat {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(213, 52, 232, 0.2),
+      rgba(54, 105, 255, 0.14)
+    );
+}
+
+:global(html[data-theme="light"]) .publicCompactFollowButton {
+  color: #6f198f !important;
+  border-color: rgba(171, 42, 204, 0.42) !important;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(222, 76, 237, 0.16),
+      rgba(102, 83, 255, 0.11)
+    ) !important;
+  box-shadow:
+    0 5px 14px rgba(148, 42, 190, 0.1);
+}
+
+:global(html[data-theme="light"])
+  .publicCompactFollowButton:hover:not(:disabled) {
+  color: #56126f !important;
+  border-color: rgba(171, 42, 204, 0.58) !important;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(222, 76, 237, 0.23),
+      rgba(102, 83, 255, 0.16)
+    ) !important;
+}
+
+:global(html[data-theme="light"]) .publicCompactFollowingButton {
+  color: #13714d !important;
+  border-color: rgba(26, 151, 99, 0.4) !important;
+  background: rgba(33, 176, 116, 0.13) !important;
+}
+
+:global(html[data-theme="light"]) .publicCompactFlagButton {
+  color: #c52d68 !important;
+  border-color: rgba(215, 52, 112, 0.38) !important;
+  background: rgba(225, 55, 116, 0.11) !important;
+  box-shadow:
+    0 5px 14px rgba(190, 37, 93, 0.08);
+}
+
+:global(html[data-theme="light"]) .publicCompactFlagButton:hover {
+  color: #9e174d !important;
+  border-color: rgba(215, 52, 112, 0.55) !important;
+  background: rgba(225, 55, 116, 0.18) !important;
+}

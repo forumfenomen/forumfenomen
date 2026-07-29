@@ -1665,3 +1665,35 @@
 }
 /* BLOG GLOBAL READABLE SECONDARY TEXT V6 END */
 
+
+/* BLOG LIGHT THEME TEXT CONTRAST FIX */
+
+:global(html[data-theme="light"]) .sideCard h3 {
+  color: #24232d !important;
+}
+
+:global(html[data-theme="light"]) .sideCard .articleMeta {
+  color: #626571 !important;
+}
+
+:global(html[data-theme="light"]) .sideCard .metaDot {
+  background: #8b8d98 !important;
+}
+
+:global(html[data-theme="light"]) .sideCard {
+  background: rgba(255, 255, 255, 0.97) !important;
+  border-color: rgba(42, 38, 62, 0.11) !important;
+}
+
+:global(html[data-theme="light"]) .articleCard h3 {
+  color: #24232d !important;
+}
+
+:global(html[data-theme="light"]) .articleCard .articleMeta {
+  color: #626571 !important;
+}
+
+:global(html[data-theme="light"]) .articleCard p {
+  color: #666974 !important;
+}
+

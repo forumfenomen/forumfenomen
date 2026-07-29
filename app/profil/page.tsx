@@ -3446,33 +3446,29 @@ export default function ProfilePage() {
                     </>
                   )}
 
-                  <button
-                    type="button"
-                    className={
-                      styles.followingBadge
-                    }
-                    disabled={
-                      unfollowingUserId ===
-                      follow.following_id
-                    }
-                    onClick={() => {
-                      void unfollowUser(
-                        follow.following_id
-                      );
-                    }}
-                    title={
-                      language === "tr"
-                        ? "Takibi bırak"
-                        : "Unfollow"
-                    }
-                  >
-                    <CheckIcon />
+                  {profileUrl ? (
+                    <a
+                      href={profileUrl}
+                      className={styles.followingBadge}
+                      title={
+                        language === "tr"
+                          ? "Profili görüntüle"
+                          : "View profile"
+                      }
+                    >
+                      {language === "tr"
+                        ? "Profili Gör"
+                        : "View Profile"}
+                    </a>
+                  ) : (
+                    <span
+                      className={styles.followingBadge}
+                    >
+                      <CheckIcon />
 
-                    {unfollowingUserId ===
-                      follow.following_id
-                      ? "..."
-                      : t.following}
-                  </button>
+                      {t.following}
+                    </span>
+                  )}
                 </article>
               );
             })
