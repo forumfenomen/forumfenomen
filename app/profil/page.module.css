@@ -1803,13 +1803,18 @@
   }
 
   .profileMenu {
+    position: relative;
+
     display: flex;
 
     gap: 5px;
     overflow-x: auto;
+    overflow-y: hidden;
 
-    padding: 6px;
+    padding: 6px 42px 6px 6px;
 
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
 
@@ -1817,10 +1822,50 @@
     display: none;
   }
 
+  .profileMenu::after {
+    content: "›";
+
+    position: sticky;
+    right: 0;
+    z-index: 8;
+
+    display: grid;
+    width: 30px;
+    min-width: 30px;
+    height: 40px;
+
+    flex: 0 0 30px;
+    place-items: center;
+
+    margin-left: -30px;
+
+    color: #e064eb;
+
+    border-left:
+      1px solid rgba(218, 74, 235, 0.2);
+    border-radius: 10px;
+
+    background:
+      linear-gradient(90deg,
+        rgba(8, 8, 18, 0),
+        rgba(8, 8, 18, 0.97) 45%);
+
+    font-size: 27px;
+    line-height: 1;
+
+    pointer-events: none;
+
+    animation:
+      profileMenuSwipeHint 1.5s ease-in-out infinite;
+  }
+
   .profileMenu button {
     display: flex;
     min-width: max-content;
     min-height: 40px;
+
+    flex: 0 0 auto;
+    scroll-snap-align: start;
 
     gap: 6px;
 
@@ -3499,19 +3544,19 @@
   }
 }
 
-  .publicProfileContent,
-  .publicProfileState {
-    padding: 14px;
-    border-radius: 18px;
-  }
+.publicProfileContent,
+.publicProfileState {
+  padding: 14px;
+  border-radius: 18px;
+}
 
-  .publicFollowButton,
-  .publicFollowingButton,
-  .publicProfileOwnButton {
-    min-height: 36px;
-    padding: 0 12px;
-    font-size: 9px;
-  }
+.publicFollowButton,
+.publicFollowingButton,
+.publicProfileOwnButton {
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 9px;
+}
 
 
 .followingPersonRow {
@@ -5499,8 +5544,7 @@
 /* OWN PROFILE MOBILE ACTIONS FIX */
 
 @media (max-width: 600px) {
-  .profileHero
-    .profileActions:has(.logoutButton) {
+  .profileHero .profileActions:has(.logoutButton) {
     position: static !important;
     top: auto !important;
     right: auto !important;
@@ -5518,12 +5562,8 @@
     margin: -3px 0 0 !important;
   }
 
-  .profileHero
-    .profileActions:has(.logoutButton)
-    .editButton,
-  .profileHero
-    .profileActions:has(.logoutButton)
-    .settingsButton {
+  .profileHero .profileActions:has(.logoutButton) .editButton,
+  .profileHero .profileActions:has(.logoutButton) .settingsButton {
     width: 38px !important;
     height: 38px !important;
     min-width: 38px !important;
@@ -5536,8 +5576,7 @@
 /* OWN PROFILE MOBILE ACTIONS FIX */
 
 @media (max-width: 600px) {
-  .profileHero
-    .profileActions:has(.logoutButton) {
+  .profileHero .profileActions:has(.logoutButton) {
     position: static !important;
     top: auto !important;
     right: auto !important;
@@ -5555,12 +5594,8 @@
     margin: -3px 0 0 !important;
   }
 
-  .profileHero
-    .profileActions:has(.logoutButton)
-    .editButton,
-  .profileHero
-    .profileActions:has(.logoutButton)
-    .settingsButton {
+  .profileHero .profileActions:has(.logoutButton) .editButton,
+  .profileHero .profileActions:has(.logoutButton) .settingsButton {
     width: 38px !important;
     height: 38px !important;
     min-width: 38px !important;
@@ -5569,18 +5604,14 @@
     flex: 0 0 38px !important;
   }
 
-  .profileHero
-    .profileActions:has(.logoutButton)
-    .editButton {
+  .profileHero .profileActions:has(.logoutButton) .editButton {
     display: grid !important;
     place-items: center !important;
     padding: 0 !important;
     line-height: 0 !important;
   }
 
-  .profileHero
-    .profileActions:has(.logoutButton)
-    .editButton svg {
+  .profileHero .profileActions:has(.logoutButton) .editButton svg {
     display: block !important;
     width: 17px !important;
     height: 17px !important;
@@ -5609,7 +5640,7 @@
   width: 100%;
 }
 
-.emptyNotification > div {
+.emptyNotification>div {
   width: 100%;
   min-width: 0;
 }
@@ -5632,6 +5663,7 @@
 /* PROFILE MOBILE READABILITY FINAL */
 
 @media (max-width: 680px) {
+
   /* Profil üst biyografi */
   .profileText p {
     font-size: 13px !important;
@@ -5858,17 +5890,13 @@
 .publicCompactFollowButton svg {
   color: #d85cff !important;
   stroke: currentColor !important;
-  filter: drop-shadow(
-    0 0 5px rgba(216, 92, 255, 0.45)
-  );
+  filter: drop-shadow(0 0 5px rgba(216, 92, 255, 0.45));
 }
 
 .publicCompactFollowingButton svg {
   color: #5ee7a8 !important;
   stroke: currentColor !important;
-  filter: drop-shadow(
-    0 0 5px rgba(94, 231, 168, 0.35)
-  );
+  filter: drop-shadow(0 0 5px rgba(94, 231, 168, 0.35));
 }
 
 /* OWN PROFILE ACTION POSITION FIX */
@@ -6016,11 +6044,9 @@
   border-radius: 12px !important;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(216, 92, 255, 0.18),
-      rgba(0, 195, 255, 0.12)
-    ) !important;
+      rgba(0, 195, 255, 0.12)) !important;
 
   color: #ffffff !important;
 
@@ -6064,36 +6090,29 @@
 :global(html[data-theme="light"]) .profileHero .statsGrid button:hover,
 :global(html[data-theme="light"]) .profileHero .statsGrid button.activeProfileStat {
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(213, 52, 232, 0.2),
-      rgba(54, 105, 255, 0.14)
-    );
+      rgba(54, 105, 255, 0.14));
 }
 
 :global(html[data-theme="light"]) .publicCompactFollowButton {
   color: #6f198f !important;
   border-color: rgba(171, 42, 204, 0.42) !important;
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(222, 76, 237, 0.16),
-      rgba(102, 83, 255, 0.11)
-    ) !important;
+      rgba(102, 83, 255, 0.11)) !important;
   box-shadow:
     0 5px 14px rgba(148, 42, 190, 0.1);
 }
 
-:global(html[data-theme="light"])
-  .publicCompactFollowButton:hover:not(:disabled) {
+:global(html[data-theme="light"]) .publicCompactFollowButton:hover:not(:disabled) {
   color: #56126f !important;
   border-color: rgba(171, 42, 204, 0.58) !important;
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(222, 76, 237, 0.23),
-      rgba(102, 83, 255, 0.16)
-    ) !important;
+      rgba(102, 83, 255, 0.16)) !important;
 }
 
 :global(html[data-theme="light"]) .publicCompactFollowingButton {
@@ -6114,4 +6133,32 @@
   color: #9e174d !important;
   border-color: rgba(215, 52, 112, 0.55) !important;
   background: rgba(225, 55, 116, 0.18) !important;
+}
+
+@keyframes profileMenuSwipeHint {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translateX(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(4px);
+  }
+}
+
+:global(html[data-theme="light"])
+  .profileMenu::after {
+  color: #a72dc4;
+
+  border-left-color:
+    rgba(158, 45, 188, 0.2);
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.98) 45%
+    );
 }

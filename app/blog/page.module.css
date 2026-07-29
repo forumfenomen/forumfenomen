@@ -544,6 +544,7 @@
   color: #92949f;
   font-size: 10px;
   line-height: 1.5;
+  line-clamp: 3;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
@@ -841,6 +842,7 @@
     margin-top: 9px;
     font-size: 10px;
     line-height: 1.45;
+    line-clamp: 3;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
   }
@@ -1001,6 +1003,7 @@
   .articleCard p {
     min-height: 0;
     font-size: 9px;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
   }
 
@@ -1360,6 +1363,7 @@
     font-size: 10.8px !important;
     line-height: 1.5 !important;
 
+    line-clamp: 2 !important;
     -webkit-line-clamp: 2 !important;
   }
 
