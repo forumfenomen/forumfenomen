@@ -22,6 +22,7 @@ import {
 
 import {
     useEffect,
+    useLayoutEffect,
     useState,
 } from "react";
 
@@ -329,7 +330,7 @@ export default function PublicProfilePage() {
     const [commentCount, setCommentCount] =
         useState(0);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (loading) {
             return;
         }
@@ -338,28 +339,74 @@ export default function PublicProfilePage() {
             window.history.scrollRestoration = "manual";
         }
 
-        const resetScroll = () => {
+        const resetSafariPage = () => {
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+
             window.scrollTo({
                 top: 0,
                 left: 0,
                 behavior: "auto",
             });
 
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
+            // Safari'nin eski dokunma ve görüntü katmanını yenile.
+            document.body.getBoundingClientRect();
+
+            window.scrollBy(0, 1);
+            window.scrollTo(0, 0);
         };
 
-        resetScroll();
+        resetSafariPage();
 
-        const frameId =
-            window.requestAnimationFrame(resetScroll);
+        const firstFrameId =
+            window.requestAnimationFrame(() => {
+                resetSafariPage();
 
-        const timeoutId =
-            window.setTimeout(resetScroll, 150);
+                window.requestAnimationFrame(
+                    resetSafariPage
+                );
+            });
+
+        const timeout150 =
+            window.setTimeout(
+                resetSafariPage,
+                150
+            );
+
+        const timeout500 =
+            window.setTimeout(
+                resetSafariPage,
+                500
+            );
+
+        const timeout1000 =
+            window.setTimeout(
+                resetSafariPage,
+                1000
+            );
+
+        const handlePageShow = () => {
+            resetSafariPage();
+        };
+
+        window.addEventListener(
+            "pageshow",
+            handlePageShow
+        );
 
         return () => {
-            window.cancelAnimationFrame(frameId);
-            window.clearTimeout(timeoutId);
+            window.cancelAnimationFrame(
+                firstFrameId
+            );
+
+            window.clearTimeout(timeout150);
+            window.clearTimeout(timeout500);
+            window.clearTimeout(timeout1000);
+
+            window.removeEventListener(
+                "pageshow",
+                handlePageShow
+            );
         };
     }, [usernameParam, loading]);
 

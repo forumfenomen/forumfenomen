@@ -1330,6 +1330,288 @@ export default function FeedPage() {
           </div>
         </section>
 
+        <section className="ff-insight-grid">
+
+
+
+          <button
+
+            type="button"
+
+            className={
+
+              activeFeedFilter === "latest"
+
+                ? "active"
+
+                : ""
+
+            }
+
+            onClick={() => {
+
+              setActiveFeedFilter("latest");
+
+
+
+              document
+
+                .querySelector(".ff-featured-section")
+
+                ?.scrollIntoView({
+
+                  behavior: "smooth",
+
+                  block: "start",
+
+                });
+
+            }}
+
+          >
+
+            <strong>
+
+              🕘 {language === "tr"
+
+                ? "Son Eklenen"
+
+                : "Latest"}
+
+            </strong>
+
+
+
+            <span>
+
+              {latestPosts.length}{" "}
+
+              {language === "tr" ? "konu" : "topics"}
+
+            </span>
+
+          </button>
+
+
+
+          <button
+
+            type="button"
+
+            className={
+
+              activeFeedFilter === "trends"
+
+                ? "active"
+
+                : ""
+
+            }
+
+            onClick={() => {
+
+              setActiveFeedFilter("trends");
+
+
+
+              document
+
+                .querySelector(".ff-featured-section")
+
+                ?.scrollIntoView({
+
+                  behavior: "smooth",
+
+                  block: "start",
+
+                });
+
+            }}
+
+          >
+
+            <strong>🔥 {t.trends}</strong>
+
+
+
+            <span>
+
+              {trendPosts.length}{" "}
+
+              {language === "tr" ? "konu" : "topics"}
+
+            </span>
+
+          </button>
+
+
+
+          <button
+
+            type="button"
+
+            className={
+
+              activeFeedFilter === "popular"
+
+                ? "active"
+
+                : ""
+
+            }
+
+            onClick={() => {
+
+              setActiveFeedFilter("popular");
+
+
+
+              document
+
+                .querySelector(".ff-featured-section")
+
+                ?.scrollIntoView({
+
+                  behavior: "smooth",
+
+                  block: "start",
+
+                });
+
+            }}
+
+          >
+
+            <strong>↗ {t.popular}</strong>
+
+
+
+            <span>
+
+              {popularPosts.length}{" "}
+
+              {language === "tr" ? "konu" : "topics"}
+
+            </span>
+
+          </button>
+
+
+
+          <button
+
+            type="button"
+
+            className={
+
+              activeFeedFilter === "community"
+
+                ? "active"
+
+                : ""
+
+            }
+
+            onClick={() => {
+
+              setActiveFeedFilter("community");
+
+
+
+              document
+
+                .querySelector(".ff-featured-section")
+
+                ?.scrollIntoView({
+
+                  behavior: "smooth",
+
+                  block: "start",
+
+                });
+
+            }}
+
+          >
+
+            <strong>👥 {t.community}</strong>
+
+
+
+            <span>
+
+              {communityPosts.length}{" "}
+
+              {language === "tr" ? "konu" : "topics"}
+
+            </span>
+
+          </button>
+
+
+
+          <button
+
+            type="button"
+
+            className={
+
+              activeFeedFilter === "following"
+
+                ? "active"
+
+                : ""
+
+            }
+
+            onClick={() => {
+
+              if (!currentUserId) {
+
+                router.push("/giris");
+
+                return;
+
+              }
+
+
+
+              setActiveFeedFilter("following");
+
+
+
+              document
+
+                .querySelector(".ff-featured-section")
+
+                ?.scrollIntoView({
+
+                  behavior: "smooth",
+
+                  block: "start",
+
+                });
+
+            }}
+
+          >
+
+            <strong>☆ {t.following}</strong>
+
+
+
+            <span>
+
+              {followingPosts.length}{" "}
+
+              {language === "tr" ? "konu" : "topics"}
+
+            </span>
+
+          </button>
+
+        </section>
+
         <section className="ff-featured-section">
           <div className="ff-section-heading">
             <h2>{activeFeedTitle[activeFeedFilter]}</h2>
@@ -1470,147 +1752,7 @@ export default function FeedPage() {
           </div>
         </section>
 
-        <section className="ff-insight-grid">
 
-          <button
-            type="button"
-            className={
-              activeFeedFilter === "latest"
-                ? "active"
-                : ""
-            }
-            onClick={() => {
-              setActiveFeedFilter("latest");
-
-              document
-                .querySelector(".ff-featured-section")
-                ?.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                });
-            }}
-          >
-            <strong>
-              🕘 {language === "tr"
-                ? "Son Eklenen"
-                : "Latest"}
-            </strong>
-
-            <span>
-              {latestPosts.length}{" "}
-              {language === "tr" ? "konu" : "topics"}
-            </span>
-          </button>
-
-          <button
-            type="button"
-            className={
-              activeFeedFilter === "trends"
-                ? "active"
-                : ""
-            }
-            onClick={() => {
-              setActiveFeedFilter("trends");
-
-              document
-                .querySelector(".ff-featured-section")
-                ?.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                });
-            }}
-          >
-            <strong>🔥 {t.trends}</strong>
-
-            <span>
-              {trendPosts.length}{" "}
-              {language === "tr" ? "konu" : "topics"}
-            </span>
-          </button>
-
-          <button
-            type="button"
-            className={
-              activeFeedFilter === "popular"
-                ? "active"
-                : ""
-            }
-            onClick={() => {
-              setActiveFeedFilter("popular");
-
-              document
-                .querySelector(".ff-featured-section")
-                ?.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                });
-            }}
-          >
-            <strong>↗ {t.popular}</strong>
-
-            <span>
-              {popularPosts.length}{" "}
-              {language === "tr" ? "konu" : "topics"}
-            </span>
-          </button>
-
-          <button
-            type="button"
-            className={
-              activeFeedFilter === "community"
-                ? "active"
-                : ""
-            }
-            onClick={() => {
-              setActiveFeedFilter("community");
-
-              document
-                .querySelector(".ff-featured-section")
-                ?.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                });
-            }}
-          >
-            <strong>👥 {t.community}</strong>
-
-            <span>
-              {communityPosts.length}{" "}
-              {language === "tr" ? "konu" : "topics"}
-            </span>
-          </button>
-
-          <button
-            type="button"
-            className={
-              activeFeedFilter === "following"
-                ? "active"
-                : ""
-            }
-            onClick={() => {
-              if (!currentUserId) {
-                router.push("/giris");
-                return;
-              }
-
-              setActiveFeedFilter("following");
-
-              document
-                .querySelector(".ff-featured-section")
-                ?.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                });
-            }}
-          >
-            <strong>☆ {t.following}</strong>
-
-            <span>
-              {followingPosts.length}{" "}
-              {language === "tr" ? "konu" : "topics"}
-            </span>
-          </button>
-        </section>
 
         <section className="ff-ad-banner">
           <span className="ff-ad-badge">{t.ad}</span>
