@@ -1802,20 +1802,38 @@
     gap: 8px;
   }
 
-  .profileMenu {
-    position: relative;
+  .profileMenu::after {
+    content: "›";
 
-    display: flex;
+    position: sticky;
+    right: 4px;
+    z-index: 8;
 
-    gap: 5px;
-    overflow-x: auto;
-    overflow-y: hidden;
+    display: grid;
+    width: 18px;
+    min-width: 18px;
+    height: 40px;
 
-    padding: 6px 42px 6px 6px;
+    flex: 0 0 18px;
+    place-items: center;
 
-    scroll-snap-type: x proximity;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    margin-left: -18px;
+
+    color: #e064eb;
+
+    background:
+      linear-gradient(90deg,
+        rgba(8, 8, 18, 0),
+        rgba(8, 8, 18, 0.94) 62%);
+
+    font-size: 21px;
+    font-weight: 500;
+    line-height: 1;
+
+    pointer-events: none;
+
+    animation:
+      profileMenuSwipeHint 1.5s ease-in-out infinite;
   }
 
   .profileMenu::-webkit-scrollbar {
@@ -6136,6 +6154,7 @@
 }
 
 @keyframes profileMenuSwipeHint {
+
   0%,
   100% {
     opacity: 0.55;
@@ -6148,17 +6167,12 @@
   }
 }
 
-:global(html[data-theme="light"])
-  .profileMenu::after {
+:global(html[data-theme="light"]) 
+.profileMenu::after {
   color: #a72dc4;
 
-  border-left-color:
-    rgba(158, 45, 188, 0.2);
-
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       rgba(255, 255, 255, 0),
-      rgba(255, 255, 255, 0.98) 45%
-    );
+      rgba(255, 255, 255, 0.96) 62%);
 }
