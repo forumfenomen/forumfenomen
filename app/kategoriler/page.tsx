@@ -155,6 +155,39 @@ const subcategoryIdMap: Record<
   "telif-haklari": "copyright",
 };
 
+const topicVisualMap: Record<
+  CategoryId,
+  {
+    icon: string;
+    iconClass: string;
+  }
+> = {
+  platforms: {
+    icon: "◎",
+    iconClass: "social",
+  },
+  content: {
+    icon: "AI",
+    iconClass: "ai",
+  },
+  growth: {
+    icon: "↗",
+    iconClass: "social",
+  },
+  money: {
+    icon: "₺",
+    iconClass: "business",
+  },
+  education: {
+    icon: "▶",
+    iconClass: "video",
+  },
+  legal: {
+    icon: "§",
+    iconClass: "business",
+  },
+};
+
 const ui = {
   tr: {
     pageTitle: "Kategoriler",
@@ -361,6 +394,61 @@ function EyeIcon() {
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" />
       <circle cx="12" cy="12" r="2.5" />
+    </svg>
+  );
+}
+
+function InstagramTopicIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <rect
+        x="3"
+        y="3"
+        width="18"
+        height="18"
+        rx="5"
+      />
+      <circle
+        cx="12"
+        cy="12"
+        r="4.2"
+      />
+      <circle
+        cx="17.4"
+        cy="6.7"
+        r="1"
+        className="ff-social-dot"
+      />
+    </svg>
+  );
+}
+
+function YouTubeTopicIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path d="M21 12c0 3.2-.4 5.2-1.2 6-.8.8-3.4 1.2-7.8 1.2S5 18.8 4.2 18C3.4 17.2 3 15.2 3 12s.4-5.2 1.2-6C5 5.2 7.6 4.8 12 4.8s7 .4 7.8 1.2c.8.8 1.2 2.8 1.2 6Z" />
+      <path
+        d="m10 9 5 3-5 3V9Z"
+        className="ff-youtube-play"
+      />
+    </svg>
+  );
+}
+
+function TikTokTopicIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path d="M14 3v10.2a4.3 4.3 0 1 1-3.7-4.25" />
+      <path d="M14 3c.65 3.05 2.35 4.75 5 5.15" />
     </svg>
   );
 }
@@ -1792,15 +1880,23 @@ export default function CategoriesPage() {
                     className="ff-topic-card ff-category-feed-topic"
                   >
                     <div
-                      className="ff-topic-icon ff-category-feed-icon"
-                      style={
-                        {
-                          "--category-accent":
-                            activeCategory.accent,
-                        } as CSSProperties
-                      }
+                      className={`ff-topic-icon ${topicVisualMap[topic.category]
+                          .iconClass
+                        } ff-category-feed-icon`}
                     >
-                      {activeCategory.icon}
+                      {topic.subcategoryId ===
+                        "instagram" ? (
+                        <InstagramTopicIcon />
+                      ) : topic.subcategoryId ===
+                        "tiktok" ? (
+                        <TikTokTopicIcon />
+                      ) : topic.subcategoryId ===
+                        "youtube" ? (
+                        <YouTubeTopicIcon />
+                      ) : (
+                        topicVisualMap[topic.category]
+                          .icon
+                      )}
                     </div>
 
                     <div className="ff-topic-main">

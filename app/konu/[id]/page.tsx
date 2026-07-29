@@ -1654,6 +1654,48 @@ export default function TopicDetailPage() {
 
             setCommentText("");
             setReplyingTo(null);
+
+            setHighlightedCommentId(
+                newComment.id
+            );
+
+            window.setTimeout(() => {
+                const target =
+                    document.getElementById(
+                        `comment-${newComment.id}`
+                    );
+
+                if (!target) {
+                    return;
+                }
+
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                });
+
+                if (
+                    highlightTimeoutRef.current !== null
+                ) {
+                    window.clearTimeout(
+                        highlightTimeoutRef.current
+                    );
+                }
+
+                highlightTimeoutRef.current =
+                    window.setTimeout(() => {
+                        setHighlightedCommentId(
+                            (current) =>
+                                current === newComment.id
+                                    ? null
+                                    : current
+                        );
+
+                        highlightTimeoutRef.current =
+                            null;
+                    }, 3500);
+            }, 100);
+
         } catch (error) {
             console.error(
                 "Beklenmeyen yorum hatası:",
@@ -2518,8 +2560,8 @@ export default function TopicDetailPage() {
                     >
                         <div
                             className={`${styles.confirmModalIcon} ${topicReportCompleted
-                                    ? styles.reportSuccessIcon
-                                    : styles.reportModalIcon
+                                ? styles.reportSuccessIcon
+                                : styles.reportModalIcon
                                 }`}
                         >
                             <ReportIcon />
@@ -2617,8 +2659,8 @@ export default function TopicDetailPage() {
                                                 key={value}
                                                 type="button"
                                                 className={`${styles.reportReasonButton} ${reportReason === value
-                                                        ? styles.reportReasonActive
-                                                        : ""
+                                                    ? styles.reportReasonActive
+                                                    : ""
                                                     }`}
                                                 aria-pressed={
                                                     reportReason === value
