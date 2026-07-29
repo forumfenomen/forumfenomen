@@ -25,7 +25,6 @@ type Theme = "light" | "dark";
 type FeedFilter =
   | "latest"
   | "trends"
-  | "popular"
   | "community"
   | "following";
 
@@ -334,8 +333,6 @@ const copy = {
     search: "Konu, kullanıcı veya kategori ara...",
     trends: "Güncel Trendler",
     trendsCount: "56 yeni konu",
-    popular: "Popüler",
-    popularCount: "32 yeni konu",
     community: "Öne Çıkanlar",
     communityCount: "18 yeni konu",
     following: "Takip Ettiklerin",
@@ -360,8 +357,6 @@ const copy = {
     search: "Search topics, users or categories...",
     trends: "Current Trends",
     trendsCount: "56 new topics",
-    popular: "Popular",
-    popularCount: "32 new topics",
     community: "Highlights",
     communityCount: "18 new topics",
     following: "Following",
@@ -1076,20 +1071,6 @@ export default function FeedPage() {
       return secondScore - firstScore;
     });
 
-  const popularPosts = [...topicPosts].sort(
-    (firstPost, secondPost) => {
-      const firstScore =
-        (firstPost.commentCountValue ?? 0) * 5 +
-        (firstPost.viewCountValue ?? 0);
-
-      const secondScore =
-        (secondPost.commentCountValue ?? 0) * 5 +
-        (secondPost.viewCountValue ?? 0);
-
-      return secondScore - firstScore;
-    }
-  );
-
   const communityPosts = [...topicPosts].sort(
     (firstPost, secondPost) => {
       const firstScore =
@@ -1139,7 +1120,6 @@ export default function FeedPage() {
   const filteredPosts: Record<FeedFilter, Post[]> = {
     latest: latestPosts,
     trends: trendPosts,
-    popular: popularPosts,
     community: communityPosts,
     following: followingPosts,
   };
@@ -1153,7 +1133,6 @@ export default function FeedPage() {
         ? "Son Eklenen Konular"
         : "Latest Topics",
     trends: t.trends,
-    popular: t.popular,
     community: t.community,
     following: t.following,
   };
@@ -1353,7 +1332,7 @@ export default function FeedPage() {
               setActiveFeedFilter("latest");
 
 
-              
+
 
             }}
 
@@ -1403,7 +1382,7 @@ export default function FeedPage() {
 
 
 
-             
+
             }}
 
           >
@@ -1422,50 +1401,7 @@ export default function FeedPage() {
 
           </button>
 
-
-
-          <button
-
-            type="button"
-
-            className={
-
-              activeFeedFilter === "popular"
-
-                ? "active"
-
-                : ""
-
-            }
-
-            onClick={() => {
-
-              setActiveFeedFilter("popular");
-
-
-
-              
-
-            }}
-
-          >
-
-            <strong>↗ {t.popular}</strong>
-
-
-
-            <span>
-
-              {popularPosts.length}{" "}
-
-              {language === "tr" ? "konu" : "topics"}
-
-            </span>
-
-          </button>
-
-
-
+          
           <button
 
             type="button"
@@ -1484,17 +1420,11 @@ export default function FeedPage() {
 
               setActiveFeedFilter("community");
 
-
-
-             
-
             }}
 
           >
 
             <strong>👥 {t.community}</strong>
-
-
 
             <span>
 
@@ -1505,8 +1435,6 @@ export default function FeedPage() {
             </span>
 
           </button>
-
-
 
           <button
 
@@ -1538,7 +1466,7 @@ export default function FeedPage() {
 
 
 
-              
+
 
             }}
 
