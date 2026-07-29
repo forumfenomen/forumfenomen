@@ -29,6 +29,7 @@ type Theme = "dark" | "light";
 
 type TopicDetailRow = {
     id: string;
+    author_id: string;
     title: string;
     content: string;
     created_at: string;
@@ -206,6 +207,17 @@ function ReportIcon() {
     );
 }
 
+function BookmarkIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+        >
+            <path d="M6 3.5h12v17l-6-3.8-6 3.8v-17Z" />
+        </svg>
+    );
+}
+
 function RemoveIcon() {
     return (
         <svg
@@ -291,6 +303,36 @@ export default function TopicDetailPage() {
     const [currentUserId, setCurrentUserId] =
         useState<string | null>(null);
 
+    const [topicReaction, setTopicReaction] =
+        useState<ReactionValue>(0);
+
+    const [topicLikeCount, setTopicLikeCount] =
+        useState(0);
+
+    const [topicDislikeCount, setTopicDislikeCount] =
+        useState(0);
+
+    const [topicReactionLoading, setTopicReactionLoading] =
+        useState(false);
+
+    const [topicSaved, setTopicSaved] =
+        useState(false);
+
+    const [topicSaveLoading, setTopicSaveLoading] =
+        useState(false);
+
+    const [topicReported, setTopicReported] =
+        useState(false);
+
+    const [topicReportOpen, setTopicReportOpen] =
+        useState(false);
+
+    const [topicReportLoading, setTopicReportLoading] =
+        useState(false);
+
+    const [topicReportCompleted, setTopicReportCompleted] =
+        useState(false);
+
     const [commentReactions, setCommentReactions] =
         useState<Record<string, ReactionValue>>({});
 
@@ -329,7 +371,7 @@ export default function TopicDetailPage() {
         useState(false);
 
     useEffect(() => {
-        if (!reportModalComment) {
+        if (!reportModalComment && !topicReportOpen) {
             return;
         }
 
@@ -367,7 +409,7 @@ export default function TopicDetailPage() {
 
             window.scrollTo(0, scrollY);
         };
-    }, [reportModalComment]);
+    }, [reportModalComment, topicReportOpen]);
 
     useEffect(() => {
         const savedLanguage =
@@ -446,6 +488,7 @@ export default function TopicDetailPage() {
                 .from("topics")
                 .select(`
           id,
+          author_id,
           title,
           content,
           created_at,
@@ -497,6 +540,104 @@ export default function TopicDetailPage() {
             isActive = false;
         };
     }, [topicId]);
+
+    useEffect(() => {
+        let isActive = true;
+
+        async function loadTopicActions() {
+            if (!topicId) {
+                return;
+            }
+
+            const supabase = createClient();
+
+            const reactionsResult = await supabase
+                .from("topic_reactions")
+                .select("reaction")
+                .eq("topic_id", topicId);
+
+            if (!isActive) {
+                return;
+            }
+
+            if (reactionsResult.error) {
+                console.error(
+                    "Konu tepkileri alınamadı:",
+                    reactionsResult.error.message
+                );
+            } else {
+                const reactionRows =
+                    reactionsResult.data ?? [];
+
+                setTopicLikeCount(
+                    reactionRows.filter(
+                        (item) => item.reaction === 1
+                    ).length
+                );
+
+                setTopicDislikeCount(
+                    reactionRows.filter(
+                        (item) => item.reaction === -1
+                    ).length
+                );
+            }
+
+            if (!currentUserId) {
+                setTopicReaction(0);
+                setTopicSaved(false);
+                setTopicReported(false);
+                return;
+            }
+
+            const [
+                userReactionResult,
+                savedResult,
+                reportedResult,
+            ] = await Promise.all([
+                supabase
+                    .from("topic_reactions")
+                    .select("reaction")
+                    .eq("topic_id", topicId)
+                    .eq("user_id", currentUserId)
+                    .maybeSingle(),
+
+                supabase
+                    .from("saved_topics")
+                    .select("topic_id")
+                    .eq("topic_id", topicId)
+                    .eq("user_id", currentUserId)
+                    .maybeSingle(),
+
+                supabase
+                    .from("topic_reports")
+                    .select("id")
+                    .eq("topic_id", topicId)
+                    .eq("reporter_id", currentUserId)
+                    .maybeSingle(),
+            ]);
+
+            if (!isActive) {
+                return;
+            }
+
+            setTopicReaction(
+                userReactionResult.data?.reaction === 1
+                    ? 1
+                    : userReactionResult.data?.reaction === -1
+                        ? -1
+                        : 0
+            );
+
+            setTopicSaved(Boolean(savedResult.data));
+            setTopicReported(Boolean(reportedResult.data));
+        }
+
+        void loadTopicActions();
+
+        return () => {
+            isActive = false;
+        };
+    }, [topicId, currentUserId]);
 
     useEffect(() => {
         let isActive = true;
@@ -907,6 +1048,223 @@ export default function TopicDetailPage() {
         }, 120);
     }
 
+    async function handleTopicReaction(
+        reaction: 1 | -1
+    ) {
+        if (!currentUserId) {
+            router.push("/giris");
+            return;
+        }
+
+        if (!topicId || topicReactionLoading) {
+            return;
+        }
+
+        setTopicReactionLoading(true);
+
+        try {
+            const supabase = createClient();
+
+            const { data, error } = await supabase
+                .rpc("toggle_topic_reaction", {
+                    p_topic_id: topicId,
+                    p_reaction: reaction,
+                })
+                .single();
+
+            if (error || !data) {
+                console.error(
+                    "Konu tepkisi kaydedilemedi:",
+                    error?.message
+                );
+
+                window.alert(
+                    language === "tr"
+                        ? "İşlem gerçekleştirilemedi."
+                        : "The action could not be completed."
+                );
+
+                return;
+            }
+
+            const result =
+                data as unknown as ReactionResult;
+
+            setTopicLikeCount(
+                Number(result.like_count ?? 0)
+            );
+
+            setTopicDislikeCount(
+                Number(result.dislike_count ?? 0)
+            );
+
+            setTopicReaction(
+                result.user_reaction === 1
+                    ? 1
+                    : result.user_reaction === -1
+                        ? -1
+                        : 0
+            );
+        } catch (error) {
+            console.error(
+                "Beklenmeyen konu tepki hatası:",
+                error
+            );
+        } finally {
+            setTopicReactionLoading(false);
+        }
+    }
+
+    async function handleTopicSave() {
+        if (!currentUserId) {
+            router.push("/giris");
+            return;
+        }
+
+        if (!topicId || topicSaveLoading) {
+            return;
+        }
+
+        setTopicSaveLoading(true);
+
+        try {
+            const supabase = createClient();
+
+            const { data, error } =
+                await supabase.rpc(
+                    "toggle_saved_topic",
+                    {
+                        p_topic_id: topicId,
+                    }
+                );
+
+            if (error) {
+                console.error(
+                    "Konu kaydedilemedi:",
+                    error.message
+                );
+
+                window.alert(
+                    language === "tr"
+                        ? "Kaydetme işlemi gerçekleştirilemedi."
+                        : "The save action could not be completed."
+                );
+
+                return;
+            }
+
+            setTopicSaved(data === true);
+        } catch (error) {
+            console.error(
+                "Beklenmeyen kaydetme hatası:",
+                error
+            );
+        } finally {
+            setTopicSaveLoading(false);
+        }
+    }
+
+    function openTopicReportModal() {
+        if (!currentUserId) {
+            router.push("/giris");
+            return;
+        }
+
+        if (
+            !topic ||
+            currentUserId === topic.author_id ||
+            topicReported
+        ) {
+            return;
+        }
+
+        setTopicReportOpen(true);
+        setTopicReportCompleted(false);
+        setReportReason("");
+        setReportDetails("");
+        setReportMessage(null);
+    }
+
+    function closeTopicReportModal() {
+        if (topicReportLoading) {
+            return;
+        }
+
+        setTopicReportOpen(false);
+        setTopicReportCompleted(false);
+        setReportReason("");
+        setReportDetails("");
+        setReportMessage(null);
+    }
+
+    async function handleTopicReport() {
+        if (!currentUserId) {
+            router.push("/giris");
+            return;
+        }
+
+        if (
+            !topicId ||
+            !reportReason ||
+            topicReportLoading
+        ) {
+            if (!reportReason) {
+                setReportMessage("reason");
+            }
+
+            return;
+        }
+
+        setTopicReportLoading(true);
+        setReportMessage(null);
+
+        try {
+            const supabase = createClient();
+
+            const { error } = await supabase.rpc(
+                "submit_topic_report",
+                {
+                    p_topic_id: topicId,
+                    p_reason: reportReason,
+                    p_details:
+                        reportDetails.trim() || null,
+                }
+            );
+
+            if (error) {
+                console.error(
+                    "Konu şikâyet edilemedi:",
+                    error.message
+                );
+
+                if (
+                    error.message.includes(
+                        "REPORT_ALREADY_EXISTS"
+                    )
+                ) {
+                    setTopicReported(true);
+                    setTopicReportCompleted(true);
+                    return;
+                }
+
+                setReportMessage("error");
+                return;
+            }
+
+            setTopicReported(true);
+            setTopicReportCompleted(true);
+        } catch (error) {
+            console.error(
+                "Beklenmeyen konu şikâyeti hatası:",
+                error
+            );
+
+            setReportMessage("error");
+        } finally {
+            setTopicReportLoading(false);
+        }
+    }
+
     async function handleCommentReaction(
         commentId: string,
         reaction: 1 | -1
@@ -1280,8 +1638,8 @@ export default function TopicDetailPage() {
             };
 
             setComments((current) => [
-                newComment,
                 ...current,
+                newComment,
             ]);
 
             setTopic((current) =>
@@ -1536,6 +1894,139 @@ export default function TopicDetailPage() {
                                     </div>
                                 )}
 
+                                <div className={styles.topicActions}>
+                                    <button
+                                        type="button"
+                                        className={`${styles.commentAction} ${topicReaction === 1
+                                            ? styles.likeActive
+                                            : ""
+                                            }`}
+                                        onClick={() => {
+                                            void handleTopicReaction(1);
+                                        }}
+                                        disabled={topicReactionLoading}
+                                        aria-pressed={topicReaction === 1}
+                                        aria-label={
+                                            language === "tr"
+                                                ? "Konuyu beğen"
+                                                : "Like topic"
+                                        }
+                                        title={
+                                            language === "tr"
+                                                ? "Beğen"
+                                                : "Like"
+                                        }
+                                    >
+                                        <LikeIcon />
+
+                                        {topicLikeCount > 0 && (
+                                            <small className={styles.actionCount}>
+                                                {topicLikeCount}
+                                            </small>
+                                        )}
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        className={`${styles.commentAction} ${topicReaction === -1
+                                            ? styles.dislikeActive
+                                            : ""
+                                            }`}
+                                        onClick={() => {
+                                            void handleTopicReaction(-1);
+                                        }}
+                                        disabled={topicReactionLoading}
+                                        aria-pressed={topicReaction === -1}
+                                        aria-label={
+                                            language === "tr"
+                                                ? "Konuyu beğenme"
+                                                : "Dislike topic"
+                                        }
+                                        title={
+                                            language === "tr"
+                                                ? "Beğenme"
+                                                : "Dislike"
+                                        }
+                                    >
+                                        <DislikeIcon />
+
+                                        {topicDislikeCount > 0 && (
+                                            <small className={styles.actionCount}>
+                                                {topicDislikeCount}
+                                            </small>
+                                        )}
+                                    </button>
+
+                                    {currentUserId !== topic.author_id && (
+                                        <button
+                                            type="button"
+                                            className={`${styles.commentAction} ${styles.topicReportAction
+                                                } ${topicReported
+                                                    ? styles.reportedAction
+                                                    : ""
+                                                }`}
+                                            onClick={openTopicReportModal}
+                                            disabled={
+                                                topicReported ||
+                                                topicReportLoading
+                                            }
+                                            aria-pressed={topicReported}
+                                            aria-label={
+                                                topicReported
+                                                    ? language === "tr"
+                                                        ? "Konu şikâyet edildi"
+                                                        : "Topic reported"
+                                                    : language === "tr"
+                                                        ? "Konuyu şikâyet et"
+                                                        : "Report topic"
+                                            }
+                                            title={
+                                                topicReported
+                                                    ? language === "tr"
+                                                        ? "Şikâyet Edildi"
+                                                        : "Reported"
+                                                    : language === "tr"
+                                                        ? "Şikâyet Et"
+                                                        : "Report"
+                                            }
+                                        >
+                                            <ReportIcon />
+                                        </button>
+                                    )}
+
+                                    <button
+                                        type="button"
+                                        className={`${styles.commentAction} ${topicSaved
+                                            ? styles.savedTopicAction
+                                            : ""
+                                            }`}
+                                        onClick={() => {
+                                            void handleTopicSave();
+                                        }}
+                                        disabled={topicSaveLoading}
+                                        aria-pressed={topicSaved}
+                                        aria-label={
+                                            topicSaved
+                                                ? language === "tr"
+                                                    ? "Konuyu kayıttan kaldır"
+                                                    : "Remove saved topic"
+                                                : language === "tr"
+                                                    ? "Konuyu kaydet"
+                                                    : "Save topic"
+                                        }
+                                        title={
+                                            topicSaved
+                                                ? language === "tr"
+                                                    ? "Kaydedildi"
+                                                    : "Saved"
+                                                : language === "tr"
+                                                    ? "Kaydet"
+                                                    : "Save"
+                                        }
+                                    >
+                                        <BookmarkIcon />
+                                    </button>
+                                </div>
                             </div>
 
                             <div
@@ -1601,6 +2092,9 @@ export default function TopicDetailPage() {
                                         >
                                             ×
                                         </button>
+
+
+
                                     </div>
                                 )}
 
@@ -2007,6 +2501,247 @@ export default function TopicDetailPage() {
                     </>
                 )}
             </div>
+
+            {topicReportOpen && (
+    <div
+        className={styles.modalBackdrop}
+        onMouseDown={closeTopicReportModal}
+    >
+        <section
+            className={`${styles.confirmModal} ${styles.reportModal}`}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="report-topic-title"
+            onMouseDown={(event) =>
+                event.stopPropagation()
+            }
+        >
+            <div
+                className={`${styles.confirmModalIcon} ${
+                    topicReportCompleted
+                        ? styles.reportSuccessIcon
+                        : styles.reportModalIcon
+                }`}
+            >
+                <ReportIcon />
+            </div>
+
+            <span className={styles.confirmModalLabel}>
+                {language === "tr"
+                    ? "TOPLULUK GÜVENLİĞİ"
+                    : "COMMUNITY SAFETY"}
+            </span>
+
+            {topicReportCompleted ? (
+                <>
+                    <h2 id="report-topic-title">
+                        {language === "tr"
+                            ? "Şikâyetin iletildi"
+                            : "Report submitted"}
+                    </h2>
+
+                    <p>
+                        {language === "tr"
+                            ? "Konu hakkındaki bildirimin moderasyon sistemine kaydedildi. İnceleme sonucunda gerekli işlem uygulanacaktır."
+                            : "Your topic report has been recorded for moderation review."}
+                    </p>
+
+                    <div
+                        className={`${styles.confirmModalActions} ${styles.reportSuccessActions}`}
+                    >
+                        <button
+                            type="button"
+                            className={
+                                styles.confirmReportButton
+                            }
+                            onClick={closeTopicReportModal}
+                        >
+                            {language === "tr"
+                                ? "Tamam"
+                                : "Done"}
+                        </button>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <h2 id="report-topic-title">
+                        {language === "tr"
+                            ? "Bu konuyu neden şikâyet ediyorsun?"
+                            : "Why are you reporting this topic?"}
+                    </h2>
+
+                    <p>
+                        {language === "tr"
+                            ? "En uygun nedeni seç. Bildirimin konu sahibine gösterilmez."
+                            : "Select the most appropriate reason. Your report will not be shown to the topic author."}
+                    </p>
+
+                    <div className={styles.reportReasonGrid}>
+                        {[
+                            {
+                                value: "spam",
+                                tr: "Spam",
+                                en: "Spam",
+                            },
+                            {
+                                value: "harassment",
+                                tr: "Taciz veya zorbalık",
+                                en: "Harassment",
+                            },
+                            {
+                                value: "hate",
+                                tr: "Nefret söylemi",
+                                en: "Hate speech",
+                            },
+                            {
+                                value: "illegal",
+                                tr: "Yasadışı içerik",
+                                en: "Illegal content",
+                            },
+                            {
+                                value:
+                                    "personal_information",
+                                tr: "Kişisel bilgi",
+                                en: "Personal information",
+                            },
+                            {
+                                value: "other",
+                                tr: "Diğer",
+                                en: "Other",
+                            },
+                        ].map((reason) => {
+                            const value =
+                                reason.value as ReportReason;
+
+                            return (
+                                <button
+                                    key={value}
+                                    type="button"
+                                    className={`${styles.reportReasonButton} ${
+                                        reportReason === value
+                                            ? styles.reportReasonActive
+                                            : ""
+                                    }`}
+                                    aria-pressed={
+                                        reportReason === value
+                                    }
+                                    onClick={() => {
+                                        setReportReason(value);
+                                        setReportMessage(null);
+                                    }}
+                                >
+                                    {language === "tr"
+                                        ? reason.tr
+                                        : reason.en}
+                                </button>
+                            );
+                        })}
+                    </div>
+
+                    <label
+                        className={
+                            styles.reportDetailsLabel
+                        }
+                    >
+                        <span>
+                            {language === "tr"
+                                ? "Ek açıklama (isteğe bağlı)"
+                                : "Additional details (optional)"}
+                        </span>
+
+                        <textarea
+                            value={reportDetails}
+                            maxLength={1000}
+                            placeholder={
+                                language === "tr"
+                                    ? "Moderasyon ekibine yardımcı olacak kısa bir açıklama yaz..."
+                                    : "Add a short explanation for the moderation team..."
+                            }
+                            onChange={(event) => {
+                                setReportDetails(
+                                    event.target.value
+                                );
+
+                                setReportMessage(null);
+                            }}
+                        />
+
+                        <small>
+                            {reportDetails.length}/1000
+                        </small>
+                    </label>
+
+                    {reportMessage === "reason" && (
+                        <p
+                            className={
+                                styles.reportFeedback
+                            }
+                        >
+                            {language === "tr"
+                                ? "Lütfen bir şikâyet nedeni seç."
+                                : "Please select a report reason."}
+                        </p>
+                    )}
+
+                    {reportMessage === "error" && (
+                        <p
+                            className={
+                                styles.reportFeedback
+                            }
+                        >
+                            {language === "tr"
+                                ? "Şikâyet gönderilemedi. Lütfen tekrar dene."
+                                : "The report could not be submitted. Please try again."}
+                        </p>
+                    )}
+
+                    <div
+                        className={
+                            styles.confirmModalActions
+                        }
+                    >
+                        <button
+                            type="button"
+                            className={
+                                styles.confirmCancelButton
+                            }
+                            onClick={closeTopicReportModal}
+                            disabled={topicReportLoading}
+                        >
+                            {language === "tr"
+                                ? "Vazgeç"
+                                : "Cancel"}
+                        </button>
+
+                        <button
+                            type="button"
+                            className={
+                                styles.confirmReportButton
+                            }
+                            disabled={
+                                !reportReason ||
+                                topicReportLoading
+                            }
+                            onClick={() => {
+                                void handleTopicReport();
+                            }}
+                        >
+                            <ReportIcon />
+
+                            {topicReportLoading
+                                ? language === "tr"
+                                    ? "Gönderiliyor..."
+                                    : "Submitting..."
+                                : language === "tr"
+                                    ? "Şikâyeti Gönder"
+                                    : "Submit Report"}
+                        </button>
+                    </div>
+                </>
+            )}
+        </section>
+    </div>
+)}
 
             {reportModalComment && (
                 <div
