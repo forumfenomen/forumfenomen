@@ -1784,7 +1784,7 @@ export default function PublicProfilePage() {
                                                     className={styles.followingPersonRow}
                                                 >
                                                     {personDetails.profileUrl ? (
-                                                        <Link
+                                                        <a
                                                             href={personDetails.profileUrl}
                                                             className={
                                                                 styles.followingPersonLink
@@ -1821,7 +1821,7 @@ export default function PublicProfilePage() {
                                                                         : "@fenomen"}
                                                                 </small>
                                                             </span>
-                                                        </Link>
+                                                        </a>
                                                     ) : (
                                                         <>
                                                             <span
@@ -1839,15 +1839,14 @@ export default function PublicProfilePage() {
                                                     )}
 
                                                     {personDetails.profileUrl ? (
-                                                        <Link
+                                                        <a
                                                             href={personDetails.profileUrl}
-                                                            scroll={true}
                                                             className={styles.followingBadge}
                                                         >
                                                             {language === "tr"
                                                                 ? "Profili Gör"
                                                                 : "View Profile"}
-                                                        </Link>
+                                                        </a>
                                                     ) : null}
                                                 </article>
                                             );
@@ -1881,7 +1880,7 @@ export default function PublicProfilePage() {
                                                     className={styles.followingPersonRow}
                                                 >
                                                     {personDetails.profileUrl ? (
-                                                        <Link
+                                                        <a
                                                             href={personDetails.profileUrl}
                                                             className={
                                                                 styles.followingPersonLink
@@ -1918,7 +1917,7 @@ export default function PublicProfilePage() {
                                                                         : "@fenomen"}
                                                                 </small>
                                                             </span>
-                                                        </Link>
+                                                        </a>
                                                     ) : (
                                                         <>
                                                             <span
@@ -1936,15 +1935,14 @@ export default function PublicProfilePage() {
                                                     )}
 
                                                     {personDetails.profileUrl ? (
-                                                        <Link
-                                                            href={personDetails.profileUrl}
-                                                            scroll={true}
-                                                            className={styles.followingBadge}
-                                                        >
+                                                        <a
+  href={personDetails.profileUrl}
+  className={styles.followingBadge}
+>
                                                             {language === "tr"
                                                                 ? "Profili Gör"
                                                                 : "View Profile"}
-                                                        </Link>
+                                                        </a>
                                                     ) : null}
                                                 </article>
                                             );
