@@ -13721,27 +13721,43 @@ html[data-theme="light"] .ff-insight-grid button.active {
   }
 }
 
-/* AKTİF FİLTRE KARTI ÜST ÇİZGİ DÜZELTMESİ */
+/* AKIŞ FİLTRE KARTI AKTİF ÇİZGİ */
 
-.ff-insight-grid button {
-  position: relative;
+.ff-insight-grid {
   overflow: visible;
 }
 
+.ff-insight-grid button {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  transform: none;
+  -webkit-transform: none;
+}
+
+.ff-insight-grid button:hover,
+.ff-insight-grid button:active,
+.ff-insight-grid button:focus {
+  transform: none;
+  -webkit-transform: none;
+}
+
 .ff-insight-grid button.active {
-  z-index: 2;
+  position: relative;
+  z-index: 5;
+  overflow: hidden;
 }
 
 .ff-insight-grid button.active::before {
   content: "";
 
   position: absolute;
-  top: -1px;
+  top: 0;
   left: 14px;
   right: 14px;
 
   height: 2px;
-
   border-radius: 999px;
 
   background:
@@ -13758,30 +13774,9 @@ html[data-theme="light"] .ff-insight-grid button.active {
     0 0 8px rgba(225, 69, 255, 0.7),
     0 0 14px rgba(71, 118, 255, 0.35);
 
-  pointer-events: none;
-}
-
-/* AKIŞ FİLTRE KARTI HOVER VE ÜST ÇİZGİ SABİTLEME */
-
-.ff-insight-grid button {
-  isolation: isolate;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-}
-
-.ff-insight-grid button:hover {
-  transform: translateY(-2px) translateZ(0);
-  -webkit-transform: translateY(-2px) translateZ(0);
-}
-
-.ff-insight-grid button.active {
-  position: relative;
-  z-index: 5;
-  overflow: visible;
-}
-
-.ff-insight-grid button.active::before {
   z-index: 10;
-  transform: translateZ(1px);
-  -webkit-transform: translateZ(1px);
+  pointer-events: none;
+
+  transform: none;
+  -webkit-transform: none;
 }

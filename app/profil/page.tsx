@@ -3240,7 +3240,7 @@ export default function ProfilePage() {
                   }
                 >
                   {profileUrl ? (
-                    <Link
+                    <a
                       href={profileUrl}
                       className={
                         styles.followingPersonLink
@@ -3277,7 +3277,7 @@ export default function ProfilePage() {
                             : "@fenomen"}
                         </small>
                       </span>
-                    </Link>
+                    </a>
                   ) : (
                     <>
                       <span
@@ -3296,10 +3296,8 @@ export default function ProfilePage() {
                     </>
                   )}
 
-                  <Link
-                    href={
-                      profileUrl ?? "/profil"
-                    }
+                  <a
+                    href={profileUrl ?? "/profil"}
                     className={
                       styles.followingBadge
                     }
@@ -3307,7 +3305,7 @@ export default function ProfilePage() {
                     {language === "tr"
                       ? "Profili Gör"
                       : "View Profile"}
-                  </Link>
+                  </a>
                 </article>
               );
             })
@@ -3392,7 +3390,7 @@ export default function ProfilePage() {
                   }
                 >
                   {profileUrl ? (
-                    <Link
+                    <a
                       href={profileUrl}
                       className={
                         styles.followingPersonLink
@@ -3429,7 +3427,7 @@ export default function ProfilePage() {
                             : "@fenomen"}
                         </small>
                       </span>
-                    </Link>
+                    </a>
                   ) : (
                     <>
                       <span

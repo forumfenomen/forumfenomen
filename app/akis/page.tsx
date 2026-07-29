@@ -334,7 +334,7 @@ const copy = {
     search: "Konu, kullanıcı veya kategori ara...",
     trends: "Güncel Trendler",
     trendsCount: "56 yeni konu",
-    popular: "Tartışmalar",
+    popular: "Popüler",
     popularCount: "32 yeni konu",
     community: "Öne Çıkanlar",
     communityCount: "18 yeni konu",
@@ -1353,18 +1353,7 @@ export default function FeedPage() {
               setActiveFeedFilter("latest");
 
 
-
-              document
-
-                .querySelector(".ff-featured-section")
-
-                ?.scrollIntoView({
-
-                  behavior: "smooth",
-
-                  block: "start",
-
-                });
+              
 
             }}
 
@@ -1414,18 +1403,7 @@ export default function FeedPage() {
 
 
 
-              document
-
-                .querySelector(".ff-featured-section")
-
-                ?.scrollIntoView({
-
-                  behavior: "smooth",
-
-                  block: "start",
-
-                });
-
+             
             }}
 
           >
@@ -1466,17 +1444,7 @@ export default function FeedPage() {
 
 
 
-              document
-
-                .querySelector(".ff-featured-section")
-
-                ?.scrollIntoView({
-
-                  behavior: "smooth",
-
-                  block: "start",
-
-                });
+              
 
             }}
 
@@ -1518,17 +1486,7 @@ export default function FeedPage() {
 
 
 
-              document
-
-                .querySelector(".ff-featured-section")
-
-                ?.scrollIntoView({
-
-                  behavior: "smooth",
-
-                  block: "start",
-
-                });
+             
 
             }}
 
@@ -1580,17 +1538,7 @@ export default function FeedPage() {
 
 
 
-              document
-
-                .querySelector(".ff-featured-section")
-
-                ?.scrollIntoView({
-
-                  behavior: "smooth",
-
-                  block: "start",
-
-                });
+              
 
             }}
 
