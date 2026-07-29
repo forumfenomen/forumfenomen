@@ -876,36 +876,36 @@ export default function TopicDetailPage() {
     }
 
     function startReply(comment: CommentRow) {
-    setReplyingTo(comment);
-    setCommentMessage(null);
-
-    window.setTimeout(() => {
-        const input = commentInputRef.current;
-
-        if (!input) {
-            return;
-        }
-
-        const commentForm =
-            input.closest("form") ?? input;
-
-        const top =
-            commentForm.getBoundingClientRect().top +
-            window.scrollY -
-            150;
-
-        window.scrollTo({
-            top: Math.max(top, 0),
-            behavior: "smooth",
-        });
+        setReplyingTo(comment);
+        setCommentMessage(null);
 
         window.setTimeout(() => {
-            input.focus({
-                preventScroll: true,
+            const input = commentInputRef.current;
+
+            if (!input) {
+                return;
+            }
+
+            const commentForm =
+                input.closest("form") ?? input;
+
+            const top =
+                commentForm.getBoundingClientRect().top +
+                window.scrollY -
+                150;
+
+            window.scrollTo({
+                top: Math.max(top, 0),
+                behavior: "smooth",
             });
-        }, 500);
-    }, 120);
-}
+
+            window.setTimeout(() => {
+                input.focus({
+                    preventScroll: true,
+                });
+            }, 500);
+        }, 120);
+    }
 
     async function handleCommentReaction(
         commentId: string,
@@ -1443,12 +1443,22 @@ export default function TopicDetailPage() {
                     <>
                         <article className={styles.topicCard}>
                             <div className={styles.topicTop}>
-                                <span className={styles.categoryBadge}>
-                                    {topic.categories?.name ??
-                                        (language === "tr"
-                                            ? "Genel"
-                                            : "General")}
-                                </span>
+                                {topic.categories ? (
+                                    <Link
+                                        href={`/kategoriler?group=${encodeURIComponent(
+                                            topic.categories.category_groups?.slug ?? ""
+                                        )}&category=${encodeURIComponent(
+                                            topic.categories.slug
+                                        )}`}
+                                        className={styles.categoryBadge}
+                                    >
+                                        {topic.categories.name}
+                                    </Link>
+                                ) : (
+                                    <span className={styles.categoryBadge}>
+                                        {language === "tr" ? "Genel" : "General"}
+                                    </span>
+                                )}
 
                                 <div className={styles.topicMeta}>
                                     <span className={styles.date}>

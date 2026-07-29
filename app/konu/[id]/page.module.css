@@ -2134,30 +2134,37 @@
 /* TOPIC DETAIL CATEGORY BADGE SIZE V12 START */
 
 .categoryBadge {
-  min-height: 38px !important;
-  padding: 0 15px !important;
+    min-height: 38px !important;
+    padding: 0 15px !important;
 
-  font-size: 13px !important;
-  font-weight: 750 !important;
-  line-height: 1 !important;
+    font-size: 13px !important;
+    font-weight: 750 !important;
+    line-height: 1 !important;
+
+    text-decoration: none !important;
+    cursor: pointer;
+
+    transition:
+        transform 0.18s ease,
+        border-color 0.18s ease,
+        background 0.18s ease;
 }
 
-.date {
-  font-size: 11px !important;
-  line-height: 1.4 !important;
+.categoryBadge:hover {
+    transform: translateY(-1px);
 }
 
 @media (max-width: 680px) {
-  .categoryBadge {
-    min-height: 36px !important;
-    padding: 0 13px !important;
+    .categoryBadge {
+        min-height: 36px !important;
+        padding: 0 13px !important;
 
-    font-size: 12px !important;
-  }
+        font-size: 12px !important;
+    }
 
-  .topicTop {
-    gap: 10px !important;
-  }
+    .topicTop {
+        gap: 10px !important;
+    }
 }
 
 /* TOPIC DETAIL CATEGORY BADGE SIZE V12 END */
@@ -2165,63 +2172,63 @@
 /* TOPIC HEADER LAYOUT V26 START */
 
 .topicTop {
-  align-items: flex-start !important;
+    align-items: flex-start !important;
 }
 
 .topicMeta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 7px;
-  margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 7px;
+    margin-left: auto;
 }
 
 .topicMeta .stats {
-  width: auto;
-  margin: 0;
-  gap: 11px;
+    width: auto;
+    margin: 0;
+    gap: 11px;
 }
 
 .topicMeta .stats span {
-  font-size: 11px;
+    font-size: 11px;
 }
 
 .topicMeta .stats svg {
-  width: 15px;
-  height: 15px;
+    width: 15px;
+    height: 15px;
 }
 
 .topicCard h1 {
-  font-size: clamp(27px, 4.4vw, 41px) !important;
+    font-size: clamp(27px, 4.4vw, 41px) !important;
 }
 
 @media (max-width: 680px) {
-  .topicTop {
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    justify-content: space-between !important;
-    gap: 12px !important;
-  }
+    .topicTop {
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        justify-content: space-between !important;
+        gap: 12px !important;
+    }
 
-  .topicMeta {
-    flex: 0 0 auto;
-    align-items: flex-end;
-  }
+    .topicMeta {
+        flex: 0 0 auto;
+        align-items: flex-end;
+    }
 
-  .date {
-    text-align: right;
-    white-space: nowrap;
-  }
+    .date {
+        text-align: right;
+        white-space: nowrap;
+    }
 
-  .topicMeta .stats {
-    width: auto !important;
-    margin: 0 !important;
-  }
+    .topicMeta .stats {
+        width: auto !important;
+        margin: 0 !important;
+    }
 
-  .topicCard h1 {
-    font-size: 27px !important;
-    line-height: 1.15 !important;
-  }
+    .topicCard h1 {
+        font-size: 27px !important;
+        line-height: 1.15 !important;
+    }
 }
 
 /* TOPIC HEADER LAYOUT V26 END */
@@ -2229,14 +2236,14 @@
 /* COMMENT PROFILE AVATAR V27 START */
 
 .commentAvatar {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 .commentAvatar img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* COMMENT PROFILE AVATAR V27 END */
@@ -2244,19 +2251,19 @@
 /* TOPIC TITLE SMALLER FINAL V30 START */
 
 .topicCard h1 {
-  max-width: 700px !important;
-  font-size: clamp(23px, 3.2vw, 34px) !important;
-  line-height: 1.18 !important;
-  letter-spacing: -0.7px !important;
+    max-width: 700px !important;
+    font-size: clamp(23px, 3.2vw, 34px) !important;
+    line-height: 1.18 !important;
+    letter-spacing: -0.7px !important;
 }
 
 @media (max-width: 680px) {
-  .topicCard h1 {
-    margin-top: 14px !important;
-    font-size: 22px !important;
-    line-height: 1.22 !important;
-    letter-spacing: -0.4px !important;
-  }
+    .topicCard h1 {
+        margin-top: 14px !important;
+        font-size: 22px !important;
+        line-height: 1.22 !important;
+        letter-spacing: -0.4px !important;
+    }
 }
 
 /* TOPIC TITLE SMALLER FINAL V30 END */

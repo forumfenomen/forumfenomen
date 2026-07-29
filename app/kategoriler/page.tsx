@@ -1244,7 +1244,7 @@ export default function CategoriesPage() {
         )
       `)
         .eq("status", "published")
-        .order("is_pinned", {
+        .order("created_at", {
           ascending: false,
         })
         .order("created_at", {

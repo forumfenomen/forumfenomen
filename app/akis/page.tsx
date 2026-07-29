@@ -23,6 +23,7 @@ type Language = "tr" | "en";
 type Theme = "light" | "dark";
 
 type FeedFilter =
+  | "latest"
   | "trends"
   | "popular"
   | "community"
@@ -612,7 +613,7 @@ export default function FeedPage() {
     useState<Post[]>([]);
 
   const [activeFeedFilter, setActiveFeedFilter] =
-    useState<FeedFilter>("trends");
+    useState<FeedFilter>("latest");
 
   const [followingUserIds, setFollowingUserIds] =
     useState<string[]>([]);
@@ -804,9 +805,6 @@ export default function FeedPage() {
         )
       `)
         .eq("status", "published")
-        .order("is_pinned", {
-          ascending: false,
-        })
         .order("created_at", {
           ascending: false,
         })
@@ -1124,7 +1122,22 @@ export default function FeedPage() {
       return secondDate - firstDate;
     });
 
+  const latestPosts = [...topicPosts].sort(
+    (firstPost, secondPost) => {
+      const firstDate = firstPost.createdAt
+        ? new Date(firstPost.createdAt).getTime()
+        : 0;
+
+      const secondDate = secondPost.createdAt
+        ? new Date(secondPost.createdAt).getTime()
+        : 0;
+
+      return secondDate - firstDate;
+    }
+  );
+
   const filteredPosts: Record<FeedFilter, Post[]> = {
+    latest: latestPosts,
     trends: trendPosts,
     popular: popularPosts,
     community: communityPosts,
@@ -1135,6 +1148,10 @@ export default function FeedPage() {
     filteredPosts[activeFeedFilter].slice(0, 10);
 
   const activeFeedTitle: Record<FeedFilter, string> = {
+    latest:
+      language === "tr"
+        ? "Son Eklenen Konular"
+        : "Latest Topics",
     trends: t.trends,
     popular: t.popular,
     community: t.community,
@@ -1145,15 +1162,39 @@ export default function FeedPage() {
     event: MouseEvent<HTMLAnchorElement>,
     href: string
   ) {
-    if (window.location.pathname === href) {
-      event.preventDefault();
+    if (window.location.pathname !== href) {
+      return;
+    }
 
+    event.preventDefault();
+
+    if (href === "/akis") {
+      setActiveFeedFilter("latest");
+    }
+
+    const resetScroll = () => {
       window.scrollTo({
         top: 0,
         left: 0,
-        behavior: "smooth",
+        behavior: "auto",
       });
-    }
+
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    resetScroll();
+
+    window.requestAnimationFrame(() => {
+      resetScroll();
+
+      window.requestAnimationFrame(() => {
+        resetScroll();
+      });
+    });
+
+    window.setTimeout(resetScroll, 100);
+    window.setTimeout(resetScroll, 300);
   }
 
   return (
