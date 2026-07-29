@@ -1829,7 +1829,8 @@
   .profileMenu button {
     display: flex;
     min-width: max-content;
-    min-height: 40px;
+    min-height: 40px !important;
+    height: 40px !important;
 
     flex: 0 0 auto;
     align-items: center;
@@ -1839,24 +1840,30 @@
 
     padding: 0 10px;
 
+    color: #aeb0bb;
+
+    border: 0;
     border-radius: 13px;
 
-    font-size: 9.5px;
-    font-weight: 680;
+    background:
+      rgba(255, 255, 255, 0.025);
+
+    font-size: 9.5px !important;
+    font-weight: 680 !important;
   }
 
   .menuIcon {
-    width: 27px;
-    height: 27px;
+    width: 27px !important;
+    height: 27px !important;
 
-    flex: 0 0 27px;
+    flex: 0 0 27px !important;
 
     border-radius: 9px;
   }
 
   .menuIcon svg {
-    width: 15px;
-    height: 15px;
+    width: 15px !important;
+    height: 15px !important;
   }
 
   .profileMenu button>svg,
@@ -6139,7 +6146,7 @@
 
   .profileMenuArrow {
     position: absolute;
-    top: 6px;
+    top: 50%;
     right: 6px;
     z-index: 10;
 
@@ -6164,7 +6171,7 @@
     box-shadow:
       0 6px 16px rgba(0, 0, 0, 0.2);
 
-
+    transform: translateY(-50%);
 
     pointer-events: none;
 
@@ -6192,11 +6199,13 @@
 
   0%,
   100% {
-    transform: translateX(0);
+    transform:
+      translateY(-50%) translateX(0);
   }
 
   50% {
-    transform: translateX(3px);
+    transform:
+      translateY(-50%) translateX(3px);
   }
 }
 
