@@ -334,6 +334,10 @@ export default function PublicProfilePage() {
             return;
         }
 
+        if ("scrollRestoration" in window.history) {
+            window.history.scrollRestoration = "manual";
+        }
+
         const resetScroll = () => {
             window.scrollTo({
                 top: 0,
@@ -1936,9 +1940,9 @@ export default function PublicProfilePage() {
 
                                                     {personDetails.profileUrl ? (
                                                         <a
-  href={personDetails.profileUrl}
-  className={styles.followingBadge}
->
+                                                            href={personDetails.profileUrl}
+                                                            className={styles.followingBadge}
+                                                        >
                                                             {language === "tr"
                                                                 ? "Profili Gör"
                                                                 : "View Profile"}

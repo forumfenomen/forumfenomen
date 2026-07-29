@@ -334,7 +334,7 @@ const copy = {
     search: "Konu, kullanıcı veya kategori ara...",
     trends: "Güncel Trendler",
     trendsCount: "56 yeni konu",
-    popular: "Popüler Tartışmalar",
+    popular: "Tartışmalar",
     popularCount: "32 yeni konu",
     community: "Öne Çıkanlar",
     communityCount: "18 yeni konu",
@@ -360,7 +360,7 @@ const copy = {
     search: "Search topics, users or categories...",
     trends: "Current Trends",
     trendsCount: "56 new topics",
-    popular: "Popular Discussions",
+    popular: "Popular",
     popularCount: "32 new topics",
     community: "Highlights",
     communityCount: "18 new topics",
@@ -1471,6 +1471,37 @@ export default function FeedPage() {
         </section>
 
         <section className="ff-insight-grid">
+
+          <button
+            type="button"
+            className={
+              activeFeedFilter === "latest"
+                ? "active"
+                : ""
+            }
+            onClick={() => {
+              setActiveFeedFilter("latest");
+
+              document
+                .querySelector(".ff-featured-section")
+                ?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+            }}
+          >
+            <strong>
+              🕘 {language === "tr"
+                ? "Son Eklenen"
+                : "Latest"}
+            </strong>
+
+            <span>
+              {latestPosts.length}{" "}
+              {language === "tr" ? "konu" : "topics"}
+            </span>
+          </button>
+
           <button
             type="button"
             className={

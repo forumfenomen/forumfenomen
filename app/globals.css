@@ -13708,7 +13708,7 @@ html[data-theme="light"] .ff-insight-grid button.active {
 @media (max-width: 680px) {
   .ff-insight-grid {
     grid-template-columns:
-      repeat(4, minmax(135px, 1fr));
+      repeat(5, minmax(135px, 1fr));
   }
 
   .ff-insight-grid button {
@@ -13759,4 +13759,29 @@ html[data-theme="light"] .ff-insight-grid button.active {
     0 0 14px rgba(71, 118, 255, 0.35);
 
   pointer-events: none;
+}
+
+/* AKIŞ FİLTRE KARTI HOVER VE ÜST ÇİZGİ SABİTLEME */
+
+.ff-insight-grid button {
+  isolation: isolate;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.ff-insight-grid button:hover {
+  transform: translateY(-2px) translateZ(0);
+  -webkit-transform: translateY(-2px) translateZ(0);
+}
+
+.ff-insight-grid button.active {
+  position: relative;
+  z-index: 5;
+  overflow: visible;
+}
+
+.ff-insight-grid button.active::before {
+  z-index: 10;
+  transform: translateZ(1px);
+  -webkit-transform: translateZ(1px);
 }
