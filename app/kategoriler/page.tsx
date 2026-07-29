@@ -989,29 +989,6 @@ export default function CategoriesPage() {
   const categoryDetailRef =
     useRef<HTMLElement | null>(null);
 
-  useEffect(() => {
-    if (
-      "scrollRestoration" in window.history
-    ) {
-      window.history.scrollRestoration =
-        "manual";
-    }
-
-    const navigationEntry =
-      performance.getEntriesByType(
-        "navigation"
-      )[0] as PerformanceNavigationTiming | undefined;
-
-    const isReload =
-      navigationEntry?.type === "reload";
-
-    if (isReload) {
-      window.scrollTo({
-        top: 0,
-        behavior: "auto",
-      });
-    }
-  }, []);
 
   useEffect(() => {
     const params =
@@ -1024,6 +1001,9 @@ export default function CategoriesPage() {
 
     const categorySlug =
       params.get("category");
+
+    const shouldFocusCategory =
+      params.get("focus") === "category";
 
     if (!groupSlug) {
       return;
@@ -1059,15 +1039,12 @@ export default function CategoriesPage() {
       setSelectedSubcategory(null);
     }
 
-    const navigationEntry =
-      performance.getEntriesByType(
-        "navigation"
-      )[0] as PerformanceNavigationTiming | undefined;
+    if (!shouldFocusCategory) {
+      window.scrollTo({
+        top: 0,
+        behavior: "auto",
+      });
 
-    const isReload =
-      navigationEntry?.type === "reload";
-
-    if (isReload) {
       return;
     }
 
@@ -1089,6 +1066,18 @@ export default function CategoriesPage() {
           top: Math.max(targetTop, 0),
           behavior: "smooth",
         });
+
+        const cleanUrl =
+          new URL(window.location.href);
+
+        cleanUrl.searchParams.delete("focus");
+
+        window.history.replaceState(
+          window.history.state,
+          "",
+          `${cleanUrl.pathname}${cleanUrl.search}${cleanUrl.hash}`
+        );
+
       }, 180);
 
     return () => {

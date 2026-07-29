@@ -1807,7 +1807,7 @@ export default function TopicDetailPage() {
                                             topic.categories.category_groups?.slug ?? ""
                                         )}&category=${encodeURIComponent(
                                             topic.categories.slug
-                                        )}`}
+                                        )}&focus=category`}
                                         className={styles.categoryBadge}
                                     >
                                         {topic.categories.name}
@@ -2503,245 +2503,243 @@ export default function TopicDetailPage() {
             </div>
 
             {topicReportOpen && (
-    <div
-        className={styles.modalBackdrop}
-        onMouseDown={closeTopicReportModal}
-    >
-        <section
-            className={`${styles.confirmModal} ${styles.reportModal}`}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="report-topic-title"
-            onMouseDown={(event) =>
-                event.stopPropagation()
-            }
-        >
-            <div
-                className={`${styles.confirmModalIcon} ${
-                    topicReportCompleted
-                        ? styles.reportSuccessIcon
-                        : styles.reportModalIcon
-                }`}
-            >
-                <ReportIcon />
-            </div>
-
-            <span className={styles.confirmModalLabel}>
-                {language === "tr"
-                    ? "TOPLULUK GÜVENLİĞİ"
-                    : "COMMUNITY SAFETY"}
-            </span>
-
-            {topicReportCompleted ? (
-                <>
-                    <h2 id="report-topic-title">
-                        {language === "tr"
-                            ? "Şikâyetin iletildi"
-                            : "Report submitted"}
-                    </h2>
-
-                    <p>
-                        {language === "tr"
-                            ? "Konu hakkındaki bildirimin moderasyon sistemine kaydedildi. İnceleme sonucunda gerekli işlem uygulanacaktır."
-                            : "Your topic report has been recorded for moderation review."}
-                    </p>
-
-                    <div
-                        className={`${styles.confirmModalActions} ${styles.reportSuccessActions}`}
-                    >
-                        <button
-                            type="button"
-                            className={
-                                styles.confirmReportButton
-                            }
-                            onClick={closeTopicReportModal}
-                        >
-                            {language === "tr"
-                                ? "Tamam"
-                                : "Done"}
-                        </button>
-                    </div>
-                </>
-            ) : (
-                <>
-                    <h2 id="report-topic-title">
-                        {language === "tr"
-                            ? "Bu konuyu neden şikâyet ediyorsun?"
-                            : "Why are you reporting this topic?"}
-                    </h2>
-
-                    <p>
-                        {language === "tr"
-                            ? "En uygun nedeni seç. Bildirimin konu sahibine gösterilmez."
-                            : "Select the most appropriate reason. Your report will not be shown to the topic author."}
-                    </p>
-
-                    <div className={styles.reportReasonGrid}>
-                        {[
-                            {
-                                value: "spam",
-                                tr: "Spam",
-                                en: "Spam",
-                            },
-                            {
-                                value: "harassment",
-                                tr: "Taciz veya zorbalık",
-                                en: "Harassment",
-                            },
-                            {
-                                value: "hate",
-                                tr: "Nefret söylemi",
-                                en: "Hate speech",
-                            },
-                            {
-                                value: "illegal",
-                                tr: "Yasadışı içerik",
-                                en: "Illegal content",
-                            },
-                            {
-                                value:
-                                    "personal_information",
-                                tr: "Kişisel bilgi",
-                                en: "Personal information",
-                            },
-                            {
-                                value: "other",
-                                tr: "Diğer",
-                                en: "Other",
-                            },
-                        ].map((reason) => {
-                            const value =
-                                reason.value as ReportReason;
-
-                            return (
-                                <button
-                                    key={value}
-                                    type="button"
-                                    className={`${styles.reportReasonButton} ${
-                                        reportReason === value
-                                            ? styles.reportReasonActive
-                                            : ""
-                                    }`}
-                                    aria-pressed={
-                                        reportReason === value
-                                    }
-                                    onClick={() => {
-                                        setReportReason(value);
-                                        setReportMessage(null);
-                                    }}
-                                >
-                                    {language === "tr"
-                                        ? reason.tr
-                                        : reason.en}
-                                </button>
-                            );
-                        })}
-                    </div>
-
-                    <label
-                        className={
-                            styles.reportDetailsLabel
+                <div
+                    className={styles.modalBackdrop}
+                    onMouseDown={closeTopicReportModal}
+                >
+                    <section
+                        className={`${styles.confirmModal} ${styles.reportModal}`}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="report-topic-title"
+                        onMouseDown={(event) =>
+                            event.stopPropagation()
                         }
                     >
-                        <span>
-                            {language === "tr"
-                                ? "Ek açıklama (isteğe bağlı)"
-                                : "Additional details (optional)"}
-                        </span>
-
-                        <textarea
-                            value={reportDetails}
-                            maxLength={1000}
-                            placeholder={
-                                language === "tr"
-                                    ? "Moderasyon ekibine yardımcı olacak kısa bir açıklama yaz..."
-                                    : "Add a short explanation for the moderation team..."
-                            }
-                            onChange={(event) => {
-                                setReportDetails(
-                                    event.target.value
-                                );
-
-                                setReportMessage(null);
-                            }}
-                        />
-
-                        <small>
-                            {reportDetails.length}/1000
-                        </small>
-                    </label>
-
-                    {reportMessage === "reason" && (
-                        <p
-                            className={
-                                styles.reportFeedback
-                            }
-                        >
-                            {language === "tr"
-                                ? "Lütfen bir şikâyet nedeni seç."
-                                : "Please select a report reason."}
-                        </p>
-                    )}
-
-                    {reportMessage === "error" && (
-                        <p
-                            className={
-                                styles.reportFeedback
-                            }
-                        >
-                            {language === "tr"
-                                ? "Şikâyet gönderilemedi. Lütfen tekrar dene."
-                                : "The report could not be submitted. Please try again."}
-                        </p>
-                    )}
-
-                    <div
-                        className={
-                            styles.confirmModalActions
-                        }
-                    >
-                        <button
-                            type="button"
-                            className={
-                                styles.confirmCancelButton
-                            }
-                            onClick={closeTopicReportModal}
-                            disabled={topicReportLoading}
-                        >
-                            {language === "tr"
-                                ? "Vazgeç"
-                                : "Cancel"}
-                        </button>
-
-                        <button
-                            type="button"
-                            className={
-                                styles.confirmReportButton
-                            }
-                            disabled={
-                                !reportReason ||
-                                topicReportLoading
-                            }
-                            onClick={() => {
-                                void handleTopicReport();
-                            }}
+                        <div
+                            className={`${styles.confirmModalIcon} ${topicReportCompleted
+                                    ? styles.reportSuccessIcon
+                                    : styles.reportModalIcon
+                                }`}
                         >
                             <ReportIcon />
+                        </div>
 
-                            {topicReportLoading
-                                ? language === "tr"
-                                    ? "Gönderiliyor..."
-                                    : "Submitting..."
-                                : language === "tr"
-                                    ? "Şikâyeti Gönder"
-                                    : "Submit Report"}
-                        </button>
-                    </div>
-                </>
+                        <span className={styles.confirmModalLabel}>
+                            {language === "tr"
+                                ? "TOPLULUK GÜVENLİĞİ"
+                                : "COMMUNITY SAFETY"}
+                        </span>
+
+                        {topicReportCompleted ? (
+                            <>
+                                <h2 id="report-topic-title">
+                                    {language === "tr"
+                                        ? "Şikâyetin iletildi"
+                                        : "Report submitted"}
+                                </h2>
+
+                                <p>
+                                    {language === "tr"
+                                        ? "Konu hakkındaki bildirimin moderasyon sistemine kaydedildi. İnceleme sonucunda gerekli işlem uygulanacaktır."
+                                        : "Your topic report has been recorded for moderation review."}
+                                </p>
+
+                                <div
+                                    className={`${styles.confirmModalActions} ${styles.reportSuccessActions}`}
+                                >
+                                    <button
+                                        type="button"
+                                        className={
+                                            styles.confirmReportButton
+                                        }
+                                        onClick={closeTopicReportModal}
+                                    >
+                                        {language === "tr"
+                                            ? "Tamam"
+                                            : "Done"}
+                                    </button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <h2 id="report-topic-title">
+                                    {language === "tr"
+                                        ? "Bu konuyu neden şikâyet ediyorsun?"
+                                        : "Why are you reporting this topic?"}
+                                </h2>
+
+                                <p>
+                                    {language === "tr"
+                                        ? "En uygun nedeni seç. Bildirimin konu sahibine gösterilmez."
+                                        : "Select the most appropriate reason. Your report will not be shown to the topic author."}
+                                </p>
+
+                                <div className={styles.reportReasonGrid}>
+                                    {[
+                                        {
+                                            value: "spam",
+                                            tr: "Spam",
+                                            en: "Spam",
+                                        },
+                                        {
+                                            value: "harassment",
+                                            tr: "Taciz veya zorbalık",
+                                            en: "Harassment",
+                                        },
+                                        {
+                                            value: "hate",
+                                            tr: "Nefret söylemi",
+                                            en: "Hate speech",
+                                        },
+                                        {
+                                            value: "illegal",
+                                            tr: "Yasadışı içerik",
+                                            en: "Illegal content",
+                                        },
+                                        {
+                                            value:
+                                                "personal_information",
+                                            tr: "Kişisel bilgi",
+                                            en: "Personal information",
+                                        },
+                                        {
+                                            value: "other",
+                                            tr: "Diğer",
+                                            en: "Other",
+                                        },
+                                    ].map((reason) => {
+                                        const value =
+                                            reason.value as ReportReason;
+
+                                        return (
+                                            <button
+                                                key={value}
+                                                type="button"
+                                                className={`${styles.reportReasonButton} ${reportReason === value
+                                                        ? styles.reportReasonActive
+                                                        : ""
+                                                    }`}
+                                                aria-pressed={
+                                                    reportReason === value
+                                                }
+                                                onClick={() => {
+                                                    setReportReason(value);
+                                                    setReportMessage(null);
+                                                }}
+                                            >
+                                                {language === "tr"
+                                                    ? reason.tr
+                                                    : reason.en}
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+
+                                <label
+                                    className={
+                                        styles.reportDetailsLabel
+                                    }
+                                >
+                                    <span>
+                                        {language === "tr"
+                                            ? "Ek açıklama (isteğe bağlı)"
+                                            : "Additional details (optional)"}
+                                    </span>
+
+                                    <textarea
+                                        value={reportDetails}
+                                        maxLength={1000}
+                                        placeholder={
+                                            language === "tr"
+                                                ? "Moderasyon ekibine yardımcı olacak kısa bir açıklama yaz..."
+                                                : "Add a short explanation for the moderation team..."
+                                        }
+                                        onChange={(event) => {
+                                            setReportDetails(
+                                                event.target.value
+                                            );
+
+                                            setReportMessage(null);
+                                        }}
+                                    />
+
+                                    <small>
+                                        {reportDetails.length}/1000
+                                    </small>
+                                </label>
+
+                                {reportMessage === "reason" && (
+                                    <p
+                                        className={
+                                            styles.reportFeedback
+                                        }
+                                    >
+                                        {language === "tr"
+                                            ? "Lütfen bir şikâyet nedeni seç."
+                                            : "Please select a report reason."}
+                                    </p>
+                                )}
+
+                                {reportMessage === "error" && (
+                                    <p
+                                        className={
+                                            styles.reportFeedback
+                                        }
+                                    >
+                                        {language === "tr"
+                                            ? "Şikâyet gönderilemedi. Lütfen tekrar dene."
+                                            : "The report could not be submitted. Please try again."}
+                                    </p>
+                                )}
+
+                                <div
+                                    className={
+                                        styles.confirmModalActions
+                                    }
+                                >
+                                    <button
+                                        type="button"
+                                        className={
+                                            styles.confirmCancelButton
+                                        }
+                                        onClick={closeTopicReportModal}
+                                        disabled={topicReportLoading}
+                                    >
+                                        {language === "tr"
+                                            ? "Vazgeç"
+                                            : "Cancel"}
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        className={
+                                            styles.confirmReportButton
+                                        }
+                                        disabled={
+                                            !reportReason ||
+                                            topicReportLoading
+                                        }
+                                        onClick={() => {
+                                            void handleTopicReport();
+                                        }}
+                                    >
+                                        <ReportIcon />
+
+                                        {topicReportLoading
+                                            ? language === "tr"
+                                                ? "Gönderiliyor..."
+                                                : "Submitting..."
+                                            : language === "tr"
+                                                ? "Şikâyeti Gönder"
+                                                : "Submit Report"}
+                                    </button>
+                                </div>
+                            </>
+                        )}
+                    </section>
+                </div>
             )}
-        </section>
-    </div>
-)}
 
             {reportModalComment && (
                 <div
