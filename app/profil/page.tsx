@@ -4565,38 +4565,45 @@ export default function ProfilePage() {
             className={styles.profileLayout}
           >
             <aside className={styles.profileSidebar}>
-              <nav className={styles.profileMenu}>
-                {menuItems.map((item) => (
-                  <button
-                    type="button"
-                    key={item.id}
-                    className={
-                      activeSection === item.id
-                        ? styles.activeMenuItem
-                        : ""
-                    }
-                    onClick={() =>
-                      openProfileSection(item.id)
-                    }
-                  >
-                    <span className={styles.menuIcon}>
-                      {item.icon}
-                    </span>
+              <div className={styles.profileMenuWrap}>
+                <nav className={styles.profileMenu}>
+                  {menuItems.map((item) => (
+                    <button
+                      type="button"
+                      key={item.id}
+                      className={
+                        activeSection === item.id
+                          ? styles.activeMenuItem
+                          : ""
+                      }
+                      onClick={() =>
+                        openProfileSection(item.id)
+                      }
+                    >
+                      <span className={styles.menuIcon}>
+                        {item.icon}
+                      </span>
 
-                    <span>
-                      {sectionNames[item.id]}
-                    </span>
+                      <span>
+                        {sectionNames[item.id]}
+                      </span>
 
-                    {item.count !== undefined ? (
-                      <small>{item.count}</small>
-                    ) : (
-                      <ChevronIcon />
-                    )}
-                  </button>
-                ))}
-              </nav>
+                      {item.count !== undefined ? (
+                        <small>{item.count}</small>
+                      ) : (
+                        <ChevronIcon />
+                      )}
+                    </button>
+                  ))}
+                </nav>
 
-
+                <span
+                  className={styles.profileMenuArrow}
+                  aria-hidden="true"
+                >
+                  <ChevronIcon />
+                </span>
+              </div>
             </aside>
 
 

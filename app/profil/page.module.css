@@ -6162,3 +6162,102 @@
       rgba(255, 255, 255, 0.98) 45%
     );
 }
+
+.profileMenuWrap {
+  position: relative;
+  min-width: 0;
+}
+
+.profileMenuArrow {
+  display: none;
+}
+
+@media (max-width: 680px) {
+  .profileMenuWrap {
+    overflow: hidden;
+
+    border-radius: 20px;
+  }
+
+  .profileMenu {
+    padding-right: 48px;
+  }
+
+  .profileMenuArrow {
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    z-index: 10;
+
+    display: grid;
+    width: 34px;
+    height: 34px;
+
+    place-items: center;
+
+    color: #e15ae9;
+
+    border:
+      1px solid rgba(213, 56, 237, 0.32);
+    border-radius: 11px;
+
+    background:
+      linear-gradient(
+        135deg,
+        rgba(218, 48, 232, 0.13),
+        rgba(54, 104, 255, 0.1)
+      ),
+      rgba(8, 8, 18, 0.94);
+
+    box-shadow:
+      0 8px 20px rgba(0, 0, 0, 0.22);
+
+    transform: translateY(-50%);
+
+    pointer-events: none;
+
+    animation:
+      profileMenuArrowMove 1.5s
+      ease-in-out infinite;
+  }
+
+  .profileMenuArrow svg {
+    width: 16px;
+    height: 16px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}
+
+@keyframes profileMenuArrowMove {
+  0%,
+  100% {
+    transform:
+      translateY(-50%)
+      translateX(0);
+  }
+
+  50% {
+    transform:
+      translateY(-50%)
+      translateX(3px);
+  }
+}
+
+:global(html[data-theme="light"])
+  .profileMenuArrow {
+  color: #a42bc0;
+
+  border-color:
+    rgba(164, 43, 192, 0.24);
+
+  background:
+    rgba(255, 255, 255, 0.96);
+
+  box-shadow:
+    0 8px 18px rgba(48, 40, 70, 0.12);
+}
