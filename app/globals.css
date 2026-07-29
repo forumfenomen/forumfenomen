@@ -13720,3 +13720,43 @@ html[data-theme="light"] .ff-insight-grid button.active {
     font-size: 10.5px !important;
   }
 }
+
+/* AKTİF FİLTRE KARTI ÜST ÇİZGİ DÜZELTMESİ */
+
+.ff-insight-grid button {
+  position: relative;
+  overflow: visible;
+}
+
+.ff-insight-grid button.active {
+  z-index: 2;
+}
+
+.ff-insight-grid button.active::before {
+  content: "";
+
+  position: absolute;
+  top: -1px;
+  left: 14px;
+  right: 14px;
+
+  height: 2px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #ef4dff 24%,
+      #8d4dff 58%,
+      #23bfff 82%,
+      transparent
+    );
+
+  box-shadow:
+    0 0 8px rgba(225, 69, 255, 0.7),
+    0 0 14px rgba(71, 118, 255, 0.35);
+
+  pointer-events: none;
+}
