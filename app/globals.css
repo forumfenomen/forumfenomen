@@ -13566,3 +13566,119 @@ html[data-theme="light"] .ff-category-feed-tag {
     padding-inline: 13px;
   }
 }
+
+/* KATEGORİ KONULARI — AKIŞ KARTI GÖRÜNÜMÜ */
+
+.ff-category-topic-list {
+  gap: 10px !important;
+}
+
+.ff-category-feed-topic {
+  overflow: hidden;
+
+  border:
+    1px solid rgba(193, 72, 237, 0.13) !important;
+
+  border-radius: 17px !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(20, 18, 31, 0.96),
+      rgba(10, 9, 18, 0.98)
+    ) !important;
+
+  box-shadow:
+    0 8px 22px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.025) !important;
+}
+
+.ff-category-feed-topic:hover {
+  border-color:
+    color-mix(
+      in srgb,
+      var(--category-accent) 30%,
+      rgba(255, 255, 255, 0.07)
+    ) !important;
+}
+
+html[data-theme="light"] .ff-category-feed-topic {
+  border-color:
+    rgba(83, 60, 105, 0.1) !important;
+
+  background:
+    rgba(255, 255, 255, 0.96) !important;
+
+  box-shadow:
+    0 8px 20px rgba(48, 36, 65, 0.06) !important;
+}
+
+/* ANA AKIŞ FİLTRE KARTLARI */
+
+.ff-insight-grid button {
+  display: grid;
+  min-width: 145px;
+  gap: 4px;
+
+  border: 1px solid var(--feed-border);
+  border-radius: 15px;
+  padding: 13px;
+
+  background: var(--feed-card);
+  color: inherit;
+
+  font: inherit;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.ff-insight-grid button:hover {
+  transform: translateY(-2px);
+  border-color: rgba(210, 64, 240, 0.28);
+}
+
+.ff-insight-grid button.active {
+  border-color: rgba(213, 66, 241, 0.58);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(161, 36, 206, 0.2),
+      rgba(45, 37, 105, 0.18)
+    );
+
+  box-shadow:
+    0 0 0 1px rgba(212, 66, 241, 0.08),
+    0 10px 25px rgba(88, 26, 119, 0.16);
+}
+
+.ff-insight-grid button:focus-visible {
+  outline: 2px solid #d64bf1;
+  outline-offset: 3px;
+}
+
+html[data-theme="light"] .ff-insight-grid button {
+  border-color: rgba(92, 70, 140, 0.16);
+  background: rgba(255, 255, 255, 0.94);
+
+  box-shadow:
+    0 8px 22px rgba(58, 45, 92, 0.06);
+}
+
+html[data-theme="light"] .ff-insight-grid button.active {
+  border-color: rgba(180, 51, 219, 0.48);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(221, 87, 239, 0.13),
+      rgba(94, 83, 221, 0.1)
+    );
+}

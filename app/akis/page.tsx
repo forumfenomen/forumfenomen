@@ -22,6 +22,12 @@ import {
 type Language = "tr" | "en";
 type Theme = "light" | "dark";
 
+type FeedFilter =
+  | "trends"
+  | "popular"
+  | "community"
+  | "following";
+
 type Post = {
   id?: string;
   icon: string;
@@ -34,11 +40,16 @@ type Post = {
   timeTr: string;
   timeEn: string;
   comments: string;
+  authorId?: string;
+  createdAt?: string;
+  commentCountValue?: number;
+  viewCountValue?: number;
   views: string;
 };
 
 type TopicRow = {
   id: string;
+  author_id: string;
   title: string;
   created_at: string;
   comment_count: number;
@@ -600,6 +611,12 @@ export default function FeedPage() {
   const [topicPosts, setTopicPosts] =
     useState<Post[]>([]);
 
+  const [activeFeedFilter, setActiveFeedFilter] =
+    useState<FeedFilter>("trends");
+
+  const [followingUserIds, setFollowingUserIds] =
+    useState<string[]>([]);
+
   const [topicsLoading, setTopicsLoading] =
     useState(true);
 
@@ -705,6 +722,59 @@ export default function FeedPage() {
   useEffect(() => {
     let isActive = true;
 
+    async function loadFollowingUsers() {
+      const supabase = createClient();
+
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (userError || !user) {
+        setFollowingUserIds([]);
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("user_follows")
+        .select("following_id")
+        .eq("follower_id", user.id);
+
+      if (!isActive) {
+        return;
+      }
+
+      if (error) {
+        console.error(
+          "Takip edilen kullanıcılar alınamadı:",
+          error.message
+        );
+
+        setFollowingUserIds([]);
+        return;
+      }
+
+      setFollowingUserIds(
+        (data ?? []).map(
+          (item) => item.following_id
+        )
+      );
+    }
+
+    void loadFollowingUsers();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let isActive = true;
+
     async function loadTopics() {
       setTopicsLoading(true);
 
@@ -714,6 +784,7 @@ export default function FeedPage() {
         .from("topics")
         .select(`
         id,
+        author_id,
         title,
         created_at,
         comment_count,
@@ -790,6 +861,10 @@ export default function FeedPage() {
 
           return {
             id: topic.id,
+            authorId: topic.author_id,
+            createdAt: topic.created_at,
+            commentCountValue: topic.comment_count ?? 0,
+            viewCountValue: topic.view_count ?? 0,
             icon:
               categorySlug === "instagram"
                 ? "instagram"
@@ -977,7 +1052,94 @@ export default function FeedPage() {
   };
   const t = copy[language];
 
-  const displayPosts = topicPosts;
+  const sevenDaysAgo =
+    Date.now() - 7 * 24 * 60 * 60 * 1000;
+
+  const trendPosts = [...topicPosts]
+    .filter((post) => {
+      if (!post.createdAt) {
+        return false;
+      }
+
+      return (
+        new Date(post.createdAt).getTime() >=
+        sevenDaysAgo
+      );
+    })
+    .sort((firstPost, secondPost) => {
+      const firstScore =
+        (firstPost.commentCountValue ?? 0) * 4 +
+        (firstPost.viewCountValue ?? 0);
+
+      const secondScore =
+        (secondPost.commentCountValue ?? 0) * 4 +
+        (secondPost.viewCountValue ?? 0);
+
+      return secondScore - firstScore;
+    });
+
+  const popularPosts = [...topicPosts].sort(
+    (firstPost, secondPost) => {
+      const firstScore =
+        (firstPost.commentCountValue ?? 0) * 5 +
+        (firstPost.viewCountValue ?? 0);
+
+      const secondScore =
+        (secondPost.commentCountValue ?? 0) * 5 +
+        (secondPost.viewCountValue ?? 0);
+
+      return secondScore - firstScore;
+    }
+  );
+
+  const communityPosts = [...topicPosts].sort(
+    (firstPost, secondPost) => {
+      const firstScore =
+        (firstPost.commentCountValue ?? 0) * 8 +
+        (firstPost.viewCountValue ?? 0) * 0.35;
+
+      const secondScore =
+        (secondPost.commentCountValue ?? 0) * 8 +
+        (secondPost.viewCountValue ?? 0) * 0.35;
+
+      return secondScore - firstScore;
+    }
+  );
+
+  const followingPosts = topicPosts
+    .filter(
+      (post) =>
+        post.authorId &&
+        followingUserIds.includes(post.authorId)
+    )
+    .sort((firstPost, secondPost) => {
+      const firstDate = firstPost.createdAt
+        ? new Date(firstPost.createdAt).getTime()
+        : 0;
+
+      const secondDate = secondPost.createdAt
+        ? new Date(secondPost.createdAt).getTime()
+        : 0;
+
+      return secondDate - firstDate;
+    });
+
+  const filteredPosts: Record<FeedFilter, Post[]> = {
+    trends: trendPosts,
+    popular: popularPosts,
+    community: communityPosts,
+    following: followingPosts,
+  };
+
+  const displayPosts =
+    filteredPosts[activeFeedFilter].slice(0, 10);
+
+  const activeFeedTitle: Record<FeedFilter, string> = {
+    trends: t.trends,
+    popular: t.popular,
+    community: t.community,
+    following: t.following,
+  };
 
   function handleBottomNavigation(
     event: MouseEvent<HTMLAnchorElement>,
@@ -1129,7 +1291,7 @@ export default function FeedPage() {
 
         <section className="ff-featured-section">
           <div className="ff-section-heading">
-            <h2>{t.featured}</h2>
+            <h2>{activeFeedTitle[activeFeedFilter]}</h2>
             <button type="button">{t.seeAll} ›</button>
           </div>
 
@@ -1268,25 +1430,114 @@ export default function FeedPage() {
         </section>
 
         <section className="ff-insight-grid">
-          <article>
+          <button
+            type="button"
+            className={
+              activeFeedFilter === "trends"
+                ? "active"
+                : ""
+            }
+            onClick={() => {
+              setActiveFeedFilter("trends");
+
+              document
+                .querySelector(".ff-featured-section")
+                ?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+            }}
+          >
             <strong>🔥 {t.trends}</strong>
-            <span>{t.trendsCount}</span>
-          </article>
 
-          <article>
+            <span>
+              {trendPosts.length}{" "}
+              {language === "tr" ? "konu" : "topics"}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            className={
+              activeFeedFilter === "popular"
+                ? "active"
+                : ""
+            }
+            onClick={() => {
+              setActiveFeedFilter("popular");
+
+              document
+                .querySelector(".ff-featured-section")
+                ?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+            }}
+          >
             <strong>↗ {t.popular}</strong>
-            <span>{t.popularCount}</span>
-          </article>
 
-          <article>
+            <span>
+              {popularPosts.length}{" "}
+              {language === "tr" ? "konu" : "topics"}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            className={
+              activeFeedFilter === "community"
+                ? "active"
+                : ""
+            }
+            onClick={() => {
+              setActiveFeedFilter("community");
+
+              document
+                .querySelector(".ff-featured-section")
+                ?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+            }}
+          >
             <strong>👥 {t.community}</strong>
-            <span>{t.communityCount}</span>
-          </article>
 
-          <article>
+            <span>
+              {communityPosts.length}{" "}
+              {language === "tr" ? "konu" : "topics"}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            className={
+              activeFeedFilter === "following"
+                ? "active"
+                : ""
+            }
+            onClick={() => {
+              if (!currentUserId) {
+                router.push("/giris");
+                return;
+              }
+
+              setActiveFeedFilter("following");
+
+              document
+                .querySelector(".ff-featured-section")
+                ?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+            }}
+          >
             <strong>☆ {t.following}</strong>
-            <span>{t.followingCount}</span>
-          </article>
+
+            <span>
+              {followingPosts.length}{" "}
+              {language === "tr" ? "konu" : "topics"}
+            </span>
+          </button>
         </section>
 
         <section className="ff-ad-banner">
