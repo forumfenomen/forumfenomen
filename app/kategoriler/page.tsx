@@ -990,6 +990,30 @@ export default function CategoriesPage() {
     useRef<HTMLElement | null>(null);
 
   useEffect(() => {
+    if (
+      "scrollRestoration" in window.history
+    ) {
+      window.history.scrollRestoration =
+        "manual";
+    }
+
+    const navigationEntry =
+      performance.getEntriesByType(
+        "navigation"
+      )[0] as PerformanceNavigationTiming | undefined;
+
+    const isReload =
+      navigationEntry?.type === "reload";
+
+    if (isReload) {
+      window.scrollTo({
+        top: 0,
+        behavior: "auto",
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     const params =
       new URLSearchParams(
         window.location.search
@@ -1033,6 +1057,18 @@ export default function CategoriesPage() {
       );
     } else {
       setSelectedSubcategory(null);
+    }
+
+    const navigationEntry =
+      performance.getEntriesByType(
+        "navigation"
+      )[0] as PerformanceNavigationTiming | undefined;
+
+    const isReload =
+      navigationEntry?.type === "reload";
+
+    if (isReload) {
+      return;
     }
 
     const scrollTimer =
@@ -1594,7 +1630,7 @@ export default function CategoriesPage() {
         <section
           ref={categoryDetailRef}
           className="ff-category-detail"
-          
+
           style={
             {
               "--category-accent":
