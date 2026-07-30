@@ -303,6 +303,9 @@ export default function TopicDetailPage() {
     const [currentUserId, setCurrentUserId] =
         useState<string | null>(null);
 
+    const [authChecked, setAuthChecked] =
+        useState(false);
+
     const [topicReaction, setTopicReaction] =
         useState<ReactionValue>(0);
 
@@ -446,6 +449,7 @@ export default function TopicDetailPage() {
 
             if (isActive) {
                 setCurrentUserId(user?.id ?? null);
+                setAuthChecked(true);
             }
         }
 
@@ -458,6 +462,8 @@ export default function TopicDetailPage() {
                         setCurrentUserId(
                             session?.user.id ?? null
                         );
+
+                        setAuthChecked(true);
                     }
                 }
             );
@@ -2194,457 +2200,498 @@ export default function TopicDetailPage() {
                                 </div>
                             </div>
 
-                            <div
-                                className={styles.content}
-                                dangerouslySetInnerHTML={{
-                                    __html: topic.content,
-                                }}
-                            />
-                        </article>
+                            {!authChecked ? (
+                                <div className={styles.guestContentGate}>
+                                    <span className={styles.guestGateLoader} />
 
-                        <section className={styles.commentsCard}>
-                            <div className={styles.commentsHeader}>
-                                <div>
-                                    <span>
+                                    <p>
                                         {language === "tr"
-                                            ? "TOPLULUK"
-                                            : "COMMUNITY"}
-                                    </span>
+                                            ? "Oturum kontrol ediliyor..."
+                                            : "Checking session..."}
+                                    </p>
+                                </div>
+                            ) : currentUserId ? (
+                                <div
+                                    className={styles.content}
+                                    dangerouslySetInnerHTML={{
+                                        __html: topic.content,
+                                    }}
+                                />
+                            ) : (
+                                <div className={styles.guestContentGate}>
+                                    <div className={styles.guestGateIcon}>
+                                        <BookmarkIcon />
+                                    </div>
 
                                     <h2>
                                         {language === "tr"
-                                            ? `Yorumlar (${topic.comment_count ?? 0})`
-                                            : `Comments (${topic.comment_count ?? 0})`}
+                                            ? "Bu içeriğin devamı üyelere özel"
+                                            : "The rest of this content is for members"}
                                     </h2>
+
+                                    <p>
+                                        {language === "tr"
+                                            ? "Konunun tamamını ve topluluk yorumlarını görmek için hesabına giriş yap."
+                                            : "Sign in to read the full topic and community comments."}
+                                    </p>
+
+                                    <Link
+                                        href="/giris"
+                                        className={styles.guestGateButton}
+                                    >
+                                        {language === "tr"
+                                            ? "Üye Ol / Giriş Yap"
+                                            : "Join / Sign In"}
+                                    </Link>
                                 </div>
-                            </div>
+                            )}
+                        </article>
 
-                            <form
-                                className={styles.commentForm}
-                                onSubmit={handleCommentSubmit}
-                            >
-                                {replyingTo && (
-                                    <div className={styles.replyingBox}>
-                                        <div>
-                                            <span>
-                                                {language === "tr"
-                                                    ? "YANITLANIYOR"
-                                                    : "REPLYING TO"}
-                                            </span>
+                        {authChecked && currentUserId && (
+                            <section className={styles.commentsCard}>
+                                <div className={styles.commentsHeader}>
+                                    <div>
+                                        <span>
+                                            {language === "tr"
+                                                ? "TOPLULUK"
+                                                : "COMMUNITY"}
+                                        </span>
 
-                                            <strong>
-                                                {getCommentAuthor(replyingTo)}
-                                            </strong>
+                                        <h2>
+                                            {language === "tr"
+                                                ? `Yorumlar (${topic.comment_count ?? 0})`
+                                                : `Comments (${topic.comment_count ?? 0})`}
+                                        </h2>
+                                    </div>
+                                </div>
 
-                                            <p>
-                                                {replyingTo.content.length > 160
-                                                    ? `${replyingTo.content.slice(
-                                                        0,
-                                                        160
-                                                    )}…`
-                                                    : replyingTo.content}
-                                            </p>
+                                <form
+                                    className={styles.commentForm}
+                                    onSubmit={handleCommentSubmit}
+                                >
+                                    {replyingTo && (
+                                        <div className={styles.replyingBox}>
+                                            <div>
+                                                <span>
+                                                    {language === "tr"
+                                                        ? "YANITLANIYOR"
+                                                        : "REPLYING TO"}
+                                                </span>
+
+                                                <strong>
+                                                    {getCommentAuthor(replyingTo)}
+                                                </strong>
+
+                                                <p>
+                                                    {replyingTo.content.length > 160
+                                                        ? `${replyingTo.content.slice(
+                                                            0,
+                                                            160
+                                                        )}…`
+                                                        : replyingTo.content}
+                                                </p>
+                                            </div>
+
+                                            <button
+                                                type="button"
+                                                onClick={() => setReplyingTo(null)}
+                                                aria-label={
+                                                    language === "tr"
+                                                        ? "Yanıtlamayı iptal et"
+                                                        : "Cancel reply"
+                                                }
+                                            >
+                                                ×
+                                            </button>
+
+
+
                                         </div>
+                                    )}
+
+                                    <textarea
+                                        ref={commentInputRef}
+                                        value={commentText}
+                                        maxLength={2000}
+                                        onChange={(event) => {
+                                            setCommentText(event.target.value);
+                                            setCommentMessage(null);
+                                        }}
+                                        placeholder={
+                                            replyingTo
+                                                ? language === "tr"
+                                                    ? `${getCommentAuthor(
+                                                        replyingTo
+                                                    )} kullanıcısına yanıt yaz...`
+                                                    : `Reply to ${getCommentAuthor(
+                                                        replyingTo
+                                                    )}...`
+                                                : language === "tr"
+                                                    ? "Bu konu hakkında fikrini paylaş..."
+                                                    : "Share your thoughts about this topic..."
+                                        }
+                                    />
+
+                                    <div className={styles.commentFormFooter}>
+                                        <span>
+                                            {commentText.length}/2000
+                                        </span>
 
                                         <button
-                                            type="button"
-                                            onClick={() => setReplyingTo(null)}
-                                            aria-label={
-                                                language === "tr"
-                                                    ? "Yanıtlamayı iptal et"
-                                                    : "Cancel reply"
+                                            type="submit"
+                                            disabled={
+                                                !commentText.trim() ||
+                                                commentSubmitting
                                             }
                                         >
-                                            ×
-                                        </button>
-
-
-
-                                    </div>
-                                )}
-
-                                <textarea
-                                    ref={commentInputRef}
-                                    value={commentText}
-                                    maxLength={2000}
-                                    onChange={(event) => {
-                                        setCommentText(event.target.value);
-                                        setCommentMessage(null);
-                                    }}
-                                    placeholder={
-                                        replyingTo
-                                            ? language === "tr"
-                                                ? `${getCommentAuthor(
-                                                    replyingTo
-                                                )} kullanıcısına yanıt yaz...`
-                                                : `Reply to ${getCommentAuthor(
-                                                    replyingTo
-                                                )}...`
-                                            : language === "tr"
-                                                ? "Bu konu hakkında fikrini paylaş..."
-                                                : "Share your thoughts about this topic..."
-                                    }
-                                />
-
-                                <div className={styles.commentFormFooter}>
-                                    <span>
-                                        {commentText.length}/2000
-                                    </span>
-
-                                    <button
-                                        type="submit"
-                                        disabled={
-                                            !commentText.trim() ||
-                                            commentSubmitting
-                                        }
-                                    >
-                                        {commentSubmitting
-                                            ? language === "tr"
-                                                ? "Gönderiliyor..."
-                                                : "Posting..."
-                                            : replyingTo
+                                            {commentSubmitting
                                                 ? language === "tr"
-                                                    ? "Yanıtı Gönder"
-                                                    : "Post Reply"
-                                                : language === "tr"
-                                                    ? "Yorum Yap"
-                                                    : "Post Comment"}
-                                    </button>
-                                </div>
-
-                                {commentMessage === "login" && (
-                                    <p className={styles.commentFeedback}>
-                                        {language === "tr"
-                                            ? "Yorum yapmak için giriş yapmalısın. "
-                                            : "You must sign in to comment. "}
-
-                                        <Link href="/giris">
-                                            {language === "tr"
-                                                ? "Giriş yap"
-                                                : "Sign in"}
-                                        </Link>
-                                    </p>
-                                )}
-
-                                {commentMessage === "error" && (
-                                    <p className={styles.commentFeedback}>
-                                        {language === "tr"
-                                            ? "Yorum gönderilemedi. Lütfen tekrar dene."
-                                            : "The comment could not be posted. Please try again."}
-                                    </p>
-                                )}
-                            </form>
-
-                            <div className={styles.commentsList}>
-                                {commentsLoading ? (
-                                    <div className={styles.commentState}>
-                                        <span className={styles.loader} />
-
-                                        <p>
-                                            {language === "tr"
-                                                ? "Yorumlar yükleniyor..."
-                                                : "Loading comments..."}
-                                        </p>
+                                                    ? "Gönderiliyor..."
+                                                    : "Posting..."
+                                                : replyingTo
+                                                    ? language === "tr"
+                                                        ? "Yanıtı Gönder"
+                                                        : "Post Reply"
+                                                    : language === "tr"
+                                                        ? "Yorum Yap"
+                                                        : "Post Comment"}
+                                        </button>
                                     </div>
-                                ) : comments.length === 0 ? (
-                                    <div className={styles.commentState}>
-                                        <MessageIcon />
 
-                                        <p>
+                                    {commentMessage === "login" && (
+                                        <p className={styles.commentFeedback}>
                                             {language === "tr"
-                                                ? "Henüz yorum yapılmamış. İlk yorumu sen yap."
-                                                : "There are no comments yet. Be the first to comment."}
+                                                ? "Yorum yapmak için giriş yapmalısın. "
+                                                : "You must sign in to comment. "}
+
+                                            <Link href="/giris">
+                                                {language === "tr"
+                                                    ? "Giriş yap"
+                                                    : "Sign in"}
+                                            </Link>
                                         </p>
-                                    </div>
-                                ) : (
-                                    orderedComments.map((comment) => {
+                                    )}
 
-                                        const commentDepth =
-                                            commentDepthMap.get(comment.id) ?? 0;
+                                    {commentMessage === "error" && (
+                                        <p className={styles.commentFeedback}>
+                                            {language === "tr"
+                                                ? "Yorum gönderilemedi. Lütfen tekrar dene."
+                                                : "The comment could not be posted. Please try again."}
+                                        </p>
+                                    )}
+                                </form>
 
-                                        const commentAuthor =
-                                            getCommentAuthor(comment);
+                                <div className={styles.commentsList}>
+                                    {commentsLoading ? (
+                                        <div className={styles.commentState}>
+                                            <span className={styles.loader} />
 
-                                        return (
-                                            <article
-                                                id={`comment-${comment.id}`}
-                                                key={comment.id}
-                                                style={{
-                                                    marginLeft: `${Math.min(
-                                                        commentDepth,
-                                                        4
-                                                    ) * 18}px`,
-                                                }}
-                                                className={[
-                                                    styles.commentItem,
-                                                    commentDepth > 0
-                                                        ? styles.commentReply
-                                                        : "",
-                                                    highlightedCommentId ===
-                                                        comment.id
-                                                        ? styles.highlightedComment
-                                                        : "",
-                                                ]
-                                                    .filter(Boolean)
-                                                    .join(" ")}
-                                            >
-                                                <div className={styles.commentHeader}>
-                                                    {getCommentProfileHref(comment) ? (
-                                                        <Link
-                                                            href={getCommentProfileHref(comment)!}
-                                                            className={styles.commentAuthorLink}
-                                                            aria-label={
-                                                                language === "tr"
-                                                                    ? `${commentAuthor} profilini aç`
-                                                                    : `Open ${commentAuthor}'s profile`
-                                                            }
-                                                        >
-                                                            <span className={styles.commentAvatar}>
-                                                                {comment.profiles?.avatar_url ? (
-                                                                    <img
-                                                                        src={comment.profiles.avatar_url}
-                                                                        alt=""
-                                                                    />
-                                                                ) : (
-                                                                    commentAuthor
-                                                                        .slice(0, 1)
-                                                                        .toLocaleUpperCase(
-                                                                            language === "tr"
-                                                                                ? "tr-TR"
-                                                                                : "en-US"
-                                                                        )
-                                                                )}
-                                                            </span>
+                                            <p>
+                                                {language === "tr"
+                                                    ? "Yorumlar yükleniyor..."
+                                                    : "Loading comments..."}
+                                            </p>
+                                        </div>
+                                    ) : comments.length === 0 ? (
+                                        <div className={styles.commentState}>
+                                            <MessageIcon />
 
-                                                            <span
-                                                                className={
-                                                                    styles.commentAuthorText
+                                            <p>
+                                                {language === "tr"
+                                                    ? "Henüz yorum yapılmamış. İlk yorumu sen yap."
+                                                    : "There are no comments yet. Be the first to comment."}
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        orderedComments.map((comment) => {
+
+                                            const commentDepth =
+                                                commentDepthMap.get(comment.id) ?? 0;
+
+                                            const commentAuthor =
+                                                getCommentAuthor(comment);
+
+                                            return (
+                                                <article
+                                                    id={`comment-${comment.id}`}
+                                                    key={comment.id}
+                                                    style={{
+                                                        marginLeft: `${Math.min(
+                                                            commentDepth,
+                                                            4
+                                                        ) * 18}px`,
+                                                    }}
+                                                    className={[
+                                                        styles.commentItem,
+                                                        commentDepth > 0
+                                                            ? styles.commentReply
+                                                            : "",
+                                                        highlightedCommentId ===
+                                                            comment.id
+                                                            ? styles.highlightedComment
+                                                            : "",
+                                                    ]
+                                                        .filter(Boolean)
+                                                        .join(" ")}
+                                                >
+                                                    <div className={styles.commentHeader}>
+                                                        {getCommentProfileHref(comment) ? (
+                                                            <Link
+                                                                href={getCommentProfileHref(comment)!}
+                                                                className={styles.commentAuthorLink}
+                                                                aria-label={
+                                                                    language === "tr"
+                                                                        ? `${commentAuthor} profilini aç`
+                                                                        : `Open ${commentAuthor}'s profile`
                                                                 }
                                                             >
-                                                                <strong>
-                                                                    {commentAuthor}
-                                                                </strong>
+                                                                <span className={styles.commentAvatar}>
+                                                                    {comment.profiles?.avatar_url ? (
+                                                                        <img
+                                                                            src={comment.profiles.avatar_url}
+                                                                            alt=""
+                                                                        />
+                                                                    ) : (
+                                                                        commentAuthor
+                                                                            .slice(0, 1)
+                                                                            .toLocaleUpperCase(
+                                                                                language === "tr"
+                                                                                    ? "tr-TR"
+                                                                                    : "en-US"
+                                                                            )
+                                                                    )}
+                                                                </span>
 
-                                                                {comment.profiles?.username ? (
-                                                                    <span>
-                                                                        @
-                                                                        {comment.profiles.username.replace(
-                                                                            /^@/,
-                                                                            ""
-                                                                        )}
-                                                                    </span>
-                                                                ) : null}
-                                                            </span>
-                                                        </Link>
-                                                    ) : (
-                                                        <div
-                                                            className={
-                                                                styles.commentAuthorFallback
-                                                            }
-                                                        >
-                                                            <span className={styles.commentAvatar}>
-                                                                {comment.profiles?.avatar_url ? (
-                                                                    <img
-                                                                        src={comment.profiles.avatar_url}
-                                                                        alt=""
-                                                                    />
-                                                                ) : (
-                                                                    commentAuthor
-                                                                        .slice(0, 1)
-                                                                        .toLocaleUpperCase(
-                                                                            language === "tr"
-                                                                                ? "tr-TR"
-                                                                                : "en-US"
-                                                                        )
-                                                                )}
-                                                            </span>
+                                                                <span
+                                                                    className={
+                                                                        styles.commentAuthorText
+                                                                    }
+                                                                >
+                                                                    <strong>
+                                                                        {commentAuthor}
+                                                                    </strong>
 
-                                                            <strong>{commentAuthor}</strong>
-                                                        </div>
-                                                    )}
+                                                                    {comment.profiles?.username ? (
+                                                                        <span>
+                                                                            @
+                                                                            {comment.profiles.username.replace(
+                                                                                /^@/,
+                                                                                ""
+                                                                            )}
+                                                                        </span>
+                                                                    ) : null}
+                                                                </span>
+                                                            </Link>
+                                                        ) : (
+                                                            <div
+                                                                className={
+                                                                    styles.commentAuthorFallback
+                                                                }
+                                                            >
+                                                                <span className={styles.commentAvatar}>
+                                                                    {comment.profiles?.avatar_url ? (
+                                                                        <img
+                                                                            src={comment.profiles.avatar_url}
+                                                                            alt=""
+                                                                        />
+                                                                    ) : (
+                                                                        commentAuthor
+                                                                            .slice(0, 1)
+                                                                            .toLocaleUpperCase(
+                                                                                language === "tr"
+                                                                                    ? "tr-TR"
+                                                                                    : "en-US"
+                                                                            )
+                                                                    )}
+                                                                </span>
 
-                                                    <small className={styles.commentDate}>
-                                                        {formatCommentDate(
-                                                            comment.created_at
+                                                                <strong>{commentAuthor}</strong>
+                                                            </div>
                                                         )}
-                                                    </small>
-                                                </div>
+
+                                                        <small className={styles.commentDate}>
+                                                            {formatCommentDate(
+                                                                comment.created_at
+                                                            )}
+                                                        </small>
+                                                    </div>
 
 
-                                                <p className={styles.commentContent}>
-                                                    {comment.content}
-                                                </p>
+                                                    <p className={styles.commentContent}>
+                                                        {comment.content}
+                                                    </p>
 
-                                                <div className={styles.commentActions}>
-                                                    <button
-                                                        type="button"
-                                                        className={`${styles.commentAction} ${commentReactions[comment.id] === 1
-                                                            ? styles.likeActive
-                                                            : ""
-                                                            }`}
-                                                        onClick={() =>
-                                                            void handleCommentReaction(
-                                                                comment.id,
-                                                                1
-                                                            )
-                                                        }
-                                                        disabled={
-                                                            reactionLoadingId === comment.id
-                                                        }
-                                                        aria-pressed={
-                                                            commentReactions[comment.id] === 1
-                                                        }
-                                                        aria-label={
-                                                            language === "tr"
-                                                                ? "Yorumu beğen"
-                                                                : "Like comment"
-                                                        }
-                                                        title={
-                                                            language === "tr"
-                                                                ? "Beğen"
-                                                                : "Like"
-                                                        }
-                                                    >
-                                                        <LikeIcon />
-
-                                                        {comment.like_count > 0 && (
-                                                            <small className={styles.actionCount}>
-                                                                {comment.like_count}
-                                                            </small>
-                                                        )}
-                                                    </button>
-
-                                                    <button
-                                                        type="button"
-                                                        className={`${styles.commentAction} ${commentReactions[comment.id] === -1
-                                                            ? styles.dislikeActive
-                                                            : ""
-                                                            }`}
-                                                        onClick={() =>
-                                                            void handleCommentReaction(
-                                                                comment.id,
-                                                                -1
-                                                            )
-                                                        }
-                                                        disabled={
-                                                            reactionLoadingId === comment.id
-                                                        }
-                                                        aria-pressed={
-                                                            commentReactions[comment.id] === -1
-                                                        }
-                                                        aria-label={
-                                                            language === "tr"
-                                                                ? "Yorumu beğenme"
-                                                                : "Dislike comment"
-                                                        }
-                                                        title={
-                                                            language === "tr"
-                                                                ? "Beğenme"
-                                                                : "Dislike"
-                                                        }
-                                                    >
-                                                        <DislikeIcon />
-
-                                                        {comment.dislike_count > 0 && (
-                                                            <small className={styles.actionCount}>
-                                                                {comment.dislike_count}
-                                                            </small>
-                                                        )}
-                                                    </button>
-
-                                                    <button
-                                                        type="button"
-                                                        className={styles.commentAction}
-                                                        onClick={() =>
-                                                            startReply(comment)
-                                                        }
-                                                        aria-label={
-                                                            language === "tr"
-                                                                ? "Yoruma yanıt ver"
-                                                                : "Reply to comment"
-                                                        }
-                                                        title={
-                                                            language === "tr"
-                                                                ? "Yanıtla"
-                                                                : "Reply"
-                                                        }
-                                                    >
-                                                        <ReplyIcon />
-                                                    </button>
-
-                                                    {currentUserId !== comment.author_id && (
+                                                    <div className={styles.commentActions}>
                                                         <button
                                                             type="button"
-                                                            className={`${styles.commentAction} ${styles.reportAction
-                                                                } ${reportedCommentIds[comment.id]
-                                                                    ? styles.reportedAction
-                                                                    : ""
+                                                            className={`${styles.commentAction} ${commentReactions[comment.id] === 1
+                                                                ? styles.likeActive
+                                                                : ""
                                                                 }`}
                                                             onClick={() =>
-                                                                openReportModal(comment)
+                                                                void handleCommentReaction(
+                                                                    comment.id,
+                                                                    1
+                                                                )
                                                             }
                                                             disabled={
-                                                                reportLoadingId === comment.id ||
-                                                                reportedCommentIds[comment.id]
+                                                                reactionLoadingId === comment.id
                                                             }
                                                             aria-pressed={
-                                                                reportedCommentIds[comment.id] ??
-                                                                false
+                                                                commentReactions[comment.id] === 1
                                                             }
                                                             aria-label={
-                                                                reportedCommentIds[comment.id]
-                                                                    ? language === "tr"
-                                                                        ? "Yorum şikâyet edildi"
-                                                                        : "Comment reported"
-                                                                    : language === "tr"
-                                                                        ? "Yorumu şikâyet et"
-                                                                        : "Report comment"
+                                                                language === "tr"
+                                                                    ? "Yorumu beğen"
+                                                                    : "Like comment"
                                                             }
                                                             title={
-                                                                reportedCommentIds[comment.id]
-                                                                    ? language === "tr"
-                                                                        ? "Şikâyet Edildi"
-                                                                        : "Reported"
-                                                                    : language === "tr"
-                                                                        ? "Şikâyet Et"
-                                                                        : "Report"
+                                                                language === "tr"
+                                                                    ? "Beğen"
+                                                                    : "Like"
                                                             }
                                                         >
-                                                            <ReportIcon />
-                                                        </button>
-                                                    )}
+                                                            <LikeIcon />
 
-                                                    {currentUserId === comment.author_id && (
+                                                            {comment.like_count > 0 && (
+                                                                <small className={styles.actionCount}>
+                                                                    {comment.like_count}
+                                                                </small>
+                                                            )}
+                                                        </button>
+
                                                         <button
                                                             type="button"
-                                                            className={`${styles.commentAction} ${styles.removeAction}`}
+                                                            className={`${styles.commentAction} ${commentReactions[comment.id] === -1
+                                                                ? styles.dislikeActive
+                                                                : ""
+                                                                }`}
                                                             onClick={() =>
-                                                                setRemoveConfirmComment(comment)
+                                                                void handleCommentReaction(
+                                                                    comment.id,
+                                                                    -1
+                                                                )
                                                             }
                                                             disabled={
-                                                                removeLoadingId === comment.id
+                                                                reactionLoadingId === comment.id
+                                                            }
+                                                            aria-pressed={
+                                                                commentReactions[comment.id] === -1
                                                             }
                                                             aria-label={
                                                                 language === "tr"
-                                                                    ? "Yorumu kaldır"
-                                                                    : "Remove comment"
+                                                                    ? "Yorumu beğenme"
+                                                                    : "Dislike comment"
                                                             }
                                                             title={
                                                                 language === "tr"
-                                                                    ? "Yorumu Kaldır"
-                                                                    : "Remove Comment"
+                                                                    ? "Beğenme"
+                                                                    : "Dislike"
                                                             }
                                                         >
-                                                            <RemoveIcon />
+                                                            <DislikeIcon />
+
+                                                            {comment.dislike_count > 0 && (
+                                                                <small className={styles.actionCount}>
+                                                                    {comment.dislike_count}
+                                                                </small>
+                                                            )}
                                                         </button>
-                                                    )}
-                                                </div>
-                                            </article>
-                                        );
-                                    })
-                                )}
-                            </div>
-                        </section>
+
+                                                        <button
+                                                            type="button"
+                                                            className={styles.commentAction}
+                                                            onClick={() =>
+                                                                startReply(comment)
+                                                            }
+                                                            aria-label={
+                                                                language === "tr"
+                                                                    ? "Yoruma yanıt ver"
+                                                                    : "Reply to comment"
+                                                            }
+                                                            title={
+                                                                language === "tr"
+                                                                    ? "Yanıtla"
+                                                                    : "Reply"
+                                                            }
+                                                        >
+                                                            <ReplyIcon />
+                                                        </button>
+
+                                                        {currentUserId !== comment.author_id && (
+                                                            <button
+                                                                type="button"
+                                                                className={`${styles.commentAction} ${styles.reportAction
+                                                                    } ${reportedCommentIds[comment.id]
+                                                                        ? styles.reportedAction
+                                                                        : ""
+                                                                    }`}
+                                                                onClick={() =>
+                                                                    openReportModal(comment)
+                                                                }
+                                                                disabled={
+                                                                    reportLoadingId === comment.id ||
+                                                                    reportedCommentIds[comment.id]
+                                                                }
+                                                                aria-pressed={
+                                                                    reportedCommentIds[comment.id] ??
+                                                                    false
+                                                                }
+                                                                aria-label={
+                                                                    reportedCommentIds[comment.id]
+                                                                        ? language === "tr"
+                                                                            ? "Yorum şikâyet edildi"
+                                                                            : "Comment reported"
+                                                                        : language === "tr"
+                                                                            ? "Yorumu şikâyet et"
+                                                                            : "Report comment"
+                                                                }
+                                                                title={
+                                                                    reportedCommentIds[comment.id]
+                                                                        ? language === "tr"
+                                                                            ? "Şikâyet Edildi"
+                                                                            : "Reported"
+                                                                        : language === "tr"
+                                                                            ? "Şikâyet Et"
+                                                                            : "Report"
+                                                                }
+                                                            >
+                                                                <ReportIcon />
+                                                            </button>
+                                                        )}
+
+                                                        {currentUserId === comment.author_id && (
+                                                            <button
+                                                                type="button"
+                                                                className={`${styles.commentAction} ${styles.removeAction}`}
+                                                                onClick={() =>
+                                                                    setRemoveConfirmComment(comment)
+                                                                }
+                                                                disabled={
+                                                                    removeLoadingId === comment.id
+                                                                }
+                                                                aria-label={
+                                                                    language === "tr"
+                                                                        ? "Yorumu kaldır"
+                                                                        : "Remove comment"
+                                                                }
+                                                                title={
+                                                                    language === "tr"
+                                                                        ? "Yorumu Kaldır"
+                                                                        : "Remove Comment"
+                                                                }
+                                                            >
+                                                                <RemoveIcon />
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                </article>
+                                            );
+                                        })
+                                    )}
+                                </div>
+                            </section>
+                        )}
                     </>
                 )}
             </div>
