@@ -32,6 +32,7 @@ type Post = {
   id?: string;
   icon: string;
   iconClass: string;
+  toneClass?: string;
   titleTr: string;
   titleEn: string;
   categoryTr: string;
@@ -171,36 +172,43 @@ const categoryVisualMap: Record<
   {
     icon: string;
     iconClass: string;
+    toneClass: string;
   }
 > = {
   platformlar: {
     icon: "◎",
     iconClass: "social",
+    toneClass: "platforms",
   },
 
   "icerik-uretimi": {
     icon: "AI",
     iconClass: "ai",
+    toneClass: "content",
   },
 
   buyume: {
     icon: "↗",
     iconClass: "social",
+    toneClass: "growth",
   },
 
   "para-kazanma": {
     icon: "₺",
     iconClass: "business",
+    toneClass: "money",
   },
 
   egitim: {
     icon: "▶",
     iconClass: "video",
+    toneClass: "education",
   },
 
   yasal: {
     icon: "§",
     iconClass: "business",
+    toneClass: "legal",
   },
 };
 
@@ -832,6 +840,7 @@ export default function FeedPage() {
             categoryVisualMap[groupSlug] ?? {
               icon: "#",
               iconClass: "social",
+              toneClass: "platforms",
             };
 
           const categorySlug =
@@ -867,6 +876,7 @@ export default function FeedPage() {
                     ? "youtube"
                     : visual.icon,
             iconClass: visual.iconClass,
+            toneClass: visual.toneClass,
             titleTr: topic.title,
             titleEn: topic.title,
             categoryTr: categoryName,
@@ -1401,7 +1411,7 @@ export default function FeedPage() {
 
           </button>
 
-          
+
           <button
 
             type="button"
@@ -1516,7 +1526,10 @@ export default function FeedPage() {
                   className="ff-topic-card"
                   key={post.id ?? post.titleTr}
                 >
-                  <div className={`ff-topic-icon ${post.iconClass}`}>
+                  <div
+                    className={`ff-topic-icon ${post.iconClass} ${post.toneClass ?? ""
+                      }`}
+                  >
                     {post.icon === "instagram" ? (
                       <InstagramIcon />
                     ) : post.icon === "tiktok" ? (
@@ -1550,7 +1563,10 @@ export default function FeedPage() {
                     </h3>
 
                     <div className="ff-topic-meta">
-                      <span className={`ff-category ${post.iconClass}`}>
+                      <span
+                        className={`ff-category ${post.iconClass} ${post.toneClass ?? ""
+                          }`}
+                      >
                         {language === "tr"
                           ? post.categoryTr
                           : post.categoryEn}
@@ -1611,7 +1627,10 @@ export default function FeedPage() {
                     <BookmarkIcon />
                   </button>
 
-                  <div className="ff-topic-stats">
+                  <div
+                    className={`ff-topic-stats ${post.toneClass ?? ""
+                      }`}
+                  >
                     <span>
                       <MessageIcon />
                       {post.comments}

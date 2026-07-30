@@ -13821,3 +13821,128 @@ html[data-theme="light"] .ff-insight-grid button.active {
     inset 0 1px 0 rgba(255, 255, 255, 0.035),
     0 7px 17px rgba(0, 0, 0, 0.18) !important;
 }
+
+/* FEED TOPICS — CATEGORY COLOR MATCH */
+
+.ff-topic-icon.platforms,
+.ff-category.platforms {
+  --feed-topic-accent: #e646d7;
+}
+
+.ff-topic-icon.content,
+.ff-category.content {
+  --feed-topic-accent: #865dff;
+}
+
+.ff-topic-icon.growth,
+.ff-category.growth {
+  --feed-topic-accent: #3ad6b2;
+}
+
+.ff-topic-icon.money,
+.ff-category.money {
+  --feed-topic-accent: #e9b54b;
+}
+
+.ff-topic-icon.education,
+.ff-category.education {
+  --feed-topic-accent: #29aee8;
+}
+
+.ff-topic-icon.legal,
+.ff-category.legal {
+  --feed-topic-accent: #ed4c82;
+}
+
+.ff-topic-icon.platforms,
+.ff-topic-icon.content,
+.ff-topic-icon.growth,
+.ff-topic-icon.money,
+.ff-topic-icon.education,
+.ff-topic-icon.legal {
+  color: var(--feed-topic-accent) !important;
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--feed-topic-accent) 34%,
+      transparent
+    ) !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(
+        in srgb,
+        var(--feed-topic-accent) 15%,
+        rgba(18, 15, 29, 0.96)
+      ),
+      rgba(12, 11, 21, 0.97)
+    ) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 7px 17px
+      color-mix(
+        in srgb,
+        var(--feed-topic-accent) 12%,
+        transparent
+      ) !important;
+}
+
+.ff-category.platforms,
+.ff-category.content,
+.ff-category.growth,
+.ff-category.money,
+.ff-category.education,
+.ff-category.legal {
+  color: var(--feed-topic-accent) !important;
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--feed-topic-accent) 32%,
+      transparent
+    ) !important;
+
+  background:
+    color-mix(
+      in srgb,
+      var(--feed-topic-accent) 13%,
+      transparent
+    ) !important;
+}
+
+.ff-topic-stats.platforms {
+  --feed-topic-accent: #e646d7;
+}
+
+.ff-topic-stats.content {
+  --feed-topic-accent: #865dff;
+}
+
+.ff-topic-stats.growth {
+  --feed-topic-accent: #3ad6b2;
+}
+
+.ff-topic-stats.money {
+  --feed-topic-accent: #e9b54b;
+}
+
+.ff-topic-stats.education {
+  --feed-topic-accent: #29aee8;
+}
+
+.ff-topic-stats.legal {
+  --feed-topic-accent: #ed4c82;
+}
+
+.ff-topic-stats.platforms svg,
+.ff-topic-stats.content svg,
+.ff-topic-stats.growth svg,
+.ff-topic-stats.money svg,
+.ff-topic-stats.education svg,
+.ff-topic-stats.legal svg {
+  color: var(--feed-topic-accent) !important;
+  stroke: currentColor !important;
+}
