@@ -47,3 +47,5 @@ app/globals-before-*.css
 # Local backup files
 *.bak
 *before-*
+contact-search.txt
+supabase/.temp/
