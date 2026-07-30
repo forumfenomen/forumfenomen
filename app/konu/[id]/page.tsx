@@ -559,7 +559,9 @@ export default function TopicDetailPage() {
             `forumfenomen-topic-viewed-${topicId}`;
 
         if (
-            window.sessionStorage.getItem(viewSessionKey)
+            window.sessionStorage.getItem(
+                viewSessionKey
+            )
         ) {
             return;
         }
@@ -569,46 +571,67 @@ export default function TopicDetailPage() {
             "true"
         );
 
-        const supabase = createClient();
+        async function recordTopicView() {
+            try {
+                const response = await fetch(
+                    `/api/topics/${topicId}/view`,
+                    {
+                        method: "POST",
+                        credentials: "same-origin",
+                        cache: "no-store",
+                        keepalive: true,
+                        headers: {
+                            Accept: "application/json",
+                        },
+                    }
+                );
 
-        async function incrementTopicView() {
-            const { data, error } = await supabase.rpc(
-                "increment_topic_view",
-                {
-                    p_topic_id: topicId,
+                if (!response.ok) {
+                    throw new Error(
+                        `VIEW_COUNTER_${response.status}`
+                    );
                 }
-            );
 
-            if (error) {
+                const result =
+                    (await response.json()) as {
+                        viewCount?: unknown;
+                    };
+
+                const nextViewCount =
+                    Number(result.viewCount);
+
+                if (
+                    !Number.isFinite(
+                        nextViewCount
+                    )
+                ) {
+                    throw new Error(
+                        "INVALID_VIEW_COUNT"
+                    );
+                }
+
+                setTopic((current) =>
+                    current
+                        ? {
+                            ...current,
+                            view_count:
+                                nextViewCount,
+                        }
+                        : current
+                );
+            } catch (error) {
                 console.error(
                     "Konu görüntülenmesi artırılamadı:",
-                    error.message
+                    error
                 );
 
                 window.sessionStorage.removeItem(
                     viewSessionKey
                 );
-
-                return;
             }
-
-            const nextViewCount = Number(data);
-
-            if (!Number.isFinite(nextViewCount)) {
-                return;
-            }
-
-            setTopic((current) =>
-                current
-                    ? {
-                        ...current,
-                        view_count: nextViewCount,
-                    }
-                    : current
-            );
         }
 
-        void incrementTopicView();
+        void recordTopicView();
     }, [topicId]);
 
     useEffect(() => {

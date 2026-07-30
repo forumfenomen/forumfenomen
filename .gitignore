@@ -49,3 +49,4 @@ app/globals-before-*.css
 *before-*
 contact-search.txt
 supabase/.temp/
+.vercel
