@@ -1812,6 +1812,68 @@ export default function TopicDetailPage() {
         ])
     );
 
+    const childCommentsMap = new Map<
+        string,
+        CommentRow[]
+    >();
+
+    for (const comment of comments) {
+        if (!comment.parent_comment_id) {
+            continue;
+        }
+
+        const currentChildren =
+            childCommentsMap.get(
+                comment.parent_comment_id
+            ) ?? [];
+
+        currentChildren.push(comment);
+
+        childCommentsMap.set(
+            comment.parent_comment_id,
+            currentChildren
+        );
+    }
+
+    const rootComments = comments.filter(
+        (comment) =>
+            !comment.parent_comment_id ||
+            !commentMap.has(comment.parent_comment_id)
+    );
+
+    const orderedComments: CommentRow[] = [];
+
+    const commentDepthMap = new Map<
+        string,
+        number
+    >();
+
+    function collectCommentBranch(
+        comment: CommentRow,
+        depth: number
+    ) {
+        orderedComments.push(comment);
+
+        commentDepthMap.set(
+            comment.id,
+            depth
+        );
+
+        const children =
+            childCommentsMap.get(comment.id) ?? [];
+
+        for (const childComment of children) {
+            collectCommentBranch(
+                childComment,
+                depth + 1
+            );
+        }
+    }
+
+    for (const rootComment of rootComments) {
+        collectCommentBranch(rootComment, 0);
+    }
+
     return (
         <main className={styles.page}>
             <div className={styles.shell}>
@@ -2295,13 +2357,10 @@ export default function TopicDetailPage() {
                                         </p>
                                     </div>
                                 ) : (
-                                    comments.map((comment) => {
-                                        const parentComment =
-                                            comment.parent_comment_id
-                                                ? commentMap.get(
-                                                    comment.parent_comment_id
-                                                )
-                                                : null;
+                                    orderedComments.map((comment) => {
+
+                                        const commentDepth =
+                                            commentDepthMap.get(comment.id) ?? 0;
 
                                         const commentAuthor =
                                             getCommentAuthor(comment);
@@ -2310,9 +2369,15 @@ export default function TopicDetailPage() {
                                             <article
                                                 id={`comment-${comment.id}`}
                                                 key={comment.id}
+                                                style={{
+                                                    marginLeft: `${Math.min(
+                                                        commentDepth,
+                                                        4
+                                                    ) * 18}px`,
+                                                }}
                                                 className={[
                                                     styles.commentItem,
-                                                    comment.parent_comment_id
+                                                    commentDepth > 0
                                                         ? styles.commentReply
                                                         : "",
                                                     highlightedCommentId ===
@@ -2405,27 +2470,6 @@ export default function TopicDetailPage() {
                                                     </small>
                                                 </div>
 
-                                                {parentComment && (
-                                                    <blockquote
-                                                        className={styles.replyQuote}
-                                                    >
-                                                        <span>
-                                                            {getCommentAuthor(
-                                                                parentComment
-                                                            )}
-                                                        </span>
-
-                                                        <p>
-                                                            {parentComment.content.length >
-                                                                180
-                                                                ? `${parentComment.content.slice(
-                                                                    0,
-                                                                    180
-                                                                )}…`
-                                                                : parentComment.content}
-                                                        </p>
-                                                    </blockquote>
-                                                )}
 
                                                 <p className={styles.commentContent}>
                                                     {comment.content}
