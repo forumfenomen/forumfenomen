@@ -45,6 +45,8 @@ type Post = {
   createdAt?: string;
   commentCountValue?: number;
   viewCountValue?: number;
+  likeCountValue?: number;
+  saveCountValue?: number;
   views: string;
 };
 
@@ -71,6 +73,12 @@ type TopicRow = {
     display_name: string | null;
     username: string | null;
   } | null;
+};
+
+type FeedTopicMetricRow = {
+  topic_id: string;
+  like_count: number;
+  save_count: number;
 };
 
 const posts: Post[] = [
@@ -618,6 +626,9 @@ export default function FeedPage() {
   const [activeFeedFilter, setActiveFeedFilter] =
     useState<FeedFilter>("latest");
 
+  const [showAllTopics, setShowAllTopics] =
+    useState(false);
+
   const [followingUserIds, setFollowingUserIds] =
     useState<string[]>([]);
 
@@ -632,6 +643,10 @@ export default function FeedPage() {
 
   const [savingTopicId, setSavingTopicId] =
     useState<string | null>(null);
+
+  useEffect(() => {
+    setShowAllTopics(false);
+  }, [activeFeedFilter]);
 
   useEffect(() => {
     const savedLanguage = getForumLanguage();
@@ -784,34 +799,48 @@ export default function FeedPage() {
 
       const supabase = createClient();
 
-      const { data, error } = await supabase
-        .from("topics")
-        .select(`
+      const [
+        topicsResult,
+        metricsResult,
+      ] = await Promise.all([
+        supabase
+          .from("topics")
+          .select(`
+      id,
+      author_id,
+      title,
+      created_at,
+      comment_count,
+      view_count,
+      categories (
         id,
-        author_id,
-        title,
-        created_at,
-        comment_count,
-        view_count,
-        categories (
-          id,
+        slug,
+        name,
+        category_groups (
           slug,
-          name,
-          category_groups (
-            slug,
-            name
-          )
-        ),
-        profiles (
-          display_name,
-          username
+          name
         )
-      `)
-        .eq("status", "published")
-        .order("created_at", {
-          ascending: false,
-        })
-        .limit(20);
+      ),
+      profiles (
+        display_name,
+        username
+      )
+    `)
+          .eq("status", "published")
+          .order("created_at", {
+            ascending: false,
+          })
+          .limit(100),
+
+        supabase.rpc(
+          "get_feed_topic_metrics"
+        ),
+      ]);
+
+      const {
+        data,
+        error,
+      } = topicsResult;
 
       if (!isActive) {
         return;
@@ -829,6 +858,23 @@ export default function FeedPage() {
 
       const topicRows =
         (data ?? []) as unknown as TopicRow[];
+
+      if (metricsResult.error) {
+        console.error(
+          "Akış konu metrikleri alınamadı:",
+          metricsResult.error.message
+        );
+      }
+
+      const metricRows =
+        (metricsResult.data ?? []) as FeedTopicMetricRow[];
+
+      const metricMap = new Map(
+        metricRows.map((metric) => [
+          metric.topic_id,
+          metric,
+        ])
+      );
 
       const nextPosts = topicRows.map(
         (topic) => {
@@ -867,6 +913,11 @@ export default function FeedPage() {
             createdAt: topic.created_at,
             commentCountValue: topic.comment_count ?? 0,
             viewCountValue: topic.view_count ?? 0,
+            likeCountValue:
+              metricMap.get(topic.id)?.like_count ?? 0,
+
+            saveCountValue:
+              metricMap.get(topic.id)?.save_count ?? 0,
             icon:
               categorySlug === "instagram"
                 ? "instagram"
@@ -1055,6 +1106,9 @@ export default function FeedPage() {
   };
   const t = copy[language];
 
+  const fortyEightHoursAgo =
+    Date.now() - 48 * 60 * 60 * 1000;
+
   const sevenDaysAgo =
     Date.now() - 7 * 24 * 60 * 60 * 1000;
 
@@ -1071,27 +1125,37 @@ export default function FeedPage() {
     })
     .sort((firstPost, secondPost) => {
       const firstScore =
-        (firstPost.commentCountValue ?? 0) * 4 +
-        (firstPost.viewCountValue ?? 0);
+        (firstPost.commentCountValue ?? 0) * 3 +
+        (firstPost.likeCountValue ?? 0) * 2 +
+        (firstPost.saveCountValue ?? 0) * 4;
 
       const secondScore =
-        (secondPost.commentCountValue ?? 0) * 4 +
-        (secondPost.viewCountValue ?? 0);
+        (secondPost.commentCountValue ?? 0) * 3 +
+        (secondPost.likeCountValue ?? 0) * 2 +
+        (secondPost.saveCountValue ?? 0) * 4;
 
       return secondScore - firstScore;
     });
 
   const communityPosts = [...topicPosts].sort(
     (firstPost, secondPost) => {
-      const firstScore =
-        (firstPost.commentCountValue ?? 0) * 8 +
-        (firstPost.viewCountValue ?? 0) * 0.35;
+      const saveDifference =
+        (secondPost.saveCountValue ?? 0) -
+        (firstPost.saveCountValue ?? 0);
 
-      const secondScore =
-        (secondPost.commentCountValue ?? 0) * 8 +
-        (secondPost.viewCountValue ?? 0) * 0.35;
+      if (saveDifference !== 0) {
+        return saveDifference;
+      }
 
-      return secondScore - firstScore;
+      const firstDate = firstPost.createdAt
+        ? new Date(firstPost.createdAt).getTime()
+        : 0;
+
+      const secondDate = secondPost.createdAt
+        ? new Date(secondPost.createdAt).getTime()
+        : 0;
+
+      return secondDate - firstDate;
     }
   );
 
@@ -1113,8 +1177,18 @@ export default function FeedPage() {
       return secondDate - firstDate;
     });
 
-  const latestPosts = [...topicPosts].sort(
-    (firstPost, secondPost) => {
+  const latestPosts = [...topicPosts]
+    .filter((post) => {
+      if (!post.createdAt) {
+        return false;
+      }
+
+      return (
+        new Date(post.createdAt).getTime() >=
+        fortyEightHoursAgo
+      );
+    })
+    .sort((firstPost, secondPost) => {
       const firstDate = firstPost.createdAt
         ? new Date(firstPost.createdAt).getTime()
         : 0;
@@ -1124,8 +1198,7 @@ export default function FeedPage() {
         : 0;
 
       return secondDate - firstDate;
-    }
-  );
+    });
 
   const filteredPosts: Record<FeedFilter, Post[]> = {
     latest: latestPosts,
@@ -1134,8 +1207,13 @@ export default function FeedPage() {
     following: followingPosts,
   };
 
-  const displayPosts =
-    filteredPosts[activeFeedFilter].slice(0, 10);
+  const activePosts =
+    filteredPosts[activeFeedFilter];
+
+
+  const displayPosts = showAllTopics
+    ? activePosts
+    : activePosts.slice(0, 7);
 
   const activeFeedTitle: Record<FeedFilter, string> = {
     latest:
@@ -1501,7 +1579,22 @@ export default function FeedPage() {
         <section className="ff-featured-section">
           <div className="ff-section-heading">
             <h2>{activeFeedTitle[activeFeedFilter]}</h2>
-            <button type="button">{t.seeAll} ›</button>
+            {activePosts.length > 7 && (
+              <button
+                type="button"
+                onClick={() => {
+                  setShowAllTopics((current) => !current);
+                }}
+                aria-expanded={showAllTopics}
+              >
+                {showAllTopics
+                  ? language === "tr"
+                    ? "Daralt"
+                    : "Show Less"
+                  : t.seeAll}{" "}
+                {showAllTopics ? "↑" : "↓"}
+              </button>
+            )}
           </div>
 
           <div
