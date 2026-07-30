@@ -542,6 +542,67 @@ export default function TopicDetailPage() {
     }, [topicId]);
 
     useEffect(() => {
+        if (!topicId) {
+            return;
+        }
+
+        const viewSessionKey =
+            `forumfenomen-topic-viewed-${topicId}`;
+
+        if (
+            window.sessionStorage.getItem(viewSessionKey)
+        ) {
+            return;
+        }
+
+        window.sessionStorage.setItem(
+            viewSessionKey,
+            "true"
+        );
+
+        const supabase = createClient();
+
+        async function incrementTopicView() {
+            const { data, error } = await supabase.rpc(
+                "increment_topic_view",
+                {
+                    p_topic_id: topicId,
+                }
+            );
+
+            if (error) {
+                console.error(
+                    "Konu görüntülenmesi artırılamadı:",
+                    error.message
+                );
+
+                window.sessionStorage.removeItem(
+                    viewSessionKey
+                );
+
+                return;
+            }
+
+            const nextViewCount = Number(data);
+
+            if (!Number.isFinite(nextViewCount)) {
+                return;
+            }
+
+            setTopic((current) =>
+                current
+                    ? {
+                        ...current,
+                        view_count: nextViewCount,
+                    }
+                    : current
+            );
+        }
+
+        void incrementTopicView();
+    }, [topicId]);
+
+    useEffect(() => {
         let isActive = true;
 
         async function loadTopicActions() {
