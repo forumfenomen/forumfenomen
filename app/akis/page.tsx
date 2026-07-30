@@ -1106,8 +1106,8 @@ export default function FeedPage() {
   };
   const t = copy[language];
 
-  const fortyEightHoursAgo =
-    Date.now() - 48 * 60 * 60 * 1000;
+  const seventyTwoHoursAgo =
+    Date.now() - 72 * 60 * 60 * 1000;
 
   const sevenDaysAgo =
     Date.now() - 7 * 24 * 60 * 60 * 1000;
@@ -1177,18 +1177,8 @@ export default function FeedPage() {
       return secondDate - firstDate;
     });
 
-  const latestPosts = [...topicPosts]
-    .filter((post) => {
-      if (!post.createdAt) {
-        return false;
-      }
-
-      return (
-        new Date(post.createdAt).getTime() >=
-        fortyEightHoursAgo
-      );
-    })
-    .sort((firstPost, secondPost) => {
+  const latestPosts = [...topicPosts].sort(
+    (firstPost, secondPost) => {
       const firstDate = firstPost.createdAt
         ? new Date(firstPost.createdAt).getTime()
         : 0;
@@ -1198,7 +1188,20 @@ export default function FeedPage() {
         : 0;
 
       return secondDate - firstDate;
-    });
+    }
+  );
+
+  const latestSeventyTwoHourCount =
+    topicPosts.filter((post) => {
+      if (!post.createdAt) {
+        return false;
+      }
+
+      return (
+        new Date(post.createdAt).getTime() >=
+        seventyTwoHoursAgo
+      );
+    }).length;
 
   const filteredPosts: Record<FeedFilter, Post[]> = {
     latest: latestPosts,
@@ -1440,7 +1443,7 @@ export default function FeedPage() {
 
             <span>
 
-              {latestPosts.length}{" "}
+              {latestSeventyTwoHourCount}{" "}
 
               {language === "tr" ? "konu" : "topics"}
 
