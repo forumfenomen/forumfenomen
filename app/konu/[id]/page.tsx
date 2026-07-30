@@ -479,6 +479,10 @@ export default function TopicDetailPage() {
     }, []);
 
     useEffect(() => {
+        if (!authChecked) {
+            return;
+        }
+
         let isActive = true;
 
         async function loadTopic() {
@@ -496,26 +500,22 @@ export default function TopicDetailPage() {
             const { data, error } = await supabase
                 .from("topics")
                 .select(`
-          id,
-          author_id,
-          title,
-          content,
-          created_at,
-          comment_count,
-          view_count,
-          categories (
+        id,
+        author_id,
+        title,
+        content,
+        created_at,
+        comment_count,
+        view_count,
+        categories (
+          slug,
+          name,
+          category_groups (
             slug,
-            name,
-            category_groups (
-              slug,
-              name
-            )
-          ),
-          profiles (
-            display_name,
-            username
+            name
           )
-        `)
+        )
+      `)
                 .eq("id", topicId)
                 .eq("status", "published")
                 .maybeSingle();
@@ -536,9 +536,56 @@ export default function TopicDetailPage() {
                 return;
             }
 
-            setTopic(
-                data as unknown as TopicDetailRow
-            );
+            let authorProfile:
+                TopicDetailRow["profiles"] = null;
+
+            /*
+             * Oturum açmış aktif kullanıcılar
+             * güvenli RPC üzerinden konu sahibini görür.
+             * Oturum kapalı ziyaretçide profil null kalır.
+             */
+            if (currentUserId) {
+                const {
+                    data: profileData,
+                    error: profileError,
+                } = await supabase.rpc(
+                    "get_topic_author_profiles",
+                    {
+                        p_topic_ids: [topicId],
+                    }
+                );
+
+                if (!isActive) {
+                    return;
+                }
+
+                if (profileError) {
+                    console.error(
+                        "Konu sahibi profili alınamadı:",
+                        profileError.message
+                    );
+                } else {
+                    const profile =
+                        profileData?.[0];
+
+                    if (profile) {
+                        authorProfile = {
+                            display_name:
+                                profile.display_name,
+                            username:
+                                profile.username,
+                        };
+                    }
+                }
+            }
+
+            setTopic({
+                ...(data as unknown as Omit<
+                    TopicDetailRow,
+                    "profiles"
+                >),
+                profiles: authorProfile,
+            });
 
             setLoading(false);
         }
@@ -548,7 +595,11 @@ export default function TopicDetailPage() {
         return () => {
             isActive = false;
         };
-    }, [topicId]);
+    }, [
+        topicId,
+        authChecked,
+        currentUserId,
+    ]);
 
     useEffect(() => {
         if (!topicId) {
@@ -757,6 +808,10 @@ export default function TopicDetailPage() {
     }, [topicId, currentUserId]);
 
     useEffect(() => {
+        if (!authChecked) {
+            return;
+        }
+
         let isActive = true;
 
         async function loadComments() {
@@ -803,32 +858,40 @@ export default function TopicDetailPage() {
             }
 
             const commentRows =
-                (data ?? []) as Omit<CommentRow, "profiles">[];
+                (data ?? []) as Omit<
+                    CommentRow,
+                    "profiles"
+                >[];
 
-            const authorIds = [
-                ...new Set(
-                    commentRows.map((comment) => comment.author_id)
-                ),
-            ];
+            type CommentAuthorProfile = {
+                id: string;
+                display_name: string | null;
+                username: string | null;
+                avatar_url: string | null;
+            };
 
-            let profileMap = new Map<
-                string,
-                CommentRow["profiles"]
-            >();
+            let profileRows:
+                CommentAuthorProfile[] = [];
 
-            if (authorIds.length > 0) {
+            /*
+             * Oturum kapalı ziyaretçiye profil bilgisi
+             * gönderilmez. Yorum sahipleri
+             * "ForumFenomen Üyesi" olarak görünür.
+             */
+            if (currentUserId) {
                 const {
                     data: profileData,
                     error: profileError,
-                } = await supabase
-                    .from("public_profiles")
-                    .select(`
-            id,
-            display_name,
-            username,
-            avatar_url
-        `)
-                    .in("id", authorIds);
+                } = await supabase.rpc(
+                    "get_topic_comment_author_profiles",
+                    {
+                        p_topic_id: topicId,
+                    }
+                );
+
+                if (!isActive) {
+                    return;
+                }
 
                 if (profileError) {
                     console.error(
@@ -836,24 +899,36 @@ export default function TopicDetailPage() {
                         profileError.message
                     );
                 } else {
-                    profileMap = new Map(
-                        (profileData ?? []).map((profile) => [
-                            profile.id,
-                            {
-                                display_name: profile.display_name,
-                                username: profile.username,
-                                avatar_url: profile.avatar_url,
-                            },
-                        ])
-                    );
+                    profileRows =
+                        (profileData ??
+                            []) as CommentAuthorProfile[];
                 }
             }
+
+            const profileMap = new Map<
+                string,
+                CommentRow["profiles"]
+            >(
+                profileRows.map((profile) => [
+                    profile.id,
+                    {
+                        display_name:
+                            profile.display_name,
+                        username:
+                            profile.username,
+                        avatar_url:
+                            profile.avatar_url,
+                    },
+                ])
+            );
 
             setComments(
                 commentRows.map((comment) => ({
                     ...comment,
                     profiles:
-                        profileMap.get(comment.author_id) ?? null,
+                        profileMap.get(
+                            comment.author_id
+                        ) ?? null,
                 }))
             );
 
@@ -865,7 +940,11 @@ export default function TopicDetailPage() {
         return () => {
             isActive = false;
         };
-    }, [topicId]);
+    }, [
+        topicId,
+        authChecked,
+        currentUserId,
+    ]);
 
     useEffect(() => {
         let isActive = true;

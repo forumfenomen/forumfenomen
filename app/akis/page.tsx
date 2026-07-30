@@ -806,26 +806,22 @@ export default function FeedPage() {
         supabase
           .from("topics")
           .select(`
-      id,
-      author_id,
-      title,
-      created_at,
-      comment_count,
-      view_count,
-      categories (
-        id,
-        slug,
-        name,
-        category_groups (
-          slug,
-          name
-        )
-      ),
-      profiles (
-        display_name,
-        username
-      )
-    `)
+          id,
+          author_id,
+          title,
+          created_at,
+          comment_count,
+          view_count,
+          categories (
+            id,
+            slug,
+            name,
+            category_groups (
+              slug,
+              name
+            )
+          )
+        `)
           .eq("status", "published")
           .order("created_at", {
             ascending: false,
@@ -837,14 +833,14 @@ export default function FeedPage() {
         ),
       ]);
 
+      if (!isActive) {
+        return;
+      }
+
       const {
         data,
         error,
       } = topicsResult;
-
-      if (!isActive) {
-        return;
-      }
 
       if (error) {
         console.error(
@@ -857,7 +853,10 @@ export default function FeedPage() {
       }
 
       const topicRows =
-        (data ?? []) as unknown as TopicRow[];
+        (data ?? []) as unknown as Omit<
+          TopicRow,
+          "profiles"
+        >[];
 
       if (metricsResult.error) {
         console.error(
@@ -873,6 +872,63 @@ export default function FeedPage() {
         metricRows.map((metric) => [
           metric.topic_id,
           metric,
+        ])
+      );
+
+      type TopicAuthorProfile = {
+        topic_id: string;
+        id: string;
+        display_name: string | null;
+        username: string | null;
+        avatar_url: string | null;
+      };
+
+      let authorProfileRows:
+        TopicAuthorProfile[] = [];
+
+      /*
+       * Oturum açmış kullanıcılar konu sahiplerini
+       * güvenli RPC üzerinden görür.
+       *
+       * Oturum kapalı ziyaretçide profil listesi
+       * boş kalır ve ForumFenomen Üyesi gösterilir.
+       */
+      if (
+        currentUserId &&
+        topicRows.length > 0
+      ) {
+        const {
+          data: profileData,
+          error: profileError,
+        } = await supabase.rpc(
+          "get_topic_author_profiles",
+          {
+            p_topic_ids: topicRows.map(
+              (topic) => topic.id
+            ),
+          }
+        );
+
+        if (!isActive) {
+          return;
+        }
+
+        if (profileError) {
+          console.error(
+            "Akış konu sahipleri alınamadı:",
+            profileError.message
+          );
+        } else {
+          authorProfileRows =
+            (profileData ??
+              []) as TopicAuthorProfile[];
+        }
+      }
+
+      const authorProfileMap = new Map(
+        authorProfileRows.map((profile) => [
+          profile.topic_id,
+          profile,
         ])
       );
 
@@ -898,9 +954,12 @@ export default function FeedPage() {
               ? "Genel"
               : "General");
 
+          const authorProfile =
+            authorProfileMap.get(topic.id);
+
           const authorName =
-            topic.profiles?.display_name?.trim() ||
-            topic.profiles?.username
+            authorProfile?.display_name?.trim() ||
+            authorProfile?.username
               ?.replace(/^@/, "")
               .trim() ||
             (language === "tr"
@@ -911,13 +970,16 @@ export default function FeedPage() {
             id: topic.id,
             authorId: topic.author_id,
             createdAt: topic.created_at,
-            commentCountValue: topic.comment_count ?? 0,
-            viewCountValue: topic.view_count ?? 0,
+            commentCountValue:
+              topic.comment_count ?? 0,
+            viewCountValue:
+              topic.view_count ?? 0,
             likeCountValue:
-              metricMap.get(topic.id)?.like_count ?? 0,
-
+              metricMap.get(topic.id)
+                ?.like_count ?? 0,
             saveCountValue:
-              metricMap.get(topic.id)?.save_count ?? 0,
+              metricMap.get(topic.id)
+                ?.save_count ?? 0,
             icon:
               categorySlug === "instagram"
                 ? "instagram"
@@ -963,7 +1025,10 @@ export default function FeedPage() {
     return () => {
       isActive = false;
     };
-  }, [language]);
+  }, [
+    language,
+    currentUserId,
+  ]);
 
   const toggleSavedTopic = async (
     topicId?: string

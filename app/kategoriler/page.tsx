@@ -1377,16 +1377,9 @@ export default function CategoriesPage() {
             slug,
             name
           )
-        ),
-        profiles (
-          display_name,
-          username
         )
       `)
         .eq("status", "published")
-        .order("created_at", {
-          ascending: false,
-        })
         .order("created_at", {
           ascending: false,
         })
@@ -1407,7 +1400,79 @@ export default function CategoriesPage() {
       }
 
       const topicRows =
-        (data ?? []) as unknown as TopicRow[];
+        (data ?? []) as unknown as Omit<
+          TopicRow,
+          "profiles"
+        >[];
+
+      type TopicAuthorProfile = {
+        topic_id: string;
+        id: string;
+        display_name: string | null;
+        username: string | null;
+        avatar_url: string | null;
+      };
+
+      let authorProfileRows:
+        TopicAuthorProfile[] = [];
+
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (sessionError) {
+        console.error(
+          "Kategori kullanıcı oturumu alınamadı:",
+          sessionError.message
+        );
+      }
+
+      const user = session?.user ?? null;
+
+      /*
+       * Yalnızca oturum açmış kullanıcılar
+       * gerçek konu sahibi adlarını görür.
+       */
+      if (user && topicRows.length > 0) {
+        const {
+          data: profileData,
+          error: profileError,
+        } = await supabase.rpc(
+          "get_topic_author_profiles",
+          {
+            p_topic_ids: topicRows.map(
+              (topic) => topic.id
+            ),
+          }
+        );
+
+        if (!isActive) {
+          return;
+        }
+
+        if (profileError) {
+          console.error(
+            "Kategori konu sahipleri alınamadı:",
+            profileError.message
+          );
+        } else {
+          authorProfileRows =
+            (profileData ??
+              []) as TopicAuthorProfile[];
+        }
+      }
+
+      const authorProfileMap = new Map(
+        authorProfileRows.map((profile) => [
+          profile.topic_id,
+          profile,
+        ])
+      );
 
       const nextTopics = topicRows.flatMap(
         (topic) => {
@@ -1466,9 +1531,12 @@ export default function CategoriesPage() {
             topic.categories?.name ??
             "Genel";
 
+          const authorProfile =
+            authorProfileMap.get(topic.id);
+
           const authorName =
-            topic.profiles?.display_name?.trim() ||
-            topic.profiles?.username
+            authorProfile?.display_name?.trim() ||
+            authorProfile?.username
               ?.replace(/^@/, "")
               .trim() ||
             "ForumFenomen Üyesi";
@@ -1881,7 +1949,7 @@ export default function CategoriesPage() {
                   >
                     <div
                       className={`ff-topic-icon ${topicVisualMap[topic.category]
-                          .iconClass
+                        .iconClass
                         } ff-category-feed-icon`}
                     >
                       {topic.subcategoryId ===
