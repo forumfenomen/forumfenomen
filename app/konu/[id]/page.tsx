@@ -321,6 +321,9 @@ export default function TopicDetailPage() {
     const [topicSaved, setTopicSaved] =
         useState(false);
 
+    const [topicSaveCount, setTopicSaveCount] =
+        useState(0);
+
     const [topicSaveLoading, setTopicSaveLoading] =
         useState(false);
 
@@ -618,6 +621,13 @@ export default function TopicDetailPage() {
 
             const supabase = createClient();
 
+            const saveCountResult = await supabase.rpc(
+                "get_topic_save_count",
+                {
+                    p_topic_id: topicId,
+                }
+            );
+
             const reactionsResult = await supabase
                 .from("topic_reactions")
                 .select("reaction")
@@ -625,6 +635,23 @@ export default function TopicDetailPage() {
 
             if (!isActive) {
                 return;
+            }
+
+            if (saveCountResult.error) {
+                console.error(
+                    "Konu kaydetme sayısı alınamadı:",
+                    saveCountResult.error.message
+                );
+            } else {
+                const nextSaveCount = Number(
+                    saveCountResult.data
+                );
+
+                setTopicSaveCount(
+                    Number.isFinite(nextSaveCount)
+                        ? nextSaveCount
+                        : 0
+                );
             }
 
             if (reactionsResult.error) {
@@ -1220,7 +1247,15 @@ export default function TopicDetailPage() {
                 return;
             }
 
-            setTopicSaved(data === true);
+            const nextSaved = data === true;
+
+            setTopicSaved(nextSaved);
+
+            setTopicSaveCount((current) =>
+                nextSaved
+                    ? current + 1
+                    : Math.max(0, current - 1)
+            );
         } catch (error) {
             console.error(
                 "Beklenmeyen kaydetme hatası:",
@@ -2196,6 +2231,12 @@ export default function TopicDetailPage() {
                                         }
                                     >
                                         <BookmarkIcon />
+
+                                        {topicSaveCount > 0 && (
+                                            <span className={styles.actionCount}>
+                                                {topicSaveCount}
+                                            </span>
+                                        )}
                                     </button>
                                 </div>
                             </div>
