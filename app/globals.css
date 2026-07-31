@@ -14098,7 +14098,7 @@ html[data-theme="light"] .ff-feed-more-button {
     flex: 0 0 auto;
     min-width: 0;
     gap: 6px;
-    transform: translateX(-4px);
+    transform: translateX(-8px);
   }
 
   .ff-feed-page
@@ -14181,5 +14181,46 @@ html[data-theme="light"] .ff-feed-more-button {
 
   .ff-feed-page .ff-featured-section {
     margin-top: 16px;
+  }
+}
+
+/* ff-mobile-filter-font-tune */
+
+@media (max-width: 768px) {
+  .ff-feed-page
+    .ff-insight-grid
+    button
+    strong {
+    font-size: 11.5px !important;
+    line-height: 1.3 !important;
+  }
+
+  .ff-feed-page
+    .ff-insight-grid
+    button
+    span {
+    font-size: 10.8px !important;
+    line-height: 1.35 !important;
+  }
+}
+
+@media (max-width: 370px) {
+  .ff-feed-page
+    .ff-feed-header-actions {
+    transform: translateX(-6px);
+  }
+
+  .ff-feed-page
+    .ff-insight-grid
+    button
+    strong {
+    font-size: 11px !important;
+  }
+
+  .ff-feed-page
+    .ff-insight-grid
+    button
+    span {
+    font-size: 10.4px !important;
   }
 }
