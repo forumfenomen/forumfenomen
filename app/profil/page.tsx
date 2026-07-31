@@ -1535,79 +1535,22 @@ export default function ProfilePage() {
         return;
       }
 
-      const [
-        followedUsersResult,
-        followerUsersResult,
-        followerCountResult,
-        followingCountResult,
-      ] = await Promise.all([
-        supabase
-          .from("user_follows")
-          .select(`
-          following_id,
-          created_at,
-          profiles:profiles!user_follows_following_id_fkey (
-            id,
-            display_name,
-            username,
-            avatar_url
-          )
-        `)
-          .eq("follower_id", user.id)
-          .order("created_at", {
-            ascending: false,
-          }),
-
-        supabase
-          .from("user_follows")
-          .select(`
-    follower_id,
-    created_at,
-    profiles:profiles!user_follows_follower_id_fkey (
-      id,
-      display_name,
-      username,
-      avatar_url
-    )
-  `)
-          .eq("following_id", user.id)
-          .order("created_at", {
-            ascending: false,
-          }),
-
-        supabase
-          .from("user_follows")
-          .select("follower_id", {
-            count: "exact",
-            head: true,
-          })
-          .eq("following_id", user.id),
-
-        supabase
-          .from("user_follows")
-          .select("following_id", {
-            count: "exact",
-            head: true,
-          })
-          .eq("follower_id", user.id),
-      ]);
+      const followDataResult =
+        await supabase.rpc(
+          "get_profile_follow_data",
+          {
+            p_profile_id: user.id,
+          }
+        );
 
       if (!isActive) {
         return;
       }
 
-      if (
-        followedUsersResult.error ||
-        followerUsersResult.error ||
-        followerCountResult.error ||
-        followingCountResult.error
-      ) {
+      if (followDataResult.error) {
         console.error(
-          "Takip bilgileri alınamadı:",
-          followedUsersResult.error?.message ??
-          followerUsersResult.error?.message ??
-          followerCountResult.error?.message ??
-          followingCountResult.error?.message
+          "Guvenli takip bilgileri alinamadi:",
+          followDataResult.error.message
         );
 
         setFollowedUsers([]);
@@ -1615,20 +1558,52 @@ export default function ProfilePage() {
         setFollowerCount(0);
         setFollowingCount(0);
         setFollowsLoading(false);
+        setFollowersLoading(false);
         return;
       }
 
-      const rows =
-        (followedUsersResult.data ??
-          []) as unknown as FollowedUserRow[];
+      const followData =
+        followDataResult.data?.[0] as
+          | {
+              follower_count:
+                | number
+                | string
+                | null;
 
-      setFollowedUsers(
-        rows.filter((item) => item.profiles)
-      );
+              following_count:
+                | number
+                | string
+                | null;
+
+              followers:
+                FollowerUserRow[]
+                | null;
+
+              following_users:
+                FollowedUserRow[]
+                | null;
+            }
+          | undefined;
+
+      const followedRows =
+        Array.isArray(
+          followData?.following_users
+        )
+          ? followData.following_users
+          : [];
 
       const followerRows =
-        (followerUsersResult.data ??
-          []) as unknown as FollowerUserRow[];
+        Array.isArray(
+          followData?.followers
+        )
+          ? followData.followers
+          : [];
+
+      setFollowedUsers(
+        followedRows.filter(
+          (item) => item.profiles
+        )
+      );
 
       setFollowerUsers(
         followerRows.filter(
@@ -1636,12 +1611,24 @@ export default function ProfilePage() {
         )
       );
 
+      const nextFollowerCount = Number(
+        followData?.follower_count ?? 0
+      );
+
+      const nextFollowingCount = Number(
+        followData?.following_count ?? 0
+      );
+
       setFollowerCount(
-        followerCountResult.count ?? 0
+        Number.isFinite(nextFollowerCount)
+          ? nextFollowerCount
+          : 0
       );
 
       setFollowingCount(
-        followingCountResult.count ?? 0
+        Number.isFinite(nextFollowingCount)
+          ? nextFollowingCount
+          : 0
       );
 
       setFollowsLoading(false);
