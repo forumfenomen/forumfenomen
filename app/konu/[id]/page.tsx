@@ -473,6 +473,94 @@ export default function TopicDetailPage() {
 
     /* TOPIC ENTRY SCROLL RESET END */
 
+    /* TOPIC LOADED SCROLL RESET FINAL START */
+
+    useEffect(() => {
+        if (
+            !topicId ||
+            loading ||
+            notFound
+        ) {
+            return;
+        }
+
+        /*
+         * Yorum bildiriminden gelindiyse yorum odaklama
+         * davran???na kesinlikle m?dahale etme.
+         */
+        if (
+            window.location.hash.startsWith(
+                "#comment-"
+            )
+        ) {
+            return;
+        }
+
+        const resetScroll = () => {
+            window.scrollTo(0, 0);
+
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        };
+
+        /*
+         * iPhone Safari ve Next.js, veri y?klendikten
+         * sonra eski scroll konumunu yeniden uygulayabildi?i
+         * i?in birka? a?amada tekrar en ?ste sabitliyoruz.
+         */
+        resetScroll();
+
+        const frameOne =
+            window.requestAnimationFrame(
+                resetScroll
+            );
+
+        const frameTwo =
+            window.requestAnimationFrame(() => {
+                window.requestAnimationFrame(
+                    resetScroll
+                );
+            });
+
+        const timerOne =
+            window.setTimeout(
+                resetScroll,
+                100
+            );
+
+        const timerTwo =
+            window.setTimeout(
+                resetScroll,
+                350
+            );
+
+        const timerThree =
+            window.setTimeout(
+                resetScroll,
+                800
+            );
+
+        return () => {
+            window.cancelAnimationFrame(
+                frameOne
+            );
+
+            window.cancelAnimationFrame(
+                frameTwo
+            );
+
+            window.clearTimeout(timerOne);
+            window.clearTimeout(timerTwo);
+            window.clearTimeout(timerThree);
+        };
+    }, [
+        topicId,
+        loading,
+        notFound,
+    ]);
+
+    /* TOPIC LOADED SCROLL RESET FINAL END */
+
     useEffect(() => {
         const savedLanguage =
             getForumLanguage();
