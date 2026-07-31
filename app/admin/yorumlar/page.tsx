@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 
 import CommentModerationActions from "@/components/admin/comment-moderation-actions";
 import { createClient } from "@/lib/supabase/server";
@@ -421,7 +421,15 @@ export default async function AdminCommentsPage({
                     <div>
                         <span>YORUM KAYITLARI</span>
 
-                        <h2>Tüm Yorumlar</h2>
+                        <h2>
+    {selectedStatus === "published"
+        ? "Yayındaki Yorumlar"
+        : selectedStatus === "hidden"
+          ? "Gizlenen Yorumlar"
+          : selectedStatus === "banned"
+            ? "Yasaklanan Yorumlar"
+            : "Tüm Yorumlar"}
+</h2>
                     </div>
 
                     <div className={styles.panelBadge}>
