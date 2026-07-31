@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import {
   useEffect,
@@ -13,7 +13,6 @@ import {
   type ForumLanguage,
 } from "@/lib/forumfenomen-language";
 
-import { createClient } from "@/lib/supabase/client";
 
 import styles from "@/components/info-pages.module.css";
 
@@ -220,29 +219,38 @@ export default function ContactPage() {
     setSubmitError(null);
 
     try {
-      const supabase = createClient();
-
-      const { error } = await supabase.rpc(
-        "submit_contact_message",
+      const response = await fetch(
+        "/api/contact",
         {
-          p_full_name: name.trim(),
-          p_email: email.trim(),
-          p_subject: subject,
-          p_message: message.trim(),
-          p_language: language,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fullName: name.trim(),
+            email: email.trim(),
+            subject,
+            message: message.trim(),
+            language,
+          }),
         }
       );
 
-      if (error) {
+      const result = (await response
+        .json()
+        .catch(() => null)) as {
+          code?: string;
+        } | null;
+
+      if (!response.ok) {
         console.error(
           "İletişim mesajı gönderilemedi:",
-          error.message
+          result?.code || response.status
         );
 
         if (
-          error.message.includes(
-            "CONTACT_RATE_LIMIT"
-          )
+          result?.code ===
+          "CONTACT_RATE_LIMIT"
         ) {
           setSubmitError("rate-limit");
         } else {

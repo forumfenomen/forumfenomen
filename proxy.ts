@@ -15,6 +15,7 @@ const PUBLIC_TEST_PATHS = new Set([
   SITE_PREVIEW_PATH,
   SITE_TEST_ENTRY_PATH,
   "/api/test-access",
+  "/api/contact",
   "/robots.txt",
   "/sitemap.xml",
   "/manifest.webmanifest",
@@ -37,9 +38,9 @@ export async function proxy(
     request.nextUrl.pathname;
 
   /*
-   * Ana alan adında mevcut app/page.tsx
-   * yerine logo sayfasını göster.
-   * Tarayıcı adresi "/" olarak kalır.
+   * Ana alan adÄ±nda mevcut app/page.tsx
+   * yerine logo sayfasÄ±nÄ± gÃ¶ster.
+   * TarayÄ±cÄ± adresi "/" olarak kalÄ±r.
    */
   if (pathname === "/") {
     const previewUrl =
@@ -56,8 +57,8 @@ export async function proxy(
   }
 
   /*
-   * Test giriş sayfası ve doğrulama
-   * endpoint'i herkese açık olmalıdır.
+   * Test giriÅŸ sayfasÄ± ve doÄŸrulama
+   * endpoint'i herkese aÃ§Ä±k olmalÄ±dÄ±r.
    */
   if (isPublicTestPath(pathname)) {
     return NextResponse.next({
@@ -74,8 +75,8 @@ export async function proxy(
     )?.value;
 
   /*
-   * Ortam değişkeni yoksa veya çerez
-   * geçersizse sistem kapalı kalır.
+   * Ortam deÄŸiÅŸkeni yoksa veya Ã§erez
+   * geÃ§ersizse sistem kapalÄ± kalÄ±r.
    */
   if (
     !expectedAccessToken ||
@@ -94,9 +95,9 @@ export async function proxy(
   }
 
   /*
-   * Test kapısını geçen kullanıcı için
+   * Test kapÄ±sÄ±nÄ± geÃ§en kullanÄ±cÄ± iÃ§in
    * mevcut Supabase oturum ve hesap
-   * kısıtlama sistemi aynen çalışır.
+   * kÄ±sÄ±tlama sistemi aynen Ã§alÄ±ÅŸÄ±r.
    */
   return updateSession(request);
 }
