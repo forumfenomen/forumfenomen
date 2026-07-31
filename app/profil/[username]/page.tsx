@@ -271,6 +271,16 @@ export default function PublicProfilePage() {
     const [followingUsers, setFollowingUsers] =
         useState<PublicFollowingRow[]>([]);
 
+    const [
+        canViewFollowersFromServer,
+        setCanViewFollowersFromServer,
+    ] = useState(false);
+
+    const [
+        canViewFollowingFromServer,
+        setCanViewFollowingFromServer,
+    ] = useState(false);
+
     const [loading, setLoading] =
         useState(true);
 
@@ -446,6 +456,10 @@ export default function PublicProfilePage() {
             setLoading(true);
             setNotFound(false);
             setActiveTab("topics");
+            setFollowers([]);
+            setFollowingUsers([]);
+            setCanViewFollowersFromServer(false);
+            setCanViewFollowingFromServer(false);
 
             const supabase = createClient();
 
@@ -516,13 +530,8 @@ export default function PublicProfilePage() {
             const [
                 topicsResult,
                 commentsListResult,
-                followersListResult,
-                followingListResult,
-                followersResult,
-                followingResult,
+                followDataResult,
                 commentsResult,
-                currentFollowResult,
-                ownerFollowResult,
                 followRequestResult,
             ] = await Promise.all([
                 supabase
@@ -545,6 +554,7 @@ export default function PublicProfilePage() {
                         ascending: false,
                     })
                     .limit(20),
+
                 supabase
                     .from("topic_comments")
                     .select(`
@@ -565,61 +575,13 @@ export default function PublicProfilePage() {
                     })
                     .limit(50),
 
-                supabase
-                    .from("user_follows")
-                    .select(`
-    follower_id,
-    created_at,
-    profiles:profiles!user_follows_follower_id_fkey (
-      id,
-      display_name,
-      username,
-      avatar_url
-    )
-  `)
-                    .eq("following_id", publicProfile.id)
-                    .order("created_at", {
-                        ascending: false,
-                    }),
-
-                supabase
-                    .from("user_follows")
-                    .select(`
-    following_id,
-    created_at,
-    profiles:profiles!user_follows_following_id_fkey (
-      id,
-      display_name,
-      username,
-      avatar_url
-    )
-  `)
-                    .eq("follower_id", publicProfile.id)
-                    .order("created_at", {
-                        ascending: false,
-                    }),
-
-                supabase
-                    .from("user_follows")
-                    .select("follower_id", {
-                        count: "exact",
-                        head: true,
-                    })
-                    .eq(
-                        "following_id",
-                        publicProfile.id
-                    ),
-
-                supabase
-                    .from("user_follows")
-                    .select("following_id", {
-                        count: "exact",
-                        head: true,
-                    })
-                    .eq(
-                        "follower_id",
-                        publicProfile.id
-                    ),
+                supabase.rpc(
+                    "get_profile_follow_data",
+                    {
+                        p_profile_id:
+                            publicProfile.id,
+                    }
+                ),
 
                 supabase
                     .from("topic_comments")
@@ -635,45 +597,12 @@ export default function PublicProfilePage() {
 
                 user
                     ? supabase
-                        .from("user_follows")
-                        .select("following_id")
-                        .eq(
-                            "follower_id",
-                            user.id
-                        )
-                        .eq(
-                            "following_id",
-                            publicProfile.id
-                        )
-                        .maybeSingle()
-                    : Promise.resolve({
-                        data: null,
-                        error: null,
-                    }),
-
-                user
-                    ? supabase
                         .from("user_follow_requests")
                         .select("status")
                         .eq("requester_id", user.id)
-                        .eq("receiver_id", publicProfile.id)
-                        .maybeSingle()
-                    : Promise.resolve({
-                        data: null,
-                        error: null,
-                    }),
-
-                user
-                    ? supabase
-                        .from("user_follows")
-                        .select("following_id")
                         .eq(
-                            "follower_id",
+                            "receiver_id",
                             publicProfile.id
-                        )
-                        .eq(
-                            "following_id",
-                            user.id
                         )
                         .maybeSingle()
                     : Promise.resolve({
@@ -705,38 +634,108 @@ export default function PublicProfilePage() {
                     []) as unknown as PublicCommentRow[]
             );
 
+            if (followDataResult.error) {
+                console.error(
+                    "G?venli takip verisi al?namad?:",
+                    followDataResult.error.message
+                );
+            }
+
+            const followData =
+                followDataResult.data?.[0] as
+                | {
+                    follower_count:
+                        | number
+                        | string
+                        | null;
+
+                    following_count:
+                        | number
+                        | string
+                        | null;
+
+                    is_following:
+                        boolean | null;
+
+                    owner_follows_current_user:
+                        boolean | null;
+
+                    can_view_followers:
+                        boolean | null;
+
+                    can_view_following:
+                        boolean | null;
+
+                    followers:
+                        PublicFollowerRow[]
+                        | null;
+
+                    following_users:
+                        PublicFollowingRow[]
+                        | null;
+                }
+                | undefined;
+
+            const followerRows =
+                Array.isArray(followData?.followers)
+                    ? followData.followers
+                    : [];
+
+            const followingRows =
+                Array.isArray(
+                    followData?.following_users
+                )
+                    ? followData.following_users
+                    : [];
+
             setFollowers(
-                (
-                    (followersListResult.data ??
-                        []) as unknown as PublicFollowerRow[]
-                ).filter((item) => item.profiles)
+                followerRows.filter(
+                    (item) => item.profiles
+                )
             );
 
             setFollowingUsers(
-                (
-                    (followingListResult.data ??
-                        []) as unknown as PublicFollowingRow[]
-                ).filter((item) => item.profiles)
+                followingRows.filter(
+                    (item) => item.profiles
+                )
+            );
+
+            const nextFollowerCount = Number(
+                followData?.follower_count ?? 0
+            );
+
+            const nextFollowingCount = Number(
+                followData?.following_count ?? 0
             );
 
             setFollowerCount(
-                followersResult.count ?? 0
+                Number.isFinite(nextFollowerCount)
+                    ? nextFollowerCount
+                    : 0
             );
 
             setFollowingCount(
-                followingResult.count ?? 0
-            );
-
-            setCommentCount(
-                commentsResult.count ?? 0
+                Number.isFinite(nextFollowingCount)
+                    ? nextFollowingCount
+                    : 0
             );
 
             setIsFollowing(
-                Boolean(currentFollowResult.data)
+                followData?.is_following === true
             );
 
             setOwnerFollowsCurrentUser(
-                Boolean(ownerFollowResult.data)
+                followData
+                    ?.owner_follows_current_user ===
+                    true
+            );
+
+            setCanViewFollowersFromServer(
+                followData?.can_view_followers === true
+            );
+
+            setCanViewFollowingFromServer(
+                followData?.can_view_following === true
             );
 
             const followRequestData =
@@ -1195,18 +1194,10 @@ export default function PublicProfilePage() {
             : false;
 
     const canViewFollowers =
-        profile
-            ? canViewVisibility(
-                profile.followers_visibility
-            )
-            : false;
+        canViewFollowersFromServer;
 
     const canViewFollowing =
-        profile
-            ? canViewVisibility(
-                profile.following_visibility
-            )
-            : false;
+        canViewFollowingFromServer;
 
     return (
         <main className={styles.page}>
@@ -1821,7 +1812,15 @@ export default function PublicProfilePage() {
                                 </div>
                             ) : activeTab === "followers" ? (
                                 <div className={styles.peopleList}>
-                                    {followers.length === 0 ? (
+                                    {!canViewFollowers ? (
+                                        <div className={styles.emptyState}>
+                                            <p>
+                                                {language === "tr"
+                                                    ? "Bu kullan?c?n?n takip?i listesi gizli."
+                                                    : "This user's follower list is private."}
+                                            </p>
+                                        </div>
+                                    ) : followers.length === 0 ? (
                                         <div className={styles.emptyState}>
                                             <p>
                                                 {language === "tr"
@@ -1917,7 +1916,15 @@ export default function PublicProfilePage() {
                                 </div>
                             ) : (
                                 <div className={styles.peopleList}>
-                                    {followingUsers.length === 0 ? (
+                                    {!canViewFollowing ? (
+                                        <div className={styles.emptyState}>
+                                            <p>
+                                                {language === "tr"
+                                                    ? "Bu kullan?c?n?n takip etti?i ki?iler gizli."
+                                                    : "This user's following list is private."}
+                                            </p>
+                                        </div>
+                                    ) : followingUsers.length === 0 ? (
                                         <div className={styles.emptyState}>
                                             <p>
                                                 {language === "tr"
