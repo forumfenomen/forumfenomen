@@ -2254,7 +2254,10 @@ export default function PublicProfilePage() {
                 className="ff-bottom-nav"
                 aria-label="ForumFenomen"
             >
-                <Link href="/akis">
+                <Link
+                    href="/akis"
+                    prefetch={false}
+                >
                     <HomeIcon />
                     <span>
                         {language === "tr"
@@ -2263,7 +2266,10 @@ export default function PublicProfilePage() {
                     </span>
                 </Link>
 
-                <Link href="/kategoriler">
+                <Link
+                    href="/kategoriler"
+                    prefetch={false}
+                >
                     <GridIcon />
                     <span>
                         {language === "tr"
@@ -2274,6 +2280,7 @@ export default function PublicProfilePage() {
 
                 <Link
                     href="/konu-ac"
+                    prefetch={false}
                     className="ff-center-nav-button"
                     aria-label={
                         language === "tr"
@@ -2299,12 +2306,18 @@ export default function PublicProfilePage() {
                     </span>
                 </Link>
 
-                <Link href="/blog">
+                <Link
+                    href="/blog"
+                    prefetch={false}
+                >
                     <BlogIcon />
                     <span>Blog</span>
                 </Link>
 
-                <Link href="/profil">
+                <Link
+                    href="/profil"
+                    prefetch={false}
+                >
                     <UserIcon />
                     <span>
                         {language === "tr"

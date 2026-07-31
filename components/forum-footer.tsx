@@ -77,6 +77,7 @@ export default function ForumFooter() {
           <Link
             className={styles.footerLink}
             href="/hakkimizda"
+            prefetch={false}
           >
             {t.about}
           </Link>
@@ -86,6 +87,7 @@ export default function ForumFooter() {
           <Link
             className={styles.footerLink}
             href="/iletisim"
+            prefetch={false}
           >
             {t.contact}
           </Link>
@@ -95,6 +97,7 @@ export default function ForumFooter() {
           <Link
             className={styles.footerLink}
             href="/yasal"
+            prefetch={false}
           >
             {t.legal}
           </Link>
@@ -104,6 +107,7 @@ export default function ForumFooter() {
           <Link
             className={styles.footerLink}
             href="/yasal/gizlilik"
+            prefetch={false}
           >
             {t.privacy}
           </Link>
@@ -113,6 +117,7 @@ export default function ForumFooter() {
           <Link
             className={styles.footerLink}
             href="/yasal/cerez-politikasi"
+            prefetch={false}
           >
             {t.cookies}
           </Link>
