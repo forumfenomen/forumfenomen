@@ -450,14 +450,25 @@ export default function PublicProfilePage() {
             const supabase = createClient();
 
             const {
-                data: { user },
-            } = await supabase.auth.getUser();
+                data: { session },
+                error: sessionError,
+            } = await supabase.auth.getSession();
 
             if (!isActive) {
                 return;
             }
 
-            setCurrentUserId(user?.id ?? null);
+            if (
+                sessionError ||
+                !session?.user
+            ) {
+                window.location.replace("/giris");
+                return;
+            }
+
+            const user = session.user;
+
+            setCurrentUserId(user.id);
 
             const {
                 data: profileData,
