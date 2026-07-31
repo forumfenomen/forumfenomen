@@ -8,6 +8,7 @@ import {
 } from "react";
 
 import { useRouter } from "next/navigation";
+import { createPortal } from "react-dom";
 
 import { createClient } from "@/lib/supabase/client";
 
@@ -112,6 +113,9 @@ function formatNotificationTime(value: string) {
 }
 
 export default function NotificationBell() {
+  const triggerRef =
+    useRef<HTMLDivElement | null>(null);
+
   const panelRef =
     useRef<HTMLDivElement | null>(null);
 
@@ -331,11 +335,20 @@ export default function NotificationBell() {
     const handleOutsideClick = (
       event: MouseEvent
     ) => {
+      const target =
+        event.target as Node;
+
+      const clickedTrigger =
+        triggerRef.current?.contains(target) ??
+        false;
+
+      const clickedPanel =
+        panelRef.current?.contains(target) ??
+        false;
+
       if (
-        panelRef.current &&
-        !panelRef.current.contains(
-          event.target as Node
-        )
+        !clickedTrigger &&
+        !clickedPanel
       ) {
         setIsOpen(false);
       }
@@ -561,7 +574,7 @@ export default function NotificationBell() {
 
   return (
     <div
-      ref={panelRef}
+      ref={triggerRef}
       className={styles.wrapper}
     >
       <button
@@ -588,9 +601,12 @@ export default function NotificationBell() {
         ) : null}
       </button>
 
-      {isOpen ? (
-        <div
-          className={styles.panel}
+      {isOpen &&
+      typeof document !== "undefined"
+        ? createPortal(
+          <div
+            ref={panelRef}
+            className={styles.panel}
           role="dialog"
           aria-label="Bildirimler"
         >
@@ -706,8 +722,10 @@ export default function NotificationBell() {
               )
             )}
           </div>
-        </div>
-      ) : null}
+        </div>,
+          document.body
+        )
+        : null}
     </div>
   );
 }
