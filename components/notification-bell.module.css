@@ -469,3 +469,60 @@
 .notificationItem:hover {
   background: rgba(213, 56, 237, 0.09);
 }
+
+/* NOTIFICATION MOBILE VIEWPORT FIX START */
+
+@media (max-width: 620px) {
+  .panel {
+    position: fixed;
+
+    top: max(
+      82px,
+      calc(env(safe-area-inset-top) + 70px)
+    );
+
+    right: 12px;
+    left: 12px;
+
+    width: calc(100dvw - 24px);
+    min-width: 0;
+    max-width: none;
+
+    max-height: calc(
+      100dvh - 110px - env(safe-area-inset-bottom)
+    );
+
+    box-sizing: border-box;
+    transform: none;
+  }
+
+  .panelHeader {
+    min-width: 0;
+  }
+
+  .panelHeader > div:first-child {
+    min-width: 0;
+  }
+
+  .notificationList {
+    width: 100%;
+    min-width: 0;
+
+    max-height: calc(
+      100dvh - 235px - env(safe-area-inset-bottom)
+    );
+  }
+
+  .notificationItem,
+  .notificationContent {
+    min-width: 0;
+  }
+
+  .notificationContent strong,
+  .notificationContent p {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
+
+/* NOTIFICATION MOBILE VIEWPORT FIX END */
