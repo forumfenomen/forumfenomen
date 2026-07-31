@@ -702,10 +702,13 @@ export default function TopicDetailPage() {
                 }
             );
 
-            const reactionsResult = await supabase
-                .from("topic_reactions")
-                .select("reaction")
-                .eq("topic_id", topicId);
+            const reactionSummaryResult =
+                await supabase.rpc(
+                    "get_topic_reaction_summary",
+                    {
+                        p_topic_id: topicId,
+                    }
+                );
 
             if (!isActive) {
                 return;
@@ -728,25 +731,49 @@ export default function TopicDetailPage() {
                 );
             }
 
-            if (reactionsResult.error) {
+            if (reactionSummaryResult.error) {
                 console.error(
-                    "Konu tepkileri alınamadı:",
-                    reactionsResult.error.message
+                    "Konu tepki ?zeti al?namad?:",
+                    reactionSummaryResult.error.message
                 );
+
+                setTopicLikeCount(0);
+                setTopicDislikeCount(0);
+                setTopicReaction(0);
             } else {
-                const reactionRows =
-                    reactionsResult.data ?? [];
+                const summary =
+                    reactionSummaryResult.data?.[0];
+
+                const nextLikeCount = Number(
+                    summary?.like_count ?? 0
+                );
+
+                const nextDislikeCount = Number(
+                    summary?.dislike_count ?? 0
+                );
+
+                const nextUserReaction = Number(
+                    summary?.user_reaction ?? 0
+                );
 
                 setTopicLikeCount(
-                    reactionRows.filter(
-                        (item) => item.reaction === 1
-                    ).length
+                    Number.isFinite(nextLikeCount)
+                        ? nextLikeCount
+                        : 0
                 );
 
                 setTopicDislikeCount(
-                    reactionRows.filter(
-                        (item) => item.reaction === -1
-                    ).length
+                    Number.isFinite(nextDislikeCount)
+                        ? nextDislikeCount
+                        : 0
+                );
+
+                setTopicReaction(
+                    nextUserReaction === 1
+                        ? 1
+                        : nextUserReaction === -1
+                            ? -1
+                            : 0
                 );
             }
 
@@ -758,17 +785,9 @@ export default function TopicDetailPage() {
             }
 
             const [
-                userReactionResult,
                 savedResult,
                 reportedResult,
             ] = await Promise.all([
-                supabase
-                    .from("topic_reactions")
-                    .select("reaction")
-                    .eq("topic_id", topicId)
-                    .eq("user_id", currentUserId)
-                    .maybeSingle(),
-
                 supabase
                     .from("saved_topics")
                     .select("topic_id")
@@ -787,14 +806,6 @@ export default function TopicDetailPage() {
             if (!isActive) {
                 return;
             }
-
-            setTopicReaction(
-                userReactionResult.data?.reaction === 1
-                    ? 1
-                    : userReactionResult.data?.reaction === -1
-                        ? -1
-                        : 0
-            );
 
             setTopicSaved(Boolean(savedResult.data));
             setTopicReported(Boolean(reportedResult.data));
