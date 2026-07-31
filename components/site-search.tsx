@@ -192,10 +192,6 @@ export default function SiteSearch({
               slug,
               name
             )
-          ),
-          profiles (
-            display_name,
-            username
           )
         `)
                 .eq("status", "published")
@@ -221,10 +217,103 @@ export default function SiteSearch({
                 return;
             }
 
-            setTopicRows(
-                (data ?? []) as unknown as TopicRow[]
+            const rawTopicRows =
+                (data ?? []) as unknown as Omit<
+                    TopicRow,
+                    "profiles"
+                >[];
+
+            type TopicAuthorProfile = {
+                topic_id: string;
+                id: string;
+                display_name: string | null;
+                username: string | null;
+                avatar_url: string | null;
+            };
+
+            let authorProfileRows:
+                TopicAuthorProfile[] = [];
+
+            const {
+                data: { session },
+                error: sessionError,
+            } = await supabase.auth.getSession();
+
+            if (!isActive) {
+                return;
+            }
+
+            if (sessionError) {
+                console.error(
+                    "Arama oturumu alınamadı:",
+                    sessionError.message
+                );
+            }
+
+            /*
+             * Oturum açmış kullanıcı gerçek konu
+             * sahiplerini görür. Oturum kapalıysa
+             * profil alanı null kalır.
+             */
+            if (
+                session?.user &&
+                rawTopicRows.length > 0
+            ) {
+                const {
+                    data: profileData,
+                    error: profileError,
+                } = await supabase.rpc(
+                    "get_topic_author_profiles",
+                    {
+                        p_topic_ids:
+                            rawTopicRows.map(
+                                (topic) => topic.id
+                            ),
+                    }
+                );
+
+                if (!isActive) {
+                    return;
+                }
+
+                if (profileError) {
+                    console.error(
+                        "Arama konu sahipleri alınamadı:",
+                        profileError.message
+                    );
+                } else {
+                    authorProfileRows =
+                        (profileData ??
+                            []) as TopicAuthorProfile[];
+                }
+            }
+
+            const authorProfileMap = new Map(
+                authorProfileRows.map((profile) => [
+                    profile.topic_id,
+                    profile,
+                ])
             );
 
+            const nextTopicRows: TopicRow[] =
+                rawTopicRows.map((topic) => {
+                    const profile =
+                        authorProfileMap.get(topic.id);
+
+                    return {
+                        ...topic,
+                        profiles: profile
+                            ? {
+                                display_name:
+                                    profile.display_name,
+                                username:
+                                    profile.username,
+                            }
+                            : null,
+                    };
+                });
+
+            setTopicRows(nextTopicRows);
             setLoading(false);
         }
 
