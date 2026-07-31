@@ -1293,6 +1293,36 @@ export default function FeedPage() {
     following: t.following,
   };
 
+  function handleTopicExpansionToggle() {
+    const shouldScrollUp = showAllTopics;
+
+    setShowAllTopics((current) => !current);
+
+    if (!shouldScrollUp) {
+      return;
+    }
+
+    const scrollToTopicSection = () => {
+      document
+        .getElementById("feed-topic-section")
+        ?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+    };
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(
+        scrollToTopicSection
+      );
+    });
+
+    window.setTimeout(
+      scrollToTopicSection,
+      180
+    );
+  }
+
   function handleBottomNavigation(
     event: MouseEvent<HTMLAnchorElement>,
     href: string
@@ -1644,7 +1674,10 @@ export default function FeedPage() {
 
         </section>
 
-        <section className="ff-featured-section">
+        <section
+          id="feed-topic-section"
+          className="ff-featured-section"
+        >
           <div className="ff-section-heading">
             <h2>{activeFeedTitle[activeFeedFilter]}</h2>
           </div>
@@ -1796,9 +1829,7 @@ export default function FeedPage() {
               <button
                 type="button"
                 className="ff-feed-more-button"
-                onClick={() => {
-                  setShowAllTopics((current) => !current);
-                }}
+                onClick={handleTopicExpansionToggle}
                 aria-expanded={showAllTopics}
               >
                 <span
