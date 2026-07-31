@@ -3026,8 +3026,8 @@ html[data-theme="light"] .ff-feed-page {
 
 @media (max-width: 680px) {
   .ff-feed-page {
-    padding-right: 10px;
-    padding-left: 10px;
+    padding-right: 7px;
+    padding-left: 7px;
   }
 
   .ff-feed-logo-wrap {
@@ -14047,28 +14047,6 @@ html[data-theme="light"] .ff-feed-more-button {
 }
 
 
-@media (max-width: 370px) {
-  .ff-feed-page .ff-feed-logo {
-    width: clamp(158px, 46vw, 175px) !important;
-  }
-
-  .ff-feed-page .ff-feed-header-actions {
-    gap: 5px;
-  }
-
-  .ff-feed-page .ff-feed-header-actions .ff-round-action {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
-    flex-basis: 32px;
-  }
-
-  .ff-feed-page .ff-feed-header-actions .ff-site-search {
-    flex-basis: 32px;
-    min-width: 32px;
-  }
-}
 
 /* ff-mobile-feed-spacing-fix */
 

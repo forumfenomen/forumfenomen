@@ -21,7 +21,17 @@
 
 .shell :global(.ff-feed-header) {
   width: 100% !important;
-  margin: 0 0 10px;
+  margin: 0 0 10px !important;
+}
+
+.shell :global(.ff-feed-header:has(.ff-site-search-popover)) {
+  margin-bottom: 75px !important;
+}
+
+@media (max-width: 680px) {
+  .shell :global(.ff-feed-header:has(.ff-site-search-popover)) {
+    margin-bottom: 69px !important;
+  }
 }
 
 .searchPanel {
@@ -6368,6 +6378,7 @@
 }
 
 @keyframes profileMenuArrowNudge {
+
   0%,
   100% {
     transform: translateY(-50%) translateX(0);
@@ -6381,6 +6392,7 @@
 /* MOBILE EDIT ICON CENTER FIX */
 
 @media (max-width: 680px) {
+
   .profileHero .profileActions .editButton,
   .contentEditButton {
     display: grid !important;
@@ -6405,10 +6417,7 @@
 }
 
 @media (max-width: 680px) {
-  .profileHero
-  .profileActions:has(.logoutButton)
-  .editButton
-  svg {
+  .profileHero .profileActions:has(.logoutButton) .editButton svg {
     transform: translateY(3px) !important;
   }
 }

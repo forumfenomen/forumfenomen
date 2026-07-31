@@ -13,6 +13,23 @@
   margin: 0 auto;
 }
 
+.shell :global(.ff-feed-header) {
+  width: 100% !important;
+  margin: 0 0 10px !important;
+}
+
+.shell
+  :global(.ff-feed-header:has(.ff-site-search-popover)) {
+  margin-bottom: 75px !important;
+}
+
+@media (max-width: 680px) {
+  .shell
+    :global(.ff-feed-header:has(.ff-site-search-popover)) {
+    margin-bottom: 69px !important;
+  }
+}
+
 .searchPanel {
   display: flex;
   min-height: 52px;

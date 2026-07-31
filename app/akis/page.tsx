@@ -1367,17 +1367,20 @@ export default function FeedPage() {
       <TemporaryUsernameReminder />
       <div className="ff-feed-app">
         <header className="ff-feed-header">
-          <div className="ff-feed-logo-wrap">
+          <Link
+            href="/akis"
+            className="ff-feed-logo-wrap"
+            aria-label="ForumFenomen"
+          >
             <Image
+              className="ff-feed-logo"
               src="/forumfenomen-logo-transparent.png"
               alt="ForumFenomen"
-              width={1856}
-              height={506}
+              width={460}
+              height={140}
               priority
-              unoptimized
-              className="ff-feed-logo"
             />
-          </div>
+          </Link>
 
           <div className="ff-feed-header-actions">
             <button
@@ -1833,9 +1836,8 @@ export default function FeedPage() {
                 aria-expanded={showAllTopics}
               >
                 <span
-                  className={`ff-feed-more-arrow ${
-                    showAllTopics ? "up" : "down"
-                  }`}
+                  className={`ff-feed-more-arrow ${showAllTopics ? "up" : "down"
+                    }`}
                   aria-hidden="true"
                 />
 
@@ -1850,9 +1852,8 @@ export default function FeedPage() {
                 </span>
 
                 <span
-                  className={`ff-feed-more-arrow ${
-                    showAllTopics ? "up" : "down"
-                  }`}
+                  className={`ff-feed-more-arrow ${showAllTopics ? "up" : "down"
+                    }`}
                   aria-hidden="true"
                 />
               </button>
