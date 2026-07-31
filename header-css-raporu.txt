@@ -1,0 +1,10432 @@
+﻿===== HEADER VE SEARCH CSS RAPORU =====
+
+
+===== ff-feed-header =====
+SATIR: 2397
+    var(--feed-bg);
+}
+
+.ff-feed-app {
+  width: min(100%, 820px);
+  margin: 0 auto;
+}
+
+.ff-feed-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 82px;
+  padding: 14px 4px 11px;
+  background:
+    linear-gradient(to bottom,
+      var(--feed-bg) 70%,
+      transparent);
+}
+
+.ff-feed-logo-wrap {
+  display: flex;
+  align-items: center;
+  width: 208px;
+  min-height: 48px;
+  padding: 6px 10px;
+  border-radius: 14px;
+  background: #030409;
+
+------------------------------
+SATIR: 2428
+}
+
+.ff-feed-logo {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.ff-feed-header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.ff-round-action {
+  display: grid;
+  width: 45px;
+  height: 45px;
+  place-items: center;
+  border: 1px solid rgba(190, 57, 255, 0.34);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle,
+      rgba(165, 30, 245, 0.13),
+      rgba(8, 9, 17, 0.95));
+  color: #ffffff;
+  box-shadow:
+    0 0 24px rgba(171, 29, 245, 0.11);
+}
+
+.ff-round-action.active {
+  border-color: rgba(0, 181, 255, 0.58);
+
+------------------------------
+SATIR: 3149
+  .ff-center-nav-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 430px) {
+  .ff-feed-header {
+    min-height: 72px;
+  }
+
+  .ff-feed-logo-wrap {
+    width: 162px;
+  }
+
+  .ff-feed-hero {
+    grid-template-columns: 1fr 105px;
+    padding: 20px 16px;
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 27px;
+  }
+
+  .ff-feed-hero-art {
+    min-height: 155px;
+  }
+
+  .ff-hero-orbit {
+    width: 125px;
+
+------------------------------
+SATIR: 3416
+
+/* FEED LIGHT HEADER HERO FIX */
+
+/*
+  Üst menü hem açık hem koyu temada koyu kalır.
+  Logo artık ayrı siyah kutu gibi değil, üst panelle bütünleşir.
+*/
+
+.ff-feed-header {
+  position: sticky;
+  top: 10px;
+  z-index: 40;
+  min-height: 78px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  padding: 10px 15px;
+  border: 1px solid rgba(155, 75, 255, 0.25);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 8% 50%,
+      rgba(196, 41, 255, 0.11),
+      transparent 28%),
+    radial-gradient(circle at 92% 50%,
+      rgba(0, 178, 255, 0.08),
+      transparent 28%),
+    rgba(4, 5, 12, 0.97) !important;
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.24),
+    0 0 35px rgba(115, 40, 220, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+
+------------------------------
+SATIR: 3441
+    rgba(4, 5, 12, 0.97) !important;
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.24),
+    0 0 35px rgba(115, 40, 220, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+}
+
+html[data-theme="light"] .ff-feed-header {
+  background:
+    radial-gradient(circle at 8% 50%,
+      rgba(196, 41, 255, 0.12),
+      transparent 28%),
+    radial-gradient(circle at 92% 50%,
+      rgba(0, 178, 255, 0.09),
+      transparent 28%),
+    rgba(4, 5, 12, 0.98) !important;
+  border-color: rgba(155, 75, 255, 0.28);
+  box-shadow:
+    0 16px 42px rgba(40, 31, 64, 0.2),
+    0 0 34px rgba(115, 40, 220, 0.07);
+}
+
+/* Logo panelin içinde bütünleşik görünür */
+
+.ff-feed-logo-wrap {
+  width: 280px;
+  min-height: 57px;
+  padding: 1px 4px;
+  border: 0;
+  border-radius: 0;
+
+------------------------------
+SATIR: 3629
+  box-shadow:
+    0 19px 43px rgba(165, 20, 245, 0.33),
+    0 0 34px rgba(0, 182, 255, 0.14);
+}
+
+/* Mobil düzen */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    top: 6px;
+    min-height: 69px;
+    margin-top: 6px;
+    padding: 8px 10px;
+    border-radius: 19px;
+  }
+
+  .ff-feed-logo-wrap {
+    width: 220px;
+    min-height: 48px;
+  }
+
+  .ff-feed-hero {
+    min-height: 275px;
+  }
+
+  .ff-feed-hero::before {
+    background:
+      linear-gradient(90deg,
+        rgba(3, 4, 11, 0.98) 0%,
+        rgba(3, 4, 11, 0.9) 48%,
+        rgba(5, 5, 15, 0.37) 73%,
+
+------------------------------
+SATIR: 3716
+
+.ff-feed-page {
+  margin: 0;
+  border: 0;
+}
+
+/* Üst koyu paneli bir miktar küçült */
+
+.ff-feed-header {
+  min-height: 68px;
+  margin-top: 7px;
+  margin-bottom: 13px;
+  padding: 6px 12px;
+  border-radius: 19px;
+}
+
+/* Panel küçülürken yatay logoyu biraz büyüt */
+
+.ff-feed-logo-wrap {
+  width: 305px;
+  min-height: 50px;
+  padding: 0;
+}
+
+.ff-feed-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Konu kartlarını daha kompakt hale getir */
+
+------------------------------
+SATIR: 3855
+  border-color: #d946ef;
+  background: rgba(208, 47, 232, 0.08);
+  color: #ef5af2;
+}
+
+/* Telefon ve dar ekranlar */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 64px;
+    padding: 5px 9px;
+  }
+
+  .ff-feed-logo-wrap {
+    width: 230px;
+    min-height: 46px;
+  }
+
+  .ff-topic-card {
+    min-height: 126px;
+    grid-template-columns: 54px 1fr;
+    gap: 11px;
+    padding: 12px 13px;
+  }
+
+  .ff-topic-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .ff-topic-main {
+
+------------------------------
+SATIR: 4449
+}
+
+/* FEED HEADER HERO COMPACT V3 */
+
+/* ------------------------------------------------------
+   ÜST PANEL
+------------------------------------------------------ */
+
+.ff-feed-header {
+  min-height: 94px;
+  margin-top: 7px;
+  margin-bottom: 11px;
+  padding: 7px 17px;
+  border-radius: 20px;
+}
+
+/* Logo büyürken panel gereksiz yere uzamaz */
+
+.ff-feed-logo-wrap {
+  display: flex;
+  width: 340px;
+  height: 72px;
+  min-height: 0;
+  align-items: center;
+  overflow: visible;
+  padding: 0;
+}
+
+.ff-feed-logo {
+  display: block;
+  width: 100%;
+
+------------------------------
+SATIR: 4480
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1.08);
+  transform-origin: left center;
+}
+
+/* Sağ üst düğmeler */
+
+.ff-feed-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ff-round-action {
+  width: 43px;
+  height: 43px;
+  flex: 0 0 43px;
+}
+
+.ff-round-action svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Bildirim zili */
+
+.ff-notification-button {
+  position: relative;
+  color: #ffffff;
+}
+
+------------------------------
+SATIR: 4603
+  }
+}
+
+/* ------------------------------------------------------
+   MOBİL
+------------------------------------------------------ */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 76px;
+    padding: 5px 10px;
+  }
+
+  .ff-feed-logo-wrap {
+    width: 220px;
+    height: 55px;
+  }
+
+  .ff-round-action {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+  .ff-feed-hero {
+    min-height: 238px;
+    grid-template-columns:
+
+------------------------------
+SATIR: 4619
+  }
+
+  .ff-round-action {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+  .ff-feed-hero {
+    min-height: 238px;
+    grid-template-columns:
+      minmax(0, 1fr) 130px;
+
+    padding: 18px 17px;
+  }
+
+  /* Dar ekranda başlık taşmasın */
+
+  .ff-feed-hero h1 {
+    white-space: normal;
+    font-size: 29px;
+    line-height: 1.08;
+  }
+
+  .ff-feed-hero-art {
+    min-height: 150px;
+    transform: translateX(17px);
+
+------------------------------
+SATIR: 4656
+}
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    width: 185px;
+    height: 49px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 4px;
+  }
+
+  .ff-round-action {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+  }
+
+  .ff-round-action svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .ff-feed-hero {
+    grid-template-columns:
+      minmax(0, 1fr) 105px;
+
+    padding-right: 13px;
+  }
+
+  .ff-feed-hero h1 {
+
+------------------------------
+SATIR: 4696
+    height: 108px;
+  }
+}
+
+/* HEADER LOGO AND HERO ART ALIGNMENT */
+
+/* Üst menüde logo tamamen sola yaslanır */
+
+.ff-feed-header {
+  justify-content: flex-start;
+}
+
+.ff-feed-logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  margin-right: auto;
+}
+
+.ff-feed-logo {
+  object-position: left center;
+  transform-origin: left center;
+}
+
+/* Sağ taraftaki düğmeler sağda kalır */
+
+.ff-feed-header-actions {
+  margin-left: auto;
+}
+
+
+------------------------------
+SATIR: 4715
+
+.ff-feed-logo {
+  object-position: left center;
+  transform-origin: left center;
+}
+
+/* Sağ taraftaki düğmeler sağda kalır */
+
+.ff-feed-header-actions {
+  margin-left: auto;
+}
+
+/*
+  Başlığın yazı boyutu ve alanı değişmez.
+  Yalnızca sağdaki hareketli görsel sola kaydırılır.
+*/
+
+.ff-feed-hero {
+  column-gap: 0;
+}
+
+.ff-feed-hero-copy {
+  position: relative;
+  z-index: 3;
+}
+
+.ff-feed-hero-art {
+  justify-self: start;
+  transform: translateX(-34px);
+}
+
+
+------------------------------
+SATIR: 4877
+  object-fit: contain;
+  object-position: left center;
+  transform: scale(1.12);
+  transform-origin: left center;
+}
+
+/* Sağ üst butonlar logoyu sıkıştıramaz */
+
+.ff-feed-header-actions {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 360px;
+    width: 360px;
+    height: 68px;
+    min-height: 68px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.14);
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+
+------------------------------
+SATIR: 4900
+  .ff-feed-logo {
+    transform: scale(1.14);
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    padding-right: 7px;
+    padding-left: 7px;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 255px;
+    width: 255px;
+    max-width: none;
+    height: 58px;
+    min-height: 58px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px;
+  }
+
+  .ff-round-action {
+    width: 34px;
+
+------------------------------
+SATIR: 4917
+    height: 58px;
+    min-height: 58px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px;
+  }
+
+  .ff-round-action {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .ff-round-action svg {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex: 0 0 225px;
+    width: 225px;
+    height: 53px;
+
+------------------------------
+SATIR: 4967
+/* Çok dar telefon */
+
+@media (max-width: 390px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 205px;
+    width: 205px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 2px;
+  }
+
+  .ff-round-action {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+}
+
+/* BOTTOM NAV CLEAN REBUILD V4 */
+
+/*
+  Önceki SVG gövde ve gölge katmanlarını etkisizleştirir.
+  Menü gövdesi artık tek ve temiz bir kapsüldür.
+*/
+
+.ff-bottom-nav,
+html[data-theme="light"] .ff-bottom-nav {
+  position: fixed !important;
+  left: 50% !important;
+  right: auto !important;
+
+------------------------------
+SATIR: 6522
+}
+
+/* MOBILE HEADER HERO FINAL TUNE */
+
+@media (max-width: 680px) {
+
+  /* Üst paneli gereksiz büyütmeden logoya alan aç */
+
+  .ff-feed-header {
+    min-height: 67px !important;
+    padding: 4px 7px !important;
+    margin-bottom: 9px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 248px !important;
+    width: 248px !important;
+    max-width: none !important;
+    height: 54px !important;
+    min-height: 54px !important;
+    overflow: visible !important;
+  }
+
+  .ff-feed-logo {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: left center !important;
+    transform: scale(1.32) !important;
+    transform-origin: left center !important;
+  }
+
+------------------------------
+SATIR: 6548
+    object-fit: contain !important;
+    object-position: left center !important;
+    transform: scale(1.32) !important;
+    transform-origin: left center !important;
+  }
+
+  /* Sağ üst butonları hafif küçült, logoyu sıkıştırmasın */
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+  .ff-round-action {
+    width: 33px !important;
+    height: 33px !important;
+    flex-basis: 33px !important;
+  }
+
+  .ff-round-action svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  /* Hero balonundaki üst ve alt boşlukları azalt */
+
+  .ff-feed-hero {
+    min-height: 0 !important;
+    grid-template-columns:
+      minmax(0, 1fr) 118px !important;
+
+    align-items: center !important;
+
+------------------------------
+SATIR: 6894
+      calc(72px + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* HEADER BRAND FINAL SIZE */
+
+/* Üst balonu yalnızca hafifçe büyüt */
+
+.ff-feed-header {
+  min-height: 88px !important;
+  padding: 7px 15px !important;
+}
+
+/*
+  Logoyu transform ile büyütmek yerine
+  gerçek piksel yüksekliğiyle göster.
+*/
+
+.ff-feed-logo-wrap {
+  flex: 0 0 390px !important;
+  width: 390px !important;
+  max-width: calc(100% - 155px) !important;
+  height: 72px !important;
+  min-height: 72px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  overflow: visible !important;
+  padding: 0 !important;
+
+------------------------------
+SATIR: 6937
+  transform: none !important;
+  filter:
+    drop-shadow(0 0 11px rgba(214, 55, 255, 0.14)) drop-shadow(0 0 17px rgba(0, 181, 255, 0.07)) !important;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-header {
+    min-height: 82px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex-basis: 330px !important;
+    width: 330px !important;
+    height: 66px !important;
+  }
+
+  .ff-feed-logo {
+    height: 60px !important;
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 72px !important;
+    padding: 5px 7px !important;
+  }
+
+
+------------------------------
+SATIR: 6955
+  .ff-feed-logo {
+    height: 60px !important;
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 72px !important;
+    padding: 5px 7px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 245px !important;
+    width: 245px !important;
+    max-width: calc(100% - 108px) !important;
+    height: 58px !important;
+    min-height: 58px !important;
+  }
+
+  .ff-feed-logo {
+    width: auto !important;
+    max-width: 100% !important;
+    height: 54px !important;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+
+------------------------------
+SATIR: 6990
+    height: 55px !important;
+    min-height: 55px !important;
+  }
+
+  .ff-feed-logo {
+    height: 51px !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+  .ff-round-action {
+    width: 30px !important;
+    height: 30px !important;
+    flex-basis: 30px !important;
+  }
+}
+
+/* HEADER LOGO FORCE BIG */
+
+/* Üst panel logoya yeterli alan verir */
+
+.ff-feed-header {
+  min-height: 92px !important;
+  padding: 7px 15px !important;
+}
+
+/* Eski genişlik ve max-width sınırlamalarını kaldır */
+
+.ff-feed-logo-wrap {
+
+------------------------------
+SATIR: 7005
+    flex-basis: 30px !important;
+  }
+}
+
+/* HEADER LOGO FORCE BIG */
+
+/* Üst panel logoya yeterli alan verir */
+
+.ff-feed-header {
+  min-height: 92px !important;
+  padding: 7px 15px !important;
+}
+
+/* Eski genişlik ve max-width sınırlamalarını kaldır */
+
+.ff-feed-logo-wrap {
+  display: flex !important;
+  flex: 0 0 440px !important;
+
+  width: 440px !important;
+  max-width: none !important;
+
+  height: 78px !important;
+  min-height: 78px !important;
+
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  margin: 0 auto 0 0 !important;
+  padding: 0 !important;
+
+
+------------------------------
+SATIR: 7056
+  flex-shrink: 0 !important;
+
+  filter:
+    drop-shadow(0 0 12px rgba(214, 55, 255, 0.17)) drop-shadow(0 0 19px rgba(0, 181, 255, 0.09)) !important;
+}
+
+/* Sağ butonlar logoyu küçültemez */
+
+.ff-feed-header-actions {
+  flex: 0 0 auto !important;
+  margin-left: auto !important;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-header {
+    min-height: 84px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex-basis: 350px !important;
+    width: 350px !important;
+    height: 70px !important;
+    min-height: 70px !important;
+  }
+
+  .ff-feed-logo {
+    width: 305px !important;
+  }
+}
+
+------------------------------
+SATIR: 7064
+.ff-feed-header-actions {
+  flex: 0 0 auto !important;
+  margin-left: auto !important;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-header {
+    min-height: 84px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex-basis: 350px !important;
+    width: 350px !important;
+    height: 70px !important;
+    min-height: 70px !important;
+  }
+
+  .ff-feed-logo {
+    width: 305px !important;
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 76px !important;
+    padding: 5px 7px !important;
+  }
+
+------------------------------
+SATIR: 7083
+  .ff-feed-logo {
+    width: 305px !important;
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 76px !important;
+    padding: 5px 7px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 275px !important;
+
+    width: 275px !important;
+    max-width: none !important;
+
+    height: 62px !important;
+    min-height: 62px !important;
+  }
+
+  .ff-feed-logo {
+    width: 258px !important;
+    max-width: none !important;
+    height: auto !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+
+------------------------------
+SATIR: 7104
+  }
+
+  .ff-feed-logo {
+    width: 258px !important;
+    max-width: none !important;
+    height: auto !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+  .ff-round-action {
+    width: 31px !important;
+    height: 31px !important;
+    flex-basis: 31px !important;
+  }
+
+  .ff-round-action svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 245px !important;
+
+    width: 245px !important;
+
+------------------------------
+SATIR: 7154
+    flex-basis: 218px !important;
+    width: 218px !important;
+  }
+
+  .ff-feed-logo {
+    width: 208px !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 2px !important;
+  }
+
+  .ff-round-action {
+    width: 28px !important;
+    height: 28px !important;
+    flex-basis: 28px !important;
+  }
+}
+
+/* HEADER PANEL SLIGHTLY BIGGER */
+
+/* Logo boyutu değişmez, yalnızca çevresindeki panel hafif büyür */
+
+.ff-feed-header {
+  min-height: 98px !important;
+  padding: 10px 17px !important;
+  border-radius: 23px !important;
+}
+
+/* Tablet */
+
+
+------------------------------
+SATIR: 7169
+    flex-basis: 28px !important;
+  }
+}
+
+/* HEADER PANEL SLIGHTLY BIGGER */
+
+/* Logo boyutu değişmez, yalnızca çevresindeki panel hafif büyür */
+
+.ff-feed-header {
+  min-height: 98px !important;
+  padding: 10px 17px !important;
+  border-radius: 23px !important;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-header {
+    min-height: 90px !important;
+    padding: 8px 13px !important;
+    border-radius: 21px !important;
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 81px !important;
+    padding: 7px 9px !important;
+    border-radius: 20px !important;
+
+------------------------------
+SATIR: 7178
+  min-height: 98px !important;
+  padding: 10px 17px !important;
+  border-radius: 23px !important;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-header {
+    min-height: 90px !important;
+    padding: 8px 13px !important;
+    border-radius: 21px !important;
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 81px !important;
+    padding: 7px 9px !important;
+    border-radius: 20px !important;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-header {
+    min-height: 78px !important;
+    padding: 6px 8px !important;
+
+------------------------------
+SATIR: 7188
+    padding: 8px 13px !important;
+    border-radius: 21px !important;
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 81px !important;
+    padding: 7px 9px !important;
+    border-radius: 20px !important;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-header {
+    min-height: 78px !important;
+    padding: 6px 8px !important;
+  }
+}
+
+/* ENGLISH HERO OVERLAP FIX */
+
+/*
+  Sadece İngilizce dilinde uygulanır.
+  Türkçe hero tasarımına dokunmaz.
+*/
+
+
+------------------------------
+SATIR: 7198
+    padding: 7px 9px !important;
+    border-radius: 20px !important;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-header {
+    min-height: 78px !important;
+    padding: 6px 8px !important;
+  }
+}
+
+/* ENGLISH HERO OVERLAP FIX */
+
+/*
+  Sadece İngilizce dilinde uygulanır.
+  Türkçe hero tasarımına dokunmaz.
+*/
+
+html[lang="en"] .ff-feed-hero {
+  grid-template-columns:
+    minmax(0, 1fr) 245px !important;
+
+  column-gap: 14px !important;
+}
+
+html[lang="en"] .ff-feed-hero-copy {
+  min-width: 0 !important;
+  padding-right: 4px !important;
+
+------------------------------
+SATIR: 7930
+    #03040a;
+}
+
+.ff-categories-shell {
+  width: min(calc(100% - 24px), 820px);
+  margin: 0 auto;
+}
+
+.ff-categories-page .ff-feed-header {
+  width: 100% !important;
+  margin: 0 0 10px !important;
+}
+
+.ff-category-search-panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 52px;
+  margin-bottom: 10px;
+  padding: 0 16px;
+
+  border:
+    1px solid rgba(180, 54, 236, 0.25);
+  border-radius: 18px;
+
+  background:
+    rgba(8, 8, 18, 0.92);
+
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.2);
+
+------------------------------
+SATIR: 12609
+
+  .ff-site-search-result-copy small {
+    font-size: 9px;
+  }
+}
+
+/* GENEL ARAMA — HEADER ALTINDA TAM GENİŞLİK */
+
+.ff-feed-header {
+  position: sticky;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/* Arama açıldığında alttaki içerik için yer oluştur */
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 72px !important;
+}
+
+/* Sağdan açılan kutu görünümünü kaldır */
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  left: 0 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+
+------------------------------
+SATIR: 12613
+}
+
+/* GENEL ARAMA — HEADER ALTINDA TAM GENİŞLİK */
+
+.ff-feed-header {
+  position: sticky;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/* Arama açıldığında alttaki içerik için yer oluştur */
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 72px !important;
+}
+
+/* Sağdan açılan kutu görünümünü kaldır */
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  left: 0 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+
+------------------------------
+SATIR: 12618
+  position: sticky;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/* Arama açıldığında alttaki içerik için yer oluştur */
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 72px !important;
+}
+
+/* Sağdan açılan kutu görünümünü kaldır */
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  left: 0 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+
+------------------------------
+SATIR: 12623
+}
+
+/* Arama açıldığında alttaki içerik için yer oluştur */
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 72px !important;
+}
+
+/* Sağdan açılan kutu görünümünü kaldır */
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  left: 0 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Ekran görüntüsündeki uzun arama çubuğu */
+.ff-feed-header .ff-site-search-input {
+
+------------------------------
+SATIR: 12645
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Ekran görüntüsündeki uzun arama çubuğu */
+.ff-feed-header .ff-site-search-input {
+  width: 100%;
+  height: 52px;
+
+  border: 1px solid rgba(153, 62, 229, 0.3);
+  border-radius: 15px;
+  padding: 0 17px;
+
+  background:
+    linear-gradient(90deg,
+      rgba(13, 8, 22, 0.98),
+      rgba(7, 9, 17, 0.98));
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.ff-feed-header .ff-site-search-input:focus-within {
+  border-color: rgba(202, 71, 245, 0.58);
+
+  box-shadow:
+    0 0 0 3px rgba(174, 36, 241, 0.07),
+
+------------------------------
+SATIR: 12663
+      rgba(13, 8, 22, 0.98),
+      rgba(7, 9, 17, 0.98));
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.ff-feed-header .ff-site-search-input:focus-within {
+  border-color: rgba(202, 71, 245, 0.58);
+
+  box-shadow:
+    0 0 0 3px rgba(174, 36, 241, 0.07),
+    0 0 25px rgba(76, 73, 255, 0.07);
+}
+
+.ff-feed-header .ff-site-search-input input {
+  font-size: 13px;
+}
+
+/* Yazmaya başlayınca sonuçların aşağı açıldığı alan */
+.ff-feed-header .ff-site-search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  left: 0;
+
+  max-height: 390px;
+  overflow-y: auto;
+
+  margin: 0;
+
+------------------------------
+SATIR: 12671
+.ff-feed-header .ff-site-search-input:focus-within {
+  border-color: rgba(202, 71, 245, 0.58);
+
+  box-shadow:
+    0 0 0 3px rgba(174, 36, 241, 0.07),
+    0 0 25px rgba(76, 73, 255, 0.07);
+}
+
+.ff-feed-header .ff-site-search-input input {
+  font-size: 13px;
+}
+
+/* Yazmaya başlayınca sonuçların aşağı açıldığı alan */
+.ff-feed-header .ff-site-search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  left: 0;
+
+  max-height: 390px;
+  overflow-y: auto;
+
+  margin: 0;
+  border: 1px solid rgba(145, 76, 238, 0.25);
+  border-radius: 17px;
+  padding: 7px;
+
+  background:
+    radial-gradient(circle at 10% 0%,
+      rgba(205, 52, 241, 0.1),
+      transparent 36%),
+
+------------------------------
+SATIR: 12676
+    0 0 25px rgba(76, 73, 255, 0.07);
+}
+
+.ff-feed-header .ff-site-search-input input {
+  font-size: 13px;
+}
+
+/* Yazmaya başlayınca sonuçların aşağı açıldığı alan */
+.ff-feed-header .ff-site-search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  left: 0;
+
+  max-height: 390px;
+  overflow-y: auto;
+
+  margin: 0;
+  border: 1px solid rgba(145, 76, 238, 0.25);
+  border-radius: 17px;
+  padding: 7px;
+
+  background:
+    radial-gradient(circle at 10% 0%,
+      rgba(205, 52, 241, 0.1),
+      transparent 36%),
+    radial-gradient(circle at 90% 100%,
+      rgba(0, 170, 245, 0.08),
+      transparent 38%),
+    rgba(7, 8, 16, 0.985);
+
+
+------------------------------
+SATIR: 12707
+  box-shadow:
+    0 25px 65px rgba(0, 0, 0, 0.58),
+    0 0 30px rgba(110, 48, 242, 0.09);
+
+  backdrop-filter: blur(24px);
+}
+
+/* Açık tema */
+html[data-theme="light"] .ff-feed-header .ff-site-search-input {
+  border-color: rgba(88, 57, 155, 0.15);
+  background: rgba(255, 255, 255, 0.97);
+}
+
+html[data-theme="light"] .ff-feed-header .ff-site-search-results {
+  border-color: rgba(88, 57, 155, 0.15);
+
+  background:
+    radial-gradient(circle at 10% 0%,
+      rgba(205, 52, 241, 0.07),
+      transparent 36%),
+    rgba(255, 255, 255, 0.99);
+
+  box-shadow:
+    0 22px 55px rgba(50, 38, 78, 0.16);
+}
+
+/* Mobilde de header altında açılsın */
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 67px !important;
+  }
+
+------------------------------
+SATIR: 12712
+}
+
+/* Açık tema */
+html[data-theme="light"] .ff-feed-header .ff-site-search-input {
+  border-color: rgba(88, 57, 155, 0.15);
+  background: rgba(255, 255, 255, 0.97);
+}
+
+html[data-theme="light"] .ff-feed-header .ff-site-search-results {
+  border-color: rgba(88, 57, 155, 0.15);
+
+  background:
+    radial-gradient(circle at 10% 0%,
+      rgba(205, 52, 241, 0.07),
+      transparent 36%),
+    rgba(255, 255, 255, 0.99);
+
+  box-shadow:
+    0 22px 55px rgba(50, 38, 78, 0.16);
+}
+
+/* Mobilde de header altında açılsın */
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 67px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+
+------------------------------
+SATIR: 12727
+    rgba(255, 255, 255, 0.99);
+
+  box-shadow:
+    0 22px 55px rgba(50, 38, 78, 0.16);
+}
+
+/* Mobilde de header altında açılsın */
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 67px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+    left: 0 !important;
+
+    width: 100% !important;
+    max-height: none !important;
+  }
+
+  .ff-feed-header .ff-site-search-input {
+    height: 49px;
+    border-radius: 14px;
+    padding: 0 14px;
+  }
+
+  .ff-feed-header .ff-site-search-results {
+    max-height: min(360px, calc(100dvh - 190px));
+  }
+
+------------------------------
+SATIR: 12731
+}
+
+/* Mobilde de header altında açılsın */
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 67px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+    left: 0 !important;
+
+    width: 100% !important;
+    max-height: none !important;
+  }
+
+  .ff-feed-header .ff-site-search-input {
+    height: 49px;
+    border-radius: 14px;
+    padding: 0 14px;
+  }
+
+  .ff-feed-header .ff-site-search-results {
+    max-height: min(360px, calc(100dvh - 190px));
+  }
+}
+
+/* GENEL ARAMA — HEADER İLE SAYFA İÇERİĞİ ARASINDA */
+
+
+------------------------------
+SATIR: 12741
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+    left: 0 !important;
+
+    width: 100% !important;
+    max-height: none !important;
+  }
+
+  .ff-feed-header .ff-site-search-input {
+    height: 49px;
+    border-radius: 14px;
+    padding: 0 14px;
+  }
+
+  .ff-feed-header .ff-site-search-results {
+    max-height: min(360px, calc(100dvh - 190px));
+  }
+}
+
+/* GENEL ARAMA — HEADER İLE SAYFA İÇERİĞİ ARASINDA */
+
+.ff-feed-header {
+  position: sticky;
+  overflow: visible !important;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/*
+
+------------------------------
+SATIR: 12747
+  }
+
+  .ff-feed-header .ff-site-search-input {
+    height: 49px;
+    border-radius: 14px;
+    padding: 0 14px;
+  }
+
+  .ff-feed-header .ff-site-search-results {
+    max-height: min(360px, calc(100dvh - 190px));
+  }
+}
+
+/* GENEL ARAMA — HEADER İLE SAYFA İÇERİĞİ ARASINDA */
+
+.ff-feed-header {
+  position: sticky;
+  overflow: visible !important;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/*
+  Header büyümez.
+  Arama için yalnızca header sonrasında boşluk açılır.
+*/
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 75px !important;
+}
+
+------------------------------
+SATIR: 12754
+
+  .ff-feed-header .ff-site-search-results {
+    max-height: min(360px, calc(100dvh - 190px));
+  }
+}
+
+/* GENEL ARAMA — HEADER İLE SAYFA İÇERİĞİ ARASINDA */
+
+.ff-feed-header {
+  position: sticky;
+  overflow: visible !important;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/*
+  Header büyümez.
+  Arama için yalnızca header sonrasında boşluk açılır.
+*/
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 75px !important;
+}
+
+/*
+  Arama kutusu header'ın altına yerleşir.
+*/
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+
+
+------------------------------
+SATIR: 12759
+
+/* GENEL ARAMA — HEADER İLE SAYFA İÇERİĞİ ARASINDA */
+
+.ff-feed-header {
+  position: sticky;
+  overflow: visible !important;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/*
+  Header büyümez.
+  Arama için yalnızca header sonrasında boşluk açılır.
+*/
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 75px !important;
+}
+
+/*
+  Arama kutusu header'ın altına yerleşir.
+*/
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  bottom: auto !important;
+  left: 0 !important;
+
+
+------------------------------
+SATIR: 12767
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/*
+  Header büyümez.
+  Arama için yalnızca header sonrasında boşluk açılır.
+*/
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 75px !important;
+}
+
+/*
+  Arama kutusu header'ın altına yerleşir.
+*/
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  bottom: auto !important;
+  left: 0 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+
+------------------------------
+SATIR: 12774
+*/
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 75px !important;
+}
+
+/*
+  Arama kutusu header'ın altına yerleşir.
+*/
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  bottom: auto !important;
+  left: 0 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/*
+
+------------------------------
+SATIR: 12799
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/*
+  Sonuçlar arama çubuğunun altından açılır.
+*/
+.ff-feed-header .ff-site-search-results {
+  position: absolute !important;
+
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  bottom: auto !important;
+  left: 0 !important;
+
+  width: 100% !important;
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 69px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+
+------------------------------
+SATIR: 12813
+  left: 0 !important;
+
+  width: 100% !important;
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 69px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+    bottom: auto !important;
+    left: 0 !important;
+
+    width: 100% !important;
+  }
+}
+
+.ff-bookmark-button.saved {
+  color: #ed5df4;
+  border-color: rgba(237, 93, 244, 0.58);
+  background: rgba(165, 22, 244, 0.16);
+  box-shadow:
+    0 0 0 1px rgba(237, 93, 244, 0.08),
+    0 0 20px rgba(165, 22, 244, 0.18);
+
+------------------------------
+SATIR: 12817
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 69px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+    bottom: auto !important;
+    left: 0 !important;
+
+    width: 100% !important;
+  }
+}
+
+.ff-bookmark-button.saved {
+  color: #ed5df4;
+  border-color: rgba(237, 93, 244, 0.58);
+  background: rgba(165, 22, 244, 0.16);
+  box-shadow:
+    0 0 0 1px rgba(237, 93, 244, 0.08),
+    0 0 20px rgba(165, 22, 244, 0.18);
+}
+
+.ff-bookmark-button.saved svg {
+  fill: currentColor;
+
+------------------------------
+SATIR: 13374
+    height: 23px;
+  }
+}
+
+/* MOBILE SEARCH INPUT ZOOM FIX START */
+@media (max-width: 680px) {
+
+  .ff-site-search-input input,
+  .ff-feed-header .ff-site-search-input input {
+    font-size: 16px !important;
+  }
+}
+
+/* MOBILE SEARCH INPUT ZOOM FIX END */
+
+/* MOBILE HEADER ICON SIZE V9 START */
+
+@media (max-width: 680px) {
+  .ff-round-action svg {
+    width: 19px !important;
+    height: 19px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .ff-round-action svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+
+------------------------------
+SATIR: 14036
+
+  .ff-feed-more-button {
+    min-height: 30px;
+    padding: 5px 10px;
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  .ff-feed-header-actions .ff-round-action {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+  }
+
+  .ff-feed-header-actions .ff-round-action svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+
+@media (max-width: 370px) {
+  .ff-feed-page .ff-feed-logo {
+    width: clamp(158px, 46vw, 175px) !important;
+  }
+
+  .ff-feed-page .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+
+------------------------------
+SATIR: 14043
+
+  .ff-feed-header-actions .ff-round-action {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+  }
+
+  .ff-feed-header-actions .ff-round-action svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+
+@media (max-width: 370px) {
+  .ff-feed-page .ff-feed-logo {
+    width: clamp(158px, 46vw, 175px) !important;
+  }
+
+  .ff-feed-page .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-round-action {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    flex-basis: 32px;
+  }
+
+------------------------------
+SATIR: 14055
+}
+
+
+@media (max-width: 370px) {
+  .ff-feed-page .ff-feed-logo {
+    width: clamp(158px, 46vw, 175px) !important;
+  }
+
+  .ff-feed-page .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-round-action {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    flex-basis: 32px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-site-search {
+    flex-basis: 32px;
+    min-width: 32px;
+  }
+}
+
+/* ff-mobile-feed-spacing-fix */
+
+.ff-featured-section {
+  scroll-margin-top: 18px;
+}
+
+------------------------------
+SATIR: 14059
+  .ff-feed-page .ff-feed-logo {
+    width: clamp(158px, 46vw, 175px) !important;
+  }
+
+  .ff-feed-page .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-round-action {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    flex-basis: 32px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-site-search {
+    flex-basis: 32px;
+    min-width: 32px;
+  }
+}
+
+/* ff-mobile-feed-spacing-fix */
+
+.ff-featured-section {
+  scroll-margin-top: 18px;
+}
+
+@media (max-width: 768px) {
+  .ff-feed-page .ff-insight-grid button {
+    min-height: 82px;
+
+------------------------------
+SATIR: 14067
+  .ff-feed-page .ff-feed-header-actions .ff-round-action {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    flex-basis: 32px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-site-search {
+    flex-basis: 32px;
+    min-width: 32px;
+  }
+}
+
+/* ff-mobile-feed-spacing-fix */
+
+.ff-featured-section {
+  scroll-margin-top: 18px;
+}
+
+@media (max-width: 768px) {
+  .ff-feed-page .ff-insight-grid button {
+    min-height: 82px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .ff-feed-page .ff-featured-section {
+    margin-top: 18px;
+    scroll-margin-top: 14px;
+  }
+
+------------------------------
+
+
+===== ff-feed-logo-wrap =====
+SATIR: 2412
+  min-height: 82px;
+  padding: 14px 4px 11px;
+  background:
+    linear-gradient(to bottom,
+      var(--feed-bg) 70%,
+      transparent);
+}
+
+.ff-feed-logo-wrap {
+  display: flex;
+  align-items: center;
+  width: 208px;
+  min-height: 48px;
+  padding: 6px 10px;
+  border-radius: 14px;
+  background: #030409;
+}
+
+.ff-feed-logo {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.ff-feed-header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.ff-round-action {
+  display: grid;
+
+------------------------------
+SATIR: 3033
+}
+
+@media (max-width: 680px) {
+  .ff-feed-page {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .ff-feed-logo-wrap {
+    width: 187px;
+  }
+
+  .ff-round-action {
+    width: 41px;
+    height: 41px;
+  }
+
+  .ff-feed-hero {
+    min-height: 267px;
+    grid-template-columns: 1fr 130px;
+    padding: 23px 20px;
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 31px;
+  }
+
+  .ff-feed-hero p {
+    max-width: 270px;
+    font-size: 12px;
+  }
+
+------------------------------
+SATIR: 3153
+  }
+}
+
+@media (max-width: 430px) {
+  .ff-feed-header {
+    min-height: 72px;
+  }
+
+  .ff-feed-logo-wrap {
+    width: 162px;
+  }
+
+  .ff-feed-hero {
+    grid-template-columns: 1fr 105px;
+    padding: 20px 16px;
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 27px;
+  }
+
+  .ff-feed-hero-art {
+    min-height: 155px;
+  }
+
+  .ff-hero-orbit {
+    width: 125px;
+    height: 125px;
+  }
+
+  .ff-rocket-svg {
+
+------------------------------
+SATIR: 3196
+    text-overflow: ellipsis;
+  }
+}
+
+/* FORUMFENOMEN FEED HEADER V2 */
+
+/* Üst yatay logo */
+
+.ff-feed-logo-wrap {
+  width: 255px;
+  min-height: 58px;
+  padding: 5px 8px;
+}
+
+.ff-feed-logo {
+  width: 100%;
+  height: auto;
+}
+
+/* Tema düğmesi arama düğmesiyle aynı ölçüde */
+
+.ff-theme-icon-button {
+  color: #f0b6ff;
+}
+
+html[data-theme="light"] .ff-theme-icon-button {
+  color: #6c3be8;
+  background:
+    radial-gradient(circle,
+      rgba(143, 75, 255, 0.11),
+      rgba(255, 255, 255, 0.96));
+
+------------------------------
+SATIR: 3364
+  }
+
+  50% {
+    transform: translateY(-7px) rotate(1deg);
+  }
+}
+
+@media (max-width: 680px) {
+  .ff-feed-logo-wrap {
+    width: 220px;
+    min-height: 52px;
+  }
+
+  .ff-community-svg {
+    width: 165px;
+    height: 150px;
+  }
+
+  .ff-hero-social-button {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+    border-radius: 11px;
+  }
+
+  .ff-hero-social-button svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+
+------------------------------
+SATIR: 3388
+
+  .ff-hero-social-button svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 430px) {
+  .ff-feed-logo-wrap {
+    width: 185px;
+  }
+
+  .ff-community-svg {
+    width: 135px;
+    height: 125px;
+  }
+
+  .ff-hero-socials {
+    gap: 7px;
+    margin-top: 14px;
+  }
+
+  .ff-hero-social-button {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+}
+
+/* FEED LIGHT HEADER HERO FIX */
+
+
+------------------------------
+SATIR: 3458
+  border-color: rgba(155, 75, 255, 0.28);
+  box-shadow:
+    0 16px 42px rgba(40, 31, 64, 0.2),
+    0 0 34px rgba(115, 40, 220, 0.07);
+}
+
+/* Logo panelin içinde bütünleşik görünür */
+
+.ff-feed-logo-wrap {
+  width: 280px;
+  min-height: 57px;
+  padding: 1px 4px;
+  border: 0;
+  border-radius: 0;
+  background: transparent !important;
+}
+
+.ff-feed-logo {
+  width: 100%;
+  height: auto;
+  filter:
+    drop-shadow(0 0 10px rgba(215, 55, 255, 0.12)) drop-shadow(0 0 18px rgba(0, 181, 255, 0.07));
+}
+
+/* Üstteki tema ve arama butonlarını belirginleştir */
+
+.ff-round-action {
+  flex: 0 0 45px;
+  background:
+    radial-gradient(circle,
+      rgba(154, 31, 240, 0.17),
+
+------------------------------
+SATIR: 3637
+  .ff-feed-header {
+    top: 6px;
+    min-height: 69px;
+    margin-top: 6px;
+    padding: 8px 10px;
+    border-radius: 19px;
+  }
+
+  .ff-feed-logo-wrap {
+    width: 220px;
+    min-height: 48px;
+  }
+
+  .ff-feed-hero {
+    min-height: 275px;
+  }
+
+  .ff-feed-hero::before {
+    background:
+      linear-gradient(90deg,
+        rgba(3, 4, 11, 0.98) 0%,
+        rgba(3, 4, 11, 0.9) 48%,
+        rgba(5, 5, 15, 0.37) 73%,
+        transparent 100%);
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 31px;
+    line-height: 1.08;
+  }
+}
+
+------------------------------
+SATIR: 3662
+
+  .ff-feed-hero h1 {
+    font-size: 31px;
+    line-height: 1.08;
+  }
+}
+
+@media (max-width: 430px) {
+  .ff-feed-logo-wrap {
+    width: 183px;
+  }
+
+  .ff-round-action {
+    width: 39px;
+    height: 39px;
+    flex-basis: 39px;
+  }
+
+  .ff-feed-hero {
+    min-height: 270px;
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 27px;
+    letter-spacing: -1px;
+  }
+
+  .ff-new-topic-button {
+    min-width: 170px;
+    min-height: 50px;
+    padding: 0 18px;
+
+------------------------------
+SATIR: 3726
+  margin-top: 7px;
+  margin-bottom: 13px;
+  padding: 6px 12px;
+  border-radius: 19px;
+}
+
+/* Panel küçülürken yatay logoyu biraz büyüt */
+
+.ff-feed-logo-wrap {
+  width: 305px;
+  min-height: 50px;
+  padding: 0;
+}
+
+.ff-feed-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Konu kartlarını daha kompakt hale getir */
+
+.ff-topic-list {
+  gap: 9px;
+}
+
+.ff-topic-card {
+  min-height: 111px;
+  grid-template-columns: 58px 1fr;
+  gap: 13px;
+  padding: 13px 15px;
+
+------------------------------
+SATIR: 3860
+/* Telefon ve dar ekranlar */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 64px;
+    padding: 5px 9px;
+  }
+
+  .ff-feed-logo-wrap {
+    width: 230px;
+    min-height: 46px;
+  }
+
+  .ff-topic-card {
+    min-height: 126px;
+    grid-template-columns: 54px 1fr;
+    gap: 11px;
+    padding: 12px 13px;
+  }
+
+  .ff-topic-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .ff-topic-main {
+    padding-right: 27px;
+  }
+
+  .ff-topic-main h3 {
+    font-size: 14px;
+
+------------------------------
+SATIR: 3892
+
+  .ff-topic-stats {
+    right: 13px;
+    bottom: 11px;
+  }
+}
+
+@media (max-width: 430px) {
+  .ff-feed-logo-wrap {
+    width: 195px;
+  }
+
+  .ff-topic-card {
+    min-height: 130px;
+  }
+}
+
+/* FORUMFENOMEN DESIRED BOTTOM NAV */
+
+/* ------------------------------------------------------
+   DAHA İNCE KONU KARTLARI
+------------------------------------------------------ */
+
+.ff-topic-list {
+  gap: 8px;
+}
+
+.ff-topic-card {
+  min-height: 96px;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 12px;
+
+------------------------------
+SATIR: 4459
+  margin-top: 7px;
+  margin-bottom: 11px;
+  padding: 7px 17px;
+  border-radius: 20px;
+}
+
+/* Logo büyürken panel gereksiz yere uzamaz */
+
+.ff-feed-logo-wrap {
+  display: flex;
+  width: 340px;
+  height: 72px;
+  min-height: 0;
+  align-items: center;
+  overflow: visible;
+  padding: 0;
+}
+
+.ff-feed-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1.08);
+  transform-origin: left center;
+}
+
+/* Sağ üst düğmeler */
+
+.ff-feed-header-actions {
+  display: flex;
+
+------------------------------
+SATIR: 4571
+  height: 175px;
+}
+
+/* ------------------------------------------------------
+   TABLET
+------------------------------------------------------ */
+
+@media (max-width: 800px) {
+  .ff-feed-logo-wrap {
+    width: 285px;
+    height: 65px;
+  }
+
+  .ff-feed-hero {
+    min-height: 235px;
+    grid-template-columns:
+      minmax(0, 1.35fr) minmax(185px, 0.65fr);
+
+    padding: 20px 23px;
+  }
+
+  .ff-feed-hero h1 {
+    font-size: clamp(31px, 5.2vw, 41px);
+  }
+
+  .ff-feed-hero-art {
+    transform: translateX(19px);
+  }
+
+  .ff-community-svg {
+    width: 185px;
+
+------------------------------
+SATIR: 4608
+------------------------------------------------------ */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 76px;
+    padding: 5px 10px;
+  }
+
+  .ff-feed-logo-wrap {
+    width: 220px;
+    height: 55px;
+  }
+
+  .ff-round-action {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+  .ff-feed-hero {
+    min-height: 238px;
+    grid-template-columns:
+      minmax(0, 1fr) 130px;
+
+    padding: 18px 17px;
+  }
+
+
+------------------------------
+SATIR: 4651
+
+  .ff-community-svg {
+    width: 140px;
+    height: 125px;
+  }
+}
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    width: 185px;
+    height: 49px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 4px;
+  }
+
+  .ff-round-action {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+  }
+
+  .ff-round-action svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .ff-feed-hero {
+    grid-template-columns:
+      minmax(0, 1fr) 105px;
+
+------------------------------
+SATIR: 4700
+/* HEADER LOGO AND HERO ART ALIGNMENT */
+
+/* Üst menüde logo tamamen sola yaslanır */
+
+.ff-feed-header {
+  justify-content: flex-start;
+}
+
+.ff-feed-logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  margin-right: auto;
+}
+
+.ff-feed-logo {
+  object-position: left center;
+  transform-origin: left center;
+}
+
+/* Sağ taraftaki düğmeler sağda kalır */
+
+.ff-feed-header-actions {
+  margin-left: auto;
+}
+
+/*
+  Başlığın yazı boyutu ve alanı değişmez.
+  Yalnızca sağdaki hareketli görsel sola kaydırılır.
+*/
+
+------------------------------
+SATIR: 4765
+  .ff-feed-hero h1 {
+    font-size: clamp(31px, 5.2vw, 41px);
+  }
+}
+
+/* Telefon */
+
+@media (max-width: 680px) {
+  .ff-feed-logo-wrap {
+    margin-left: 0;
+  }
+
+  .ff-feed-hero-art {
+    transform: translateX(-14px);
+  }
+
+  .ff-feed-hero h1 {
+    white-space: normal;
+    font-size: 29px;
+  }
+}
+
+@media (max-width: 470px) {
+  .ff-feed-hero-art {
+    transform: translateX(-9px);
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 26px;
+  }
+}
+
+------------------------------
+SATIR: 4791
+
+  .ff-feed-hero h1 {
+    font-size: 26px;
+  }
+}
+
+/* HEADER LOGO BIGGER */
+
+.ff-feed-logo-wrap {
+  width: 390px;
+  height: 74px;
+  max-width: calc(100% - 165px);
+  overflow: visible;
+  padding: 0;
+}
+
+.ff-feed-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+  transform: scale(1.24);
+  transform-origin: left center;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-logo-wrap {
+    width: 325px;
+    height: 66px;
+
+------------------------------
+SATIR: 4811
+  object-position: left center;
+  transform: scale(1.24);
+  transform-origin: left center;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-logo-wrap {
+    width: 325px;
+    height: 66px;
+    max-width: calc(100% - 150px);
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+}
+
+/* Telefon */
+
+@media (max-width: 680px) {
+  .ff-feed-logo-wrap {
+    width: 235px;
+    height: 55px;
+    max-width: calc(100% - 125px);
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.16);
+  }
+
+------------------------------
+SATIR: 4825
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+}
+
+/* Telefon */
+
+@media (max-width: 680px) {
+  .ff-feed-logo-wrap {
+    width: 235px;
+    height: 55px;
+    max-width: calc(100% - 125px);
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.16);
+  }
+}
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    width: 190px;
+    height: 49px;
+    max-width: calc(100% - 118px);
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.12);
+  }
+}
+
+
+------------------------------
+SATIR: 4837
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.16);
+  }
+}
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    width: 190px;
+    height: 49px;
+    max-width: calc(100% - 118px);
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.12);
+  }
+}
+
+/* HEADER LOGO REAL SIZE FIX */
+
+/*
+  Logo flex düzeni nedeniyle artık küçülemez.
+  Masaüstünde marka adı ve slogan net görünür.
+*/
+
+.ff-feed-logo-wrap {
+  flex: 0 0 460px;
+  width: 460px;
+  max-width: none;
+  height: 76px;
+
+------------------------------
+SATIR: 4855
+
+/* HEADER LOGO REAL SIZE FIX */
+
+/*
+  Logo flex düzeni nedeniyle artık küçülemez.
+  Masaüstünde marka adı ve slogan net görünür.
+*/
+
+.ff-feed-logo-wrap {
+  flex: 0 0 460px;
+  width: 460px;
+  max-width: none;
+  height: 76px;
+  min-height: 76px;
+  margin-right: auto;
+  overflow: visible;
+}
+
+.ff-feed-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+  transform: scale(1.12);
+  transform-origin: left center;
+}
+
+/* Sağ üst butonlar logoyu sıkıştıramaz */
+
+.ff-feed-header-actions {
+
+------------------------------
+SATIR: 4885
+.ff-feed-header-actions {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 360px;
+    width: 360px;
+    height: 68px;
+    min-height: 68px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.14);
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    padding-right: 7px;
+    padding-left: 7px;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 255px;
+    width: 255px;
+
+------------------------------
+SATIR: 4905
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    padding-right: 7px;
+    padding-left: 7px;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 255px;
+    width: 255px;
+    max-width: none;
+    height: 58px;
+    min-height: 58px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px;
+  }
+
+  .ff-round-action {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .ff-round-action svg {
+
+------------------------------
+SATIR: 4936
+    width: 17px;
+    height: 17px;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex: 0 0 225px;
+    width: 225px;
+    height: 53px;
+    min-height: 53px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+
+  .ff-round-action {
+    width: 31px;
+    height: 31px;
+    flex-basis: 31px;
+  }
+
+  .ff-round-action svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+
+------------------------------
+SATIR: 4962
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Çok dar telefon */
+
+@media (max-width: 390px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 205px;
+    width: 205px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 2px;
+  }
+
+  .ff-round-action {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+}
+
+/* BOTTOM NAV CLEAN REBUILD V4 */
+
+/*
+  Önceki SVG gövde ve gölge katmanlarını etkisizleştirir.
+  Menü gövdesi artık tek ve temiz bir kapsüldür.
+*/
+
+
+------------------------------
+SATIR: 6528
+  /* Üst paneli gereksiz büyütmeden logoya alan aç */
+
+  .ff-feed-header {
+    min-height: 67px !important;
+    padding: 4px 7px !important;
+    margin-bottom: 9px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 248px !important;
+    width: 248px !important;
+    max-width: none !important;
+    height: 54px !important;
+    min-height: 54px !important;
+    overflow: visible !important;
+  }
+
+  .ff-feed-logo {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: left center !important;
+    transform: scale(1.32) !important;
+    transform-origin: left center !important;
+  }
+
+  /* Sağ üst butonları hafif küçült, logoyu sıkıştırmasın */
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+------------------------------
+SATIR: 6629
+  .ff-community-svg {
+    width: 128px !important;
+    height: 118px !important;
+  }
+}
+
+@media (max-width: 430px) {
+
+  .ff-feed-logo-wrap {
+    flex-basis: 225px !important;
+    width: 225px !important;
+    height: 51px !important;
+    min-height: 51px !important;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.36) !important;
+  }
+
+  .ff-round-action {
+    width: 31px !important;
+    height: 31px !important;
+    flex-basis: 31px !important;
+  }
+
+  .ff-feed-hero {
+    grid-template-columns:
+      minmax(0, 1fr) 108px !important;
+
+    padding:
+      12px 10px 13px 14px !important;
+
+------------------------------
+SATIR: 6904
+  padding: 7px 15px !important;
+}
+
+/*
+  Logoyu transform ile büyütmek yerine
+  gerçek piksel yüksekliğiyle göster.
+*/
+
+.ff-feed-logo-wrap {
+  flex: 0 0 390px !important;
+  width: 390px !important;
+  max-width: calc(100% - 155px) !important;
+  height: 72px !important;
+  min-height: 72px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  overflow: visible !important;
+  padding: 0 !important;
+}
+
+.ff-feed-logo {
+  display: block !important;
+
+  width: auto !important;
+  max-width: 100% !important;
+  height: 66px !important;
+
+  object-fit: contain !important;
+
+------------------------------
+SATIR: 6941
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-header {
+    min-height: 82px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex-basis: 330px !important;
+    width: 330px !important;
+    height: 66px !important;
+  }
+
+  .ff-feed-logo {
+    height: 60px !important;
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 72px !important;
+    padding: 5px 7px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 245px !important;
+    width: 245px !important;
+    max-width: calc(100% - 108px) !important;
+
+------------------------------
+SATIR: 6960
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 72px !important;
+    padding: 5px 7px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 245px !important;
+    width: 245px !important;
+    max-width: calc(100% - 108px) !important;
+    height: 58px !important;
+    min-height: 58px !important;
+  }
+
+  .ff-feed-logo {
+    width: auto !important;
+    max-width: 100% !important;
+    height: 54px !important;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 220px !important;
+    width: 220px !important;
+    max-width: calc(100% - 101px) !important;
+    height: 55px !important;
+
+------------------------------
+SATIR: 6978
+    max-width: 100% !important;
+    height: 54px !important;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 220px !important;
+    width: 220px !important;
+    max-width: calc(100% - 101px) !important;
+    height: 55px !important;
+    min-height: 55px !important;
+  }
+
+  .ff-feed-logo {
+    height: 51px !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+  .ff-round-action {
+    width: 30px !important;
+    height: 30px !important;
+    flex-basis: 30px !important;
+  }
+}
+
+
+------------------------------
+SATIR: 7012
+
+.ff-feed-header {
+  min-height: 92px !important;
+  padding: 7px 15px !important;
+}
+
+/* Eski genişlik ve max-width sınırlamalarını kaldır */
+
+.ff-feed-logo-wrap {
+  display: flex !important;
+  flex: 0 0 440px !important;
+
+  width: 440px !important;
+  max-width: none !important;
+
+  height: 78px !important;
+  min-height: 78px !important;
+
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  margin: 0 auto 0 0 !important;
+  padding: 0 !important;
+
+  overflow: visible !important;
+}
+
+/* Logonun gerçek görünür genişliğini büyüt */
+
+.ff-feed-logo {
+  display: block !important;
+
+------------------------------
+SATIR: 7068
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-header {
+    min-height: 84px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex-basis: 350px !important;
+    width: 350px !important;
+    height: 70px !important;
+    min-height: 70px !important;
+  }
+
+  .ff-feed-logo {
+    width: 305px !important;
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 76px !important;
+    padding: 5px 7px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 275px !important;
+
+
+------------------------------
+SATIR: 7088
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 76px !important;
+    padding: 5px 7px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 275px !important;
+
+    width: 275px !important;
+    max-width: none !important;
+
+    height: 62px !important;
+    min-height: 62px !important;
+  }
+
+  .ff-feed-logo {
+    width: 258px !important;
+    max-width: none !important;
+    height: auto !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+  .ff-round-action {
+    width: 31px !important;
+    height: 31px !important;
+
+------------------------------
+SATIR: 7123
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 245px !important;
+
+    width: 245px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+  }
+
+  .ff-feed-logo {
+    width: 232px !important;
+  }
+
+  .ff-round-action {
+    width: 29px !important;
+    height: 29px !important;
+    flex-basis: 29px !important;
+  }
+}
+
+/* Çok dar telefon */
+
+@media (max-width: 390px) {
+  .ff-feed-logo-wrap {
+
+------------------------------
+SATIR: 7145
+    height: 29px !important;
+    flex-basis: 29px !important;
+  }
+}
+
+/* Çok dar telefon */
+
+@media (max-width: 390px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 218px !important;
+    width: 218px !important;
+  }
+
+  .ff-feed-logo {
+    width: 208px !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 2px !important;
+  }
+
+  .ff-round-action {
+    width: 28px !important;
+    height: 28px !important;
+    flex-basis: 28px !important;
+  }
+}
+
+/* HEADER PANEL SLIGHTLY BIGGER */
+
+/* Logo boyutu değişmez, yalnızca çevresindeki panel hafif büyür */
+
+------------------------------
+
+
+===== ff-feed-logo =====
+SATIR: 2412
+  min-height: 82px;
+  padding: 14px 4px 11px;
+  background:
+    linear-gradient(to bottom,
+      var(--feed-bg) 70%,
+      transparent);
+}
+
+.ff-feed-logo-wrap {
+  display: flex;
+  align-items: center;
+  width: 208px;
+  min-height: 48px;
+  padding: 6px 10px;
+  border-radius: 14px;
+  background: #030409;
+}
+
+.ff-feed-logo {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.ff-feed-header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.ff-round-action {
+  display: grid;
+
+------------------------------
+SATIR: 2422
+  align-items: center;
+  width: 208px;
+  min-height: 48px;
+  padding: 6px 10px;
+  border-radius: 14px;
+  background: #030409;
+}
+
+.ff-feed-logo {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.ff-feed-header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.ff-round-action {
+  display: grid;
+  width: 45px;
+  height: 45px;
+  place-items: center;
+  border: 1px solid rgba(190, 57, 255, 0.34);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle,
+      rgba(165, 30, 245, 0.13),
+      rgba(8, 9, 17, 0.95));
+  color: #ffffff;
+
+------------------------------
+SATIR: 3033
+}
+
+@media (max-width: 680px) {
+  .ff-feed-page {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .ff-feed-logo-wrap {
+    width: 187px;
+  }
+
+  .ff-round-action {
+    width: 41px;
+    height: 41px;
+  }
+
+  .ff-feed-hero {
+    min-height: 267px;
+    grid-template-columns: 1fr 130px;
+    padding: 23px 20px;
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 31px;
+  }
+
+  .ff-feed-hero p {
+    max-width: 270px;
+    font-size: 12px;
+  }
+
+------------------------------
+SATIR: 3153
+  }
+}
+
+@media (max-width: 430px) {
+  .ff-feed-header {
+    min-height: 72px;
+  }
+
+  .ff-feed-logo-wrap {
+    width: 162px;
+  }
+
+  .ff-feed-hero {
+    grid-template-columns: 1fr 105px;
+    padding: 20px 16px;
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 27px;
+  }
+
+  .ff-feed-hero-art {
+    min-height: 155px;
+  }
+
+  .ff-hero-orbit {
+    width: 125px;
+    height: 125px;
+  }
+
+  .ff-rocket-svg {
+
+------------------------------
+SATIR: 3196
+    text-overflow: ellipsis;
+  }
+}
+
+/* FORUMFENOMEN FEED HEADER V2 */
+
+/* Üst yatay logo */
+
+.ff-feed-logo-wrap {
+  width: 255px;
+  min-height: 58px;
+  padding: 5px 8px;
+}
+
+.ff-feed-logo {
+  width: 100%;
+  height: auto;
+}
+
+/* Tema düğmesi arama düğmesiyle aynı ölçüde */
+
+.ff-theme-icon-button {
+  color: #f0b6ff;
+}
+
+html[data-theme="light"] .ff-theme-icon-button {
+  color: #6c3be8;
+  background:
+    radial-gradient(circle,
+      rgba(143, 75, 255, 0.11),
+      rgba(255, 255, 255, 0.96));
+
+------------------------------
+SATIR: 3202
+/* Üst yatay logo */
+
+.ff-feed-logo-wrap {
+  width: 255px;
+  min-height: 58px;
+  padding: 5px 8px;
+}
+
+.ff-feed-logo {
+  width: 100%;
+  height: auto;
+}
+
+/* Tema düğmesi arama düğmesiyle aynı ölçüde */
+
+.ff-theme-icon-button {
+  color: #f0b6ff;
+}
+
+html[data-theme="light"] .ff-theme-icon-button {
+  color: #6c3be8;
+  background:
+    radial-gradient(circle,
+      rgba(143, 75, 255, 0.11),
+      rgba(255, 255, 255, 0.96));
+}
+
+/* Hero sosyal medya alanı */
+
+.ff-hero-socials {
+  display: flex;
+
+------------------------------
+SATIR: 3364
+  }
+
+  50% {
+    transform: translateY(-7px) rotate(1deg);
+  }
+}
+
+@media (max-width: 680px) {
+  .ff-feed-logo-wrap {
+    width: 220px;
+    min-height: 52px;
+  }
+
+  .ff-community-svg {
+    width: 165px;
+    height: 150px;
+  }
+
+  .ff-hero-social-button {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+    border-radius: 11px;
+  }
+
+  .ff-hero-social-button svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+
+------------------------------
+SATIR: 3388
+
+  .ff-hero-social-button svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 430px) {
+  .ff-feed-logo-wrap {
+    width: 185px;
+  }
+
+  .ff-community-svg {
+    width: 135px;
+    height: 125px;
+  }
+
+  .ff-hero-socials {
+    gap: 7px;
+    margin-top: 14px;
+  }
+
+  .ff-hero-social-button {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+}
+
+/* FEED LIGHT HEADER HERO FIX */
+
+
+------------------------------
+SATIR: 3458
+  border-color: rgba(155, 75, 255, 0.28);
+  box-shadow:
+    0 16px 42px rgba(40, 31, 64, 0.2),
+    0 0 34px rgba(115, 40, 220, 0.07);
+}
+
+/* Logo panelin içinde bütünleşik görünür */
+
+.ff-feed-logo-wrap {
+  width: 280px;
+  min-height: 57px;
+  padding: 1px 4px;
+  border: 0;
+  border-radius: 0;
+  background: transparent !important;
+}
+
+.ff-feed-logo {
+  width: 100%;
+  height: auto;
+  filter:
+    drop-shadow(0 0 10px rgba(215, 55, 255, 0.12)) drop-shadow(0 0 18px rgba(0, 181, 255, 0.07));
+}
+
+/* Üstteki tema ve arama butonlarını belirginleştir */
+
+.ff-round-action {
+  flex: 0 0 45px;
+  background:
+    radial-gradient(circle,
+      rgba(154, 31, 240, 0.17),
+
+------------------------------
+SATIR: 3467
+  width: 280px;
+  min-height: 57px;
+  padding: 1px 4px;
+  border: 0;
+  border-radius: 0;
+  background: transparent !important;
+}
+
+.ff-feed-logo {
+  width: 100%;
+  height: auto;
+  filter:
+    drop-shadow(0 0 10px rgba(215, 55, 255, 0.12)) drop-shadow(0 0 18px rgba(0, 181, 255, 0.07));
+}
+
+/* Üstteki tema ve arama butonlarını belirginleştir */
+
+.ff-round-action {
+  flex: 0 0 45px;
+  background:
+    radial-gradient(circle,
+      rgba(154, 31, 240, 0.17),
+      rgba(9, 10, 19, 0.96));
+  border-color: rgba(190, 70, 255, 0.38);
+  color: #ffffff;
+}
+
+html[data-theme="light"] .ff-round-action {
+  background:
+    radial-gradient(circle,
+      rgba(154, 31, 240, 0.18),
+
+------------------------------
+SATIR: 3637
+  .ff-feed-header {
+    top: 6px;
+    min-height: 69px;
+    margin-top: 6px;
+    padding: 8px 10px;
+    border-radius: 19px;
+  }
+
+  .ff-feed-logo-wrap {
+    width: 220px;
+    min-height: 48px;
+  }
+
+  .ff-feed-hero {
+    min-height: 275px;
+  }
+
+  .ff-feed-hero::before {
+    background:
+      linear-gradient(90deg,
+        rgba(3, 4, 11, 0.98) 0%,
+        rgba(3, 4, 11, 0.9) 48%,
+        rgba(5, 5, 15, 0.37) 73%,
+        transparent 100%);
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 31px;
+    line-height: 1.08;
+  }
+}
+
+------------------------------
+SATIR: 3662
+
+  .ff-feed-hero h1 {
+    font-size: 31px;
+    line-height: 1.08;
+  }
+}
+
+@media (max-width: 430px) {
+  .ff-feed-logo-wrap {
+    width: 183px;
+  }
+
+  .ff-round-action {
+    width: 39px;
+    height: 39px;
+    flex-basis: 39px;
+  }
+
+  .ff-feed-hero {
+    min-height: 270px;
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 27px;
+    letter-spacing: -1px;
+  }
+
+  .ff-new-topic-button {
+    min-width: 170px;
+    min-height: 50px;
+    padding: 0 18px;
+
+------------------------------
+SATIR: 3726
+  margin-top: 7px;
+  margin-bottom: 13px;
+  padding: 6px 12px;
+  border-radius: 19px;
+}
+
+/* Panel küçülürken yatay logoyu biraz büyüt */
+
+.ff-feed-logo-wrap {
+  width: 305px;
+  min-height: 50px;
+  padding: 0;
+}
+
+.ff-feed-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Konu kartlarını daha kompakt hale getir */
+
+.ff-topic-list {
+  gap: 9px;
+}
+
+.ff-topic-card {
+  min-height: 111px;
+  grid-template-columns: 58px 1fr;
+  gap: 13px;
+  padding: 13px 15px;
+
+------------------------------
+SATIR: 3732
+/* Panel küçülürken yatay logoyu biraz büyüt */
+
+.ff-feed-logo-wrap {
+  width: 305px;
+  min-height: 50px;
+  padding: 0;
+}
+
+.ff-feed-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Konu kartlarını daha kompakt hale getir */
+
+.ff-topic-list {
+  gap: 9px;
+}
+
+.ff-topic-card {
+  min-height: 111px;
+  grid-template-columns: 58px 1fr;
+  gap: 13px;
+  padding: 13px 15px;
+  border-radius: 18px;
+}
+
+.ff-topic-icon {
+  width: 56px;
+  height: 56px;
+
+------------------------------
+SATIR: 3860
+/* Telefon ve dar ekranlar */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 64px;
+    padding: 5px 9px;
+  }
+
+  .ff-feed-logo-wrap {
+    width: 230px;
+    min-height: 46px;
+  }
+
+  .ff-topic-card {
+    min-height: 126px;
+    grid-template-columns: 54px 1fr;
+    gap: 11px;
+    padding: 12px 13px;
+  }
+
+  .ff-topic-icon {
+    width: 52px;
+    height: 52px;
+  }
+
+  .ff-topic-main {
+    padding-right: 27px;
+  }
+
+  .ff-topic-main h3 {
+    font-size: 14px;
+
+------------------------------
+SATIR: 3892
+
+  .ff-topic-stats {
+    right: 13px;
+    bottom: 11px;
+  }
+}
+
+@media (max-width: 430px) {
+  .ff-feed-logo-wrap {
+    width: 195px;
+  }
+
+  .ff-topic-card {
+    min-height: 130px;
+  }
+}
+
+/* FORUMFENOMEN DESIRED BOTTOM NAV */
+
+/* ------------------------------------------------------
+   DAHA İNCE KONU KARTLARI
+------------------------------------------------------ */
+
+.ff-topic-list {
+  gap: 8px;
+}
+
+.ff-topic-card {
+  min-height: 96px;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 12px;
+
+------------------------------
+SATIR: 4459
+  margin-top: 7px;
+  margin-bottom: 11px;
+  padding: 7px 17px;
+  border-radius: 20px;
+}
+
+/* Logo büyürken panel gereksiz yere uzamaz */
+
+.ff-feed-logo-wrap {
+  display: flex;
+  width: 340px;
+  height: 72px;
+  min-height: 0;
+  align-items: center;
+  overflow: visible;
+  padding: 0;
+}
+
+.ff-feed-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1.08);
+  transform-origin: left center;
+}
+
+/* Sağ üst düğmeler */
+
+.ff-feed-header-actions {
+  display: flex;
+
+------------------------------
+SATIR: 4469
+  width: 340px;
+  height: 72px;
+  min-height: 0;
+  align-items: center;
+  overflow: visible;
+  padding: 0;
+}
+
+.ff-feed-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1.08);
+  transform-origin: left center;
+}
+
+/* Sağ üst düğmeler */
+
+.ff-feed-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ff-round-action {
+  width: 43px;
+  height: 43px;
+  flex: 0 0 43px;
+}
+
+
+------------------------------
+SATIR: 4571
+  height: 175px;
+}
+
+/* ------------------------------------------------------
+   TABLET
+------------------------------------------------------ */
+
+@media (max-width: 800px) {
+  .ff-feed-logo-wrap {
+    width: 285px;
+    height: 65px;
+  }
+
+  .ff-feed-hero {
+    min-height: 235px;
+    grid-template-columns:
+      minmax(0, 1.35fr) minmax(185px, 0.65fr);
+
+    padding: 20px 23px;
+  }
+
+  .ff-feed-hero h1 {
+    font-size: clamp(31px, 5.2vw, 41px);
+  }
+
+  .ff-feed-hero-art {
+    transform: translateX(19px);
+  }
+
+  .ff-community-svg {
+    width: 185px;
+
+------------------------------
+SATIR: 4608
+------------------------------------------------------ */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 76px;
+    padding: 5px 10px;
+  }
+
+  .ff-feed-logo-wrap {
+    width: 220px;
+    height: 55px;
+  }
+
+  .ff-round-action {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+  .ff-feed-hero {
+    min-height: 238px;
+    grid-template-columns:
+      minmax(0, 1fr) 130px;
+
+    padding: 18px 17px;
+  }
+
+
+------------------------------
+SATIR: 4651
+
+  .ff-community-svg {
+    width: 140px;
+    height: 125px;
+  }
+}
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    width: 185px;
+    height: 49px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 4px;
+  }
+
+  .ff-round-action {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+  }
+
+  .ff-round-action svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .ff-feed-hero {
+    grid-template-columns:
+      minmax(0, 1fr) 105px;
+
+------------------------------
+SATIR: 4700
+/* HEADER LOGO AND HERO ART ALIGNMENT */
+
+/* Üst menüde logo tamamen sola yaslanır */
+
+.ff-feed-header {
+  justify-content: flex-start;
+}
+
+.ff-feed-logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  margin-right: auto;
+}
+
+.ff-feed-logo {
+  object-position: left center;
+  transform-origin: left center;
+}
+
+/* Sağ taraftaki düğmeler sağda kalır */
+
+.ff-feed-header-actions {
+  margin-left: auto;
+}
+
+/*
+  Başlığın yazı boyutu ve alanı değişmez.
+  Yalnızca sağdaki hareketli görsel sola kaydırılır.
+*/
+
+------------------------------
+SATIR: 4708
+.ff-feed-logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  margin-right: auto;
+}
+
+.ff-feed-logo {
+  object-position: left center;
+  transform-origin: left center;
+}
+
+/* Sağ taraftaki düğmeler sağda kalır */
+
+.ff-feed-header-actions {
+  margin-left: auto;
+}
+
+/*
+  Başlığın yazı boyutu ve alanı değişmez.
+  Yalnızca sağdaki hareketli görsel sola kaydırılır.
+*/
+
+.ff-feed-hero {
+  column-gap: 0;
+}
+
+.ff-feed-hero-copy {
+  position: relative;
+  z-index: 3;
+
+------------------------------
+SATIR: 4765
+  .ff-feed-hero h1 {
+    font-size: clamp(31px, 5.2vw, 41px);
+  }
+}
+
+/* Telefon */
+
+@media (max-width: 680px) {
+  .ff-feed-logo-wrap {
+    margin-left: 0;
+  }
+
+  .ff-feed-hero-art {
+    transform: translateX(-14px);
+  }
+
+  .ff-feed-hero h1 {
+    white-space: normal;
+    font-size: 29px;
+  }
+}
+
+@media (max-width: 470px) {
+  .ff-feed-hero-art {
+    transform: translateX(-9px);
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 26px;
+  }
+}
+
+------------------------------
+SATIR: 4791
+
+  .ff-feed-hero h1 {
+    font-size: 26px;
+  }
+}
+
+/* HEADER LOGO BIGGER */
+
+.ff-feed-logo-wrap {
+  width: 390px;
+  height: 74px;
+  max-width: calc(100% - 165px);
+  overflow: visible;
+  padding: 0;
+}
+
+.ff-feed-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+  transform: scale(1.24);
+  transform-origin: left center;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-logo-wrap {
+    width: 325px;
+    height: 66px;
+
+------------------------------
+SATIR: 4799
+.ff-feed-logo-wrap {
+  width: 390px;
+  height: 74px;
+  max-width: calc(100% - 165px);
+  overflow: visible;
+  padding: 0;
+}
+
+.ff-feed-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+  transform: scale(1.24);
+  transform-origin: left center;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-logo-wrap {
+    width: 325px;
+    height: 66px;
+    max-width: calc(100% - 150px);
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+}
+
+
+------------------------------
+SATIR: 4811
+  object-position: left center;
+  transform: scale(1.24);
+  transform-origin: left center;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-logo-wrap {
+    width: 325px;
+    height: 66px;
+    max-width: calc(100% - 150px);
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+}
+
+/* Telefon */
+
+@media (max-width: 680px) {
+  .ff-feed-logo-wrap {
+    width: 235px;
+    height: 55px;
+    max-width: calc(100% - 125px);
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.16);
+  }
+
+------------------------------
+SATIR: 4817
+
+@media (max-width: 800px) {
+  .ff-feed-logo-wrap {
+    width: 325px;
+    height: 66px;
+    max-width: calc(100% - 150px);
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+}
+
+/* Telefon */
+
+@media (max-width: 680px) {
+  .ff-feed-logo-wrap {
+    width: 235px;
+    height: 55px;
+    max-width: calc(100% - 125px);
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.16);
+  }
+}
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    width: 190px;
+    height: 49px;
+
+------------------------------
+SATIR: 4825
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+}
+
+/* Telefon */
+
+@media (max-width: 680px) {
+  .ff-feed-logo-wrap {
+    width: 235px;
+    height: 55px;
+    max-width: calc(100% - 125px);
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.16);
+  }
+}
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    width: 190px;
+    height: 49px;
+    max-width: calc(100% - 118px);
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.12);
+  }
+}
+
+
+------------------------------
+SATIR: 4831
+
+@media (max-width: 680px) {
+  .ff-feed-logo-wrap {
+    width: 235px;
+    height: 55px;
+    max-width: calc(100% - 125px);
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.16);
+  }
+}
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    width: 190px;
+    height: 49px;
+    max-width: calc(100% - 118px);
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.12);
+  }
+}
+
+/* HEADER LOGO REAL SIZE FIX */
+
+/*
+  Logo flex düzeni nedeniyle artık küçülemez.
+  Masaüstünde marka adı ve slogan net görünür.
+*/
+
+------------------------------
+SATIR: 4837
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.16);
+  }
+}
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    width: 190px;
+    height: 49px;
+    max-width: calc(100% - 118px);
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.12);
+  }
+}
+
+/* HEADER LOGO REAL SIZE FIX */
+
+/*
+  Logo flex düzeni nedeniyle artık küçülemez.
+  Masaüstünde marka adı ve slogan net görünür.
+*/
+
+.ff-feed-logo-wrap {
+  flex: 0 0 460px;
+  width: 460px;
+  max-width: none;
+  height: 76px;
+
+------------------------------
+SATIR: 4843
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    width: 190px;
+    height: 49px;
+    max-width: calc(100% - 118px);
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.12);
+  }
+}
+
+/* HEADER LOGO REAL SIZE FIX */
+
+/*
+  Logo flex düzeni nedeniyle artık küçülemez.
+  Masaüstünde marka adı ve slogan net görünür.
+*/
+
+.ff-feed-logo-wrap {
+  flex: 0 0 460px;
+  width: 460px;
+  max-width: none;
+  height: 76px;
+  min-height: 76px;
+  margin-right: auto;
+  overflow: visible;
+}
+
+.ff-feed-logo {
+
+------------------------------
+SATIR: 4855
+
+/* HEADER LOGO REAL SIZE FIX */
+
+/*
+  Logo flex düzeni nedeniyle artık küçülemez.
+  Masaüstünde marka adı ve slogan net görünür.
+*/
+
+.ff-feed-logo-wrap {
+  flex: 0 0 460px;
+  width: 460px;
+  max-width: none;
+  height: 76px;
+  min-height: 76px;
+  margin-right: auto;
+  overflow: visible;
+}
+
+.ff-feed-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+  transform: scale(1.12);
+  transform-origin: left center;
+}
+
+/* Sağ üst butonlar logoyu sıkıştıramaz */
+
+.ff-feed-header-actions {
+
+------------------------------
+SATIR: 4865
+  width: 460px;
+  max-width: none;
+  height: 76px;
+  min-height: 76px;
+  margin-right: auto;
+  overflow: visible;
+}
+
+.ff-feed-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+  transform: scale(1.12);
+  transform-origin: left center;
+}
+
+/* Sağ üst butonlar logoyu sıkıştıramaz */
+
+.ff-feed-header-actions {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 360px;
+    width: 360px;
+
+------------------------------
+SATIR: 4885
+.ff-feed-header-actions {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 360px;
+    width: 360px;
+    height: 68px;
+    min-height: 68px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.14);
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    padding-right: 7px;
+    padding-left: 7px;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 255px;
+    width: 255px;
+
+------------------------------
+SATIR: 4892
+@media (max-width: 800px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 360px;
+    width: 360px;
+    height: 68px;
+    min-height: 68px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.14);
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    padding-right: 7px;
+    padding-left: 7px;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 255px;
+    width: 255px;
+    max-width: none;
+    height: 58px;
+    min-height: 58px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.2);
+
+------------------------------
+SATIR: 4905
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    padding-right: 7px;
+    padding-left: 7px;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 255px;
+    width: 255px;
+    max-width: none;
+    height: 58px;
+    min-height: 58px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px;
+  }
+
+  .ff-round-action {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .ff-round-action svg {
+
+------------------------------
+SATIR: 4913
+  .ff-feed-logo-wrap {
+    flex: 0 0 255px;
+    width: 255px;
+    max-width: none;
+    height: 58px;
+    min-height: 58px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px;
+  }
+
+  .ff-round-action {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .ff-round-action svg {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+
+------------------------------
+SATIR: 4936
+    width: 17px;
+    height: 17px;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex: 0 0 225px;
+    width: 225px;
+    height: 53px;
+    min-height: 53px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+
+  .ff-round-action {
+    width: 31px;
+    height: 31px;
+    flex-basis: 31px;
+  }
+
+  .ff-round-action svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+
+------------------------------
+SATIR: 4943
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex: 0 0 225px;
+    width: 225px;
+    height: 53px;
+    min-height: 53px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+
+  .ff-round-action {
+    width: 31px;
+    height: 31px;
+    flex-basis: 31px;
+  }
+
+  .ff-round-action svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Çok dar telefon */
+
+@media (max-width: 390px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 205px;
+    width: 205px;
+  }
+
+------------------------------
+SATIR: 4962
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Çok dar telefon */
+
+@media (max-width: 390px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 205px;
+    width: 205px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 2px;
+  }
+
+  .ff-round-action {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+}
+
+/* BOTTOM NAV CLEAN REBUILD V4 */
+
+/*
+  Önceki SVG gövde ve gölge katmanlarını etkisizleştirir.
+  Menü gövdesi artık tek ve temiz bir kapsüldür.
+*/
+
+
+------------------------------
+SATIR: 6528
+  /* Üst paneli gereksiz büyütmeden logoya alan aç */
+
+  .ff-feed-header {
+    min-height: 67px !important;
+    padding: 4px 7px !important;
+    margin-bottom: 9px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 248px !important;
+    width: 248px !important;
+    max-width: none !important;
+    height: 54px !important;
+    min-height: 54px !important;
+    overflow: visible !important;
+  }
+
+  .ff-feed-logo {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: left center !important;
+    transform: scale(1.32) !important;
+    transform-origin: left center !important;
+  }
+
+  /* Sağ üst butonları hafif küçült, logoyu sıkıştırmasın */
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+------------------------------
+SATIR: 6537
+    flex: 0 0 248px !important;
+    width: 248px !important;
+    max-width: none !important;
+    height: 54px !important;
+    min-height: 54px !important;
+    overflow: visible !important;
+  }
+
+  .ff-feed-logo {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: left center !important;
+    transform: scale(1.32) !important;
+    transform-origin: left center !important;
+  }
+
+  /* Sağ üst butonları hafif küçült, logoyu sıkıştırmasın */
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+  .ff-round-action {
+    width: 33px !important;
+    height: 33px !important;
+    flex-basis: 33px !important;
+  }
+
+  .ff-round-action svg {
+    width: 16px !important;
+
+------------------------------
+SATIR: 6629
+  .ff-community-svg {
+    width: 128px !important;
+    height: 118px !important;
+  }
+}
+
+@media (max-width: 430px) {
+
+  .ff-feed-logo-wrap {
+    flex-basis: 225px !important;
+    width: 225px !important;
+    height: 51px !important;
+    min-height: 51px !important;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.36) !important;
+  }
+
+  .ff-round-action {
+    width: 31px !important;
+    height: 31px !important;
+    flex-basis: 31px !important;
+  }
+
+  .ff-feed-hero {
+    grid-template-columns:
+      minmax(0, 1fr) 108px !important;
+
+    padding:
+      12px 10px 13px 14px !important;
+
+------------------------------
+SATIR: 6636
+
+  .ff-feed-logo-wrap {
+    flex-basis: 225px !important;
+    width: 225px !important;
+    height: 51px !important;
+    min-height: 51px !important;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.36) !important;
+  }
+
+  .ff-round-action {
+    width: 31px !important;
+    height: 31px !important;
+    flex-basis: 31px !important;
+  }
+
+  .ff-feed-hero {
+    grid-template-columns:
+      minmax(0, 1fr) 108px !important;
+
+    padding:
+      12px 10px 13px 14px !important;
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 25px !important;
+  }
+
+  .ff-feed-hero-art {
+
+------------------------------
+SATIR: 6904
+  padding: 7px 15px !important;
+}
+
+/*
+  Logoyu transform ile büyütmek yerine
+  gerçek piksel yüksekliğiyle göster.
+*/
+
+.ff-feed-logo-wrap {
+  flex: 0 0 390px !important;
+  width: 390px !important;
+  max-width: calc(100% - 155px) !important;
+  height: 72px !important;
+  min-height: 72px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  overflow: visible !important;
+  padding: 0 !important;
+}
+
+.ff-feed-logo {
+  display: block !important;
+
+  width: auto !important;
+  max-width: 100% !important;
+  height: 66px !important;
+
+  object-fit: contain !important;
+
+------------------------------
+SATIR: 6919
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  overflow: visible !important;
+  padding: 0 !important;
+}
+
+.ff-feed-logo {
+  display: block !important;
+
+  width: auto !important;
+  max-width: 100% !important;
+  height: 66px !important;
+
+  object-fit: contain !important;
+  object-position: left center !important;
+
+  transform: none !important;
+  filter:
+    drop-shadow(0 0 11px rgba(214, 55, 255, 0.14)) drop-shadow(0 0 17px rgba(0, 181, 255, 0.07)) !important;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-header {
+    min-height: 82px !important;
+  }
+
+  .ff-feed-logo-wrap {
+
+------------------------------
+SATIR: 6941
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-header {
+    min-height: 82px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex-basis: 330px !important;
+    width: 330px !important;
+    height: 66px !important;
+  }
+
+  .ff-feed-logo {
+    height: 60px !important;
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 72px !important;
+    padding: 5px 7px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 245px !important;
+    width: 245px !important;
+    max-width: calc(100% - 108px) !important;
+
+------------------------------
+SATIR: 6947
+  }
+
+  .ff-feed-logo-wrap {
+    flex-basis: 330px !important;
+    width: 330px !important;
+    height: 66px !important;
+  }
+
+  .ff-feed-logo {
+    height: 60px !important;
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 72px !important;
+    padding: 5px 7px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 245px !important;
+    width: 245px !important;
+    max-width: calc(100% - 108px) !important;
+    height: 58px !important;
+    min-height: 58px !important;
+  }
+
+  .ff-feed-logo {
+    width: auto !important;
+
+------------------------------
+SATIR: 6960
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 72px !important;
+    padding: 5px 7px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 245px !important;
+    width: 245px !important;
+    max-width: calc(100% - 108px) !important;
+    height: 58px !important;
+    min-height: 58px !important;
+  }
+
+  .ff-feed-logo {
+    width: auto !important;
+    max-width: 100% !important;
+    height: 54px !important;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 220px !important;
+    width: 220px !important;
+    max-width: calc(100% - 101px) !important;
+    height: 55px !important;
+
+------------------------------
+SATIR: 6968
+  .ff-feed-logo-wrap {
+    flex: 0 0 245px !important;
+    width: 245px !important;
+    max-width: calc(100% - 108px) !important;
+    height: 58px !important;
+    min-height: 58px !important;
+  }
+
+  .ff-feed-logo {
+    width: auto !important;
+    max-width: 100% !important;
+    height: 54px !important;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 220px !important;
+    width: 220px !important;
+    max-width: calc(100% - 101px) !important;
+    height: 55px !important;
+    min-height: 55px !important;
+  }
+
+  .ff-feed-logo {
+    height: 51px !important;
+  }
+
+  .ff-feed-header-actions {
+
+------------------------------
+SATIR: 6978
+    max-width: 100% !important;
+    height: 54px !important;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 220px !important;
+    width: 220px !important;
+    max-width: calc(100% - 101px) !important;
+    height: 55px !important;
+    min-height: 55px !important;
+  }
+
+  .ff-feed-logo {
+    height: 51px !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+  .ff-round-action {
+    width: 30px !important;
+    height: 30px !important;
+    flex-basis: 30px !important;
+  }
+}
+
+
+------------------------------
+SATIR: 6986
+  .ff-feed-logo-wrap {
+    flex-basis: 220px !important;
+    width: 220px !important;
+    max-width: calc(100% - 101px) !important;
+    height: 55px !important;
+    min-height: 55px !important;
+  }
+
+  .ff-feed-logo {
+    height: 51px !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+  .ff-round-action {
+    width: 30px !important;
+    height: 30px !important;
+    flex-basis: 30px !important;
+  }
+}
+
+/* HEADER LOGO FORCE BIG */
+
+/* Üst panel logoya yeterli alan verir */
+
+.ff-feed-header {
+  min-height: 92px !important;
+  padding: 7px 15px !important;
+}
+
+------------------------------
+SATIR: 7012
+
+.ff-feed-header {
+  min-height: 92px !important;
+  padding: 7px 15px !important;
+}
+
+/* Eski genişlik ve max-width sınırlamalarını kaldır */
+
+.ff-feed-logo-wrap {
+  display: flex !important;
+  flex: 0 0 440px !important;
+
+  width: 440px !important;
+  max-width: none !important;
+
+  height: 78px !important;
+  min-height: 78px !important;
+
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  margin: 0 auto 0 0 !important;
+  padding: 0 !important;
+
+  overflow: visible !important;
+}
+
+/* Logonun gerçek görünür genişliğini büyüt */
+
+.ff-feed-logo {
+  display: block !important;
+
+------------------------------
+SATIR: 7033
+  margin: 0 auto 0 0 !important;
+  padding: 0 !important;
+
+  overflow: visible !important;
+}
+
+/* Logonun gerçek görünür genişliğini büyüt */
+
+.ff-feed-logo {
+  display: block !important;
+
+  width: 365px !important;
+  max-width: none !important;
+
+  height: auto !important;
+  max-height: none !important;
+
+  object-fit: contain !important;
+  object-position: left center !important;
+
+  transform: none !important;
+  transform-origin: left center !important;
+
+  flex-shrink: 0 !important;
+
+  filter:
+    drop-shadow(0 0 12px rgba(214, 55, 255, 0.17)) drop-shadow(0 0 19px rgba(0, 181, 255, 0.09)) !important;
+}
+
+/* Sağ butonlar logoyu küçültemez */
+
+
+------------------------------
+SATIR: 7068
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-header {
+    min-height: 84px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex-basis: 350px !important;
+    width: 350px !important;
+    height: 70px !important;
+    min-height: 70px !important;
+  }
+
+  .ff-feed-logo {
+    width: 305px !important;
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 76px !important;
+    padding: 5px 7px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 275px !important;
+
+
+------------------------------
+SATIR: 7075
+
+  .ff-feed-logo-wrap {
+    flex-basis: 350px !important;
+    width: 350px !important;
+    height: 70px !important;
+    min-height: 70px !important;
+  }
+
+  .ff-feed-logo {
+    width: 305px !important;
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 76px !important;
+    padding: 5px 7px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 275px !important;
+
+    width: 275px !important;
+    max-width: none !important;
+
+    height: 62px !important;
+    min-height: 62px !important;
+  }
+
+
+------------------------------
+SATIR: 7088
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header {
+    min-height: 76px !important;
+    padding: 5px 7px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex: 0 0 275px !important;
+
+    width: 275px !important;
+    max-width: none !important;
+
+    height: 62px !important;
+    min-height: 62px !important;
+  }
+
+  .ff-feed-logo {
+    width: 258px !important;
+    max-width: none !important;
+    height: auto !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+  .ff-round-action {
+    width: 31px !important;
+    height: 31px !important;
+
+------------------------------
+SATIR: 7098
+
+    width: 275px !important;
+    max-width: none !important;
+
+    height: 62px !important;
+    min-height: 62px !important;
+  }
+
+  .ff-feed-logo {
+    width: 258px !important;
+    max-width: none !important;
+    height: auto !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+  .ff-round-action {
+    width: 31px !important;
+    height: 31px !important;
+    flex-basis: 31px !important;
+  }
+
+  .ff-round-action svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+/* Dar telefon */
+
+------------------------------
+SATIR: 7123
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 245px !important;
+
+    width: 245px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+  }
+
+  .ff-feed-logo {
+    width: 232px !important;
+  }
+
+  .ff-round-action {
+    width: 29px !important;
+    height: 29px !important;
+    flex-basis: 29px !important;
+  }
+}
+
+/* Çok dar telefon */
+
+@media (max-width: 390px) {
+  .ff-feed-logo-wrap {
+
+------------------------------
+SATIR: 7131
+  .ff-feed-logo-wrap {
+    flex-basis: 245px !important;
+
+    width: 245px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+  }
+
+  .ff-feed-logo {
+    width: 232px !important;
+  }
+
+  .ff-round-action {
+    width: 29px !important;
+    height: 29px !important;
+    flex-basis: 29px !important;
+  }
+}
+
+/* Çok dar telefon */
+
+@media (max-width: 390px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 218px !important;
+    width: 218px !important;
+  }
+
+  .ff-feed-logo {
+    width: 208px !important;
+  }
+
+
+------------------------------
+SATIR: 7145
+    height: 29px !important;
+    flex-basis: 29px !important;
+  }
+}
+
+/* Çok dar telefon */
+
+@media (max-width: 390px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 218px !important;
+    width: 218px !important;
+  }
+
+  .ff-feed-logo {
+    width: 208px !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 2px !important;
+  }
+
+  .ff-round-action {
+    width: 28px !important;
+    height: 28px !important;
+    flex-basis: 28px !important;
+  }
+}
+
+/* HEADER PANEL SLIGHTLY BIGGER */
+
+/* Logo boyutu değişmez, yalnızca çevresindeki panel hafif büyür */
+
+------------------------------
+SATIR: 7150
+/* Çok dar telefon */
+
+@media (max-width: 390px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 218px !important;
+    width: 218px !important;
+  }
+
+  .ff-feed-logo {
+    width: 208px !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 2px !important;
+  }
+
+  .ff-round-action {
+    width: 28px !important;
+    height: 28px !important;
+    flex-basis: 28px !important;
+  }
+}
+
+/* HEADER PANEL SLIGHTLY BIGGER */
+
+/* Logo boyutu değişmez, yalnızca çevresindeki panel hafif büyür */
+
+.ff-feed-header {
+  min-height: 98px !important;
+  padding: 10px 17px !important;
+  border-radius: 23px !important;
+
+------------------------------
+SATIR: 14051
+  .ff-feed-header-actions .ff-round-action svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+
+@media (max-width: 370px) {
+  .ff-feed-page .ff-feed-logo {
+    width: clamp(158px, 46vw, 175px) !important;
+  }
+
+  .ff-feed-page .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-round-action {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    flex-basis: 32px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-site-search {
+    flex-basis: 32px;
+    min-width: 32px;
+  }
+}
+
+/* ff-mobile-feed-spacing-fix */
+
+------------------------------
+
+
+===== ff-feed-header-actions =====
+SATIR: 2428
+}
+
+.ff-feed-logo {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.ff-feed-header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.ff-round-action {
+  display: grid;
+  width: 45px;
+  height: 45px;
+  place-items: center;
+  border: 1px solid rgba(190, 57, 255, 0.34);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle,
+      rgba(165, 30, 245, 0.13),
+      rgba(8, 9, 17, 0.95));
+  color: #ffffff;
+  box-shadow:
+    0 0 24px rgba(171, 29, 245, 0.11);
+}
+
+.ff-round-action.active {
+  border-color: rgba(0, 181, 255, 0.58);
+
+------------------------------
+SATIR: 4480
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1.08);
+  transform-origin: left center;
+}
+
+/* Sağ üst düğmeler */
+
+.ff-feed-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ff-round-action {
+  width: 43px;
+  height: 43px;
+  flex: 0 0 43px;
+}
+
+.ff-round-action svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Bildirim zili */
+
+.ff-notification-button {
+  position: relative;
+  color: #ffffff;
+}
+
+------------------------------
+SATIR: 4619
+  }
+
+  .ff-round-action {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+  .ff-feed-hero {
+    min-height: 238px;
+    grid-template-columns:
+      minmax(0, 1fr) 130px;
+
+    padding: 18px 17px;
+  }
+
+  /* Dar ekranda başlık taşmasın */
+
+  .ff-feed-hero h1 {
+    white-space: normal;
+    font-size: 29px;
+    line-height: 1.08;
+  }
+
+  .ff-feed-hero-art {
+    min-height: 150px;
+    transform: translateX(17px);
+
+------------------------------
+SATIR: 4656
+}
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    width: 185px;
+    height: 49px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 4px;
+  }
+
+  .ff-round-action {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+  }
+
+  .ff-round-action svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .ff-feed-hero {
+    grid-template-columns:
+      minmax(0, 1fr) 105px;
+
+    padding-right: 13px;
+  }
+
+  .ff-feed-hero h1 {
+
+------------------------------
+SATIR: 4715
+
+.ff-feed-logo {
+  object-position: left center;
+  transform-origin: left center;
+}
+
+/* Sağ taraftaki düğmeler sağda kalır */
+
+.ff-feed-header-actions {
+  margin-left: auto;
+}
+
+/*
+  Başlığın yazı boyutu ve alanı değişmez.
+  Yalnızca sağdaki hareketli görsel sola kaydırılır.
+*/
+
+.ff-feed-hero {
+  column-gap: 0;
+}
+
+.ff-feed-hero-copy {
+  position: relative;
+  z-index: 3;
+}
+
+.ff-feed-hero-art {
+  justify-self: start;
+  transform: translateX(-34px);
+}
+
+
+------------------------------
+SATIR: 4877
+  object-fit: contain;
+  object-position: left center;
+  transform: scale(1.12);
+  transform-origin: left center;
+}
+
+/* Sağ üst butonlar logoyu sıkıştıramaz */
+
+.ff-feed-header-actions {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 360px;
+    width: 360px;
+    height: 68px;
+    min-height: 68px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.14);
+  }
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+
+------------------------------
+SATIR: 4917
+    height: 58px;
+    min-height: 58px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px;
+  }
+
+  .ff-round-action {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .ff-round-action svg {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex: 0 0 225px;
+    width: 225px;
+    height: 53px;
+
+------------------------------
+SATIR: 4967
+/* Çok dar telefon */
+
+@media (max-width: 390px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 205px;
+    width: 205px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 2px;
+  }
+
+  .ff-round-action {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+}
+
+/* BOTTOM NAV CLEAN REBUILD V4 */
+
+/*
+  Önceki SVG gövde ve gölge katmanlarını etkisizleştirir.
+  Menü gövdesi artık tek ve temiz bir kapsüldür.
+*/
+
+.ff-bottom-nav,
+html[data-theme="light"] .ff-bottom-nav {
+  position: fixed !important;
+  left: 50% !important;
+  right: auto !important;
+
+------------------------------
+SATIR: 6548
+    object-fit: contain !important;
+    object-position: left center !important;
+    transform: scale(1.32) !important;
+    transform-origin: left center !important;
+  }
+
+  /* Sağ üst butonları hafif küçült, logoyu sıkıştırmasın */
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+  .ff-round-action {
+    width: 33px !important;
+    height: 33px !important;
+    flex-basis: 33px !important;
+  }
+
+  .ff-round-action svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  /* Hero balonundaki üst ve alt boşlukları azalt */
+
+  .ff-feed-hero {
+    min-height: 0 !important;
+    grid-template-columns:
+      minmax(0, 1fr) 118px !important;
+
+    align-items: center !important;
+
+------------------------------
+SATIR: 6990
+    height: 55px !important;
+    min-height: 55px !important;
+  }
+
+  .ff-feed-logo {
+    height: 51px !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+  .ff-round-action {
+    width: 30px !important;
+    height: 30px !important;
+    flex-basis: 30px !important;
+  }
+}
+
+/* HEADER LOGO FORCE BIG */
+
+/* Üst panel logoya yeterli alan verir */
+
+.ff-feed-header {
+  min-height: 92px !important;
+  padding: 7px 15px !important;
+}
+
+/* Eski genişlik ve max-width sınırlamalarını kaldır */
+
+.ff-feed-logo-wrap {
+
+------------------------------
+SATIR: 7056
+  flex-shrink: 0 !important;
+
+  filter:
+    drop-shadow(0 0 12px rgba(214, 55, 255, 0.17)) drop-shadow(0 0 19px rgba(0, 181, 255, 0.09)) !important;
+}
+
+/* Sağ butonlar logoyu küçültemez */
+
+.ff-feed-header-actions {
+  flex: 0 0 auto !important;
+  margin-left: auto !important;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-header {
+    min-height: 84px !important;
+  }
+
+  .ff-feed-logo-wrap {
+    flex-basis: 350px !important;
+    width: 350px !important;
+    height: 70px !important;
+    min-height: 70px !important;
+  }
+
+  .ff-feed-logo {
+    width: 305px !important;
+  }
+}
+
+------------------------------
+SATIR: 7104
+  }
+
+  .ff-feed-logo {
+    width: 258px !important;
+    max-width: none !important;
+    height: auto !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+  .ff-round-action {
+    width: 31px !important;
+    height: 31px !important;
+    flex-basis: 31px !important;
+  }
+
+  .ff-round-action svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 245px !important;
+
+    width: 245px !important;
+
+------------------------------
+SATIR: 7154
+    flex-basis: 218px !important;
+    width: 218px !important;
+  }
+
+  .ff-feed-logo {
+    width: 208px !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 2px !important;
+  }
+
+  .ff-round-action {
+    width: 28px !important;
+    height: 28px !important;
+    flex-basis: 28px !important;
+  }
+}
+
+/* HEADER PANEL SLIGHTLY BIGGER */
+
+/* Logo boyutu değişmez, yalnızca çevresindeki panel hafif büyür */
+
+.ff-feed-header {
+  min-height: 98px !important;
+  padding: 10px 17px !important;
+  border-radius: 23px !important;
+}
+
+/* Tablet */
+
+
+------------------------------
+SATIR: 14036
+
+  .ff-feed-more-button {
+    min-height: 30px;
+    padding: 5px 10px;
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  .ff-feed-header-actions .ff-round-action {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+  }
+
+  .ff-feed-header-actions .ff-round-action svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+
+@media (max-width: 370px) {
+  .ff-feed-page .ff-feed-logo {
+    width: clamp(158px, 46vw, 175px) !important;
+  }
+
+  .ff-feed-page .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+
+------------------------------
+SATIR: 14043
+
+  .ff-feed-header-actions .ff-round-action {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+  }
+
+  .ff-feed-header-actions .ff-round-action svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+
+@media (max-width: 370px) {
+  .ff-feed-page .ff-feed-logo {
+    width: clamp(158px, 46vw, 175px) !important;
+  }
+
+  .ff-feed-page .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-round-action {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    flex-basis: 32px;
+  }
+
+------------------------------
+SATIR: 14055
+}
+
+
+@media (max-width: 370px) {
+  .ff-feed-page .ff-feed-logo {
+    width: clamp(158px, 46vw, 175px) !important;
+  }
+
+  .ff-feed-page .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-round-action {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    flex-basis: 32px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-site-search {
+    flex-basis: 32px;
+    min-width: 32px;
+  }
+}
+
+/* ff-mobile-feed-spacing-fix */
+
+.ff-featured-section {
+  scroll-margin-top: 18px;
+}
+
+------------------------------
+SATIR: 14059
+  .ff-feed-page .ff-feed-logo {
+    width: clamp(158px, 46vw, 175px) !important;
+  }
+
+  .ff-feed-page .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-round-action {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    flex-basis: 32px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-site-search {
+    flex-basis: 32px;
+    min-width: 32px;
+  }
+}
+
+/* ff-mobile-feed-spacing-fix */
+
+.ff-featured-section {
+  scroll-margin-top: 18px;
+}
+
+@media (max-width: 768px) {
+  .ff-feed-page .ff-insight-grid button {
+    min-height: 82px;
+
+------------------------------
+SATIR: 14067
+  .ff-feed-page .ff-feed-header-actions .ff-round-action {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    flex-basis: 32px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-site-search {
+    flex-basis: 32px;
+    min-width: 32px;
+  }
+}
+
+/* ff-mobile-feed-spacing-fix */
+
+.ff-featured-section {
+  scroll-margin-top: 18px;
+}
+
+@media (max-width: 768px) {
+  .ff-feed-page .ff-insight-grid button {
+    min-height: 82px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .ff-feed-page .ff-featured-section {
+    margin-top: 18px;
+    scroll-margin-top: 14px;
+  }
+
+------------------------------
+
+
+===== ff-round-action =====
+SATIR: 2433
+  object-fit: contain;
+}
+
+.ff-feed-header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.ff-round-action {
+  display: grid;
+  width: 45px;
+  height: 45px;
+  place-items: center;
+  border: 1px solid rgba(190, 57, 255, 0.34);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle,
+      rgba(165, 30, 245, 0.13),
+      rgba(8, 9, 17, 0.95));
+  color: #ffffff;
+  box-shadow:
+    0 0 24px rgba(171, 29, 245, 0.11);
+}
+
+.ff-round-action.active {
+  border-color: rgba(0, 181, 255, 0.58);
+  box-shadow:
+    0 0 26px rgba(0, 181, 255, 0.18);
+}
+
+.ff-round-action svg {
+
+------------------------------
+SATIR: 2449
+    radial-gradient(circle,
+      rgba(165, 30, 245, 0.13),
+      rgba(8, 9, 17, 0.95));
+  color: #ffffff;
+  box-shadow:
+    0 0 24px rgba(171, 29, 245, 0.11);
+}
+
+.ff-round-action.active {
+  border-color: rgba(0, 181, 255, 0.58);
+  box-shadow:
+    0 0 26px rgba(0, 181, 255, 0.18);
+}
+
+.ff-round-action svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ff-search-panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 2px 0 14px;
+  padding: 0 15px;
+  border: 1px solid var(--feed-border);
+
+------------------------------
+SATIR: 2455
+}
+
+.ff-round-action.active {
+  border-color: rgba(0, 181, 255, 0.58);
+  box-shadow:
+    0 0 26px rgba(0, 181, 255, 0.18);
+}
+
+.ff-round-action svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ff-search-panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 2px 0 14px;
+  padding: 0 15px;
+  border: 1px solid var(--feed-border);
+  border-radius: 14px;
+  background: var(--feed-card);
+}
+
+.ff-search-panel svg {
+  width: 20px;
+
+------------------------------
+SATIR: 3037
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .ff-feed-logo-wrap {
+    width: 187px;
+  }
+
+  .ff-round-action {
+    width: 41px;
+    height: 41px;
+  }
+
+  .ff-feed-hero {
+    min-height: 267px;
+    grid-template-columns: 1fr 130px;
+    padding: 23px 20px;
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 31px;
+  }
+
+  .ff-feed-hero p {
+    max-width: 270px;
+    font-size: 12px;
+  }
+
+  .ff-new-topic-button {
+    min-height: 49px;
+    margin-top: 22px;
+
+------------------------------
+SATIR: 3476
+  width: 100%;
+  height: auto;
+  filter:
+    drop-shadow(0 0 10px rgba(215, 55, 255, 0.12)) drop-shadow(0 0 18px rgba(0, 181, 255, 0.07));
+}
+
+/* Üstteki tema ve arama butonlarını belirginleştir */
+
+.ff-round-action {
+  flex: 0 0 45px;
+  background:
+    radial-gradient(circle,
+      rgba(154, 31, 240, 0.17),
+      rgba(9, 10, 19, 0.96));
+  border-color: rgba(190, 70, 255, 0.38);
+  color: #ffffff;
+}
+
+html[data-theme="light"] .ff-round-action {
+  background:
+    radial-gradient(circle,
+      rgba(154, 31, 240, 0.18),
+      rgba(9, 10, 19, 0.97));
+  color: #ffffff;
+}
+
+/* Hero alanı her iki temada da koyu kalır */
+
+.ff-feed-hero {
+  isolation: isolate;
+  min-height: 290px;
+
+------------------------------
+SATIR: 3486
+  background:
+    radial-gradient(circle,
+      rgba(154, 31, 240, 0.17),
+      rgba(9, 10, 19, 0.96));
+  border-color: rgba(190, 70, 255, 0.38);
+  color: #ffffff;
+}
+
+html[data-theme="light"] .ff-round-action {
+  background:
+    radial-gradient(circle,
+      rgba(154, 31, 240, 0.18),
+      rgba(9, 10, 19, 0.97));
+  color: #ffffff;
+}
+
+/* Hero alanı her iki temada da koyu kalır */
+
+.ff-feed-hero {
+  isolation: isolate;
+  min-height: 290px;
+  border-color: rgba(155, 73, 255, 0.25);
+  background:
+    radial-gradient(circle at 76% 43%,
+      rgba(108, 42, 255, 0.25),
+      transparent 32%),
+    radial-gradient(circle at 66% 82%,
+      rgba(213, 31, 255, 0.18),
+      transparent 37%),
+    linear-gradient(135deg,
+      #04050c 0%,
+
+------------------------------
+SATIR: 3666
+  }
+}
+
+@media (max-width: 430px) {
+  .ff-feed-logo-wrap {
+    width: 183px;
+  }
+
+  .ff-round-action {
+    width: 39px;
+    height: 39px;
+    flex-basis: 39px;
+  }
+
+  .ff-feed-hero {
+    min-height: 270px;
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 27px;
+    letter-spacing: -1px;
+  }
+
+  .ff-new-topic-button {
+    min-width: 170px;
+    min-height: 50px;
+    padding: 0 18px;
+    font-size: 13px;
+  }
+}
+
+
+------------------------------
+SATIR: 4486
+/* Sağ üst düğmeler */
+
+.ff-feed-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ff-round-action {
+  width: 43px;
+  height: 43px;
+  flex: 0 0 43px;
+}
+
+.ff-round-action svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Bildirim zili */
+
+.ff-notification-button {
+  position: relative;
+  color: #ffffff;
+}
+
+.ff-notification-button:hover {
+  border-color: rgba(227, 65, 234, 0.56);
+  box-shadow:
+    0 0 25px rgba(187, 37, 238, 0.18);
+}
+
+------------------------------
+SATIR: 4492
+}
+
+.ff-round-action {
+  width: 43px;
+  height: 43px;
+  flex: 0 0 43px;
+}
+
+.ff-round-action svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Bildirim zili */
+
+.ff-notification-button {
+  position: relative;
+  color: #ffffff;
+}
+
+.ff-notification-button:hover {
+  border-color: rgba(227, 65, 234, 0.56);
+  box-shadow:
+    0 0 25px rgba(187, 37, 238, 0.18);
+}
+
+/* ------------------------------------------------------
+   HERO ALANI
+------------------------------------------------------ */
+
+.ff-feed-hero {
+
+------------------------------
+SATIR: 4613
+    padding: 5px 10px;
+  }
+
+  .ff-feed-logo-wrap {
+    width: 220px;
+    height: 55px;
+  }
+
+  .ff-round-action {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+  .ff-feed-hero {
+    min-height: 238px;
+    grid-template-columns:
+      minmax(0, 1fr) 130px;
+
+    padding: 18px 17px;
+  }
+
+  /* Dar ekranda başlık taşmasın */
+
+  .ff-feed-hero h1 {
+    white-space: normal;
+    font-size: 29px;
+
+------------------------------
+SATIR: 4660
+    width: 185px;
+    height: 49px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 4px;
+  }
+
+  .ff-round-action {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+  }
+
+  .ff-round-action svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .ff-feed-hero {
+    grid-template-columns:
+      minmax(0, 1fr) 105px;
+
+    padding-right: 13px;
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 26px;
+  }
+
+  .ff-feed-hero-art {
+
+------------------------------
+SATIR: 4666
+  }
+
+  .ff-round-action {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+  }
+
+  .ff-round-action svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .ff-feed-hero {
+    grid-template-columns:
+      minmax(0, 1fr) 105px;
+
+    padding-right: 13px;
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 26px;
+  }
+
+  .ff-feed-hero-art {
+    transform: translateX(13px);
+  }
+
+  .ff-community-svg {
+    width: 118px;
+    height: 108px;
+
+------------------------------
+SATIR: 4921
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px;
+  }
+
+  .ff-round-action {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .ff-round-action svg {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex: 0 0 225px;
+    width: 225px;
+    height: 53px;
+    min-height: 53px;
+  }
+
+  .ff-feed-logo {
+
+------------------------------
+SATIR: 4927
+  }
+
+  .ff-round-action {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .ff-round-action svg {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex: 0 0 225px;
+    width: 225px;
+    height: 53px;
+    min-height: 53px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+
+  .ff-round-action {
+    width: 31px;
+    height: 31px;
+
+------------------------------
+SATIR: 4947
+    height: 53px;
+    min-height: 53px;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.2);
+  }
+
+  .ff-round-action {
+    width: 31px;
+    height: 31px;
+    flex-basis: 31px;
+  }
+
+  .ff-round-action svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Çok dar telefon */
+
+@media (max-width: 390px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 205px;
+    width: 205px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 2px;
+  }
+
+------------------------------
+SATIR: 4953
+  }
+
+  .ff-round-action {
+    width: 31px;
+    height: 31px;
+    flex-basis: 31px;
+  }
+
+  .ff-round-action svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Çok dar telefon */
+
+@media (max-width: 390px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 205px;
+    width: 205px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 2px;
+  }
+
+  .ff-round-action {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+
+------------------------------
+SATIR: 4971
+    flex-basis: 205px;
+    width: 205px;
+  }
+
+  .ff-feed-header-actions {
+    gap: 2px;
+  }
+
+  .ff-round-action {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+}
+
+/* BOTTOM NAV CLEAN REBUILD V4 */
+
+/*
+  Önceki SVG gövde ve gölge katmanlarını etkisizleştirir.
+  Menü gövdesi artık tek ve temiz bir kapsüldür.
+*/
+
+.ff-bottom-nav,
+html[data-theme="light"] .ff-bottom-nav {
+  position: fixed !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: max(12px, env(safe-area-inset-bottom)) !important;
+  z-index: 100 !important;
+
+  display: grid !important;
+
+------------------------------
+SATIR: 6552
+  }
+
+  /* Sağ üst butonları hafif küçült, logoyu sıkıştırmasın */
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+  .ff-round-action {
+    width: 33px !important;
+    height: 33px !important;
+    flex-basis: 33px !important;
+  }
+
+  .ff-round-action svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  /* Hero balonundaki üst ve alt boşlukları azalt */
+
+  .ff-feed-hero {
+    min-height: 0 !important;
+    grid-template-columns:
+      minmax(0, 1fr) 118px !important;
+
+    align-items: center !important;
+    column-gap: 3px !important;
+
+    padding:
+      13px 13px 14px 16px !important;
+
+------------------------------
+SATIR: 6558
+  }
+
+  .ff-round-action {
+    width: 33px !important;
+    height: 33px !important;
+    flex-basis: 33px !important;
+  }
+
+  .ff-round-action svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  /* Hero balonundaki üst ve alt boşlukları azalt */
+
+  .ff-feed-hero {
+    min-height: 0 !important;
+    grid-template-columns:
+      minmax(0, 1fr) 118px !important;
+
+    align-items: center !important;
+    column-gap: 3px !important;
+
+    padding:
+      13px 13px 14px 16px !important;
+
+    border-radius: 22px !important;
+  }
+
+  .ff-feed-hero-copy {
+    align-self: center !important;
+
+------------------------------
+SATIR: 6640
+    height: 51px !important;
+    min-height: 51px !important;
+  }
+
+  .ff-feed-logo {
+    transform: scale(1.36) !important;
+  }
+
+  .ff-round-action {
+    width: 31px !important;
+    height: 31px !important;
+    flex-basis: 31px !important;
+  }
+
+  .ff-feed-hero {
+    grid-template-columns:
+      minmax(0, 1fr) 108px !important;
+
+    padding:
+      12px 10px 13px 14px !important;
+  }
+
+  .ff-feed-hero h1 {
+    font-size: 25px !important;
+  }
+
+  .ff-feed-hero-art {
+    height: 125px !important;
+    transform: translateX(4px) !important;
+  }
+
+
+------------------------------
+SATIR: 6994
+  .ff-feed-logo {
+    height: 51px !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+  .ff-round-action {
+    width: 30px !important;
+    height: 30px !important;
+    flex-basis: 30px !important;
+  }
+}
+
+/* HEADER LOGO FORCE BIG */
+
+/* Üst panel logoya yeterli alan verir */
+
+.ff-feed-header {
+  min-height: 92px !important;
+  padding: 7px 15px !important;
+}
+
+/* Eski genişlik ve max-width sınırlamalarını kaldır */
+
+.ff-feed-logo-wrap {
+  display: flex !important;
+  flex: 0 0 440px !important;
+
+  width: 440px !important;
+
+------------------------------
+SATIR: 7108
+    max-width: none !important;
+    height: auto !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 3px !important;
+  }
+
+  .ff-round-action {
+    width: 31px !important;
+    height: 31px !important;
+    flex-basis: 31px !important;
+  }
+
+  .ff-round-action svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 245px !important;
+
+    width: 245px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+  }
+
+
+------------------------------
+SATIR: 7114
+  }
+
+  .ff-round-action {
+    width: 31px !important;
+    height: 31px !important;
+    flex-basis: 31px !important;
+  }
+
+  .ff-round-action svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+/* Dar telefon */
+
+@media (max-width: 470px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 245px !important;
+
+    width: 245px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+  }
+
+  .ff-feed-logo {
+    width: 232px !important;
+  }
+
+  .ff-round-action {
+    width: 29px !important;
+
+------------------------------
+SATIR: 7135
+    height: 58px !important;
+    min-height: 58px !important;
+  }
+
+  .ff-feed-logo {
+    width: 232px !important;
+  }
+
+  .ff-round-action {
+    width: 29px !important;
+    height: 29px !important;
+    flex-basis: 29px !important;
+  }
+}
+
+/* Çok dar telefon */
+
+@media (max-width: 390px) {
+  .ff-feed-logo-wrap {
+    flex-basis: 218px !important;
+    width: 218px !important;
+  }
+
+  .ff-feed-logo {
+    width: 208px !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 2px !important;
+  }
+
+
+------------------------------
+SATIR: 7158
+  .ff-feed-logo {
+    width: 208px !important;
+  }
+
+  .ff-feed-header-actions {
+    gap: 2px !important;
+  }
+
+  .ff-round-action {
+    width: 28px !important;
+    height: 28px !important;
+    flex-basis: 28px !important;
+  }
+}
+
+/* HEADER PANEL SLIGHTLY BIGGER */
+
+/* Logo boyutu değişmez, yalnızca çevresindeki panel hafif büyür */
+
+.ff-feed-header {
+  min-height: 98px !important;
+  padding: 10px 17px !important;
+  border-radius: 23px !important;
+}
+
+/* Tablet */
+
+@media (max-width: 800px) {
+  .ff-feed-header {
+    min-height: 90px !important;
+    padding: 8px 13px !important;
+
+------------------------------
+SATIR: 13384
+  }
+}
+
+/* MOBILE SEARCH INPUT ZOOM FIX END */
+
+/* MOBILE HEADER ICON SIZE V9 START */
+
+@media (max-width: 680px) {
+  .ff-round-action svg {
+    width: 19px !important;
+    height: 19px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .ff-round-action svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+/* MOBILE HEADER ICON SIZE V9 END */
+
+/* GLOBAL MOBILE FORM ZOOM FIX START */
+
+@media (max-width: 680px) {
+
+  input,
+  textarea,
+  select,
+  [contenteditable="true"] {
+
+------------------------------
+SATIR: 13391
+@media (max-width: 680px) {
+  .ff-round-action svg {
+    width: 19px !important;
+    height: 19px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .ff-round-action svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+/* MOBILE HEADER ICON SIZE V9 END */
+
+/* GLOBAL MOBILE FORM ZOOM FIX START */
+
+@media (max-width: 680px) {
+
+  input,
+  textarea,
+  select,
+  [contenteditable="true"] {
+    font-size: 16px !important;
+  }
+}
+
+/* GLOBAL MOBILE FORM ZOOM FIX END */
+
+/* MOBILE KEYBOARD NAV HIDE V10 START */
+
+------------------------------
+SATIR: 14036
+
+  .ff-feed-more-button {
+    min-height: 30px;
+    padding: 5px 10px;
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  .ff-feed-header-actions .ff-round-action {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+  }
+
+  .ff-feed-header-actions .ff-round-action svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+
+@media (max-width: 370px) {
+  .ff-feed-page .ff-feed-logo {
+    width: clamp(158px, 46vw, 175px) !important;
+  }
+
+  .ff-feed-page .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+
+------------------------------
+SATIR: 14043
+
+  .ff-feed-header-actions .ff-round-action {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+  }
+
+  .ff-feed-header-actions .ff-round-action svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+
+@media (max-width: 370px) {
+  .ff-feed-page .ff-feed-logo {
+    width: clamp(158px, 46vw, 175px) !important;
+  }
+
+  .ff-feed-page .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-round-action {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    flex-basis: 32px;
+  }
+
+------------------------------
+SATIR: 14059
+  .ff-feed-page .ff-feed-logo {
+    width: clamp(158px, 46vw, 175px) !important;
+  }
+
+  .ff-feed-page .ff-feed-header-actions {
+    gap: 5px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-round-action {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    flex-basis: 32px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-site-search {
+    flex-basis: 32px;
+    min-width: 32px;
+  }
+}
+
+/* ff-mobile-feed-spacing-fix */
+
+.ff-featured-section {
+  scroll-margin-top: 18px;
+}
+
+@media (max-width: 768px) {
+  .ff-feed-page .ff-insight-grid button {
+    min-height: 82px;
+
+------------------------------
+
+
+===== ff-site-search =====
+SATIR: 12231
+
+  .ff-search-result-content small {
+    font-size: 9px;
+  }
+}
+
+/* GENEL SİTE ARAMASI */
+
+.ff-site-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  z-index: 80;
+}
+
+.ff-site-search-popover {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 200;
+
+  width: min(520px, calc(100vw - 30px));
+  overflow: hidden;
+
+  border: 1px solid rgba(154, 87, 255, 0.28);
+  border-radius: 20px;
+  padding: 8px;
+
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(214, 55, 244, 0.13),
+
+------------------------------
+SATIR: 12238
+
+.ff-site-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  z-index: 80;
+}
+
+.ff-site-search-popover {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 200;
+
+  width: min(520px, calc(100vw - 30px));
+  overflow: hidden;
+
+  border: 1px solid rgba(154, 87, 255, 0.28);
+  border-radius: 20px;
+  padding: 8px;
+
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(214, 55, 244, 0.13),
+      transparent 35%),
+    radial-gradient(circle at 90% 100%,
+      rgba(0, 174, 255, 0.1),
+      transparent 38%),
+    rgba(7, 8, 16, 0.98);
+
+  box-shadow:
+
+------------------------------
+SATIR: 12266
+    rgba(7, 8, 16, 0.98);
+
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.62),
+    0 0 40px rgba(113, 48, 244, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  backdrop-filter: blur(26px);
+  animation: ff-site-search-open 0.18s ease both;
+}
+
+.ff-site-search-input {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  height: 52px;
+  padding: 0 15px;
+
+  border: 1px solid rgba(151, 91, 255, 0.22);
+  border-radius: 14px;
+
+  background: rgba(4, 5, 11, 0.82);
+}
+
+.ff-site-search-input:focus-within {
+  border-color: rgba(192, 72, 255, 0.58);
+
+  box-shadow:
+    0 0 0 3px rgba(169, 30, 244, 0.09),
+    0 0 24px rgba(0, 175, 255, 0.06);
+
+------------------------------
+SATIR: 12269
+    0 28px 80px rgba(0, 0, 0, 0.62),
+    0 0 40px rgba(113, 48, 244, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  backdrop-filter: blur(26px);
+  animation: ff-site-search-open 0.18s ease both;
+}
+
+.ff-site-search-input {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  height: 52px;
+  padding: 0 15px;
+
+  border: 1px solid rgba(151, 91, 255, 0.22);
+  border-radius: 14px;
+
+  background: rgba(4, 5, 11, 0.82);
+}
+
+.ff-site-search-input:focus-within {
+  border-color: rgba(192, 72, 255, 0.58);
+
+  box-shadow:
+    0 0 0 3px rgba(169, 30, 244, 0.09),
+    0 0 24px rgba(0, 175, 255, 0.06);
+}
+
+.ff-site-search-input svg {
+
+------------------------------
+SATIR: 12283
+  padding: 0 15px;
+
+  border: 1px solid rgba(151, 91, 255, 0.22);
+  border-radius: 14px;
+
+  background: rgba(4, 5, 11, 0.82);
+}
+
+.ff-site-search-input:focus-within {
+  border-color: rgba(192, 72, 255, 0.58);
+
+  box-shadow:
+    0 0 0 3px rgba(169, 30, 244, 0.09),
+    0 0 24px rgba(0, 175, 255, 0.06);
+}
+
+.ff-site-search-input svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+
+  fill: none;
+  stroke: var(--feed-muted);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ff-site-search-input input {
+  width: 100%;
+  height: 100%;
+
+------------------------------
+SATIR: 12291
+.ff-site-search-input:focus-within {
+  border-color: rgba(192, 72, 255, 0.58);
+
+  box-shadow:
+    0 0 0 3px rgba(169, 30, 244, 0.09),
+    0 0 24px rgba(0, 175, 255, 0.06);
+}
+
+.ff-site-search-input svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+
+  fill: none;
+  stroke: var(--feed-muted);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ff-site-search-input input {
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+  outline: none;
+
+  background: transparent;
+  color: var(--feed-text);
+
+  font-size: 13px;
+
+------------------------------
+SATIR: 12303
+
+  fill: none;
+  stroke: var(--feed-muted);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ff-site-search-input input {
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+  outline: none;
+
+  background: transparent;
+  color: var(--feed-text);
+
+  font-size: 13px;
+}
+
+.ff-site-search-input input::placeholder {
+  color: var(--feed-muted);
+  opacity: 0.78;
+}
+
+.ff-site-search-results {
+  max-height: 430px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+
+------------------------------
+SATIR: 12316
+  outline: none;
+
+  background: transparent;
+  color: var(--feed-text);
+
+  font-size: 13px;
+}
+
+.ff-site-search-input input::placeholder {
+  color: var(--feed-muted);
+  opacity: 0.78;
+}
+
+.ff-site-search-results {
+  max-height: 430px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  margin-top: 7px;
+  padding: 1px;
+}
+
+.ff-site-search-result {
+  display: grid;
+  width: 100%;
+  min-height: 68px;
+
+  grid-template-columns: 46px minmax(0, 1fr) 22px;
+  align-items: center;
+  gap: 12px;
+
+
+------------------------------
+SATIR: 12321
+  font-size: 13px;
+}
+
+.ff-site-search-input input::placeholder {
+  color: var(--feed-muted);
+  opacity: 0.78;
+}
+
+.ff-site-search-results {
+  max-height: 430px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  margin-top: 7px;
+  padding: 1px;
+}
+
+.ff-site-search-result {
+  display: grid;
+  width: 100%;
+  min-height: 68px;
+
+  grid-template-columns: 46px minmax(0, 1fr) 22px;
+  align-items: center;
+  gap: 12px;
+
+  border-radius: 14px;
+  padding: 10px 12px;
+
+  color: var(--feed-text);
+  text-decoration: none;
+
+------------------------------
+SATIR: 12330
+  max-height: 430px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  margin-top: 7px;
+  padding: 1px;
+}
+
+.ff-site-search-result {
+  display: grid;
+  width: 100%;
+  min-height: 68px;
+
+  grid-template-columns: 46px minmax(0, 1fr) 22px;
+  align-items: center;
+  gap: 12px;
+
+  border-radius: 14px;
+  padding: 10px 12px;
+
+  color: var(--feed-text);
+  text-decoration: none;
+
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.ff-site-search-result+.ff-site-search-result {
+  margin-top: 3px;
+}
+
+------------------------------
+SATIR: 12350
+  color: var(--feed-text);
+  text-decoration: none;
+
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.ff-site-search-result+.ff-site-search-result {
+  margin-top: 3px;
+}
+
+.ff-site-search-result:hover,
+.ff-site-search-result:focus-visible {
+  outline: none;
+
+  background:
+    linear-gradient(90deg,
+      rgba(207, 56, 244, 0.12),
+      rgba(79, 74, 255, 0.09),
+      rgba(0, 173, 247, 0.06));
+
+  transform: translateX(2px);
+}
+
+.ff-site-search-result-icon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+
+
+------------------------------
+SATIR: 12354
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.ff-site-search-result+.ff-site-search-result {
+  margin-top: 3px;
+}
+
+.ff-site-search-result:hover,
+.ff-site-search-result:focus-visible {
+  outline: none;
+
+  background:
+    linear-gradient(90deg,
+      rgba(207, 56, 244, 0.12),
+      rgba(79, 74, 255, 0.09),
+      rgba(0, 173, 247, 0.06));
+
+  transform: translateX(2px);
+}
+
+.ff-site-search-result-icon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+
+  border: 1px solid rgba(190, 87, 255, 0.24);
+  border-radius: 13px;
+
+  background:
+
+------------------------------
+SATIR: 12355
+    transform 0.18s ease;
+}
+
+.ff-site-search-result+.ff-site-search-result {
+  margin-top: 3px;
+}
+
+.ff-site-search-result:hover,
+.ff-site-search-result:focus-visible {
+  outline: none;
+
+  background:
+    linear-gradient(90deg,
+      rgba(207, 56, 244, 0.12),
+      rgba(79, 74, 255, 0.09),
+      rgba(0, 173, 247, 0.06));
+
+  transform: translateX(2px);
+}
+
+.ff-site-search-result-icon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+
+  border: 1px solid rgba(190, 87, 255, 0.24);
+  border-radius: 13px;
+
+  background:
+    linear-gradient(135deg,
+
+------------------------------
+SATIR: 12367
+    linear-gradient(90deg,
+      rgba(207, 56, 244, 0.12),
+      rgba(79, 74, 255, 0.09),
+      rgba(0, 173, 247, 0.06));
+
+  transform: translateX(2px);
+}
+
+.ff-site-search-result-icon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+
+  border: 1px solid rgba(190, 87, 255, 0.24);
+  border-radius: 13px;
+
+  background:
+    linear-gradient(135deg,
+      #cb39ed,
+      #7743f5 55%,
+      #178ef5);
+
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.13),
+    0 8px 22px rgba(0, 0, 0, 0.19);
+}
+
+------------------------------
+SATIR: 12391
+  font-size: 14px;
+  font-weight: 800;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.13),
+    0 8px 22px rgba(0, 0, 0, 0.19);
+}
+
+.ff-site-search-result-icon.social {
+  background:
+    linear-gradient(135deg,
+      #ef4bb3,
+      #a51af2 52%,
+      #465cff);
+}
+
+.ff-site-search-result-icon.ai {
+  background:
+    linear-gradient(135deg,
+      #bb32ee,
+      #5a4bf7 55%,
+      #08aeea);
+}
+
+.ff-site-search-result-icon.growth {
+  background:
+    linear-gradient(135deg,
+      #43ca9d,
+      #3c75f3 58%,
+      #8c34ed);
+}
+
+------------------------------
+SATIR: 12399
+.ff-site-search-result-icon.social {
+  background:
+    linear-gradient(135deg,
+      #ef4bb3,
+      #a51af2 52%,
+      #465cff);
+}
+
+.ff-site-search-result-icon.ai {
+  background:
+    linear-gradient(135deg,
+      #bb32ee,
+      #5a4bf7 55%,
+      #08aeea);
+}
+
+.ff-site-search-result-icon.growth {
+  background:
+    linear-gradient(135deg,
+      #43ca9d,
+      #3c75f3 58%,
+      #8c34ed);
+}
+
+.ff-site-search-result-icon.business {
+  background:
+    linear-gradient(135deg,
+      #f2b847,
+      #e8783d 55%,
+      #be3de5);
+}
+
+------------------------------
+SATIR: 12407
+.ff-site-search-result-icon.ai {
+  background:
+    linear-gradient(135deg,
+      #bb32ee,
+      #5a4bf7 55%,
+      #08aeea);
+}
+
+.ff-site-search-result-icon.growth {
+  background:
+    linear-gradient(135deg,
+      #43ca9d,
+      #3c75f3 58%,
+      #8c34ed);
+}
+
+.ff-site-search-result-icon.business {
+  background:
+    linear-gradient(135deg,
+      #f2b847,
+      #e8783d 55%,
+      #be3de5);
+}
+
+.ff-site-search-result-icon.video {
+  background:
+    linear-gradient(135deg,
+      #ef4589,
+      #b329ed 55%,
+      #5958ff);
+}
+
+------------------------------
+SATIR: 12415
+.ff-site-search-result-icon.growth {
+  background:
+    linear-gradient(135deg,
+      #43ca9d,
+      #3c75f3 58%,
+      #8c34ed);
+}
+
+.ff-site-search-result-icon.business {
+  background:
+    linear-gradient(135deg,
+      #f2b847,
+      #e8783d 55%,
+      #be3de5);
+}
+
+.ff-site-search-result-icon.video {
+  background:
+    linear-gradient(135deg,
+      #ef4589,
+      #b329ed 55%,
+      #5958ff);
+}
+
+.ff-site-search-result-icon.legal {
+  background:
+    linear-gradient(135deg,
+      #ee6b8e,
+      #a946e7 55%,
+      #6266f5);
+}
+
+------------------------------
+SATIR: 12423
+.ff-site-search-result-icon.business {
+  background:
+    linear-gradient(135deg,
+      #f2b847,
+      #e8783d 55%,
+      #be3de5);
+}
+
+.ff-site-search-result-icon.video {
+  background:
+    linear-gradient(135deg,
+      #ef4589,
+      #b329ed 55%,
+      #5958ff);
+}
+
+.ff-site-search-result-icon.legal {
+  background:
+    linear-gradient(135deg,
+      #ee6b8e,
+      #a946e7 55%,
+      #6266f5);
+}
+
+.ff-site-search-result-icon.blog {
+  background:
+    linear-gradient(135deg,
+      #e65bf0,
+      #9f28ee 52%,
+      #147fe9);
+}
+
+------------------------------
+SATIR: 12431
+.ff-site-search-result-icon.video {
+  background:
+    linear-gradient(135deg,
+      #ef4589,
+      #b329ed 55%,
+      #5958ff);
+}
+
+.ff-site-search-result-icon.legal {
+  background:
+    linear-gradient(135deg,
+      #ee6b8e,
+      #a946e7 55%,
+      #6266f5);
+}
+
+.ff-site-search-result-icon.blog {
+  background:
+    linear-gradient(135deg,
+      #e65bf0,
+      #9f28ee 52%,
+      #147fe9);
+}
+
+.ff-site-search-result-copy {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+}
+
+.ff-site-search-result-copy strong {
+
+------------------------------
+SATIR: 12439
+.ff-site-search-result-icon.legal {
+  background:
+    linear-gradient(135deg,
+      #ee6b8e,
+      #a946e7 55%,
+      #6266f5);
+}
+
+.ff-site-search-result-icon.blog {
+  background:
+    linear-gradient(135deg,
+      #e65bf0,
+      #9f28ee 52%,
+      #147fe9);
+}
+
+.ff-site-search-result-copy {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+}
+
+.ff-site-search-result-copy strong {
+  overflow: hidden;
+
+  color: var(--feed-text);
+  font-size: 13px;
+  font-weight: 730;
+  line-height: 1.35;
+
+  text-overflow: ellipsis;
+
+------------------------------
+SATIR: 12447
+.ff-site-search-result-icon.blog {
+  background:
+    linear-gradient(135deg,
+      #e65bf0,
+      #9f28ee 52%,
+      #147fe9);
+}
+
+.ff-site-search-result-copy {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+}
+
+.ff-site-search-result-copy strong {
+  overflow: hidden;
+
+  color: var(--feed-text);
+  font-size: 13px;
+  font-weight: 730;
+  line-height: 1.35;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ff-site-search-result-copy small {
+  overflow: hidden;
+
+  color: var(--feed-muted);
+  font-size: 10px;
+
+------------------------------
+SATIR: 12453
+}
+
+.ff-site-search-result-copy {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+}
+
+.ff-site-search-result-copy strong {
+  overflow: hidden;
+
+  color: var(--feed-text);
+  font-size: 13px;
+  font-weight: 730;
+  line-height: 1.35;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ff-site-search-result-copy small {
+  overflow: hidden;
+
+  color: var(--feed-muted);
+  font-size: 10px;
+  line-height: 1.35;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+------------------------------
+SATIR: 12465
+  font-size: 13px;
+  font-weight: 730;
+  line-height: 1.35;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ff-site-search-result-copy small {
+  overflow: hidden;
+
+  color: var(--feed-muted);
+  font-size: 10px;
+  line-height: 1.35;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ff-site-search-result-arrow {
+  color: #dc50f1;
+  font-size: 25px;
+  line-height: 1;
+  text-align: center;
+}
+
+.ff-site-search-hint {
+  display: flex;
+  min-height: 92px;
+  align-items: center;
+  justify-content: center;
+
+------------------------------
+SATIR: 12476
+  color: var(--feed-muted);
+  font-size: 10px;
+  line-height: 1.35;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ff-site-search-result-arrow {
+  color: #dc50f1;
+  font-size: 25px;
+  line-height: 1;
+  text-align: center;
+}
+
+.ff-site-search-hint {
+  display: flex;
+  min-height: 92px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 20px;
+  color: var(--feed-muted);
+
+  font-size: 12px;
+  text-align: center;
+}
+
+.ff-site-search-hint svg {
+  width: 20px;
+
+------------------------------
+SATIR: 12483
+
+.ff-site-search-result-arrow {
+  color: #dc50f1;
+  font-size: 25px;
+  line-height: 1;
+  text-align: center;
+}
+
+.ff-site-search-hint {
+  display: flex;
+  min-height: 92px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 20px;
+  color: var(--feed-muted);
+
+  font-size: 12px;
+  text-align: center;
+}
+
+.ff-site-search-hint svg {
+  width: 20px;
+  height: 20px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+------------------------------
+SATIR: 12497
+
+  padding: 20px;
+  color: var(--feed-muted);
+
+  font-size: 12px;
+  text-align: center;
+}
+
+.ff-site-search-hint svg {
+  width: 20px;
+  height: 20px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ff-site-search-loader {
+  width: 18px;
+  height: 18px;
+
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  border-top-color: #c64cf3;
+  border-radius: 50%;
+
+  animation: ff-site-search-spin 0.7s linear infinite;
+}
+
+html[data-theme="light"] .ff-site-search-popover {
+
+------------------------------
+SATIR: 12508
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ff-site-search-loader {
+  width: 18px;
+  height: 18px;
+
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  border-top-color: #c64cf3;
+  border-radius: 50%;
+
+  animation: ff-site-search-spin 0.7s linear infinite;
+}
+
+html[data-theme="light"] .ff-site-search-popover {
+  border-color: rgba(91, 59, 166, 0.17);
+
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(214, 55, 244, 0.08),
+      transparent 35%),
+    radial-gradient(circle at 90% 100%,
+      rgba(0, 174, 255, 0.07),
+      transparent 38%),
+    rgba(255, 255, 255, 0.98);
+
+
+------------------------------
+SATIR: 12516
+.ff-site-search-loader {
+  width: 18px;
+  height: 18px;
+
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  border-top-color: #c64cf3;
+  border-radius: 50%;
+
+  animation: ff-site-search-spin 0.7s linear infinite;
+}
+
+html[data-theme="light"] .ff-site-search-popover {
+  border-color: rgba(91, 59, 166, 0.17);
+
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(214, 55, 244, 0.08),
+      transparent 35%),
+    radial-gradient(circle at 90% 100%,
+      rgba(0, 174, 255, 0.07),
+      transparent 38%),
+    rgba(255, 255, 255, 0.98);
+
+  box-shadow:
+    0 24px 65px rgba(52, 39, 83, 0.18),
+    0 0 30px rgba(113, 48, 244, 0.05);
+}
+
+html[data-theme="light"] .ff-site-search-input {
+  border-color: rgba(71, 51, 125, 0.13);
+  background: rgba(247, 247, 252, 0.96);
+
+------------------------------
+SATIR: 12519
+
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  border-top-color: #c64cf3;
+  border-radius: 50%;
+
+  animation: ff-site-search-spin 0.7s linear infinite;
+}
+
+html[data-theme="light"] .ff-site-search-popover {
+  border-color: rgba(91, 59, 166, 0.17);
+
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(214, 55, 244, 0.08),
+      transparent 35%),
+    radial-gradient(circle at 90% 100%,
+      rgba(0, 174, 255, 0.07),
+      transparent 38%),
+    rgba(255, 255, 255, 0.98);
+
+  box-shadow:
+    0 24px 65px rgba(52, 39, 83, 0.18),
+    0 0 30px rgba(113, 48, 244, 0.05);
+}
+
+html[data-theme="light"] .ff-site-search-input {
+  border-color: rgba(71, 51, 125, 0.13);
+  background: rgba(247, 247, 252, 0.96);
+}
+
+html[data-theme="light"] .ff-site-search-result:hover,
+
+------------------------------
+SATIR: 12536
+      transparent 38%),
+    rgba(255, 255, 255, 0.98);
+
+  box-shadow:
+    0 24px 65px rgba(52, 39, 83, 0.18),
+    0 0 30px rgba(113, 48, 244, 0.05);
+}
+
+html[data-theme="light"] .ff-site-search-input {
+  border-color: rgba(71, 51, 125, 0.13);
+  background: rgba(247, 247, 252, 0.96);
+}
+
+html[data-theme="light"] .ff-site-search-result:hover,
+html[data-theme="light"] .ff-site-search-result:focus-visible {
+  background:
+    linear-gradient(90deg,
+      rgba(207, 56, 244, 0.08),
+      rgba(79, 74, 255, 0.06),
+      rgba(0, 173, 247, 0.045));
+}
+
+@keyframes ff-site-search-open {
+  from {
+    opacity: 0;
+    transform: translateY(-7px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+
+------------------------------
+SATIR: 12541
+    0 0 30px rgba(113, 48, 244, 0.05);
+}
+
+html[data-theme="light"] .ff-site-search-input {
+  border-color: rgba(71, 51, 125, 0.13);
+  background: rgba(247, 247, 252, 0.96);
+}
+
+html[data-theme="light"] .ff-site-search-result:hover,
+html[data-theme="light"] .ff-site-search-result:focus-visible {
+  background:
+    linear-gradient(90deg,
+      rgba(207, 56, 244, 0.08),
+      rgba(79, 74, 255, 0.06),
+      rgba(0, 173, 247, 0.045));
+}
+
+@keyframes ff-site-search-open {
+  from {
+    opacity: 0;
+    transform: translateY(-7px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes ff-site-search-spin {
+  to {
+
+------------------------------
+SATIR: 12542
+}
+
+html[data-theme="light"] .ff-site-search-input {
+  border-color: rgba(71, 51, 125, 0.13);
+  background: rgba(247, 247, 252, 0.96);
+}
+
+html[data-theme="light"] .ff-site-search-result:hover,
+html[data-theme="light"] .ff-site-search-result:focus-visible {
+  background:
+    linear-gradient(90deg,
+      rgba(207, 56, 244, 0.08),
+      rgba(79, 74, 255, 0.06),
+      rgba(0, 173, 247, 0.045));
+}
+
+@keyframes ff-site-search-open {
+  from {
+    opacity: 0;
+    transform: translateY(-7px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes ff-site-search-spin {
+  to {
+    transform: rotate(360deg);
+
+------------------------------
+SATIR: 12550
+html[data-theme="light"] .ff-site-search-result:focus-visible {
+  background:
+    linear-gradient(90deg,
+      rgba(207, 56, 244, 0.08),
+      rgba(79, 74, 255, 0.06),
+      rgba(0, 173, 247, 0.045));
+}
+
+@keyframes ff-site-search-open {
+  from {
+    opacity: 0;
+    transform: translateY(-7px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes ff-site-search-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 680px) {
+  .ff-site-search-popover {
+    position: fixed;
+    top: 78px;
+    right: 10px;
+
+------------------------------
+SATIR: 12562
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes ff-site-search-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 680px) {
+  .ff-site-search-popover {
+    position: fixed;
+    top: 78px;
+    right: 10px;
+    left: 10px;
+
+    width: auto;
+    max-height: calc(100dvh - 105px);
+    border-radius: 18px;
+  }
+
+  .ff-site-search-results {
+    max-height: calc(100dvh - 190px);
+  }
+
+  .ff-site-search-result {
+
+------------------------------
+SATIR: 12569
+
+@keyframes ff-site-search-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 680px) {
+  .ff-site-search-popover {
+    position: fixed;
+    top: 78px;
+    right: 10px;
+    left: 10px;
+
+    width: auto;
+    max-height: calc(100dvh - 105px);
+    border-radius: 18px;
+  }
+
+  .ff-site-search-results {
+    max-height: calc(100dvh - 190px);
+  }
+
+  .ff-site-search-result {
+    min-height: 63px;
+    grid-template-columns: 41px minmax(0, 1fr) 19px;
+    gap: 10px;
+    padding: 9px 10px;
+  }
+
+  .ff-site-search-result-icon {
+
+------------------------------
+SATIR: 12580
+    right: 10px;
+    left: 10px;
+
+    width: auto;
+    max-height: calc(100dvh - 105px);
+    border-radius: 18px;
+  }
+
+  .ff-site-search-results {
+    max-height: calc(100dvh - 190px);
+  }
+
+  .ff-site-search-result {
+    min-height: 63px;
+    grid-template-columns: 41px minmax(0, 1fr) 19px;
+    gap: 10px;
+    padding: 9px 10px;
+  }
+
+  .ff-site-search-result-icon {
+    width: 41px;
+    height: 41px;
+    border-radius: 12px;
+    font-size: 12px;
+  }
+
+  .ff-site-search-result-copy strong {
+    font-size: 12px;
+  }
+
+  .ff-site-search-result-copy small {
+
+------------------------------
+SATIR: 12584
+    max-height: calc(100dvh - 105px);
+    border-radius: 18px;
+  }
+
+  .ff-site-search-results {
+    max-height: calc(100dvh - 190px);
+  }
+
+  .ff-site-search-result {
+    min-height: 63px;
+    grid-template-columns: 41px minmax(0, 1fr) 19px;
+    gap: 10px;
+    padding: 9px 10px;
+  }
+
+  .ff-site-search-result-icon {
+    width: 41px;
+    height: 41px;
+    border-radius: 12px;
+    font-size: 12px;
+  }
+
+  .ff-site-search-result-copy strong {
+    font-size: 12px;
+  }
+
+  .ff-site-search-result-copy small {
+    font-size: 9px;
+  }
+}
+
+
+------------------------------
+SATIR: 12591
+
+  .ff-site-search-result {
+    min-height: 63px;
+    grid-template-columns: 41px minmax(0, 1fr) 19px;
+    gap: 10px;
+    padding: 9px 10px;
+  }
+
+  .ff-site-search-result-icon {
+    width: 41px;
+    height: 41px;
+    border-radius: 12px;
+    font-size: 12px;
+  }
+
+  .ff-site-search-result-copy strong {
+    font-size: 12px;
+  }
+
+  .ff-site-search-result-copy small {
+    font-size: 9px;
+  }
+}
+
+/* GENEL ARAMA — HEADER ALTINDA TAM GENİŞLİK */
+
+.ff-feed-header {
+  position: sticky;
+}
+
+.ff-feed-header .ff-site-search {
+
+------------------------------
+SATIR: 12598
+
+  .ff-site-search-result-icon {
+    width: 41px;
+    height: 41px;
+    border-radius: 12px;
+    font-size: 12px;
+  }
+
+  .ff-site-search-result-copy strong {
+    font-size: 12px;
+  }
+
+  .ff-site-search-result-copy small {
+    font-size: 9px;
+  }
+}
+
+/* GENEL ARAMA — HEADER ALTINDA TAM GENİŞLİK */
+
+.ff-feed-header {
+  position: sticky;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/* Arama açıldığında alttaki içerik için yer oluştur */
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 72px !important;
+}
+
+------------------------------
+SATIR: 12602
+    border-radius: 12px;
+    font-size: 12px;
+  }
+
+  .ff-site-search-result-copy strong {
+    font-size: 12px;
+  }
+
+  .ff-site-search-result-copy small {
+    font-size: 9px;
+  }
+}
+
+/* GENEL ARAMA — HEADER ALTINDA TAM GENİŞLİK */
+
+.ff-feed-header {
+  position: sticky;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/* Arama açıldığında alttaki içerik için yer oluştur */
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 72px !important;
+}
+
+/* Sağdan açılan kutu görünümünü kaldır */
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+
+------------------------------
+SATIR: 12613
+}
+
+/* GENEL ARAMA — HEADER ALTINDA TAM GENİŞLİK */
+
+.ff-feed-header {
+  position: sticky;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/* Arama açıldığında alttaki içerik için yer oluştur */
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 72px !important;
+}
+
+/* Sağdan açılan kutu görünümünü kaldır */
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  left: 0 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+
+------------------------------
+SATIR: 12618
+  position: sticky;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/* Arama açıldığında alttaki içerik için yer oluştur */
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 72px !important;
+}
+
+/* Sağdan açılan kutu görünümünü kaldır */
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  left: 0 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+
+------------------------------
+SATIR: 12623
+}
+
+/* Arama açıldığında alttaki içerik için yer oluştur */
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 72px !important;
+}
+
+/* Sağdan açılan kutu görünümünü kaldır */
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  left: 0 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Ekran görüntüsündeki uzun arama çubuğu */
+.ff-feed-header .ff-site-search-input {
+
+------------------------------
+SATIR: 12645
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Ekran görüntüsündeki uzun arama çubuğu */
+.ff-feed-header .ff-site-search-input {
+  width: 100%;
+  height: 52px;
+
+  border: 1px solid rgba(153, 62, 229, 0.3);
+  border-radius: 15px;
+  padding: 0 17px;
+
+  background:
+    linear-gradient(90deg,
+      rgba(13, 8, 22, 0.98),
+      rgba(7, 9, 17, 0.98));
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.ff-feed-header .ff-site-search-input:focus-within {
+  border-color: rgba(202, 71, 245, 0.58);
+
+  box-shadow:
+    0 0 0 3px rgba(174, 36, 241, 0.07),
+
+------------------------------
+SATIR: 12663
+      rgba(13, 8, 22, 0.98),
+      rgba(7, 9, 17, 0.98));
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.ff-feed-header .ff-site-search-input:focus-within {
+  border-color: rgba(202, 71, 245, 0.58);
+
+  box-shadow:
+    0 0 0 3px rgba(174, 36, 241, 0.07),
+    0 0 25px rgba(76, 73, 255, 0.07);
+}
+
+.ff-feed-header .ff-site-search-input input {
+  font-size: 13px;
+}
+
+/* Yazmaya başlayınca sonuçların aşağı açıldığı alan */
+.ff-feed-header .ff-site-search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  left: 0;
+
+  max-height: 390px;
+  overflow-y: auto;
+
+  margin: 0;
+
+------------------------------
+SATIR: 12671
+.ff-feed-header .ff-site-search-input:focus-within {
+  border-color: rgba(202, 71, 245, 0.58);
+
+  box-shadow:
+    0 0 0 3px rgba(174, 36, 241, 0.07),
+    0 0 25px rgba(76, 73, 255, 0.07);
+}
+
+.ff-feed-header .ff-site-search-input input {
+  font-size: 13px;
+}
+
+/* Yazmaya başlayınca sonuçların aşağı açıldığı alan */
+.ff-feed-header .ff-site-search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  left: 0;
+
+  max-height: 390px;
+  overflow-y: auto;
+
+  margin: 0;
+  border: 1px solid rgba(145, 76, 238, 0.25);
+  border-radius: 17px;
+  padding: 7px;
+
+  background:
+    radial-gradient(circle at 10% 0%,
+      rgba(205, 52, 241, 0.1),
+      transparent 36%),
+
+------------------------------
+SATIR: 12676
+    0 0 25px rgba(76, 73, 255, 0.07);
+}
+
+.ff-feed-header .ff-site-search-input input {
+  font-size: 13px;
+}
+
+/* Yazmaya başlayınca sonuçların aşağı açıldığı alan */
+.ff-feed-header .ff-site-search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  left: 0;
+
+  max-height: 390px;
+  overflow-y: auto;
+
+  margin: 0;
+  border: 1px solid rgba(145, 76, 238, 0.25);
+  border-radius: 17px;
+  padding: 7px;
+
+  background:
+    radial-gradient(circle at 10% 0%,
+      rgba(205, 52, 241, 0.1),
+      transparent 36%),
+    radial-gradient(circle at 90% 100%,
+      rgba(0, 170, 245, 0.08),
+      transparent 38%),
+    rgba(7, 8, 16, 0.985);
+
+
+------------------------------
+SATIR: 12707
+  box-shadow:
+    0 25px 65px rgba(0, 0, 0, 0.58),
+    0 0 30px rgba(110, 48, 242, 0.09);
+
+  backdrop-filter: blur(24px);
+}
+
+/* Açık tema */
+html[data-theme="light"] .ff-feed-header .ff-site-search-input {
+  border-color: rgba(88, 57, 155, 0.15);
+  background: rgba(255, 255, 255, 0.97);
+}
+
+html[data-theme="light"] .ff-feed-header .ff-site-search-results {
+  border-color: rgba(88, 57, 155, 0.15);
+
+  background:
+    radial-gradient(circle at 10% 0%,
+      rgba(205, 52, 241, 0.07),
+      transparent 36%),
+    rgba(255, 255, 255, 0.99);
+
+  box-shadow:
+    0 22px 55px rgba(50, 38, 78, 0.16);
+}
+
+/* Mobilde de header altında açılsın */
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 67px !important;
+  }
+
+------------------------------
+SATIR: 12712
+}
+
+/* Açık tema */
+html[data-theme="light"] .ff-feed-header .ff-site-search-input {
+  border-color: rgba(88, 57, 155, 0.15);
+  background: rgba(255, 255, 255, 0.97);
+}
+
+html[data-theme="light"] .ff-feed-header .ff-site-search-results {
+  border-color: rgba(88, 57, 155, 0.15);
+
+  background:
+    radial-gradient(circle at 10% 0%,
+      rgba(205, 52, 241, 0.07),
+      transparent 36%),
+    rgba(255, 255, 255, 0.99);
+
+  box-shadow:
+    0 22px 55px rgba(50, 38, 78, 0.16);
+}
+
+/* Mobilde de header altında açılsın */
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 67px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+
+------------------------------
+SATIR: 12727
+    rgba(255, 255, 255, 0.99);
+
+  box-shadow:
+    0 22px 55px rgba(50, 38, 78, 0.16);
+}
+
+/* Mobilde de header altında açılsın */
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 67px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+    left: 0 !important;
+
+    width: 100% !important;
+    max-height: none !important;
+  }
+
+  .ff-feed-header .ff-site-search-input {
+    height: 49px;
+    border-radius: 14px;
+    padding: 0 14px;
+  }
+
+  .ff-feed-header .ff-site-search-results {
+    max-height: min(360px, calc(100dvh - 190px));
+  }
+
+------------------------------
+SATIR: 12731
+}
+
+/* Mobilde de header altında açılsın */
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 67px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+    left: 0 !important;
+
+    width: 100% !important;
+    max-height: none !important;
+  }
+
+  .ff-feed-header .ff-site-search-input {
+    height: 49px;
+    border-radius: 14px;
+    padding: 0 14px;
+  }
+
+  .ff-feed-header .ff-site-search-results {
+    max-height: min(360px, calc(100dvh - 190px));
+  }
+}
+
+/* GENEL ARAMA — HEADER İLE SAYFA İÇERİĞİ ARASINDA */
+
+
+------------------------------
+SATIR: 12741
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+    left: 0 !important;
+
+    width: 100% !important;
+    max-height: none !important;
+  }
+
+  .ff-feed-header .ff-site-search-input {
+    height: 49px;
+    border-radius: 14px;
+    padding: 0 14px;
+  }
+
+  .ff-feed-header .ff-site-search-results {
+    max-height: min(360px, calc(100dvh - 190px));
+  }
+}
+
+/* GENEL ARAMA — HEADER İLE SAYFA İÇERİĞİ ARASINDA */
+
+.ff-feed-header {
+  position: sticky;
+  overflow: visible !important;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/*
+
+------------------------------
+SATIR: 12747
+  }
+
+  .ff-feed-header .ff-site-search-input {
+    height: 49px;
+    border-radius: 14px;
+    padding: 0 14px;
+  }
+
+  .ff-feed-header .ff-site-search-results {
+    max-height: min(360px, calc(100dvh - 190px));
+  }
+}
+
+/* GENEL ARAMA — HEADER İLE SAYFA İÇERİĞİ ARASINDA */
+
+.ff-feed-header {
+  position: sticky;
+  overflow: visible !important;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/*
+  Header büyümez.
+  Arama için yalnızca header sonrasında boşluk açılır.
+*/
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 75px !important;
+}
+
+------------------------------
+SATIR: 12759
+
+/* GENEL ARAMA — HEADER İLE SAYFA İÇERİĞİ ARASINDA */
+
+.ff-feed-header {
+  position: sticky;
+  overflow: visible !important;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/*
+  Header büyümez.
+  Arama için yalnızca header sonrasında boşluk açılır.
+*/
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 75px !important;
+}
+
+/*
+  Arama kutusu header'ın altına yerleşir.
+*/
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  bottom: auto !important;
+  left: 0 !important;
+
+
+------------------------------
+SATIR: 12767
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/*
+  Header büyümez.
+  Arama için yalnızca header sonrasında boşluk açılır.
+*/
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 75px !important;
+}
+
+/*
+  Arama kutusu header'ın altına yerleşir.
+*/
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  bottom: auto !important;
+  left: 0 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+
+------------------------------
+SATIR: 12774
+*/
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 75px !important;
+}
+
+/*
+  Arama kutusu header'ın altına yerleşir.
+*/
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  bottom: auto !important;
+  left: 0 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/*
+
+------------------------------
+SATIR: 12799
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/*
+  Sonuçlar arama çubuğunun altından açılır.
+*/
+.ff-feed-header .ff-site-search-results {
+  position: absolute !important;
+
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  bottom: auto !important;
+  left: 0 !important;
+
+  width: 100% !important;
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 69px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+
+------------------------------
+SATIR: 12813
+  left: 0 !important;
+
+  width: 100% !important;
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 69px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+    bottom: auto !important;
+    left: 0 !important;
+
+    width: 100% !important;
+  }
+}
+
+.ff-bookmark-button.saved {
+  color: #ed5df4;
+  border-color: rgba(237, 93, 244, 0.58);
+  background: rgba(165, 22, 244, 0.16);
+  box-shadow:
+    0 0 0 1px rgba(237, 93, 244, 0.08),
+    0 0 20px rgba(165, 22, 244, 0.18);
+
+------------------------------
+SATIR: 12817
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 69px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+    bottom: auto !important;
+    left: 0 !important;
+
+    width: 100% !important;
+  }
+}
+
+.ff-bookmark-button.saved {
+  color: #ed5df4;
+  border-color: rgba(237, 93, 244, 0.58);
+  background: rgba(165, 22, 244, 0.16);
+  box-shadow:
+    0 0 0 1px rgba(237, 93, 244, 0.08),
+    0 0 20px rgba(165, 22, 244, 0.18);
+}
+
+.ff-bookmark-button.saved svg {
+  fill: currentColor;
+
+------------------------------
+SATIR: 13373
+    width: 23px;
+    height: 23px;
+  }
+}
+
+/* MOBILE SEARCH INPUT ZOOM FIX START */
+@media (max-width: 680px) {
+
+  .ff-site-search-input input,
+  .ff-feed-header .ff-site-search-input input {
+    font-size: 16px !important;
+  }
+}
+
+/* MOBILE SEARCH INPUT ZOOM FIX END */
+
+/* MOBILE HEADER ICON SIZE V9 START */
+
+@media (max-width: 680px) {
+  .ff-round-action svg {
+    width: 19px !important;
+    height: 19px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .ff-round-action svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+------------------------------
+SATIR: 13374
+    height: 23px;
+  }
+}
+
+/* MOBILE SEARCH INPUT ZOOM FIX START */
+@media (max-width: 680px) {
+
+  .ff-site-search-input input,
+  .ff-feed-header .ff-site-search-input input {
+    font-size: 16px !important;
+  }
+}
+
+/* MOBILE SEARCH INPUT ZOOM FIX END */
+
+/* MOBILE HEADER ICON SIZE V9 START */
+
+@media (max-width: 680px) {
+  .ff-round-action svg {
+    width: 19px !important;
+    height: 19px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .ff-round-action svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+
+------------------------------
+SATIR: 14067
+  .ff-feed-page .ff-feed-header-actions .ff-round-action {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    flex-basis: 32px;
+  }
+
+  .ff-feed-page .ff-feed-header-actions .ff-site-search {
+    flex-basis: 32px;
+    min-width: 32px;
+  }
+}
+
+/* ff-mobile-feed-spacing-fix */
+
+.ff-featured-section {
+  scroll-margin-top: 18px;
+}
+
+@media (max-width: 768px) {
+  .ff-feed-page .ff-insight-grid button {
+    min-height: 82px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .ff-feed-page .ff-featured-section {
+    margin-top: 18px;
+    scroll-margin-top: 14px;
+  }
+
+------------------------------
+
+
+===== ff-site-search-popover =====
+SATIR: 12238
+
+.ff-site-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  z-index: 80;
+}
+
+.ff-site-search-popover {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 200;
+
+  width: min(520px, calc(100vw - 30px));
+  overflow: hidden;
+
+  border: 1px solid rgba(154, 87, 255, 0.28);
+  border-radius: 20px;
+  padding: 8px;
+
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(214, 55, 244, 0.13),
+      transparent 35%),
+    radial-gradient(circle at 90% 100%,
+      rgba(0, 174, 255, 0.1),
+      transparent 38%),
+    rgba(7, 8, 16, 0.98);
+
+  box-shadow:
+
+------------------------------
+SATIR: 12519
+
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  border-top-color: #c64cf3;
+  border-radius: 50%;
+
+  animation: ff-site-search-spin 0.7s linear infinite;
+}
+
+html[data-theme="light"] .ff-site-search-popover {
+  border-color: rgba(91, 59, 166, 0.17);
+
+  background:
+    radial-gradient(circle at 12% 0%,
+      rgba(214, 55, 244, 0.08),
+      transparent 35%),
+    radial-gradient(circle at 90% 100%,
+      rgba(0, 174, 255, 0.07),
+      transparent 38%),
+    rgba(255, 255, 255, 0.98);
+
+  box-shadow:
+    0 24px 65px rgba(52, 39, 83, 0.18),
+    0 0 30px rgba(113, 48, 244, 0.05);
+}
+
+html[data-theme="light"] .ff-site-search-input {
+  border-color: rgba(71, 51, 125, 0.13);
+  background: rgba(247, 247, 252, 0.96);
+}
+
+html[data-theme="light"] .ff-site-search-result:hover,
+
+------------------------------
+SATIR: 12569
+
+@keyframes ff-site-search-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 680px) {
+  .ff-site-search-popover {
+    position: fixed;
+    top: 78px;
+    right: 10px;
+    left: 10px;
+
+    width: auto;
+    max-height: calc(100dvh - 105px);
+    border-radius: 18px;
+  }
+
+  .ff-site-search-results {
+    max-height: calc(100dvh - 190px);
+  }
+
+  .ff-site-search-result {
+    min-height: 63px;
+    grid-template-columns: 41px minmax(0, 1fr) 19px;
+    gap: 10px;
+    padding: 9px 10px;
+  }
+
+  .ff-site-search-result-icon {
+
+------------------------------
+SATIR: 12618
+  position: sticky;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/* Arama açıldığında alttaki içerik için yer oluştur */
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 72px !important;
+}
+
+/* Sağdan açılan kutu görünümünü kaldır */
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  left: 0 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+
+------------------------------
+SATIR: 12623
+}
+
+/* Arama açıldığında alttaki içerik için yer oluştur */
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 72px !important;
+}
+
+/* Sağdan açılan kutu görünümünü kaldır */
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  left: 0 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Ekran görüntüsündeki uzun arama çubuğu */
+.ff-feed-header .ff-site-search-input {
+
+------------------------------
+SATIR: 12727
+    rgba(255, 255, 255, 0.99);
+
+  box-shadow:
+    0 22px 55px rgba(50, 38, 78, 0.16);
+}
+
+/* Mobilde de header altında açılsın */
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 67px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+    left: 0 !important;
+
+    width: 100% !important;
+    max-height: none !important;
+  }
+
+  .ff-feed-header .ff-site-search-input {
+    height: 49px;
+    border-radius: 14px;
+    padding: 0 14px;
+  }
+
+  .ff-feed-header .ff-site-search-results {
+    max-height: min(360px, calc(100dvh - 190px));
+  }
+
+------------------------------
+SATIR: 12731
+}
+
+/* Mobilde de header altında açılsın */
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 67px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+    left: 0 !important;
+
+    width: 100% !important;
+    max-height: none !important;
+  }
+
+  .ff-feed-header .ff-site-search-input {
+    height: 49px;
+    border-radius: 14px;
+    padding: 0 14px;
+  }
+
+  .ff-feed-header .ff-site-search-results {
+    max-height: min(360px, calc(100dvh - 190px));
+  }
+}
+
+/* GENEL ARAMA — HEADER İLE SAYFA İÇERİĞİ ARASINDA */
+
+
+------------------------------
+SATIR: 12767
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/*
+  Header büyümez.
+  Arama için yalnızca header sonrasında boşluk açılır.
+*/
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 75px !important;
+}
+
+/*
+  Arama kutusu header'ın altına yerleşir.
+*/
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  bottom: auto !important;
+  left: 0 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+
+------------------------------
+SATIR: 12774
+*/
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 75px !important;
+}
+
+/*
+  Arama kutusu header'ın altına yerleşir.
+*/
+.ff-feed-header .ff-site-search-popover {
+  position: absolute !important;
+
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  bottom: auto !important;
+  left: 0 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/*
+
+------------------------------
+SATIR: 12813
+  left: 0 !important;
+
+  width: 100% !important;
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 69px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+    bottom: auto !important;
+    left: 0 !important;
+
+    width: 100% !important;
+  }
+}
+
+.ff-bookmark-button.saved {
+  color: #ed5df4;
+  border-color: rgba(237, 93, 244, 0.58);
+  background: rgba(165, 22, 244, 0.16);
+  box-shadow:
+    0 0 0 1px rgba(237, 93, 244, 0.08),
+    0 0 20px rgba(165, 22, 244, 0.18);
+
+------------------------------
+SATIR: 12817
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 69px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+    bottom: auto !important;
+    left: 0 !important;
+
+    width: 100% !important;
+  }
+}
+
+.ff-bookmark-button.saved {
+  color: #ed5df4;
+  border-color: rgba(237, 93, 244, 0.58);
+  background: rgba(165, 22, 244, 0.16);
+  box-shadow:
+    0 0 0 1px rgba(237, 93, 244, 0.08),
+    0 0 20px rgba(165, 22, 244, 0.18);
+}
+
+.ff-bookmark-button.saved svg {
+  fill: currentColor;
+
+------------------------------
+
+
+===== ff-site-search-input =====
+SATIR: 12269
+    0 28px 80px rgba(0, 0, 0, 0.62),
+    0 0 40px rgba(113, 48, 244, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  backdrop-filter: blur(26px);
+  animation: ff-site-search-open 0.18s ease both;
+}
+
+.ff-site-search-input {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  height: 52px;
+  padding: 0 15px;
+
+  border: 1px solid rgba(151, 91, 255, 0.22);
+  border-radius: 14px;
+
+  background: rgba(4, 5, 11, 0.82);
+}
+
+.ff-site-search-input:focus-within {
+  border-color: rgba(192, 72, 255, 0.58);
+
+  box-shadow:
+    0 0 0 3px rgba(169, 30, 244, 0.09),
+    0 0 24px rgba(0, 175, 255, 0.06);
+}
+
+.ff-site-search-input svg {
+
+------------------------------
+SATIR: 12283
+  padding: 0 15px;
+
+  border: 1px solid rgba(151, 91, 255, 0.22);
+  border-radius: 14px;
+
+  background: rgba(4, 5, 11, 0.82);
+}
+
+.ff-site-search-input:focus-within {
+  border-color: rgba(192, 72, 255, 0.58);
+
+  box-shadow:
+    0 0 0 3px rgba(169, 30, 244, 0.09),
+    0 0 24px rgba(0, 175, 255, 0.06);
+}
+
+.ff-site-search-input svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+
+  fill: none;
+  stroke: var(--feed-muted);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ff-site-search-input input {
+  width: 100%;
+  height: 100%;
+
+------------------------------
+SATIR: 12291
+.ff-site-search-input:focus-within {
+  border-color: rgba(192, 72, 255, 0.58);
+
+  box-shadow:
+    0 0 0 3px rgba(169, 30, 244, 0.09),
+    0 0 24px rgba(0, 175, 255, 0.06);
+}
+
+.ff-site-search-input svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+
+  fill: none;
+  stroke: var(--feed-muted);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ff-site-search-input input {
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+  outline: none;
+
+  background: transparent;
+  color: var(--feed-text);
+
+  font-size: 13px;
+
+------------------------------
+SATIR: 12303
+
+  fill: none;
+  stroke: var(--feed-muted);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ff-site-search-input input {
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+  outline: none;
+
+  background: transparent;
+  color: var(--feed-text);
+
+  font-size: 13px;
+}
+
+.ff-site-search-input input::placeholder {
+  color: var(--feed-muted);
+  opacity: 0.78;
+}
+
+.ff-site-search-results {
+  max-height: 430px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+
+------------------------------
+SATIR: 12316
+  outline: none;
+
+  background: transparent;
+  color: var(--feed-text);
+
+  font-size: 13px;
+}
+
+.ff-site-search-input input::placeholder {
+  color: var(--feed-muted);
+  opacity: 0.78;
+}
+
+.ff-site-search-results {
+  max-height: 430px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  margin-top: 7px;
+  padding: 1px;
+}
+
+.ff-site-search-result {
+  display: grid;
+  width: 100%;
+  min-height: 68px;
+
+  grid-template-columns: 46px minmax(0, 1fr) 22px;
+  align-items: center;
+  gap: 12px;
+
+
+------------------------------
+SATIR: 12536
+      transparent 38%),
+    rgba(255, 255, 255, 0.98);
+
+  box-shadow:
+    0 24px 65px rgba(52, 39, 83, 0.18),
+    0 0 30px rgba(113, 48, 244, 0.05);
+}
+
+html[data-theme="light"] .ff-site-search-input {
+  border-color: rgba(71, 51, 125, 0.13);
+  background: rgba(247, 247, 252, 0.96);
+}
+
+html[data-theme="light"] .ff-site-search-result:hover,
+html[data-theme="light"] .ff-site-search-result:focus-visible {
+  background:
+    linear-gradient(90deg,
+      rgba(207, 56, 244, 0.08),
+      rgba(79, 74, 255, 0.06),
+      rgba(0, 173, 247, 0.045));
+}
+
+@keyframes ff-site-search-open {
+  from {
+    opacity: 0;
+    transform: translateY(-7px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+
+------------------------------
+SATIR: 12645
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Ekran görüntüsündeki uzun arama çubuğu */
+.ff-feed-header .ff-site-search-input {
+  width: 100%;
+  height: 52px;
+
+  border: 1px solid rgba(153, 62, 229, 0.3);
+  border-radius: 15px;
+  padding: 0 17px;
+
+  background:
+    linear-gradient(90deg,
+      rgba(13, 8, 22, 0.98),
+      rgba(7, 9, 17, 0.98));
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.ff-feed-header .ff-site-search-input:focus-within {
+  border-color: rgba(202, 71, 245, 0.58);
+
+  box-shadow:
+    0 0 0 3px rgba(174, 36, 241, 0.07),
+
+------------------------------
+SATIR: 12663
+      rgba(13, 8, 22, 0.98),
+      rgba(7, 9, 17, 0.98));
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.ff-feed-header .ff-site-search-input:focus-within {
+  border-color: rgba(202, 71, 245, 0.58);
+
+  box-shadow:
+    0 0 0 3px rgba(174, 36, 241, 0.07),
+    0 0 25px rgba(76, 73, 255, 0.07);
+}
+
+.ff-feed-header .ff-site-search-input input {
+  font-size: 13px;
+}
+
+/* Yazmaya başlayınca sonuçların aşağı açıldığı alan */
+.ff-feed-header .ff-site-search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  left: 0;
+
+  max-height: 390px;
+  overflow-y: auto;
+
+  margin: 0;
+
+------------------------------
+SATIR: 12671
+.ff-feed-header .ff-site-search-input:focus-within {
+  border-color: rgba(202, 71, 245, 0.58);
+
+  box-shadow:
+    0 0 0 3px rgba(174, 36, 241, 0.07),
+    0 0 25px rgba(76, 73, 255, 0.07);
+}
+
+.ff-feed-header .ff-site-search-input input {
+  font-size: 13px;
+}
+
+/* Yazmaya başlayınca sonuçların aşağı açıldığı alan */
+.ff-feed-header .ff-site-search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  left: 0;
+
+  max-height: 390px;
+  overflow-y: auto;
+
+  margin: 0;
+  border: 1px solid rgba(145, 76, 238, 0.25);
+  border-radius: 17px;
+  padding: 7px;
+
+  background:
+    radial-gradient(circle at 10% 0%,
+      rgba(205, 52, 241, 0.1),
+      transparent 36%),
+
+------------------------------
+SATIR: 12707
+  box-shadow:
+    0 25px 65px rgba(0, 0, 0, 0.58),
+    0 0 30px rgba(110, 48, 242, 0.09);
+
+  backdrop-filter: blur(24px);
+}
+
+/* Açık tema */
+html[data-theme="light"] .ff-feed-header .ff-site-search-input {
+  border-color: rgba(88, 57, 155, 0.15);
+  background: rgba(255, 255, 255, 0.97);
+}
+
+html[data-theme="light"] .ff-feed-header .ff-site-search-results {
+  border-color: rgba(88, 57, 155, 0.15);
+
+  background:
+    radial-gradient(circle at 10% 0%,
+      rgba(205, 52, 241, 0.07),
+      transparent 36%),
+    rgba(255, 255, 255, 0.99);
+
+  box-shadow:
+    0 22px 55px rgba(50, 38, 78, 0.16);
+}
+
+/* Mobilde de header altında açılsın */
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 67px !important;
+  }
+
+------------------------------
+SATIR: 12741
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+    left: 0 !important;
+
+    width: 100% !important;
+    max-height: none !important;
+  }
+
+  .ff-feed-header .ff-site-search-input {
+    height: 49px;
+    border-radius: 14px;
+    padding: 0 14px;
+  }
+
+  .ff-feed-header .ff-site-search-results {
+    max-height: min(360px, calc(100dvh - 190px));
+  }
+}
+
+/* GENEL ARAMA — HEADER İLE SAYFA İÇERİĞİ ARASINDA */
+
+.ff-feed-header {
+  position: sticky;
+  overflow: visible !important;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/*
+
+------------------------------
+SATIR: 13373
+    width: 23px;
+    height: 23px;
+  }
+}
+
+/* MOBILE SEARCH INPUT ZOOM FIX START */
+@media (max-width: 680px) {
+
+  .ff-site-search-input input,
+  .ff-feed-header .ff-site-search-input input {
+    font-size: 16px !important;
+  }
+}
+
+/* MOBILE SEARCH INPUT ZOOM FIX END */
+
+/* MOBILE HEADER ICON SIZE V9 START */
+
+@media (max-width: 680px) {
+  .ff-round-action svg {
+    width: 19px !important;
+    height: 19px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .ff-round-action svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+------------------------------
+SATIR: 13374
+    height: 23px;
+  }
+}
+
+/* MOBILE SEARCH INPUT ZOOM FIX START */
+@media (max-width: 680px) {
+
+  .ff-site-search-input input,
+  .ff-feed-header .ff-site-search-input input {
+    font-size: 16px !important;
+  }
+}
+
+/* MOBILE SEARCH INPUT ZOOM FIX END */
+
+/* MOBILE HEADER ICON SIZE V9 START */
+
+@media (max-width: 680px) {
+  .ff-round-action svg {
+    width: 19px !important;
+    height: 19px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .ff-round-action svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+
+------------------------------
+
+
+===== ff-site-search-results =====
+SATIR: 12321
+  font-size: 13px;
+}
+
+.ff-site-search-input input::placeholder {
+  color: var(--feed-muted);
+  opacity: 0.78;
+}
+
+.ff-site-search-results {
+  max-height: 430px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  margin-top: 7px;
+  padding: 1px;
+}
+
+.ff-site-search-result {
+  display: grid;
+  width: 100%;
+  min-height: 68px;
+
+  grid-template-columns: 46px minmax(0, 1fr) 22px;
+  align-items: center;
+  gap: 12px;
+
+  border-radius: 14px;
+  padding: 10px 12px;
+
+  color: var(--feed-text);
+  text-decoration: none;
+
+------------------------------
+SATIR: 12580
+    right: 10px;
+    left: 10px;
+
+    width: auto;
+    max-height: calc(100dvh - 105px);
+    border-radius: 18px;
+  }
+
+  .ff-site-search-results {
+    max-height: calc(100dvh - 190px);
+  }
+
+  .ff-site-search-result {
+    min-height: 63px;
+    grid-template-columns: 41px minmax(0, 1fr) 19px;
+    gap: 10px;
+    padding: 9px 10px;
+  }
+
+  .ff-site-search-result-icon {
+    width: 41px;
+    height: 41px;
+    border-radius: 12px;
+    font-size: 12px;
+  }
+
+  .ff-site-search-result-copy strong {
+    font-size: 12px;
+  }
+
+  .ff-site-search-result-copy small {
+
+------------------------------
+SATIR: 12676
+    0 0 25px rgba(76, 73, 255, 0.07);
+}
+
+.ff-feed-header .ff-site-search-input input {
+  font-size: 13px;
+}
+
+/* Yazmaya başlayınca sonuçların aşağı açıldığı alan */
+.ff-feed-header .ff-site-search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  left: 0;
+
+  max-height: 390px;
+  overflow-y: auto;
+
+  margin: 0;
+  border: 1px solid rgba(145, 76, 238, 0.25);
+  border-radius: 17px;
+  padding: 7px;
+
+  background:
+    radial-gradient(circle at 10% 0%,
+      rgba(205, 52, 241, 0.1),
+      transparent 36%),
+    radial-gradient(circle at 90% 100%,
+      rgba(0, 170, 245, 0.08),
+      transparent 38%),
+    rgba(7, 8, 16, 0.985);
+
+
+------------------------------
+SATIR: 12712
+}
+
+/* Açık tema */
+html[data-theme="light"] .ff-feed-header .ff-site-search-input {
+  border-color: rgba(88, 57, 155, 0.15);
+  background: rgba(255, 255, 255, 0.97);
+}
+
+html[data-theme="light"] .ff-feed-header .ff-site-search-results {
+  border-color: rgba(88, 57, 155, 0.15);
+
+  background:
+    radial-gradient(circle at 10% 0%,
+      rgba(205, 52, 241, 0.07),
+      transparent 36%),
+    rgba(255, 255, 255, 0.99);
+
+  box-shadow:
+    0 22px 55px rgba(50, 38, 78, 0.16);
+}
+
+/* Mobilde de header altında açılsın */
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 67px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+
+------------------------------
+SATIR: 12747
+  }
+
+  .ff-feed-header .ff-site-search-input {
+    height: 49px;
+    border-radius: 14px;
+    padding: 0 14px;
+  }
+
+  .ff-feed-header .ff-site-search-results {
+    max-height: min(360px, calc(100dvh - 190px));
+  }
+}
+
+/* GENEL ARAMA — HEADER İLE SAYFA İÇERİĞİ ARASINDA */
+
+.ff-feed-header {
+  position: sticky;
+  overflow: visible !important;
+}
+
+.ff-feed-header .ff-site-search {
+  position: static;
+}
+
+/*
+  Header büyümez.
+  Arama için yalnızca header sonrasında boşluk açılır.
+*/
+.ff-feed-header:has(.ff-site-search-popover) {
+  margin-bottom: 75px !important;
+}
+
+------------------------------
+SATIR: 12799
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/*
+  Sonuçlar arama çubuğunun altından açılır.
+*/
+.ff-feed-header .ff-site-search-results {
+  position: absolute !important;
+
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  bottom: auto !important;
+  left: 0 !important;
+
+  width: 100% !important;
+}
+
+/* Mobil */
+
+@media (max-width: 680px) {
+  .ff-feed-header:has(.ff-site-search-popover) {
+    margin-bottom: 69px !important;
+  }
+
+  .ff-feed-header .ff-site-search-popover {
+    position: absolute !important;
+
+    top: calc(100% + 7px) !important;
+    right: 0 !important;
+
+------------------------------

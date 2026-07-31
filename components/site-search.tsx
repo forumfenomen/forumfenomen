@@ -149,6 +149,9 @@ export default function SiteSearch({
     const inputRef =
         useRef<HTMLInputElement | null>(null);
 
+    const popoverRef =
+        useRef<HTMLDivElement | null>(null);
+
     const [open, setOpen] =
         useState(false);
 
@@ -167,6 +170,7 @@ export default function SiteSearch({
     const [loading, setLoading] =
         useState(false);
 
+    
     useEffect(() => {
         if (!open || topicRows.length > 0) {
             return;
@@ -336,11 +340,20 @@ export default function SiteSearch({
         function handlePointerDown(
             event: MouseEvent
         ) {
+            const target =
+                event.target as Node;
+
+            const clickedTrigger =
+                wrapperRef.current?.contains(target) ??
+                false;
+
+            const clickedPopover =
+                popoverRef.current?.contains(target) ??
+                false;
+
             if (
-                wrapperRef.current &&
-                !wrapperRef.current.contains(
-                    event.target as Node
-                )
+                !clickedTrigger &&
+                !clickedPopover
             ) {
                 setOpen(false);
                 setSearchValue("");
@@ -640,6 +653,104 @@ export default function SiteSearch({
         });
     }
 
+    const searchPopover = open ? (
+        <div
+            ref={popoverRef}
+            className="ff-site-search-popover"
+        >
+            <div className="ff-site-search-input">
+                <SearchIcon />
+
+                <input
+                    ref={inputRef}
+                    type="search"
+                    value={searchValue}
+                    onChange={(event) =>
+                        setSearchValue(
+                            event.target.value
+                        )
+                    }
+                    placeholder={
+                        language === "tr"
+                            ? "Konu, blog, kategori veya kullanıcı ara..."
+                            : "Search topics, blogs, categories or users..."
+                    }
+                />
+            </div>
+
+            {normalizedSearch.length >= 2 ? (
+                <div
+                    className="ff-site-search-results"
+                    aria-live="polite"
+                    aria-busy={
+                        loading ||
+                        profilesLoading
+                    }
+                >
+                    {loading || profilesLoading ? (
+                        <div className="ff-site-search-hint">
+                            <span className="ff-site-search-loader" />
+
+                            <span>
+                                {language === "tr"
+                                    ? "Aranıyor..."
+                                    : "Searching..."}
+                            </span>
+                        </div>
+                    ) : searchResults.length > 0 ? (
+                        searchResults.map((result) => (
+                            <Link
+                                key={result.id}
+                                href={result.href}
+                                className="ff-site-search-result"
+                                onClick={() => {
+                                    setOpen(false);
+                                    setSearchValue("");
+                                }}
+                            >
+                                <span
+                                    className={
+                                        `ff-site-search-result-icon ` +
+                                        result.iconClass
+                                    }
+                                >
+                                    {result.icon}
+                                </span>
+
+                                <span className="ff-site-search-result-copy">
+                                    <strong>
+                                        {result.title}
+                                    </strong>
+
+                                    <small>
+                                        {result.subtitle}
+                                    </small>
+                                </span>
+
+                                <span
+                                    className="ff-site-search-result-arrow"
+                                    aria-hidden="true"
+                                >
+                                    ›
+                                </span>
+                            </Link>
+                        ))
+                    ) : (
+                        <div className="ff-site-search-hint">
+                            <SearchIcon />
+
+                            <span>
+                                {language === "tr"
+                                    ? "Eşleşen konu veya kullanıcı bulunamadı."
+                                    : "No matching topic or user was found."}
+                            </span>
+                        </div>
+                    )}
+                </div>
+            ) : null}
+        </div>
+    ) : null;
+
     return (
         <div
             ref={wrapperRef}
@@ -672,92 +783,8 @@ export default function SiteSearch({
                 )}
             </button>
 
-            {open && (
-                <div className="ff-site-search-popover">
-                    <div className="ff-site-search-input">
-                        <SearchIcon />
 
-                        <input
-                            ref={inputRef}
-                            type="search"
-                            value={searchValue}
-                            onChange={(event) =>
-                                setSearchValue(
-                                    event.target.value
-                                )
-                            }
-                            placeholder={
-                                language === "tr"
-                                    ? "Konu, blog, kategori veya kullanıcı ara..."
-                                    : "Search topics, blogs, categories or users..."
-                            }
-                        />
-                    </div>
-
-                    {normalizedSearch.length >= 2 ? (
-                        <div
-                            className="ff-site-search-results"
-                            aria-live="polite"
-                            aria-busy={loading || profilesLoading}
-                        >
-                            {loading || profilesLoading ? (
-                                <div className="ff-site-search-hint">
-                                    <span className="ff-site-search-loader" />
-
-                                    <span>
-                                        {language === "tr"
-                                            ? "Aranıyor..."
-                                            : "Searching..."}
-                                    </span>
-                                </div>
-                            ) : searchResults.length > 0 ? (
-                                searchResults.map((result) => (
-                                    <Link
-                                        key={result.id}
-                                        href={result.href}
-                                        className="ff-site-search-result"
-                                        onClick={() => {
-                                            setOpen(false);
-                                            setSearchValue("");
-                                        }}
-                                    >
-                                        <span
-                                            className={
-                                                `ff-site-search-result-icon ` +
-                                                result.iconClass
-                                            }
-                                        >
-                                            {result.icon}
-                                        </span>
-
-                                        <span className="ff-site-search-result-copy">
-                                            <strong>{result.title}</strong>
-                                            <small>{result.subtitle}</small>
-                                        </span>
-
-                                        <span
-                                            className="ff-site-search-result-arrow"
-                                            aria-hidden="true"
-                                        >
-                                            ›
-                                        </span>
-                                    </Link>
-                                ))
-                            ) : (
-                                <div className="ff-site-search-hint">
-                                    <SearchIcon />
-
-                                    <span>
-                                        {language === "tr"
-                                            ? "Eşleşen konu veya kullanıcı bulunamadı."
-                                            : "No matching topic or user was found."}
-                                    </span>
-                                </div>
-                            )}
-                        </div>
-                    ) : null}
-                </div>
-            )}
+            {searchPopover}
         </div>
     );
 }
