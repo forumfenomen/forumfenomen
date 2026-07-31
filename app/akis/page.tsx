@@ -1647,22 +1647,6 @@ export default function FeedPage() {
         <section className="ff-featured-section">
           <div className="ff-section-heading">
             <h2>{activeFeedTitle[activeFeedFilter]}</h2>
-            {activePosts.length > 7 && (
-              <button
-                type="button"
-                onClick={() => {
-                  setShowAllTopics((current) => !current);
-                }}
-                aria-expanded={showAllTopics}
-              >
-                {showAllTopics
-                  ? language === "tr"
-                    ? "Daralt"
-                    : "Show Less"
-                  : t.seeAll}{" "}
-                {showAllTopics ? "↑" : "↓"}
-              </button>
-            )}
           </div>
 
           <div
@@ -1806,6 +1790,32 @@ export default function FeedPage() {
               ))
             )}
           </div>
+
+          {activePosts.length > 7 && (
+            <div
+              className="ff-section-heading"
+              style={{
+                justifyContent: "flex-end",
+                marginTop: "18px",
+                marginBottom: 0,
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => {
+                  setShowAllTopics((current) => !current);
+                }}
+                aria-expanded={showAllTopics}
+              >
+                {showAllTopics
+                  ? language === "tr"
+                    ? "Daralt"
+                    : "Show Less"
+                  : t.seeAll}{" "}
+                {showAllTopics ? "\u2191" : "\u2193"}
+              </button>
+            </div>
+          )}
         </section>
 
 
