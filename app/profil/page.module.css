@@ -6172,8 +6172,10 @@
 
 .profileMenuWrap {
   position: relative;
-  padding-right: 58px;
-  margin-bottom: 18px;
+  width: 100%;
+  min-width: 0;
+  padding-right: 0;
+  margin-bottom: 0;
 }
 
 .profileMenuArrow {
