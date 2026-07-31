@@ -265,6 +265,11 @@ export default function PublicProfilePage() {
     const [comments, setComments] =
         useState<PublicCommentRow[]>([]);
 
+    const [
+        canViewCommentsFromServer,
+        setCanViewCommentsFromServer,
+    ] = useState(false);
+
     const [followers, setFollowers] =
         useState<PublicFollowerRow[]>([]);
 
@@ -456,6 +461,8 @@ export default function PublicProfilePage() {
             setLoading(true);
             setNotFound(false);
             setActiveTab("topics");
+            setComments([]);
+            setCanViewCommentsFromServer(false);
             setFollowers([]);
             setFollowingUsers([]);
             setCanViewFollowersFromServer(false);
@@ -529,9 +536,8 @@ export default function PublicProfilePage() {
 
             const [
                 topicsResult,
-                commentsListResult,
+                commentActivityResult,
                 followDataResult,
-                commentsResult,
                 followRequestResult,
             ] = await Promise.all([
                 supabase
@@ -555,25 +561,13 @@ export default function PublicProfilePage() {
                     })
                     .limit(20),
 
-                supabase
-                    .from("topic_comments")
-                    .select(`
-    id,
-    content,
-    created_at,
-    topic_id,
-    topics (
-      id,
-      title,
-      status
-    )
-  `)
-                    .eq("author_id", publicProfile.id)
-                    .eq("status", "published")
-                    .order("created_at", {
-                        ascending: false,
-                    })
-                    .limit(50),
+                supabase.rpc(
+                    "get_profile_comment_activity",
+                    {
+                        p_profile_id:
+                            publicProfile.id,
+                    }
+                ),
 
                 supabase.rpc(
                     "get_profile_follow_data",
@@ -582,18 +576,6 @@ export default function PublicProfilePage() {
                             publicProfile.id,
                     }
                 ),
-
-                supabase
-                    .from("topic_comments")
-                    .select("id", {
-                        count: "exact",
-                        head: true,
-                    })
-                    .eq(
-                        "author_id",
-                        publicProfile.id
-                    )
-                    .eq("status", "published"),
 
                 user
                     ? supabase
@@ -629,9 +611,52 @@ export default function PublicProfilePage() {
                     []) as unknown as PublicTopicRow[]
             );
 
-            setComments(
-                (commentsListResult.data ??
-                    []) as unknown as PublicCommentRow[]
+            if (commentActivityResult.error) {
+                console.error(
+                    "Secure profile comment activity could not be loaded:",
+                    commentActivityResult.error.message
+                );
+            }
+
+            const commentActivity =
+                commentActivityResult.data?.[0] as
+                | {
+                    comment_count:
+                        | number
+                        | string
+                        | null;
+
+                    can_view_comments:
+                        boolean | null;
+
+                    comments:
+                        PublicCommentRow[]
+                        | null;
+                }
+                | undefined;
+
+            const commentRows =
+                Array.isArray(
+                    commentActivity?.comments
+                )
+                    ? commentActivity.comments
+                    : [];
+
+            setComments(commentRows);
+
+            const nextCommentCount = Number(
+                commentActivity?.comment_count ?? 0
+            );
+
+            setCommentCount(
+                Number.isFinite(nextCommentCount)
+                    ? nextCommentCount
+                    : 0
+            );
+
+            setCanViewCommentsFromServer(
+                commentActivity
+                    ?.can_view_comments === true
             );
 
             if (followDataResult.error) {
@@ -1187,11 +1212,7 @@ export default function PublicProfilePage() {
             : false;
 
     const canViewComments =
-        profile
-            ? canViewVisibility(
-                profile.comments_visibility
-            )
-            : false;
+        canViewCommentsFromServer;
 
     const canViewFollowers =
         canViewFollowersFromServer;
@@ -1762,7 +1783,15 @@ export default function PublicProfilePage() {
                                 </div>
                             ) : activeTab === "comments" ? (
                                 <div className={styles.commentList}>
-                                    {comments.length === 0 ? (
+                                    {!canViewComments ? (
+                                        <div className={styles.emptyState}>
+                                            <p>
+                                                {language === "tr"
+                                                    ? "Bu kullanıcının yorum listesi gizli."
+                                                    : "This user's comment list is private."}
+                                            </p>
+                                        </div>
+                                    ) : comments.length === 0 ? (
                                         <div className={styles.emptyState}>
                                             <p>
                                                 {language === "tr"
