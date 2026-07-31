@@ -397,13 +397,37 @@ export default function SiteSearch({
 
                 const supabase = createClient();
 
-                const { data, error } = await supabase.rpc(
-                    "search_public_profiles",
-                    {
-                        p_query: searchValue.trim(),
-                        p_limit: 10,
-                    }
-                );
+                const {
+                    data: { session },
+                    error: sessionError,
+                } = await supabase.auth.getSession();
+
+                if (!isActive) {
+                    return;
+                }
+
+                /*
+                 * Oturumu kapalı ziyaretçiler
+                 * kullanıcı araması yapamaz.
+                 */
+                if (
+                    sessionError ||
+                    !session?.user
+                ) {
+                    setProfileRows([]);
+                    setProfilesLoading(false);
+                    return;
+                }
+
+                const { data, error } =
+                    await supabase.rpc(
+                        "search_public_profiles",
+                        {
+                            p_query:
+                                searchValue.trim(),
+                            p_limit: 10,
+                        }
+                    );
 
                 if (!isActive) {
                     return;
