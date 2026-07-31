@@ -2,6 +2,7 @@
 import type { ReactNode } from "react";
 import AuthSessionIndicator from "@/components/auth-session-indicator";
 import PresenceTracker from "@/components/presence-tracker";
+import ScrollToTop from "@/components/scroll-to-top";
 import "./globals.css";
 
 export const metadata: Metadata = {
