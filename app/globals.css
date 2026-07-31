@@ -13946,3 +13946,121 @@ html[data-theme="light"] .ff-insight-grid button.active {
   color: var(--feed-topic-accent) !important;
   stroke: currentColor !important;
 }
+
+/* ff-feed-more-control */
+
+.ff-feed-more-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 12px 0 4px;
+}
+
+.ff-feed-more-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 32px;
+  padding: 6px 12px;
+  border: 1px solid rgba(229, 67, 255, 0.38);
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(38, 16, 56, 0.94),
+      rgba(13, 12, 31, 0.97)
+    );
+  color: #ee59f8;
+  font: inherit;
+  font-size: 11.5px;
+  font-weight: 750;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow:
+    0 7px 18px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.ff-feed-more-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(239, 91, 255, 0.62);
+  box-shadow:
+    0 9px 21px rgba(0, 0, 0, 0.28),
+    0 0 13px rgba(229, 67, 255, 0.13);
+}
+
+.ff-feed-more-button:active {
+  transform: translateY(0);
+}
+
+.ff-feed-more-button:focus-visible {
+  outline: 2px solid rgba(241, 92, 255, 0.72);
+  outline-offset: 2px;
+}
+
+.ff-feed-more-arrow {
+  display: block;
+  width: 6px;
+  height: 6px;
+  flex: 0 0 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+}
+
+.ff-feed-more-arrow.down {
+  transform: rotate(45deg) translateY(-1px);
+}
+
+.ff-feed-more-arrow.up {
+  transform: rotate(-135deg) translateY(-1px);
+}
+
+.ff-feed-more-text {
+  white-space: nowrap;
+}
+
+html[data-theme="light"] .ff-feed-more-button {
+  border-color: rgba(173, 41, 207, 0.3);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.98),
+      rgba(248, 242, 255, 0.98)
+    );
+  color: #a21bc1;
+  box-shadow:
+    0 7px 17px rgba(72, 32, 103, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 720px) {
+  .ff-feed-more-wrap {
+    margin-top: 11px;
+    margin-bottom: 3px;
+  }
+
+  .ff-feed-more-button {
+    min-height: 30px;
+    padding: 5px 10px;
+    gap: 6px;
+    font-size: 11px;
+  }
+
+  .ff-feed-header-actions .ff-round-action {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+  }
+
+  .ff-feed-header-actions .ff-round-action svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}

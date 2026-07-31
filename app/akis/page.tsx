@@ -1792,27 +1792,38 @@ export default function FeedPage() {
           </div>
 
           {activePosts.length > 7 && (
-            <div
-              className="ff-section-heading"
-              style={{
-                justifyContent: "flex-end",
-                marginTop: "18px",
-                marginBottom: 0,
-              }}
-            >
+            <div className="ff-feed-more-wrap">
               <button
                 type="button"
+                className="ff-feed-more-button"
                 onClick={() => {
                   setShowAllTopics((current) => !current);
                 }}
                 aria-expanded={showAllTopics}
               >
-                {showAllTopics
-                  ? language === "tr"
-                    ? "Daralt"
-                    : "Show Less"
-                  : t.seeAll}{" "}
-                {showAllTopics ? "\u2191" : "\u2193"}
+                <span
+                  className={`ff-feed-more-arrow ${
+                    showAllTopics ? "up" : "down"
+                  }`}
+                  aria-hidden="true"
+                />
+
+                <span className="ff-feed-more-text">
+                  {showAllTopics
+                    ? language === "tr"
+                      ? "Daha Az Konu"
+                      : "Show Fewer Topics"
+                    : language === "tr"
+                      ? "Daha Fazla Konu"
+                      : "Show More Topics"}
+                </span>
+
+                <span
+                  className={`ff-feed-more-arrow ${
+                    showAllTopics ? "up" : "down"
+                  }`}
+                  aria-hidden="true"
+                />
               </button>
             </div>
           )}
