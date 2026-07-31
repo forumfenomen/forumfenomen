@@ -417,6 +417,62 @@ export default function TopicDetailPage() {
         };
     }, [reportModalComment, topicReportOpen]);
 
+    /* TOPIC ENTRY SCROLL RESET START */
+
+    useEffect(() => {
+        if (!topicId) {
+            return;
+        }
+
+        /*
+         * Bildirimden belirli bir yoruma gelindiyse
+         * mevcut yorum odaklama davran???n? koru.
+         */
+        if (
+            window.location.hash.startsWith(
+                "#comment-"
+            )
+        ) {
+            return;
+        }
+
+        const resetScroll = () => {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "auto",
+            });
+        };
+
+        /*
+         * iPhone Safari bazen ?nceki route'un
+         * scroll konumunu ilk render sonras?nda
+         * yeniden uygulad??? i?in ?? a?amada s?f?rla.
+         */
+        resetScroll();
+
+        const frameId =
+            window.requestAnimationFrame(
+                resetScroll
+            );
+
+        const timerId =
+            window.setTimeout(
+                resetScroll,
+                120
+            );
+
+        return () => {
+            window.cancelAnimationFrame(
+                frameId
+            );
+
+            window.clearTimeout(timerId);
+        };
+    }, [topicId]);
+
+    /* TOPIC ENTRY SCROLL RESET END */
+
     useEffect(() => {
         const savedLanguage =
             getForumLanguage();

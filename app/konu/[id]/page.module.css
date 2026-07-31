@@ -2598,3 +2598,30 @@
         line-height: 1;
     }
 }
+
+/* LIGHT THEME BACK LINK FIX START */
+
+:global(html[data-theme="light"]) .backLink {
+    color: #3f334d;
+
+    border-color:
+        rgba(117, 63, 160, 0.24);
+
+    background:
+        rgba(255, 255, 255, 0.92);
+
+    box-shadow:
+        0 6px 18px rgba(69, 43, 92, 0.08);
+}
+
+:global(html[data-theme="light"]) .backLink:hover {
+    color: #251b2f;
+
+    border-color:
+        rgba(166, 16, 249, 0.38);
+
+    background:
+        rgba(247, 239, 255, 0.98);
+}
+
+/* LIGHT THEME BACK LINK FIX END */
