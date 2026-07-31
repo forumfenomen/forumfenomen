@@ -1815,17 +1815,38 @@ export default function TopicDetailPage() {
                 data as Omit<CommentRow, "profiles">;
 
             const {
-                data: authorProfile,
-            } = await supabase
-                .from("public_profiles")
-                .select(`
-        id,
-        display_name,
-        username,
-        avatar_url
-    `)
-                .eq("id", insertedComment.author_id)
-                .maybeSingle();
+                data: authorProfiles,
+                error: authorProfileError,
+            } = await supabase.rpc(
+                "get_topic_comment_author_profiles",
+                {
+                    p_topic_id: topicId,
+                }
+            );
+
+            if (authorProfileError) {
+                console.error(
+                    "Yeni yorumun yazarı alınamadı:",
+                    authorProfileError.message
+                );
+            }
+
+            type CommentAuthorProfile = {
+                id: string;
+                display_name: string | null;
+                username: string | null;
+                avatar_url: string | null;
+            };
+
+            const typedAuthorProfiles =
+                (authorProfiles ?? []) as CommentAuthorProfile[];
+
+            const authorProfile =
+                typedAuthorProfiles.find(
+                    (profile) =>
+                        profile.id ===
+                        insertedComment.author_id
+                ) ?? null;
 
             const newComment: CommentRow = {
                 ...insertedComment,
