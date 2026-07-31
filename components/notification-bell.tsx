@@ -383,12 +383,18 @@ export default function NotificationBell() {
       notification.type === "user_followed" &&
       notification.related_user_id
     ) {
-      const { data: profileData, error } =
-        await supabase
-          .from("public_profiles")
-          .select("username")
-          .eq("id", notification.related_user_id)
-          .maybeSingle();
+      const { data: profileRows, error } =
+        await supabase.rpc(
+          "get_profile_summaries_by_ids",
+          {
+            p_profile_ids: [
+              notification.related_user_id,
+            ],
+          }
+        );
+
+      const profileData =
+        profileRows?.[0] ?? null;
 
       if (error) {
         console.error(

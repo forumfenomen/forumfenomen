@@ -202,14 +202,12 @@ export default async function AdminLogsPage({
     let profiles: ProfileSummary[] = [];
 
     if (actorIds.length > 0) {
-        const profilesResult = await supabase
-            .from("public_profiles")
-            .select(`
-        id,
-        display_name,
-        username
-      `)
-            .in("id", actorIds);
+        const profilesResult = await supabase.rpc(
+            "get_profile_summaries_by_ids",
+            {
+                p_profile_ids: actorIds,
+            }
+        );
 
         if (profilesResult.error) {
             console.error(

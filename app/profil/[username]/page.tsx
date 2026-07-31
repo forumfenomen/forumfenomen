@@ -492,25 +492,17 @@ export default function PublicProfilePage() {
             setCurrentUserId(user.id);
 
             const {
-                data: profileData,
+                data: profileRows,
                 error: profileError,
-            } = await supabase
-                .from("public_profiles")
-                .select(`
-  id,
-  display_name,
-  username,
-  avatar_url,
-  bio,
-  role,
-  profile_visibility,
-  followers_visibility,
-  following_visibility,
-  comments_visibility,
-  likes_visibility
-`)
-                .ilike("username", usernameParam)
-                .maybeSingle();
+            } = await supabase.rpc(
+                "get_profile_by_username",
+                {
+                    p_username: usernameParam,
+                }
+            );
+
+            const profileData =
+                profileRows?.[0] ?? null;
 
             if (!isActive) {
                 return;

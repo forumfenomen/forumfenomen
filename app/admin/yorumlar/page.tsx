@@ -165,14 +165,12 @@ export default async function AdminCommentsPage({
     let topics: TopicSummary[] = [];
 
     if (profileIds.length > 0) {
-        const profilesResult = await supabase
-            .from("public_profiles")
-            .select(`
-        id,
-        display_name,
-        username
-      `)
-            .in("id", profileIds);
+        const profilesResult = await supabase.rpc(
+            "get_profile_summaries_by_ids",
+            {
+                p_profile_ids: profileIds,
+            }
+        );
 
         if (profilesResult.error) {
             console.error(

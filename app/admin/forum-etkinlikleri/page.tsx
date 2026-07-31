@@ -221,12 +221,12 @@ export default async function AdminForumActivitiesPage({
 
   const { data: profileData } =
     profileIds.length > 0
-      ? await supabase
-          .from("public_profiles")
-          .select(
-            "id, display_name, username"
-          )
-          .in("id", profileIds)
+      ? await supabase.rpc(
+          "get_profile_summaries_by_ids",
+          {
+            p_profile_ids: profileIds,
+          }
+        )
       : { data: [] };
 
   const profileMap = new Map<
