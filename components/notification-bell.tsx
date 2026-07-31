@@ -3,6 +3,7 @@
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -134,6 +135,12 @@ export default function NotificationBell() {
 
   const [isOpen, setIsOpen] =
     useState(false);
+
+  const [panelPosition, setPanelPosition] =
+    useState<{
+      top: number;
+      left: number;
+    } | null>(null);
 
   const [isLoading, setIsLoading] =
     useState(true);
@@ -330,6 +337,93 @@ export default function NotificationBell() {
       }
     };
   }, [loadNotifications, supabase]);
+
+  useLayoutEffect(() => {
+    if (!isOpen) {
+      setPanelPosition(null);
+      return;
+    }
+
+    function updatePanelPosition() {
+      /*
+       * Mobil konumu mevcut CSS yönetiyor.
+       */
+      if (window.innerWidth <= 620) {
+        setPanelPosition(null);
+        return;
+      }
+
+      const triggerElement =
+        triggerRef.current;
+
+      if (!triggerElement) {
+        return;
+      }
+
+      /*
+       * NotificationBell wrapper'ının parent'ı,
+       * ay/tema, zil ve kapatma ikonlarının
+       * bulunduğu header action grubudur.
+       */
+      const actionsElement =
+        triggerElement.parentElement;
+
+      const anchorRect =
+        actionsElement?.getBoundingClientRect() ??
+        triggerElement.getBoundingClientRect();
+
+      const panelWidth = 420;
+      const viewportPadding = 16;
+      const panelGap = 12;
+
+      const calculatedLeft =
+        anchorRect.right - panelWidth;
+
+      const maximumLeft =
+        window.innerWidth -
+        panelWidth -
+        viewportPadding;
+
+      const left = Math.max(
+        viewportPadding,
+        Math.min(
+          calculatedLeft,
+          maximumLeft
+        )
+      );
+
+      setPanelPosition({
+        top: anchorRect.bottom + panelGap,
+        left,
+      });
+    }
+
+    updatePanelPosition();
+
+    window.addEventListener(
+      "resize",
+      updatePanelPosition
+    );
+
+    window.addEventListener(
+      "scroll",
+      updatePanelPosition,
+      true
+    );
+
+    return () => {
+      window.removeEventListener(
+        "resize",
+        updatePanelPosition
+      );
+
+      window.removeEventListener(
+        "scroll",
+        updatePanelPosition,
+        true
+      );
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     const handleOutsideClick = (
@@ -602,127 +696,136 @@ export default function NotificationBell() {
       </button>
 
       {isOpen &&
-      typeof document !== "undefined"
+        typeof document !== "undefined"
         ? createPortal(
           <div
             ref={panelRef}
             className={styles.panel}
-          role="dialog"
-          aria-label="Bildirimler"
-        >
-          <div
-            className={styles.panelHeader}
-          >
-            <div>
-              <span>BİLDİRİMLER</span>
-
-              <strong>
-                Son bildirimlerin
-              </strong>
-            </div>
-
-            <div className={styles.headerActions}>
-              {unreadCount > 0 ? (
-                <button
-                  type="button"
-                  disabled={
-                    isMarkingAll ||
-                    isClearingRead
-                  }
-                  onClick={() => {
-                    void handleMarkAllRead();
-                  }}
-                >
-                  {isMarkingAll
-                    ? "İşleniyor..."
-                    : "Tümünü okundu yap"}
-                </button>
-              ) : null}
-
-              {readCount > 0 ? (
-                <button
-                  type="button"
-                  className={styles.clearReadButton}
-                  disabled={
-                    isClearingRead ||
-                    isMarkingAll
-                  }
-                  onClick={() => {
-                    void handleClearRead();
-                  }}
-                >
-                  {isClearingRead
-                    ? "Temizleniyor..."
-                    : "Okunanları temizle"}
-                </button>
-              ) : null}
-            </div>
-          </div>
-
-          <div
-            className={
-              styles.notificationList
+            style={
+              panelPosition
+                ? {
+                  top: `${panelPosition.top}px`,
+                  left: `${panelPosition.left}px`,
+                  right: "auto",
+                }
+                : undefined
             }
+            role="dialog"
+            aria-label="Bildirimler"
           >
-            {isLoading ? (
-              <div
-                className={styles.emptyState}
-              >
-                Bildirimler yükleniyor...
+            <div
+              className={styles.panelHeader}
+            >
+              <div>
+                <span>BİLDİRİMLER</span>
+
+                <strong>
+                  Son bildirimlerin
+                </strong>
               </div>
-            ) : notifications.length === 0 ? (
-              <div
-                className={styles.emptyState}
-              >
-                Henüz bildirimin yok.
-              </div>
-            ) : (
-              notifications.map(
-                (notification) => (
+
+              <div className={styles.headerActions}>
+                {unreadCount > 0 ? (
                   <button
                     type="button"
-                    key={notification.id}
-                    className={`${styles.notificationItem} ${notification.is_read
-                      ? styles.readItem
-                      : styles.unreadItem
-                      }`}
+                    disabled={
+                      isMarkingAll ||
+                      isClearingRead
+                    }
                     onClick={() => {
-                      void handleNotificationClick(
-                        notification
-                      );
+                      void handleMarkAllRead();
                     }}
                   >
-                    <span
-                      className={
-                        styles.notificationIndicator
-                      }
-                    />
-
-                    <span
-                      className={
-                        styles.notificationContent
-                      }
-                    >
-                      <strong>
-                        {notification.title}
-                      </strong>
-
-                      <p>
-                        {notification.message}
-                      </p>
-
-                      <small>
-                        {formatNotificationTime(
-                          notification.created_at
-                        )}
-                      </small>
-                    </span>
+                    {isMarkingAll
+                      ? "İşleniyor..."
+                      : "Tümünü okundu yap"}
                   </button>
+                ) : null}
+
+                {readCount > 0 ? (
+                  <button
+                    type="button"
+                    className={styles.clearReadButton}
+                    disabled={
+                      isClearingRead ||
+                      isMarkingAll
+                    }
+                    onClick={() => {
+                      void handleClearRead();
+                    }}
+                  >
+                    {isClearingRead
+                      ? "Temizleniyor..."
+                      : "Okunanları temizle"}
+                  </button>
+                ) : null}
+              </div>
+            </div>
+
+            <div
+              className={
+                styles.notificationList
+              }
+            >
+              {isLoading ? (
+                <div
+                  className={styles.emptyState}
+                >
+                  Bildirimler yükleniyor...
+                </div>
+              ) : notifications.length === 0 ? (
+                <div
+                  className={styles.emptyState}
+                >
+                  Henüz bildirimin yok.
+                </div>
+              ) : (
+                notifications.map(
+                  (notification) => (
+                    <button
+                      type="button"
+                      key={notification.id}
+                      className={`${styles.notificationItem} ${notification.is_read
+                        ? styles.readItem
+                        : styles.unreadItem
+                        }`}
+                      onClick={() => {
+                        void handleNotificationClick(
+                          notification
+                        );
+                      }}
+                    >
+                      <span
+                        className={
+                          styles.notificationIndicator
+                        }
+                      />
+
+                      <span
+                        className={
+                          styles.notificationContent
+                        }
+                      >
+                        <strong>
+                          {notification.title}
+                        </strong>
+
+                        <p>
+                          {notification.message}
+                        </p>
+
+                        <small>
+                          {formatNotificationTime(
+                            notification.created_at
+                          )}
+                        </small>
+                      </span>
+                    </button>
+                  )
                 )
-              )
-            )}
-          </div>
-        </div>,
+              )}
+            </div>
+          </div>,
           document.body
         )
         : null}

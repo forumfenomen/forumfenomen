@@ -56,10 +56,8 @@
   position: fixed;
   z-index: 5000;
   top: 86px;
-  right: max(
-    18px,
-    calc((100vw - 1280px) / 2 + 18px)
-  );
+  right: max(18px,
+      calc((100vw - 1280px) / 2 + 18px));
 
   width: min(370px, calc(100vw - 24px));
   max-height: min(520px, calc(100vh - 90px));
@@ -479,10 +477,8 @@
   .panel {
     position: fixed;
 
-    top: max(
-      82px,
-      calc(env(safe-area-inset-top) + 70px)
-    );
+    top: max(82px,
+        calc(env(safe-area-inset-top) + 70px));
 
     right: 12px;
     left: 12px;
@@ -491,9 +487,7 @@
     min-width: 0;
     max-width: none;
 
-    max-height: calc(
-      100dvh - 110px - env(safe-area-inset-bottom)
-    );
+    max-height: calc(100dvh - 110px - env(safe-area-inset-bottom));
 
     box-sizing: border-box;
     transform: none;
@@ -503,7 +497,7 @@
     min-width: 0;
   }
 
-  .panelHeader > div:first-child {
+  .panelHeader>div:first-child {
     min-width: 0;
   }
 
@@ -511,9 +505,7 @@
     width: 100%;
     min-width: 0;
 
-    max-height: calc(
-      100dvh - 235px - env(safe-area-inset-bottom)
-    );
+    max-height: calc(100dvh - 235px - env(safe-area-inset-bottom));
   }
 
   .notificationItem,
@@ -529,3 +521,4 @@
 }
 
 /* NOTIFICATION MOBILE VIEWPORT FIX END */
+
