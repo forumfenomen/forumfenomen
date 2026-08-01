@@ -260,11 +260,14 @@ export default async function AdminTopicsPage({
           </p>
         </div>
 
-        <div
-          className={`${styles.panelBadge} ${styles.topicCountBadge}`}
+        <Link
+          href="/admin/konular/yeni"
+          className={styles.newTopicButton}
         >
-          {topics.length} konu
-        </div>
+          <span aria-hidden="true">+</span>
+
+          Yeni Konu
+        </Link>
       </header>
 
       <section className={styles.topicSummaryGrid}>

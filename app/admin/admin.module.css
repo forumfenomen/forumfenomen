@@ -3500,11 +3500,73 @@
     color: #ffffff;
 }
 
-.topicSearchButton {
+.newTopicButton {
+    display: inline-flex;
+    width: 108px;
+    min-width: 108px;
+    min-height: 38px;
 
+    box-sizing: border-box;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    margin-right: 35px;
+    padding: 0 12px;
+
+    color: #ffffff;
+
+    border:
+        1px solid rgba(72, 222, 164, 0.34);
+    border-radius: 11px;
+
+    background:
+        linear-gradient(135deg,
+            rgba(29, 171, 119, 0.96),
+            rgba(20, 126, 92, 0.96));
+
+    box-shadow:
+        0 10px 28px rgba(18, 128, 94, 0.14);
+
+    font-size: 10px;
+    font-weight: 850;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition:
+        transform 0.18s ease,
+        filter 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.newTopicButton span {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.newTopicButton:hover {
+    transform: translateY(-1px);
+
+    border-color:
+        rgba(93, 237, 181, 0.48);
+
+    filter: brightness(1.07);
+}
+
+.topicSearchButton {
     width: 92px;
     min-width: 92px;
 }
+
 
 .topicCountBadge {
     display: flex;
@@ -3930,10 +3992,18 @@
         margin-right: 0;
     }
 
+    .newTopicButton {
+    width: 108px;
+    min-width: 108px;
+
+    margin-right: 0;
+}
+
     .topicAdminSearchField {
         width: 100%;
         flex: 0 0 100%;
     }
+
 
     .topicAdminSearchClear {
         margin-left: auto;
