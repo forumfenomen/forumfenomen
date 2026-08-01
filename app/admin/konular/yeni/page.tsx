@@ -317,7 +317,7 @@ export default async function NewAdminTopicPage({
             <h2>Konu Bilgileri</h2>
           </div>
 
-          <div className={styles.panelBadge}>
+          <div className={pageStyles.adminPublishBadge}>
             ADMIN YAYINI
           </div>
         </div>
