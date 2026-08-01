@@ -1,0 +1,188 @@
+.backButton {
+    display: inline-flex;
+    min-width: 112px;
+    min-height: 40px;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 14px;
+
+    color: #b9bac4;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 11px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    font-size: 11px;
+    font-weight: 750;
+    text-decoration: none;
+}
+
+.backButton:hover {
+    color: #ffffff;
+
+    border-color:
+        rgba(215, 78, 229, 0.24);
+}
+
+.form {
+    display: grid;
+    gap: 18px;
+
+    padding-top: 4px;
+}
+
+.field {
+    display: grid;
+    gap: 8px;
+}
+
+.field > span {
+    color: #d4d3db;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.field small {
+    color: #777a87;
+
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    color: #f2f1f6;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.085);
+    border-radius: 12px;
+    outline: none;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    font: inherit;
+    font-size: 12px;
+}
+
+.field input,
+.field select {
+    min-height: 44px;
+
+    padding: 0 13px;
+}
+
+.field textarea {
+    min-height: 230px;
+
+    resize: vertical;
+
+    padding: 13px;
+
+    line-height: 1.65;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    border-color:
+        rgba(215, 78, 229, 0.42);
+
+    box-shadow:
+        0 0 0 3px rgba(215, 78, 229, 0.06);
+}
+
+.field select option,
+.field select optgroup {
+    color: #ededf3;
+    background: #14141f;
+}
+
+.errorMessage {
+    margin-bottom: 16px;
+    padding: 12px 13px;
+
+    color: #ff9ba8;
+
+    border:
+        1px solid rgba(240, 93, 111, 0.2);
+    border-radius: 12px;
+
+    background:
+        rgba(232, 78, 98, 0.055);
+
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+.formFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 18px;
+
+    padding-top: 17px;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.06);
+}
+
+.formFooter p {
+    margin: 0;
+
+    color: #7e818d;
+
+    font-size: 10px;
+}
+
+.formFooter button {
+    min-width: 150px;
+    min-height: 42px;
+
+    padding: 0 17px;
+
+    color: #ffffff;
+
+    border:
+        1px solid rgba(220, 91, 235, 0.25);
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ca3cd9,
+            #596cff
+        );
+
+    font-size: 11px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.formFooter button:hover {
+    filter: brightness(1.08);
+}
+
+@media (max-width: 620px) {
+    .formFooter {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .formFooter button {
+        width: 100%;
+    }
+}
