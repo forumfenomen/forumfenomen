@@ -5,16 +5,12 @@
   color: #f6f6fa;
 
   background:
-    radial-gradient(
-      circle at 7% 2%,
+    radial-gradient(circle at 7% 2%,
       rgba(201, 42, 235, 0.12),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 95% 17%,
+      transparent 28%),
+    radial-gradient(circle at 95% 17%,
       rgba(21, 146, 246, 0.1),
-      transparent 31%
-    ),
+      transparent 31%),
     #03040a;
 }
 
@@ -25,15 +21,23 @@
 
 .shell :global(.ff-feed-header) {
   width: 100% !important;
-  margin-bottom: 10px;
+  margin: 0 0 10px !important;
+}
+
+.shell :global(.ff-feed-header:has(.ff-site-search-popover)) {
+  margin-bottom: 75px !important;
+}
+
+@media (max-width: 680px) {
+  .shell :global(.ff-feed-header:has(.ff-site-search-popover)) {
+    margin-bottom: 69px !important;
+  }
 }
 
 .loginNotice {
   display: grid;
   grid-template-columns:
-    45px
-    minmax(0, 1fr)
-    auto;
+    45px minmax(0, 1fr) auto;
 
   align-items: center;
   gap: 14px;
@@ -46,11 +50,9 @@
   border-radius: 18px;
 
   background:
-    radial-gradient(
-      circle at 100% 0,
+    radial-gradient(circle at 100% 0,
       rgba(50, 121, 255, 0.14),
-      transparent 36%
-    ),
+      transparent 36%),
     rgba(9, 8, 20, 0.96);
 }
 
@@ -138,11 +140,9 @@
     1px solid rgba(211, 59, 235, 0.35);
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(219, 48, 231, 0.22),
-      rgba(49, 107, 255, 0.17)
-    );
+      rgba(49, 107, 255, 0.17));
 }
 
 .draftMessage {
@@ -196,21 +196,15 @@
   border-radius: 24px;
 
   background:
-    radial-gradient(
-      circle at 83% 25%,
+    radial-gradient(circle at 83% 25%,
       rgba(45, 121, 255, 0.18),
-      transparent 32%
-    ),
-    radial-gradient(
-      circle at 20% 115%,
+      transparent 32%),
+    radial-gradient(circle at 20% 115%,
       rgba(218, 40, 234, 0.16),
-      transparent 41%
-    ),
-    linear-gradient(
-      140deg,
+      transparent 41%),
+    linear-gradient(140deg,
       rgba(15, 8, 28, 0.99),
-      rgba(4, 6, 14, 0.99)
-    );
+      rgba(4, 6, 14, 0.99));
 
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.04),
@@ -224,7 +218,7 @@
   max-width: 620px;
 }
 
-.heroContent > span {
+.heroContent>span {
   display: block;
 
   margin-bottom: 7px;
@@ -273,10 +267,8 @@
   border-radius: 31px;
 
   background:
-    conic-gradient(
-      #e83ee6 var(--progress),
-      rgba(255, 255, 255, 0.06) 0
-    );
+    conic-gradient(#e83ee6 var(--progress),
+      rgba(255, 255, 255, 0.06) 0);
 
   box-shadow:
     0 0 25px rgba(190, 49, 234, 0.16);
@@ -293,14 +285,12 @@
   border-radius: 25px;
 
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       #111020,
-      #050711
-    );
+      #050711);
 }
 
-.heroProgress > div {
+.heroProgress>div {
   position: relative;
   z-index: 2;
 
@@ -329,8 +319,7 @@
 .editorLayout {
   display: grid;
   grid-template-columns:
-    minmax(0, 1fr)
-    250px;
+    minmax(0, 1fr) 250px;
 
   align-items: start;
   gap: 10px;
@@ -368,7 +357,7 @@
     1px solid rgba(255, 255, 255, 0.06);
 }
 
-.panelHeading > div:first-child > span {
+.panelHeading>div:first-child>span {
   color: #d04ddd;
 
   font-size: 8px;
@@ -407,28 +396,21 @@
   padding: 0 11px;
 
   color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 78%,
-      #ffffff
-    );
+      #ffffff);
 
   border:
-    1px solid
-      color-mix(
-        in srgb,
-        var(--accent) 30%,
-        transparent
-      );
+    1px solid color-mix(in srgb,
+      var(--accent) 30%,
+      transparent);
 
   border-radius: 12px;
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 9%,
-      transparent
-    );
+      transparent);
 
   font-size: 9px;
   font-weight: 720;
@@ -466,7 +448,7 @@
   margin-bottom: 13px;
 }
 
-.sectionLabel > span {
+.sectionLabel>span {
   display: grid;
   width: 28px;
   height: 28px;
@@ -534,15 +516,11 @@
   border-radius: 16px;
 
   background:
-    radial-gradient(
-      circle at 50% 0,
-      color-mix(
-        in srgb,
+    radial-gradient(circle at 50% 0,
+      color-mix(in srgb,
         var(--accent) 9%,
-        transparent
-      ),
-      transparent 58%
-    ),
+        transparent),
+      transparent 58%),
     rgba(255, 255, 255, 0.018);
 
   cursor: pointer;
@@ -554,7 +532,7 @@
     box-shadow 0.18s ease;
 }
 
-.categoryGrid button > span {
+.categoryGrid button>span {
   display: grid;
   width: 36px;
   height: 36px;
@@ -564,21 +542,16 @@
   color: var(--accent);
 
   border:
-    1px solid
-      color-mix(
-        in srgb,
-        var(--accent) 36%,
-        transparent
-      );
+    1px solid color-mix(in srgb,
+      var(--accent) 36%,
+      transparent);
 
   border-radius: 12px;
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 9%,
-      transparent
-    );
+      transparent);
 }
 
 .categoryGrid svg {
@@ -611,8 +584,8 @@
   text-align: center;
 
   line-clamp: 2;
--webkit-line-clamp: 2;
--webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .categoryGrid button:hover,
@@ -622,31 +595,23 @@
   transform: translateY(-2px);
 
   border-color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 65%,
-      transparent
-    );
+      transparent);
 
   box-shadow:
-    0 0 18px
-      color-mix(
-        in srgb,
-        var(--accent) 15%,
-        transparent
-      );
+    0 0 18px color-mix(in srgb,
+      var(--accent) 15%,
+      transparent);
 }
 
-.categoryGrid button.activeCategory > span {
+.categoryGrid button.activeCategory>span {
   transform: scale(1.06);
 
   box-shadow:
-    0 0 16px
-      color-mix(
-        in srgb,
-        var(--accent) 23%,
-        transparent
-      );
+    0 0 16px color-mix(in srgb,
+      var(--accent) 23%,
+      transparent);
 }
 
 .categoryGrid button.activeCategory strong {
@@ -668,28 +633,21 @@
   padding: 0 12px;
 
   color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 64%,
-      #ffffff
-    );
+      #ffffff);
 
   border:
-    1px solid
-      color-mix(
-        in srgb,
-        var(--accent) 20%,
-        rgba(255, 255, 255, 0.07)
-      );
+    1px solid color-mix(in srgb,
+      var(--accent) 20%,
+      rgba(255, 255, 255, 0.07));
 
   border-radius: 999px;
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 6%,
-      rgba(255, 255, 255, 0.02)
-    );
+      rgba(255, 255, 255, 0.02));
 
   font-size: 10px;
   font-weight: 680;
@@ -701,26 +659,19 @@
   color: #ffffff;
 
   border-color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 70%,
-      transparent
-    );
+      transparent);
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 20%,
-      rgba(255, 255, 255, 0.025)
-    );
+      rgba(255, 255, 255, 0.025));
 
   box-shadow:
-    0 0 13px
-      color-mix(
-        in srgb,
-        var(--accent) 18%,
-        transparent
-      );
+    0 0 13px color-mix(in srgb,
+      var(--accent) 18%,
+      transparent);
 }
 
 .educationNote {
@@ -761,8 +712,7 @@
 .inputShell {
   display: grid;
   grid-template-columns:
-    minmax(0, 1fr)
-    auto;
+    minmax(0, 1fr) auto;
 
   align-items: center;
   gap: 8px;
@@ -782,8 +732,7 @@
     rgba(209, 57, 234, 0.4);
 
   box-shadow:
-    0 0 0 3px
-      rgba(206, 54, 232, 0.055);
+    0 0 0 3px rgba(206, 54, 232, 0.055);
 }
 
 .inputInvalid {
@@ -809,7 +758,7 @@
   color: #666976;
 }
 
-.inputShell > span {
+.inputShell>span {
   color: #777a87;
 
   font-size: 8px;
@@ -831,8 +780,7 @@
     rgba(208, 58, 233, 0.39);
 
   box-shadow:
-    0 0 0 3px
-      rgba(204, 55, 231, 0.05);
+    0 0 0 3px rgba(204, 55, 231, 0.05);
 }
 
 .toolbar {
@@ -921,9 +869,7 @@
 .tagForm {
   display: grid;
   grid-template-columns:
-    21px
-    minmax(0, 1fr)
-    31px;
+    21px minmax(0, 1fr) 31px;
 
   min-height: 46px;
 
@@ -940,7 +886,7 @@
     rgba(255, 255, 255, 0.02);
 }
 
-.tagForm > svg {
+.tagForm>svg {
   width: 18px;
   height: 18px;
 
@@ -1042,9 +988,7 @@
 .uploadButton {
   display: grid;
   grid-template-columns:
-    42px
-    minmax(0, 1fr)
-    20px;
+    42px minmax(0, 1fr) 20px;
 
   width: 100%;
   min-height: 72px;
@@ -1067,7 +1011,7 @@
   cursor: pointer;
 }
 
-.uploadButton > span {
+.uploadButton>span {
   display: grid;
   width: 40px;
   height: 40px;
@@ -1109,7 +1053,7 @@
   font-size: 8px;
 }
 
-.uploadButton > svg {
+.uploadButton>svg {
   width: 17px;
   height: 17px;
 }
@@ -1117,9 +1061,7 @@
 .attachmentPreview {
   display: grid;
   grid-template-columns:
-    70px
-    minmax(0, 1fr)
-    34px;
+    70px minmax(0, 1fr) 34px;
 
   min-height: 76px;
 
@@ -1248,11 +1190,9 @@
 
 .toggleActive {
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       #d93fe4,
-      #5574ff
-    );
+      #5574ff);
 }
 
 .toggleActive span {
@@ -1266,12 +1206,10 @@
   margin-top: 14px;
 }
 
-.pollOptions > div {
+.pollOptions>div {
   display: grid;
   grid-template-columns:
-    20px
-    minmax(0, 1fr)
-    auto;
+    20px minmax(0, 1fr) auto;
 
   min-height: 43px;
 
@@ -1288,7 +1226,7 @@
     rgba(255, 255, 255, 0.018);
 }
 
-.pollOptions > div > svg {
+.pollOptions>div>svg {
   width: 17px;
   height: 17px;
 
@@ -1311,7 +1249,7 @@
   font-size: 10px;
 }
 
-.pollOptions > div button {
+.pollOptions>div button {
   display: grid;
   width: 29px;
   height: 29px;
@@ -1379,7 +1317,7 @@
   gap: 10px;
 }
 
-.sidebarHeading > span {
+.sidebarHeading>span {
   display: grid;
   width: 37px;
   height: 37px;
@@ -1434,8 +1372,7 @@
 .guidelinesCard li {
   display: grid;
   grid-template-columns:
-    17px
-    minmax(0, 1fr);
+    17px minmax(0, 1fr);
 
   gap: 7px;
 
@@ -1463,7 +1400,7 @@
   justify-content: space-between;
 }
 
-.progressHeading > div {
+.progressHeading>div {
   display: grid;
   gap: 5px;
 }
@@ -1492,18 +1429,13 @@
   border-radius: 15px;
 
   background:
-    conic-gradient(
-      var(--accent) var(--progress),
-      rgba(255, 255, 255, 0.06) 0
-    );
+    conic-gradient(var(--accent) var(--progress),
+      rgba(255, 255, 255, 0.06) 0);
 
   box-shadow:
-    0 0 14px
-      color-mix(
-        in srgb,
-        var(--accent) 15%,
-        transparent
-      );
+    0 0 14px color-mix(in srgb,
+      var(--accent) 15%,
+      transparent);
 }
 
 .progressTrack {
@@ -1528,12 +1460,10 @@
   border-radius: inherit;
 
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       var(--accent),
       #5c6cff,
-      #22afe9
-    );
+      #22afe9);
 
   transition:
     width 0.25s ease;
@@ -1546,7 +1476,7 @@
   margin-top: 13px;
 }
 
-.progressChecklist > span {
+.progressChecklist>span {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -1569,7 +1499,7 @@
   color: #91d8bf;
 }
 
-.actionCard > div:first-child > span {
+.actionCard>div:first-child>span {
   color: #ca4ed9;
 
   font-size: 8px;
@@ -1587,7 +1517,7 @@
   line-height: 1.5;
 }
 
-.actionCard > button {
+.actionCard>button {
   display: inline-flex;
   width: 100%;
   min-height: 39px;
@@ -1643,31 +1573,21 @@
   color: #ffffff;
 
   border:
-    1px solid
-      color-mix(
-        in srgb,
-        var(--accent) 48%,
-        transparent
-      );
+    1px solid color-mix(in srgb,
+      var(--accent) 48%,
+      transparent);
 
   background:
-    linear-gradient(
-      135deg,
-      color-mix(
-        in srgb,
+    linear-gradient(135deg,
+      color-mix(in srgb,
         var(--accent) 35%,
-        #9f24dd
-      ),
-      #386dff
-    );
+        #9f24dd),
+      #386dff);
 
   box-shadow:
-    0 8px 17px
-      color-mix(
-        in srgb,
-        var(--accent) 15%,
-        transparent
-      );
+    0 8px 17px color-mix(in srgb,
+      var(--accent) 15%,
+      transparent);
 }
 
 .publishButton:disabled {
@@ -1727,11 +1647,9 @@
   border-radius: 22px;
 
   background:
-    radial-gradient(
-      circle at 100% 0,
+    radial-gradient(circle at 100% 0,
       rgba(52, 119, 255, 0.14),
-      transparent 36%
-    ),
+      transparent 36%),
     #080812;
 
   box-shadow:
@@ -1833,28 +1751,21 @@
   padding: 0 10px;
 
   color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 75%,
-      #ffffff
-    );
+      #ffffff);
 
   border:
-    1px solid
-      color-mix(
-        in srgb,
-        var(--accent) 28%,
-        transparent
-      );
+    1px solid color-mix(in srgb,
+      var(--accent) 28%,
+      transparent);
 
   border-radius: 999px;
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 9%,
-      transparent
-    );
+      transparent);
 
   font-size: 9px;
   font-weight: 700;
@@ -1879,7 +1790,7 @@
   letter-spacing: -1.2px;
 }
 
-.previewContent > p {
+.previewContent>p {
   margin: 16px 0 0;
 
   color: #c0c2cc;
@@ -1960,16 +1871,12 @@
   color: #24242d;
 
   background:
-    radial-gradient(
-      circle at 7% 2%,
+    radial-gradient(circle at 7% 2%,
       rgba(201, 42, 235, 0.08),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 95% 17%,
+      transparent 28%),
+    radial-gradient(circle at 95% 17%,
       rgba(21, 146, 246, 0.08),
-      transparent 31%
-    ),
+      transparent 31%),
     #f4f6fb;
 }
 
@@ -2010,7 +1917,7 @@
 :global(html[data-theme="light"]) .tagForm,
 :global(html[data-theme="light"]) .uploadButton,
 :global(html[data-theme="light"]) .attachmentPreview,
-:global(html[data-theme="light"]) .pollOptions > div {
+:global(html[data-theme="light"]) .pollOptions>div {
   border-color:
     rgba(42, 38, 62, 0.09);
 
@@ -2036,34 +1943,26 @@
 
 :global(html[data-theme="light"]) .subcategoryList button {
   color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 68%,
-      #292730
-    );
+      #292730);
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 5%,
-      #ffffff
-    );
+      #ffffff);
 }
 
 :global(html[data-theme="light"]) .subcategoryList button.activeSubcategory {
   color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 78%,
-      #17141c
-    );
+      #17141c);
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 17%,
-      #ffffff
-    );
+      #ffffff);
 }
 
 /* TABLET */
@@ -2071,8 +1970,7 @@
 @media (max-width: 800px) {
   .editorLayout {
     grid-template-columns:
-      minmax(0, 1fr)
-      225px;
+      minmax(0, 1fr) 225px;
   }
 }
 
@@ -2082,10 +1980,7 @@
   .page {
     padding-top: 7px;
     padding-bottom:
-      calc(
-        103px +
-        env(safe-area-inset-bottom)
-      );
+      calc(103px + env(safe-area-inset-bottom));
   }
 
   .shell {
@@ -2094,8 +1989,7 @@
 
   .loginNotice {
     grid-template-columns:
-      39px
-      minmax(0, 1fr);
+      39px minmax(0, 1fr);
 
     gap: 10px;
 
@@ -2198,7 +2092,7 @@
     border-radius: 14px;
   }
 
-  .categoryGrid button > span {
+  .categoryGrid button>span {
     width: 33px;
     height: 33px;
   }
@@ -2257,12 +2151,12 @@
     gap: 7px;
   }
 
-  .actionCard > div:first-child,
+  .actionCard>div:first-child,
   .validationMessage {
     grid-column: 1 / -1;
   }
 
-  .actionCard > button {
+  .actionCard>button {
     margin-top: 0;
   }
 
@@ -2302,7 +2196,7 @@
     grid-template-columns: 1fr;
   }
 
-  .actionCard > div:first-child,
+  .actionCard>div:first-child,
   .validationMessage,
   .publishButton {
     grid-column: auto;
@@ -2313,7 +2207,7 @@
 
 /* Üst tanıtım alanı */
 
-.heroContent > span {
+.heroContent>span {
   font-size: 10px !important;
   font-weight: 850 !important;
 }
@@ -2335,7 +2229,7 @@
 
 /* Konu Bilgileri başlığı */
 
-.panelHeading > div:first-child > span {
+.panelHeading>div:first-child>span {
   font-size: 9.5px !important;
 }
 
@@ -2361,7 +2255,7 @@
 
 /* 01, 02, 03 gibi bölüm başlıkları */
 
-.sectionLabel > span {
+.sectionLabel>span {
   width: 31px !important;
   height: 31px !important;
 
@@ -2390,7 +2284,7 @@
   min-height: 112px !important;
 }
 
-.categoryGrid button > span {
+.categoryGrid button>span {
   width: 40px !important;
   height: 40px !important;
 }
@@ -2447,7 +2341,7 @@
   color: #858895 !important;
 }
 
-.inputShell > span {
+.inputShell>span {
   color: #989ba7 !important;
 
   font-size: 9.5px !important;
@@ -2570,8 +2464,7 @@
 
 .guidelinesCard li {
   grid-template-columns:
-    18px
-    minmax(0, 1fr) !important;
+    18px minmax(0, 1fr) !important;
 
   color: #b8bac5 !important;
 
@@ -2592,7 +2485,7 @@
   font-size: 22px !important;
 }
 
-.progressChecklist > span {
+.progressChecklist>span {
   color: #989ba7 !important;
 
   font-size: 10px !important;
@@ -2605,7 +2498,7 @@
 
 /* Sağ panel: taslak ve butonlar */
 
-.actionCard > div:first-child > span {
+.actionCard>div:first-child>span {
   font-size: 9.5px !important;
 }
 
@@ -2617,7 +2510,7 @@
   line-height: 1.55 !important;
 }
 
-.actionCard > button {
+.actionCard>button {
   min-height: 43px !important;
 
   font-size: 10.5px !important;
@@ -2667,7 +2560,7 @@
   font-size: 10.5px !important;
 }
 
-.previewContent > p {
+.previewContent>p {
   font-size: 13px !important;
   line-height: 1.8 !important;
 }
@@ -2711,7 +2604,7 @@
 
 @media (max-width: 680px) {
 
-  .heroContent > span {
+  .heroContent>span {
     font-size: 9px !important;
   }
 
@@ -2739,7 +2632,7 @@
     min-height: 99px !important;
   }
 
-  .categoryGrid button > span {
+  .categoryGrid button>span {
     width: 36px !important;
     height: 36px !important;
   }
@@ -2772,7 +2665,7 @@
     font-size: 10px !important;
   }
 
-  .progressChecklist > span {
+  .progressChecklist>span {
     font-size: 9.5px !important;
   }
 
@@ -2780,7 +2673,7 @@
     font-size: 9.5px !important;
   }
 
-  .actionCard > button {
+  .actionCard>button {
     font-size: 10px !important;
   }
 }
@@ -2822,11 +2715,9 @@
     1px solid rgba(39, 35, 58, 0.12) !important;
 
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       rgba(255, 255, 255, 0.99),
-      rgba(246, 247, 251, 0.97)
-    ) !important;
+      rgba(246, 247, 251, 0.97)) !important;
 
   box-shadow:
     0 6px 15px rgba(43, 38, 68, 0.055),
@@ -2835,69 +2726,47 @@
 
 /* Açık temada seçili ana kategori */
 
-:global(html[data-theme="light"])
-.categoryGrid button.activeCategory {
+:global(html[data-theme="light"]) .categoryGrid button.activeCategory {
   transform: translateY(-3px) !important;
 
   border:
-    2px solid
-      color-mix(
-        in srgb,
-        var(--accent) 76%,
-        #ffffff
-      ) !important;
+    2px solid color-mix(in srgb,
+      var(--accent) 76%,
+      #ffffff) !important;
 
   outline:
-    3px solid
-      color-mix(
-        in srgb,
-        var(--accent) 12%,
-        transparent
-      ) !important;
+    3px solid color-mix(in srgb,
+      var(--accent) 12%,
+      transparent) !important;
 
   outline-offset: 2px !important;
 
   background:
-    radial-gradient(
-      circle at 50% 0,
-      color-mix(
-        in srgb,
+    radial-gradient(circle at 50% 0,
+      color-mix(in srgb,
         var(--accent) 27%,
-        transparent
-      ),
-      transparent 62%
-    ),
-    linear-gradient(
-      145deg,
-      color-mix(
-        in srgb,
+        transparent),
+      transparent 62%),
+    linear-gradient(145deg,
+      color-mix(in srgb,
         var(--accent) 11%,
-        #ffffff
-      ),
-      #ffffff
-    ) !important;
+        #ffffff),
+      #ffffff) !important;
 
   box-shadow:
     0 15px 30px rgba(43, 38, 68, 0.13),
-    0 0 0 4px
-      color-mix(
-        in srgb,
-        var(--accent) 7%,
-        transparent
-      ),
-    0 0 24px
-      color-mix(
-        in srgb,
-        var(--accent) 21%,
-        transparent
-      ),
+    0 0 0 4px color-mix(in srgb,
+      var(--accent) 7%,
+      transparent),
+    0 0 24px color-mix(in srgb,
+      var(--accent) 21%,
+      transparent),
     inset 0 1px 0 rgba(255, 255, 255, 1) !important;
 }
 
 /* Sağ üst seçim işareti */
 
-:global(html[data-theme="light"])
-.categoryGrid button.activeCategory::after {
+:global(html[data-theme="light"]) .categoryGrid button.activeCategory::after {
   content: "✓" !important;
 
   position: absolute !important;
@@ -2921,18 +2790,12 @@
     var(--accent) !important;
 
   box-shadow:
-    0 4px 10px
-      color-mix(
-        in srgb,
-        var(--accent) 35%,
-        transparent
-      ),
-    0 0 0 3px
-      color-mix(
-        in srgb,
-        var(--accent) 11%,
-        transparent
-      ) !important;
+    0 4px 10px color-mix(in srgb,
+      var(--accent) 35%,
+      transparent),
+    0 0 0 3px color-mix(in srgb,
+      var(--accent) 11%,
+      transparent) !important;
 
   font-size: 12px !important;
   font-weight: 900 !important;
@@ -2941,56 +2804,40 @@
 
 /* Seçili kategori ikonu */
 
-:global(html[data-theme="light"])
-.categoryGrid button.activeCategory > span {
+:global(html[data-theme="light"]) .categoryGrid button.activeCategory>span {
   color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 88%,
-      #16131b
-    ) !important;
+      #16131b) !important;
 
   border:
-    2px solid
-      color-mix(
-        in srgb,
-        var(--accent) 65%,
-        #ffffff
-      ) !important;
+    2px solid color-mix(in srgb,
+      var(--accent) 65%,
+      #ffffff) !important;
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 20%,
-      #ffffff
-    ) !important;
+      #ffffff) !important;
 
   box-shadow:
-    0 8px 18px
-      color-mix(
-        in srgb,
-        var(--accent) 22%,
-        transparent
-      ),
-    0 0 15px
-      color-mix(
-        in srgb,
-        var(--accent) 19%,
-        transparent
-      ) !important;
+    0 8px 18px color-mix(in srgb,
+      var(--accent) 22%,
+      transparent),
+    0 0 15px color-mix(in srgb,
+      var(--accent) 19%,
+      transparent) !important;
 }
 
 /* Seçili kategori başlık ve açıklaması */
 
-:global(html[data-theme="light"])
-.categoryGrid button.activeCategory strong {
+:global(html[data-theme="light"]) .categoryGrid button.activeCategory strong {
   color: #19171f !important;
 
   font-weight: 850 !important;
 }
 
-:global(html[data-theme="light"])
-.categoryGrid button.activeCategory small {
+:global(html[data-theme="light"]) .categoryGrid button.activeCategory small {
   color: #4f515c !important;
 
   font-weight: 600 !important;
@@ -3005,11 +2852,9 @@
     1px solid rgba(42, 38, 62, 0.15) !important;
 
   background:
-    linear-gradient(
-      180deg,
+    linear-gradient(180deg,
       #ffffff,
-      #f4f5f8
-    ) !important;
+      #f4f5f8) !important;
 
   box-shadow:
     0 4px 10px rgba(43, 38, 68, 0.045),
@@ -3018,103 +2863,73 @@
 
 /* Seçili alt kategori */
 
-:global(html[data-theme="light"])
-.subcategoryList button.activeSubcategory {
+:global(html[data-theme="light"]) .subcategoryList button.activeSubcategory {
   color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 74%,
-      #17131c
-    ) !important;
+      #17131c) !important;
 
   border:
-    2px solid
-      color-mix(
-        in srgb,
-        var(--accent) 75%,
-        #ffffff
-      ) !important;
+    2px solid color-mix(in srgb,
+      var(--accent) 75%,
+      #ffffff) !important;
 
   background:
-    linear-gradient(
-      135deg,
-      color-mix(
-        in srgb,
+    linear-gradient(135deg,
+      color-mix(in srgb,
         var(--accent) 27%,
-        #ffffff
-      ),
-      color-mix(
-        in srgb,
+        #ffffff),
+      color-mix(in srgb,
         var(--accent) 12%,
-        #ffffff
-      )
-    ) !important;
+        #ffffff)) !important;
 
   font-weight: 820 !important;
 
   transform: translateY(-1px) !important;
 
   box-shadow:
-    0 7px 16px
-      color-mix(
-        in srgb,
-        var(--accent) 18%,
-        transparent
-      ),
-    0 0 0 3px
-      color-mix(
-        in srgb,
-        var(--accent) 7%,
-        transparent
-      ) !important;
+    0 7px 16px color-mix(in srgb,
+      var(--accent) 18%,
+      transparent),
+    0 0 0 3px color-mix(in srgb,
+      var(--accent) 7%,
+      transparent) !important;
 }
 
 /* Üstteki seçili kategori rozeti */
 
 :global(html[data-theme="light"]) .selectedCategoryBadge {
   color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 78%,
-      #17131d
-    ) !important;
+      #17131d) !important;
 
   border:
-    2px solid
-      color-mix(
-        in srgb,
-        var(--accent) 56%,
-        #ffffff
-      ) !important;
+    2px solid color-mix(in srgb,
+      var(--accent) 56%,
+      #ffffff) !important;
 
   background:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 16%,
-      #ffffff
-    ) !important;
+      #ffffff) !important;
 
   box-shadow:
-    0 6px 14px
-      color-mix(
-        in srgb,
-        var(--accent) 15%,
-        transparent
-      ) !important;
+    0 6px 14px color-mix(in srgb,
+      var(--accent) 15%,
+      transparent) !important;
 }
 
 /* Mobil */
 
 @media (max-width: 680px) {
 
-  :global(html[data-theme="light"])
-  .categoryGrid button.activeCategory {
+  :global(html[data-theme="light"]) .categoryGrid button.activeCategory {
     outline-width: 2px !important;
     outline-offset: 1px !important;
   }
 
-  :global(html[data-theme="light"])
-  .categoryGrid button.activeCategory::after {
+  :global(html[data-theme="light"]) .categoryGrid button.activeCategory::after {
     top: 6px !important;
     right: 6px !important;
 
@@ -3151,35 +2966,26 @@
   border-radius: 16px !important;
 
   background:
-    conic-gradient(
-      from -90deg,
+    conic-gradient(from -90deg,
       var(--accent) 0deg,
       var(--accent) var(--progress),
       rgba(255, 255, 255, 0.075) var(--progress),
-      rgba(255, 255, 255, 0.075) 360deg
-    ) !important;
+      rgba(255, 255, 255, 0.075) 360deg) !important;
 
   -webkit-mask:
-    radial-gradient(
-      farthest-side,
+    radial-gradient(farthest-side,
       transparent calc(100% - 7px),
-      #000 calc(100% - 6px)
-    ) !important;
+      #000 calc(100% - 6px)) !important;
 
   mask:
-    radial-gradient(
-      farthest-side,
+    radial-gradient(farthest-side,
       transparent calc(100% - 7px),
-      #000 calc(100% - 6px)
-    ) !important;
+      #000 calc(100% - 6px)) !important;
 
   box-shadow:
-    0 0 15px
-      color-mix(
-        in srgb,
-        var(--accent) 18%,
-        transparent
-      ) !important;
+    0 0 15px color-mix(in srgb,
+      var(--accent) 18%,
+      transparent) !important;
 
   transform: translateZ(0) !important;
   backface-visibility: hidden !important;
@@ -3197,22 +3003,17 @@
 
 :global(html[data-theme="light"]) .progressRing {
   background:
-    conic-gradient(
-      from -90deg,
+    conic-gradient(from -90deg,
       var(--accent) 0deg,
       var(--accent) var(--progress),
       rgba(42, 38, 62, 0.1) var(--progress),
-      rgba(42, 38, 62, 0.1) 360deg
-    ) !important;
+      rgba(42, 38, 62, 0.1) 360deg) !important;
 
   box-shadow:
     0 6px 16px rgba(43, 38, 68, 0.08),
-    0 0 14px
-      color-mix(
-        in srgb,
-        var(--accent) 16%,
-        transparent
-      ) !important;
+    0 0 14px color-mix(in srgb,
+      var(--accent) 16%,
+      transparent) !important;
 }
 
 @media (max-width: 680px) {
@@ -3474,11 +3275,9 @@
   color: #ffffff !important;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(217, 59, 232, 0.22),
-      rgba(79, 92, 255, 0.18)
-    ) !important;
+      rgba(79, 92, 255, 0.18)) !important;
 
   outline:
     1px solid rgba(214, 65, 235, 0.32) !important;
@@ -3500,18 +3299,15 @@
   border-radius: 16px;
 
   background:
-    radial-gradient(
-      circle at 100% 0,
+    radial-gradient(circle at 100% 0,
       rgba(57, 108, 255, 0.13),
-      transparent 37%
-    ),
+      transparent 37%),
     rgba(8, 8, 18, 0.98);
 
   box-shadow:
     0 18px 45px rgba(0, 0, 0, 0.48),
     0 0 23px rgba(193, 48, 234, 0.12),
-    inset 0 1px 0
-      rgba(255, 255, 255, 0.055);
+    inset 0 1px 0 rgba(255, 255, 255, 0.055);
 
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -3539,7 +3335,7 @@
   font-weight: 750;
 }
 
-.emojiPickerHeader > button {
+.emojiPickerHeader>button {
   display: grid !important;
 
   width: 28px !important;
@@ -3577,7 +3373,7 @@
   gap: 4px;
 }
 
-.emojiGrid > button {
+.emojiGrid>button {
   display: grid !important;
 
   width: 32px !important;
@@ -3607,7 +3403,7 @@
     background 0.15s ease !important;
 }
 
-.emojiGrid > button:hover {
+.emojiGrid>button:hover {
   transform: scale(1.14);
 
   background:
@@ -3621,11 +3417,9 @@
     rgba(163, 61, 204, 0.22);
 
   background:
-    radial-gradient(
-      circle at 100% 0,
+    radial-gradient(circle at 100% 0,
       rgba(65, 110, 255, 0.09),
-      transparent 37%
-    ),
+      transparent 37%),
     rgba(255, 255, 255, 0.99);
 
   box-shadow:
@@ -3633,19 +3427,16 @@
     inset 0 1px 0 #ffffff;
 }
 
-:global(html[data-theme="light"])
-.emojiPickerHeader {
+:global(html[data-theme="light"]) .emojiPickerHeader {
   border-bottom-color:
     rgba(42, 38, 62, 0.08);
 }
 
-:global(html[data-theme="light"])
-.emojiPickerHeader strong {
+:global(html[data-theme="light"]) .emojiPickerHeader strong {
   color: #25242d;
 }
 
-:global(html[data-theme="light"])
-.emojiPickerHeader > button {
+:global(html[data-theme="light"]) .emojiPickerHeader>button {
   color: #666976 !important;
 
   border-color:
@@ -3655,8 +3446,7 @@
     rgba(42, 38, 62, 0.03) !important;
 }
 
-:global(html[data-theme="light"])
-.emojiGrid > button:hover {
+:global(html[data-theme="light"]) .emojiGrid>button:hover {
   background:
     rgba(196, 55, 220, 0.09) !important;
 }
@@ -3675,7 +3465,7 @@
       repeat(7, minmax(0, 1fr));
   }
 
-  .emojiGrid > button {
+  .emojiGrid>button {
     width: 32px !important;
     height: 32px !important;
 
@@ -3724,11 +3514,9 @@
   padding: 0 18px;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(184, 45, 238, 0.18),
-      rgba(84, 67, 255, 0.12)
-    );
+      rgba(84, 67, 255, 0.12));
 
   color: #ec8cff;
 
@@ -3747,20 +3535,18 @@
 @media (max-width: 680px) {
   .uploadButton {
     grid-template-columns:
-      36px
-      minmax(0, 1fr)
-      auto;
+      36px minmax(0, 1fr) auto;
 
     gap: 8px;
     padding: 9px 10px !important;
   }
 
-  .uploadButton > span:first-child {
+  .uploadButton>span:first-child {
     width: 36px;
     height: 36px;
   }
 
-  .uploadButton > div {
+  .uploadButton>div {
     min-width: 0;
   }
 
@@ -3804,12 +3590,12 @@
     padding: 10px !important;
   }
 
-  .uploadButton > span:first-child {
+  .uploadButton>span:first-child {
     width: 36px !important;
     height: 36px !important;
   }
 
-  .uploadButton > div {
+  .uploadButton>div {
     min-width: 0;
   }
 
@@ -3839,7 +3625,7 @@
 /* CREATE TOPIC MOBILE READABILITY V8 START */
 
 @media (max-width: 680px) {
-  .heroContent > span {
+  .heroContent>span {
     font-size: 11px !important;
   }
 
@@ -3853,7 +3639,7 @@
     line-height: 1.55;
   }
 
-  .panelHeading > div:first-child > span {
+  .panelHeading>div:first-child>span {
     font-size: 10px !important;
   }
 
@@ -4019,6 +3805,7 @@
 /* CREATE TOPIC MOBILE CLEANUP V10 START */
 
 @media (max-width: 680px) {
+
   .panelHeading,
   .guidelinesCard,
   .progressCard {
@@ -4033,9 +3820,7 @@
 @media (min-width: 681px) {
   .uploadButton.uploadButtonDisabled {
     grid-template-columns:
-      42px
-      minmax(0, 1fr)
-      auto !important;
+      42px minmax(0, 1fr) auto !important;
 
     gap: 12px !important;
     padding: 12px 14px !important;
@@ -4059,6 +3844,7 @@
 /* CREATE TOPIC IOS ZOOM FINAL FIX V12 START */
 
 @media (max-width: 680px) {
+
   .inputShell input,
   .tagForm input,
   .editorShell textarea,
@@ -4071,6 +3857,7 @@
 /* CREATE TOPIC IOS ZOOM FINAL FIX V12 END */
 
 @media (max-width: 680px) {
+
   .saveButton,
   .loadButton,
   .previewButton {

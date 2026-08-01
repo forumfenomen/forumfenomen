@@ -417,17 +417,13 @@ export default function TopicDetailPage() {
         };
     }, [reportModalComment, topicReportOpen]);
 
-    /* TOPIC ENTRY SCROLL RESET START */
+    /* TOPIC LOADED SCROLL RESET FINAL START */
 
     useEffect(() => {
-        if (!topicId) {
+        if (!topicId || loading || notFound) {
             return;
         }
 
-        /*
-         * Bildirimden belirli bir yoruma gelindiyse
-         * mevcut yorum odaklama davran???n? koru.
-         */
         if (
             window.location.hash.startsWith(
                 "#comment-"
@@ -437,18 +433,19 @@ export default function TopicDetailPage() {
         }
 
         const resetScroll = () => {
-            window.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: "auto",
-            });
+            const scrollingElement =
+                document.scrollingElement;
+
+            window.scrollTo(0, 0);
+
+            if (scrollingElement) {
+                scrollingElement.scrollTop = 0;
+            }
+
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
         };
 
-        /*
-         * iPhone Safari bazen ?nceki route'un
-         * scroll konumunu ilk render sonras?nda
-         * yeniden uygulad??? i?in ?? a?amada s?f?rla.
-         */
         resetScroll();
 
         const frameId =
@@ -456,108 +453,20 @@ export default function TopicDetailPage() {
                 resetScroll
             );
 
-        const timerId =
-            window.setTimeout(
-                resetScroll,
-                120
-            );
+        const timeoutIds = [
+            window.setTimeout(resetScroll, 80),
+            window.setTimeout(resetScroll, 250),
+            window.setTimeout(resetScroll, 500),
+        ];
 
         return () => {
-            window.cancelAnimationFrame(
-                frameId
-            );
+            window.cancelAnimationFrame(frameId);
 
-            window.clearTimeout(timerId);
-        };
-    }, [topicId]);
-
-    /* TOPIC ENTRY SCROLL RESET END */
-
-    /* TOPIC LOADED SCROLL RESET FINAL START */
-
-    useEffect(() => {
-        if (
-            !topicId ||
-            loading ||
-            notFound
-        ) {
-            return;
-        }
-
-        /*
-         * Yorum bildiriminden gelindiyse yorum odaklama
-         * davran???na kesinlikle m?dahale etme.
-         */
-        if (
-            window.location.hash.startsWith(
-                "#comment-"
-            )
-        ) {
-            return;
-        }
-
-        const resetScroll = () => {
-            window.scrollTo(0, 0);
-
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
-        };
-
-        /*
-         * iPhone Safari ve Next.js, veri y?klendikten
-         * sonra eski scroll konumunu yeniden uygulayabildi?i
-         * i?in birka? a?amada tekrar en ?ste sabitliyoruz.
-         */
-        resetScroll();
-
-        const frameOne =
-            window.requestAnimationFrame(
-                resetScroll
-            );
-
-        const frameTwo =
-            window.requestAnimationFrame(() => {
-                window.requestAnimationFrame(
-                    resetScroll
-                );
+            timeoutIds.forEach((timeoutId) => {
+                window.clearTimeout(timeoutId);
             });
-
-        const timerOne =
-            window.setTimeout(
-                resetScroll,
-                100
-            );
-
-        const timerTwo =
-            window.setTimeout(
-                resetScroll,
-                350
-            );
-
-        const timerThree =
-            window.setTimeout(
-                resetScroll,
-                800
-            );
-
-        return () => {
-            window.cancelAnimationFrame(
-                frameOne
-            );
-
-            window.cancelAnimationFrame(
-                frameTwo
-            );
-
-            window.clearTimeout(timerOne);
-            window.clearTimeout(timerTwo);
-            window.clearTimeout(timerThree);
         };
-    }, [
-        topicId,
-        loading,
-        notFound,
-    ]);
+    }, [topicId, loading, notFound]);
 
     /* TOPIC LOADED SCROLL RESET FINAL END */
 
