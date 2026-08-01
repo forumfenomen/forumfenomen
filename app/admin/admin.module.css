@@ -3071,14 +3071,18 @@
 
 .topicModerationActions {
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-wrap: wrap;
+    width: 100%;
+
+    align-items: stretch;
+    flex-direction: column;
+
     gap: 7px;
 }
 
 .topicModerationActions button {
+    width: 100%;
     min-height: 32px;
+
     padding: 0 11px;
 
     border-radius: 9px;
@@ -3375,14 +3379,7 @@
 }
 
 @media (max-width: 620px) {
-    .topicModerationActions {
-        justify-content: stretch;
-    }
-
-    .topicModerationActions button {
-        flex: 1;
-    }
-
+    
     .topicActionModalBackdrop {
         padding: 12px;
     }
@@ -3658,13 +3655,17 @@
     gap: 6px;
 }
 
-.adminTopicTopLine time {
-    flex: 0 0 auto;
+.adminTopicSide time {
+    display: block;
 
-    color: #9295a1;
+    margin-top: 2px;
 
-    font-size: 10px;
+    color: #a4a7b2;
+
+    font-size: 11px;
+    font-weight: 600;
     line-height: 1.4;
+    text-align: center;
 }
 
 .adminTopicStatus,
@@ -3801,12 +3802,16 @@
 
 .adminTopicSide {
     display: grid;
-    justify-items: end;
-    gap: 9px;
+    width: 92px;
+
+    justify-items: stretch;
+
+    gap: 7px;
 }
 
 .adminTopicViewLink {
     display: inline-flex;
+    width: 100%;
     min-height: 32px;
 
     align-items: center;
@@ -3845,12 +3850,7 @@
     .adminTopicRow {
         grid-template-columns: 1fr;
     }
-
-    .adminTopicSide {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+    
 }
 
 @media (max-width: 620px) {
@@ -3895,14 +3895,7 @@
         flex-direction: column;
     }
 
-    .adminTopicSide {
-        align-items: stretch;
-        flex-direction: column;
-    }
-
-    .adminTopicViewLink {
-        width: 100%;
-    }
+   
 }
 
 /* ADMIN TOPICS PAGE END */

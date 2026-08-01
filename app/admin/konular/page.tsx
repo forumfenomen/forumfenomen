@@ -209,6 +209,15 @@ export default async function AdminTopicsPage({
   const search =
     params.search?.trim() ?? "";
 
+  const panelTitle =
+    activeFilter === "published"
+      ? "Yayındaki Konular"
+      : activeFilter === "hidden"
+        ? "Gizlenen Konular"
+        : activeFilter === "banned"
+          ? "Yasaklanan Konular"
+          : "Tüm Konular";
+
   const supabase = await createClient();
 
   const { data, error } = await supabase.rpc(
@@ -260,8 +269,8 @@ export default async function AdminTopicsPage({
         <Link
           href={getFilterHref("all", search)}
           className={`${styles.topicSummaryCard} ${activeFilter === "all"
-              ? styles.topicSummaryActive
-              : ""
+            ? styles.topicSummaryActive
+            : ""
             }`}
         >
           <span>Toplam konu</span>
@@ -272,8 +281,8 @@ export default async function AdminTopicsPage({
         <Link
           href={getFilterHref("published", search)}
           className={`${styles.topicSummaryCard} ${activeFilter === "published"
-              ? styles.topicSummaryActive
-              : ""
+            ? styles.topicSummaryActive
+            : ""
             }`}
         >
           <span>Yayında</span>
@@ -286,8 +295,8 @@ export default async function AdminTopicsPage({
         <Link
           href={getFilterHref("hidden", search)}
           className={`${styles.topicSummaryCard} ${activeFilter === "hidden"
-              ? styles.topicSummaryActive
-              : ""
+            ? styles.topicSummaryActive
+            : ""
             }`}
         >
           <span>Gizlenen</span>
@@ -300,8 +309,8 @@ export default async function AdminTopicsPage({
         <Link
           href={getFilterHref("banned", search)}
           className={`${styles.topicSummaryCard} ${activeFilter === "banned"
-              ? styles.topicSummaryActive
-              : ""
+            ? styles.topicSummaryActive
+            : ""
             }`}
         >
           <span>Yasaklanan</span>
@@ -317,11 +326,11 @@ export default async function AdminTopicsPage({
           <div>
             <span>KONU LİSTESİ</span>
 
-            <h2>Tüm Konular</h2>
+            <h2>{panelTitle}</h2>
           </div>
 
           <div className={styles.panelBadge}>
-            {filteredTopics.length} kayıt
+            {filteredTopics.length} konu
           </div>
         </div>
 
@@ -382,7 +391,7 @@ export default async function AdminTopicsPage({
           ) : null}
         </form>
 
-        
+
         {filteredTopics.length === 0 ? (
           <div className={styles.emptyState}>
             Arama veya filtreyle eşleşen konu
@@ -414,12 +423,12 @@ export default async function AdminTopicsPage({
                     >
                       <span
                         className={`${styles.adminTopicStatus} ${topic.status ===
-                            "published"
-                            ? styles.adminTopicPublished
-                            : topic.status ===
-                              "hidden"
-                              ? styles.adminTopicHidden
-                              : styles.adminTopicBanned
+                          "published"
+                          ? styles.adminTopicPublished
+                          : topic.status ===
+                            "hidden"
+                            ? styles.adminTopicHidden
+                            : styles.adminTopicBanned
                           }`}
                       >
                         {
@@ -458,11 +467,7 @@ export default async function AdminTopicsPage({
                       </span>
                     </div>
 
-                    <time>
-                      {formatDate(
-                        topic.created_at
-                      )}
-                    </time>
+
                   </div>
 
                   <h3>{topic.title}</h3>
@@ -523,16 +528,10 @@ export default async function AdminTopicsPage({
                   </div>
                 </div>
 
-                <div
-                  className={
-                    styles.adminTopicSide
-                  }
-                >
+                <div className={styles.adminTopicSide}>
                   <Link
                     href={`/konu/${topic.id}`}
-                    className={
-                      styles.adminTopicViewLink
-                    }
+                    className={styles.adminTopicViewLink}
                   >
                     Konuya git
                   </Link>
@@ -542,6 +541,10 @@ export default async function AdminTopicsPage({
                     topicTitle={topic.title}
                     currentStatus={topic.status}
                   />
+
+                  <time>
+                    {formatDate(topic.created_at)}
+                  </time>
                 </div>
               </article>
             ))}
