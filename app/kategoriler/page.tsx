@@ -64,7 +64,8 @@ type Topic = {
   title: LocalizedText;
   tag: LocalizedText;
   author: string;
-  ageHours: number;
+  createdAt?: string;
+  ageHours?: number;
   comments: number;
   views: number;
   followed: boolean;
@@ -72,6 +73,8 @@ type Topic = {
 
 type TopicRow = {
   id: string;
+  author_id: string | null;
+  content_profile_id: string | null;
   title: string;
   created_at: string;
   comment_count: number;
@@ -187,6 +190,62 @@ const topicVisualMap: Record<
     iconClass: "business",
   },
 };
+
+function formatRelativeTime(
+  value: string,
+  language: ForumLanguage
+) {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return language === "tr"
+      ? "Az önce"
+      : "Just now";
+  }
+
+  const elapsedMilliseconds =
+    Date.now() - date.getTime();
+
+  const elapsedMinutes = Math.max(
+    0,
+    Math.floor(
+      elapsedMilliseconds / (1000 * 60)
+    )
+  );
+
+  if (elapsedMinutes < 1) {
+    return language === "tr"
+      ? "Az önce"
+      : "Just now";
+  }
+
+  if (elapsedMinutes < 60) {
+    return language === "tr"
+      ? `${elapsedMinutes} dakika önce`
+      : `${elapsedMinutes} minute${elapsedMinutes === 1 ? "" : "s"
+      } ago`;
+  }
+
+  const elapsedHours = Math.floor(
+    elapsedMinutes / 60
+  );
+
+  if (elapsedHours < 24) {
+    return language === "tr"
+      ? `${elapsedHours} saat önce`
+      : `${elapsedHours} hour${elapsedHours === 1 ? "" : "s"
+      } ago`;
+  }
+
+  const elapsedDays = Math.floor(
+    elapsedHours / 24
+  );
+
+  return language === "tr"
+    ? `${elapsedDays} gün önce`
+    : `${elapsedDays} day${elapsedDays === 1 ? "" : "s"
+    } ago`;
+}
 
 const ui = {
   tr: {
@@ -1072,7 +1131,7 @@ export default function CategoriesPage() {
     useState<string | null>(null);
 
   const [activeTab, setActiveTab] =
-    useState<TabId>("popular");
+    useState<TabId>("new");
 
   const categoryDetailRef =
     useRef<HTMLElement | null>(null);
@@ -1111,7 +1170,7 @@ export default function CategoriesPage() {
       targetGroup.id
     );
 
-    setActiveTab("popular");
+    setActiveTab("new");
 
     if (categorySlug) {
       const targetSubcategory =
@@ -1366,6 +1425,8 @@ export default function CategoriesPage() {
         .select(`
         id,
         title,
+        author_id,
+        content_profile_id,
         created_at,
         comment_count,
         view_count,
@@ -1415,6 +1476,62 @@ export default function CategoriesPage() {
 
       let authorProfileRows:
         TopicAuthorProfile[] = [];
+
+      type ManagedContentProfile = {
+        id: string;
+        display_name: string | null;
+        username: string | null;
+      };
+
+      let managedProfileRows:
+        ManagedContentProfile[] = [];
+
+      const contentProfileIds = Array.from(
+        new Set(
+          topicRows
+            .map(
+              (topic) =>
+                topic.content_profile_id
+            )
+            .filter(
+              (
+                value
+              ): value is string =>
+                Boolean(value)
+            )
+        )
+      );
+
+      if (contentProfileIds.length > 0) {
+        const {
+          data: managedProfiles,
+          error: managedProfilesError,
+        } = await supabase
+          .from("content_profiles")
+          .select(`
+      id,
+      display_name,
+      username
+    `)
+          .in("id", contentProfileIds)
+          .eq("is_active", true)
+          .eq("is_archived", false);
+
+        if (!isActive) {
+          return;
+        }
+
+        if (managedProfilesError) {
+          console.error(
+            "Kategori içerik profilleri alınamadı:",
+            managedProfilesError.message
+          );
+        } else {
+          managedProfileRows =
+            (managedProfiles ??
+              []) as ManagedContentProfile[];
+        }
+      }
 
       const {
         data: { session },
@@ -1474,6 +1591,13 @@ export default function CategoriesPage() {
         ])
       );
 
+      const managedProfileMap = new Map(
+        managedProfileRows.map((profile) => [
+          profile.id,
+          profile,
+        ])
+      );
+
       const nextTopics = topicRows.flatMap(
         (topic) => {
           const groupSlug =
@@ -1511,32 +1635,34 @@ export default function CategoriesPage() {
                 subcategoryId
             );
 
-          const createdAt =
-            new Date(
-              topic.created_at
-            ).getTime();
-
-          const ageHours =
-            Number.isNaN(createdAt)
-              ? 0
-              : Math.max(
-                0,
-                Math.floor(
-                  (Date.now() - createdAt) /
-                  (1000 * 60 * 60)
-                )
-              );
 
           const categoryName =
             topic.categories?.name ??
             "Genel";
 
+          const managedProfile =
+            topic.content_profile_id
+              ? managedProfileMap.get(
+                topic.content_profile_id
+              )
+              : null;
+
           const authorProfile =
             authorProfileMap.get(topic.id);
 
           const authorName =
-            authorProfile?.display_name?.trim() ||
-            authorProfile?.username
+            managedProfile
+              ?.display_name
+              ?.trim() ||
+            managedProfile
+              ?.username
+              ?.replace(/^@/, "")
+              .trim() ||
+            authorProfile
+              ?.display_name
+              ?.trim() ||
+            authorProfile
+              ?.username
               ?.replace(/^@/, "")
               .trim() ||
             "ForumFenomen Üyesi";
@@ -1558,7 +1684,7 @@ export default function CategoriesPage() {
                   categoryName,
               },
               author: authorName,
-              ageHours,
+              createdAt: topic.created_at,
               comments:
                 topic.comment_count ?? 0,
               views:
@@ -1611,16 +1737,53 @@ export default function CategoriesPage() {
       );
     }
 
-    if (activeTab === "new") {
+    const sortNewestFirst = (
+      first: Topic,
+      second: Topic
+    ) => {
+      const firstTime = first.createdAt
+        ? new Date(first.createdAt).getTime()
+        : Number.MAX_SAFE_INTEGER -
+        (first.ageHours ?? 0);
+
+      const secondTime = second.createdAt
+        ? new Date(second.createdAt).getTime()
+        : Number.MAX_SAFE_INTEGER -
+        (second.ageHours ?? 0);
+
+      return secondTime - firstTime;
+    };
+
+    if (
+      activeTab === "new" ||
+      activeTab === "following"
+    ) {
       return [...result].sort(
-        (a, b) => a.ageHours - b.ageHours
+        sortNewestFirst
       );
     }
 
+    /*
+     * Popüler sekmesinde etkileşim puanı eşitse
+     * daha yeni konu önce gösterilir.
+     */
     return [...result].sort(
-      (a, b) =>
-        b.comments + b.views / 10 -
-        (a.comments + a.views / 10)
+      (first, second) => {
+        const firstScore =
+          first.comments + first.views / 10;
+
+        const secondScore =
+          second.comments + second.views / 10;
+
+        if (secondScore !== firstScore) {
+          return secondScore - firstScore;
+        }
+
+        return sortNewestFirst(
+          first,
+          second
+        );
+      }
     );
   }, [
     activeTab,
@@ -1635,7 +1798,7 @@ export default function CategoriesPage() {
   ) {
     setSelectedCategory(categoryId);
     setSelectedSubcategory(null);
-    setActiveTab("popular");
+    setActiveTab("new");
 
   }
 
@@ -2004,7 +2167,14 @@ export default function CategoriesPage() {
                         <i>•</i>
 
                         <span>
-                          {topic.ageHours} {t.hoursAgo}
+                          {topic.createdAt
+                            ? formatRelativeTime(
+                              topic.createdAt,
+                              language
+                            )
+                            : language === "tr"
+                              ? `${topic.ageHours ?? 0} saat önce`
+                              : `${topic.ageHours ?? 0} hours ago`}
                         </span>
                       </div>
                     </div>
