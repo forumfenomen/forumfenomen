@@ -1,7 +1,8 @@
-.backButton {
+.backButton,
+.adminPublishBadge {
     display: inline-flex;
-    width: 126px;
-    min-width: 126px;
+    width: 138px;
+    min-width: 138px;
     min-height: 42px;
 
     box-sizing: border-box;
@@ -10,60 +11,66 @@
     justify-content: center;
     align-self: center;
 
-    padding: 0 15px;
+    padding: 0 14px;
 
-    color: #c9cad3;
-
-    border:
-        1px solid rgba(255, 255, 255, 0.1);
     border-radius: 11px;
 
-    background:
-        rgba(255, 255, 255, 0.03);
-
     font-size: 11px;
-    font-weight: 800;
+    font-weight: 850;
     line-height: 1;
+    letter-spacing: 0.4px;
     text-align: center;
     text-decoration: none;
     white-space: nowrap;
+}
+
+.backButton {
+    color: #aeb9ff;
+
+    border:
+        1px solid rgba(113, 126, 255, 0.3);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(80, 95, 230, 0.14),
+            rgba(117, 71, 210, 0.09)
+        );
 }
 
 .backButton:hover {
     color: #ffffff;
 
     border-color:
-        rgba(215, 78, 229, 0.24);
+        rgba(132, 145, 255, 0.48);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(91, 108, 244, 0.23),
+            rgba(135, 79, 225, 0.14)
+        );
 }
 
 .adminPublishBadge {
-    display: inline-flex;
-    width: 126px;
-    min-width: 126px;
-    min-height: 42px;
+    margin-left: auto;
 
-    box-sizing: border-box;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 0 14px;
-
-    color: #d7d8df;
+    color: #ffffff;
 
     border:
-        1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 999px;
+        1px solid rgba(72, 222, 164, 0.34);
 
     background:
-        rgba(255, 255, 255, 0.028);
+        linear-gradient(
+            135deg,
+            rgba(29, 171, 119, 0.96),
+            rgba(20, 126, 92, 0.96)
+        );
 
-    font-size: 10px;
-    font-weight: 850;
-    letter-spacing: 0.6px;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
+    box-shadow:
+        0 10px 28px rgba(18, 128, 94, 0.14);
+
+    text-transform: uppercase;
 }
 
 .form {
@@ -108,7 +115,7 @@
     border-radius: 12px;
     outline: none;
 
-    background:
+    background-color:
         rgba(255, 255, 255, 0.03);
 
     font: inherit;
@@ -133,27 +140,27 @@
     appearance: none;
     -webkit-appearance: none;
 
-    padding-right: 52px;
+    padding-right: 58px;
 
     background-image:
         linear-gradient(
             45deg,
             transparent 50%,
-            #d9dae2 50%
+            #e5e6ed 50%
         ),
         linear-gradient(
             135deg,
-            #d9dae2 50%,
+            #e5e6ed 50%,
             transparent 50%
         );
 
     background-position:
-        calc(100% - 22px) 20px,
-        calc(100% - 16px) 20px;
+        calc(100% - 28px) 20px,
+        calc(100% - 21px) 20px;
 
     background-size:
-        6px 6px,
-        6px 6px;
+        7px 7px,
+        7px 7px;
 
     background-repeat: no-repeat;
 
@@ -255,6 +262,12 @@
 }
 
 @media (max-width: 620px) {
+    .backButton,
+    .adminPublishBadge {
+        width: 126px;
+        min-width: 126px;
+    }
+
     .formFooter {
         align-items: stretch;
         flex-direction: column;
