@@ -3502,10 +3502,10 @@
 
 .topicCountBadge,
 .topicSearchButton {
+    grid-column: 3;
+
     width: 92px;
     min-width: 92px;
-
-    margin-right: 16px;
 }
 
 .topicCountBadge {
@@ -3526,13 +3526,25 @@
     white-space: nowrap;
 }
 
+.pageHeader .topicCountBadge {
+    margin-right: 35px;
+}
+
+.panelHeader .topicCountBadge {
+    margin-right: 16px;
+}
+
 .topicAdminSearch {
-    display: flex;
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr) auto 92px;
+
     align-items: center;
 
     gap: 8px;
 
     margin-bottom: 14px;
+    padding-right: 16px;
     padding-bottom: 14px;
 
     border-bottom:
@@ -3541,6 +3553,8 @@
 
 .topicAdminSearchField {
     position: relative;
+
+    grid-column: 1;
 
     min-width: 0;
     flex: 1;
@@ -3631,6 +3645,8 @@
 }
 
 .topicAdminSearchClear {
+    grid-column: 2;
+
     color: #aaaab5;
 
     border:
@@ -3908,15 +3924,17 @@
         font-size: 21px;
     }
 
-    .topicCountBadge,
-    .topicSearchButton {
-        margin-right: 0;
-    }
 
     .topicAdminSearch {
-        display: grid;
         grid-template-columns:
-            minmax(0, 1fr) auto;
+            minmax(0, 1fr) auto 92px;
+
+        padding-right: 0;
+    }
+
+    .pageHeader .topicCountBadge,
+    .panelHeader .topicCountBadge {
+        margin-right: 0;
     }
 
     .topicAdminSearchField {
