@@ -3379,7 +3379,7 @@
 }
 
 @media (max-width: 620px) {
-    
+
     .topicActionModalBackdrop {
         padding: 12px;
     }
@@ -3498,6 +3498,31 @@
 
 .topicSummaryActive strong {
     color: #ffffff;
+}
+
+.topicCountBadge {
+    display: flex;
+    width: 92px;
+    min-width: 92px;
+    min-height: 38px;
+
+    box-sizing: border-box;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 9px;
+
+    font-size: 10px;
+    font-weight: 750;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.topicSearchButton {
+    width: 92px;
+    min-width: 92px;
 }
 
 .topicAdminSearch {
@@ -3656,16 +3681,22 @@
 }
 
 .adminTopicSide time {
-    display: block;
+    display: grid;
+    width: 100%;
+    min-height: 34px;
+
+    place-content: center;
 
     margin-top: 2px;
 
     color: #a4a7b2;
 
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
-    line-height: 1.4;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.35;
     text-align: center;
+    white-space: pre-line;
 }
 
 .adminTopicStatus,
@@ -3850,11 +3881,11 @@
     .adminTopicRow {
         grid-template-columns: 1fr;
     }
-    
+
 }
 
 @media (max-width: 620px) {
-        .topicSummaryCard {
+    .topicSummaryCard {
         min-height: 62px;
 
         gap: 7px;
@@ -3890,12 +3921,12 @@
     .topicAdminSearchClear {
         width: 100%;
     }
-   
+
     .adminTopicTopLine {
         flex-direction: column;
     }
 
-   
+
 }
 
 /* ADMIN TOPICS PAGE END */

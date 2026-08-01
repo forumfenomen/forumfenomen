@@ -260,7 +260,9 @@ export default async function AdminTopicsPage({
           </p>
         </div>
 
-        <div className={styles.panelBadge}>
+        <div
+          className={`${styles.panelBadge} ${styles.topicCountBadge}`}
+        >
           {topics.length} konu
         </div>
       </header>
@@ -329,7 +331,9 @@ export default async function AdminTopicsPage({
             <h2>{panelTitle}</h2>
           </div>
 
-          <div className={styles.panelBadge}>
+          <div
+            className={`${styles.panelBadge} ${styles.topicCountBadge}`}
+          >
             {filteredTopics.length} konu
           </div>
         </div>
@@ -372,7 +376,10 @@ export default async function AdminTopicsPage({
             />
           </div>
 
-          <button type="submit">
+          <button
+            type="submit"
+            className={styles.topicSearchButton}
+          >
             Ara
           </button>
 
@@ -543,7 +550,10 @@ export default async function AdminTopicsPage({
                   />
 
                   <time>
-                    {formatDate(topic.created_at)}
+                    {formatDate(topic.created_at).replace(
+                      / (\d{2}:\d{2})$/,
+                      "\n$1"
+                    )}
                   </time>
                 </div>
               </article>
