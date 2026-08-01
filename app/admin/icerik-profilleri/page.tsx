@@ -95,42 +95,58 @@ export default async function ContentProfilesPage() {
             </header>
 
             <section className={styles.statsGrid}>
-                <article className={styles.statCard}>
-                    <span className={styles.statLabel}>
-                        Toplam Profil
-                    </span>
+                <article
+                    className={`${styles.statCard} ${profileStyles.summaryCard}`}
+                >
+                    <div className={profileStyles.summaryTop}>
+                        <span className={styles.statLabel}>
+                            Toplam Profil
+                        </span>
 
-                    <strong>{profiles.length}</strong>
+                        <strong>{profiles.length}</strong>
+                    </div>
 
                     <p>Kayıtlı içerik profili</p>
                 </article>
 
-                <article className={styles.statCard}>
-                    <span className={styles.statLabel}>
-                        Aktif Profil
-                    </span>
+                <article
+                    className={`${styles.statCard} ${profileStyles.summaryCard}`}
+                >
+                    <div className={profileStyles.summaryTop}>
+                        <span className={styles.statLabel}>
+                            Aktif Profil
+                        </span>
 
-                    <strong>{activeCount}</strong>
+                        <strong>{activeCount}</strong>
+                    </div>
 
                     <p>Yeni içerik yayınlayabilir</p>
                 </article>
 
-                <article className={styles.statCard}>
-                    <span className={styles.statLabel}>
-                        Listede Görünen
-                    </span>
+                <article
+                    className={`${styles.statCard} ${profileStyles.summaryCard}`}
+                >
+                    <div className={profileStyles.summaryTop}>
+                        <span className={styles.statLabel}>
+                            Listede Görünen
+                        </span>
 
-                    <strong>{listedCount}</strong>
+                        <strong>{listedCount}</strong>
+                    </div>
 
                     <p>Kullanıcı listesinde gösterilir</p>
                 </article>
 
-                <article className={styles.statCard}>
-                    <span className={styles.statLabel}>
-                        Arşivlenen
-                    </span>
+                <article
+                    className={`${styles.statCard} ${profileStyles.summaryCard}`}
+                >
+                    <div className={profileStyles.summaryTop}>
+                        <span className={styles.statLabel}>
+                            Arşivlenen
+                        </span>
 
-                    <strong>{archivedCount}</strong>
+                        <strong>{archivedCount}</strong>
+                    </div>
 
                     <p>Yeni içerik yayınlayamaz</p>
                 </article>
@@ -207,8 +223,7 @@ export default async function ContentProfilesPage() {
                                             </span>
 
                                             <span
-                                                className={`${profileStyles.status} ${
-                                                        !profile.is_active || profile.is_archived
+                                                className={`${profileStyles.status} ${!profile.is_active || profile.is_archived
                                                         ? profileStyles.statusPassive
                                                         : ""
                                                     }`}
