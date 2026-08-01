@@ -52,7 +52,8 @@ type Post = {
 
 type TopicRow = {
   id: string;
-  author_id: string;
+  author_id: string | null;
+  content_profile_id: string | null;
   title: string;
   created_at: string;
   comment_count: number;
@@ -808,6 +809,7 @@ export default function FeedPage() {
           .select(`
           id,
           author_id,
+          content_profile_id,
           title,
           created_at,
           comment_count,
@@ -886,6 +888,62 @@ export default function FeedPage() {
       let authorProfileRows:
         TopicAuthorProfile[] = [];
 
+      type ManagedContentProfile = {
+        id: string;
+        display_name: string | null;
+        username: string | null;
+      };
+
+      let managedProfileRows:
+        ManagedContentProfile[] = [];
+
+      const contentProfileIds = Array.from(
+        new Set(
+          topicRows
+            .map(
+              (topic) =>
+                topic.content_profile_id
+            )
+            .filter(
+              (
+                value
+              ): value is string =>
+                Boolean(value)
+            )
+        )
+      );
+
+      if (contentProfileIds.length > 0) {
+        const {
+          data: managedProfiles,
+          error: managedProfilesError,
+        } = await supabase
+          .from("content_profiles")
+          .select(`
+      id,
+      display_name,
+      username
+    `)
+          .in("id", contentProfileIds)
+          .eq("is_active", true)
+          .eq("is_archived", false);
+
+        if (!isActive) {
+          return;
+        }
+
+        if (managedProfilesError) {
+          console.error(
+            "Akış içerik profilleri alınamadı:",
+            managedProfilesError.message
+          );
+        } else {
+          managedProfileRows =
+            (managedProfiles ??
+              []) as ManagedContentProfile[];
+        }
+      }
+
       /*
        * Oturum açmış kullanıcılar konu sahiplerini
        * güvenli RPC üzerinden görür.
@@ -932,6 +990,13 @@ export default function FeedPage() {
         ])
       );
 
+      const managedProfileMap = new Map(
+        managedProfileRows.map((profile) => [
+          profile.id,
+          profile,
+        ])
+      );
+
       const nextPosts = topicRows.map(
         (topic) => {
           const groupSlug =
@@ -954,12 +1019,29 @@ export default function FeedPage() {
               ? "Genel"
               : "General");
 
+          const managedProfile =
+            topic.content_profile_id
+              ? managedProfileMap.get(
+                topic.content_profile_id
+              )
+              : null;
+
           const authorProfile =
             authorProfileMap.get(topic.id);
 
           const authorName =
-            authorProfile?.display_name?.trim() ||
-            authorProfile?.username
+            managedProfile
+              ?.display_name
+              ?.trim() ||
+            managedProfile
+              ?.username
+              ?.replace(/^@/, "")
+              .trim() ||
+            authorProfile
+              ?.display_name
+              ?.trim() ||
+            authorProfile
+              ?.username
               ?.replace(/^@/, "")
               .trim() ||
             (language === "tr"
@@ -968,7 +1050,7 @@ export default function FeedPage() {
 
           return {
             id: topic.id,
-            authorId: topic.author_id,
+            authorId: topic.author_id ?? undefined,
             createdAt: topic.created_at,
             commentCountValue:
               topic.comment_count ?? 0,
