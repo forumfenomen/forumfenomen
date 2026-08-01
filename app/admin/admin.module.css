@@ -3500,10 +3500,16 @@
     color: #ffffff;
 }
 
-.topicCountBadge {
-    display: flex;
+.topicCountBadge,
+.topicSearchButton {
     width: 92px;
     min-width: 92px;
+
+    margin-right: 16px;
+}
+
+.topicCountBadge {
+    display: flex;
     min-height: 38px;
 
     box-sizing: border-box;
@@ -3518,11 +3524,6 @@
     line-height: 1;
     text-align: center;
     white-space: nowrap;
-}
-
-.topicSearchButton {
-    width: 92px;
-    min-width: 92px;
 }
 
 .topicAdminSearch {
@@ -3905,6 +3906,11 @@
 
     .topicSummaryCard strong {
         font-size: 21px;
+    }
+
+    .topicCountBadge,
+    .topicSearchButton {
+        margin-right: 0;
     }
 
     .topicAdminSearch {
