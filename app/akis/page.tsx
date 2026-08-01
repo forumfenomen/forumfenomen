@@ -1727,6 +1727,12 @@ export default function FeedPage() {
                       {post.id ? (
                         <Link
                           href={`/konu/${post.id}`}
+                          scroll={true}
+                          onClick={() => {
+                            window.scrollTo(0, 0);
+                            document.documentElement.scrollTop = 0;
+                            document.body.scrollTop = 0;
+                          }}
                           style={{
                             color: "inherit",
                             textDecoration: "none",

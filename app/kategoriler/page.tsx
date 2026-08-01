@@ -1971,6 +1971,12 @@ export default function CategoriesPage() {
                       <h3>
                         <Link
                           href={`/konu/${topic.id}`}
+                          scroll={true}
+                          onClick={() => {
+                            window.scrollTo(0, 0);
+                            document.documentElement.scrollTop = 0;
+                            document.body.scrollTop = 0;
+                          }}
                           style={{
                             color: "inherit",
                             textDecoration: "none",
