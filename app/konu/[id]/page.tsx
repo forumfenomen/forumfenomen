@@ -29,7 +29,8 @@ type Theme = "dark" | "light";
 
 type TopicDetailRow = {
     id: string;
-    author_id: string;
+    author_id: string | null;
+    content_profile_id: string | null;
     title: string;
     content: string;
     created_at: string;
@@ -555,6 +556,7 @@ export default function TopicDetailPage() {
                 .select(`
         id,
         author_id,
+        content_profile_id,
         title,
         content,
         created_at,
@@ -592,12 +594,61 @@ export default function TopicDetailPage() {
             let authorProfile:
                 TopicDetailRow["profiles"] = null;
 
+            const topicData =
+                data as unknown as Omit<
+                    TopicDetailRow,
+                    "profiles"
+                >;
+
             /*
-             * Oturum açmış aktif kullanıcılar
-             * güvenli RPC üzerinden konu sahibini görür.
-             * Oturum kapalı ziyaretçide profil null kalır.
+             * Admin içerik profilleri herkese açık görünür.
              */
-            if (currentUserId) {
+            if (topicData.content_profile_id) {
+                const {
+                    data: contentProfile,
+                    error: contentProfileError,
+                } = await supabase
+                    .from("content_profiles")
+                    .select(`
+            display_name,
+            username
+        `)
+                    .eq(
+                        "id",
+                        topicData.content_profile_id
+                    )
+                    .eq("is_active", true)
+                    .eq("is_archived", false)
+                    .maybeSingle();
+
+                if (!isActive) {
+                    return;
+                }
+
+                if (contentProfileError) {
+                    console.error(
+                        "İçerik profili alınamadı:",
+                        contentProfileError.message
+                    );
+                } else if (contentProfile) {
+                    authorProfile = {
+                        display_name:
+                            contentProfile.display_name,
+                        username:
+                            contentProfile.username,
+                    };
+                }
+            }
+
+            /*
+             * Normal kullanıcı profilleri yalnızca oturum
+             * açmış ziyaretçilere güvenli RPC ile gösterilir.
+             */
+            if (
+                !authorProfile &&
+                topicData.author_id &&
+                currentUserId
+            ) {
                 const {
                     data: profileData,
                     error: profileError,
@@ -633,10 +684,7 @@ export default function TopicDetailPage() {
             }
 
             setTopic({
-                ...(data as unknown as Omit<
-                    TopicDetailRow,
-                    "profiles"
-                >),
+                ...topicData,
                 profiles: authorProfile,
             });
 
