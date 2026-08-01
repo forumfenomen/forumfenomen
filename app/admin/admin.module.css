@@ -3511,7 +3511,7 @@
     align-items: center;
     justify-content: center;
 
-    gap: 7px;
+    gap: 8px;
 
     margin-right: 35px;
     padding: 0 12px;
@@ -3530,7 +3530,7 @@
     box-shadow:
         0 10px 28px rgba(18, 128, 94, 0.14);
 
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 850;
     line-height: 1;
     text-decoration: none;
@@ -3542,15 +3542,18 @@
         border-color 0.18s ease;
 }
 
-.newTopicButton span {
+.pageHeader .newTopicButton span {
     display: inline-flex;
 
     align-items: center;
     justify-content: center;
 
-    font-size: 17px;
-    font-weight: 500;
+    color: #ffffff;
+
+    font-size: 19px;
+    font-weight: 600;
     line-height: 1;
+    letter-spacing: 0;
 }
 
 .newTopicButton:hover {
@@ -3993,11 +3996,11 @@
     }
 
     .newTopicButton {
-    width: 108px;
-    min-width: 108px;
+        width: 108px;
+        min-width: 108px;
 
-    margin-right: 0;
-}
+        margin-right: 0;
+    }
 
     .topicAdminSearchField {
         width: 100%;
