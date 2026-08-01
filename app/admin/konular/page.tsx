@@ -54,23 +54,23 @@ const filterOptions: Array<{
   value: TopicFilter;
   label: string;
 }> = [
-  {
-    value: "all",
-    label: "Tümü",
-  },
-  {
-    value: "published",
-    label: "Yayında",
-  },
-  {
-    value: "hidden",
-    label: "Gizlenenler",
-  },
-  {
-    value: "banned",
-    label: "Yasaklananlar",
-  },
-];
+    {
+      value: "all",
+      label: "Tümü",
+    },
+    {
+      value: "published",
+      label: "Yayında",
+    },
+    {
+      value: "hidden",
+      label: "Gizlenenler",
+    },
+    {
+      value: "banned",
+      label: "Yasaklananlar",
+    },
+  ];
 
 function isValidFilter(
   value: string | undefined
@@ -256,55 +256,60 @@ export default async function AdminTopicsPage({
         </div>
       </header>
 
-      <section
-        className={styles.topicSummaryGrid}
-      >
-        <article
-          className={styles.topicSummaryCard}
+      <section className={styles.topicSummaryGrid}>
+        <Link
+          href={getFilterHref("all", search)}
+          className={`${styles.topicSummaryCard} ${activeFilter === "all"
+              ? styles.topicSummaryActive
+              : ""
+            }`}
         >
           <span>Toplam konu</span>
 
           <strong>{topics.length}</strong>
-        </article>
+        </Link>
 
-        <article
-          className={styles.topicSummaryCard}
+        <Link
+          href={getFilterHref("published", search)}
+          className={`${styles.topicSummaryCard} ${activeFilter === "published"
+              ? styles.topicSummaryActive
+              : ""
+            }`}
         >
           <span>Yayında</span>
 
           <strong>
-            {getTopicCount(
-              topics,
-              "published"
-            )}
+            {getTopicCount(topics, "published")}
           </strong>
-        </article>
+        </Link>
 
-        <article
-          className={styles.topicSummaryCard}
+        <Link
+          href={getFilterHref("hidden", search)}
+          className={`${styles.topicSummaryCard} ${activeFilter === "hidden"
+              ? styles.topicSummaryActive
+              : ""
+            }`}
         >
           <span>Gizlenen</span>
 
           <strong>
-            {getTopicCount(
-              topics,
-              "hidden"
-            )}
+            {getTopicCount(topics, "hidden")}
           </strong>
-        </article>
+        </Link>
 
-        <article
-          className={styles.topicSummaryCard}
+        <Link
+          href={getFilterHref("banned", search)}
+          className={`${styles.topicSummaryCard} ${activeFilter === "banned"
+              ? styles.topicSummaryActive
+              : ""
+            }`}
         >
           <span>Yasaklanan</span>
 
           <strong>
-            {getTopicCount(
-              topics,
-              "banned"
-            )}
+            {getTopicCount(topics, "banned")}
           </strong>
-        </article>
+        </Link>
       </section>
 
       <section className={styles.panel}>
@@ -377,40 +382,7 @@ export default async function AdminTopicsPage({
           ) : null}
         </form>
 
-        <nav
-          className={styles.topicAdminFilters}
-          aria-label="Konu durum filtreleri"
-        >
-          {filterOptions.map((option) => {
-            const isActive =
-              option.value === activeFilter;
-
-            return (
-              <Link
-                key={option.value}
-                href={getFilterHref(
-                  option.value,
-                  search
-                )}
-                className={
-                  isActive
-                    ? `${styles.topicAdminFilterButton} ${styles.topicAdminFilterActive}`
-                    : styles.topicAdminFilterButton
-                }
-              >
-                <span>{option.label}</span>
-
-                <strong>
-                  {getTopicCount(
-                    topics,
-                    option.value
-                  )}
-                </strong>
-              </Link>
-            );
-          })}
-        </nav>
-
+        
         {filteredTopics.length === 0 ? (
           <div className={styles.emptyState}>
             Arama veya filtreyle eşleşen konu
@@ -441,19 +413,18 @@ export default async function AdminTopicsPage({
                       }
                     >
                       <span
-                        className={`${styles.adminTopicStatus} ${
-                          topic.status ===
-                          "published"
+                        className={`${styles.adminTopicStatus} ${topic.status ===
+                            "published"
                             ? styles.adminTopicPublished
                             : topic.status ===
-                                "hidden"
+                              "hidden"
                               ? styles.adminTopicHidden
                               : styles.adminTopicBanned
-                        }`}
+                          }`}
                       >
                         {
                           statusNames[
-                            topic.status
+                          topic.status
                           ]
                         }
                       </span>
@@ -516,9 +487,9 @@ export default async function AdminTopicsPage({
 
                       {topic.author_username
                         ? ` · @${topic.author_username.replace(
-                            /^@/,
-                            ""
-                          )}`
+                          /^@/,
+                          ""
+                        )}`
                         : null}
                     </Link>
 

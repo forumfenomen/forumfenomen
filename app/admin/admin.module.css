@@ -3404,51 +3404,116 @@
     display: grid;
     grid-template-columns:
         repeat(4, minmax(0, 1fr));
+
     gap: 12px;
 
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 
 .topicSummaryCard {
     display: flex;
-    min-height: 82px;
+    min-height: 70px;
 
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
 
-    gap: 7px;
+    gap: 12px;
 
-    padding: 15px 17px;
+    padding: 12px 14px;
+
+    color: inherit;
+    text-decoration: none;
 
     border:
         1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 16px;
+    border-radius: 15px;
 
     background:
         rgba(255, 255, 255, 0.018);
+
+    transition:
+        border-color 0.18s ease,
+        background 0.18s ease,
+        transform 0.18s ease;
+}
+
+.topicSummaryCard:hover {
+    transform: translateY(-1px);
+
+    border-color:
+        rgba(213, 74, 231, 0.24);
+
+    background:
+        rgba(211, 58, 228, 0.035);
 }
 
 .topicSummaryCard span {
-    color: #888b98;
+    display: inline-flex;
+    min-height: 32px;
 
-    font-size: 10px;
-    font-weight: 650;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 11px;
+
+    color: #e58aed;
+
+    border:
+        1px solid rgba(218, 83, 232, 0.2);
+    border-radius: 10px;
+
+    background:
+        rgba(211, 58, 228, 0.06);
+
+    font-size: 11px;
+    font-weight: 750;
+    line-height: 1.2;
+    white-space: nowrap;
 }
 
 .topicSummaryCard strong {
     color: #f5f2fa;
 
-    font-size: 23px;
+    font-size: 24px;
     font-weight: 850;
     line-height: 1;
+}
+
+.topicSummaryActive {
+    border-color:
+        rgba(213, 69, 232, 0.32);
+
+    background:
+        linear-gradient(135deg,
+            rgba(211, 58, 228, 0.09),
+            rgba(76, 91, 255, 0.055));
+}
+
+.topicSummaryActive span {
+    color: #f08af5;
+
+    border-color:
+        rgba(218, 83, 232, 0.28);
+
+    background:
+        rgba(211, 58, 228, 0.11);
+}
+
+.topicSummaryActive strong {
+    color: #ffffff;
 }
 
 .topicAdminSearch {
     display: flex;
     align-items: center;
-    gap: 9px;
 
-    margin-bottom: 12px;
+    gap: 8px;
+
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.055);
 }
 
 .topicAdminSearchField {
@@ -3479,7 +3544,7 @@
 
 .topicAdminSearchField input {
     width: 100%;
-    height: 43px;
+    height: 38px;
 
     outline: none;
 
@@ -3495,7 +3560,7 @@
         rgba(3, 4, 10, 0.62);
 
     font: inherit;
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .topicAdminSearchField input::placeholder {
@@ -3513,7 +3578,7 @@
 .topicAdminSearch>button,
 .topicAdminSearchClear {
     display: inline-flex;
-    min-height: 43px;
+    min-height: 38px;
 
     align-items: center;
     justify-content: center;
@@ -3522,8 +3587,8 @@
 
     border-radius: 11px;
 
-    font-size: 10px;
-    font-weight: 800;
+    font-size: 11px;
+    font-weight: 750;
     text-decoration: none;
     white-space: nowrap;
 }
@@ -3550,84 +3615,6 @@
 
     background:
         rgba(255, 255, 255, 0.025);
-}
-
-.topicAdminFilters {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-
-    gap: 8px;
-
-    margin-bottom: 15px;
-    padding-bottom: 14px;
-
-    border-bottom:
-        1px solid rgba(255, 255, 255, 0.055);
-}
-
-.topicAdminFilterButton {
-    display: inline-flex;
-    min-height: 34px;
-
-    align-items: center;
-    justify-content: center;
-
-    gap: 7px;
-
-    padding: 0 11px;
-
-    color: #9699a5;
-
-    border:
-        1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 10px;
-
-    background:
-        rgba(255, 255, 255, 0.018);
-
-    font-size: 10px;
-    font-weight: 700;
-    text-decoration: none;
-}
-
-.topicAdminFilterButton strong {
-    display: grid;
-    min-width: 20px;
-    height: 20px;
-
-    place-items: center;
-
-    padding: 0 5px;
-
-    color: #b8bbc7;
-
-    border-radius: 999px;
-
-    background:
-        rgba(255, 255, 255, 0.055);
-
-    font-size: 8px;
-    font-weight: 800;
-}
-
-.topicAdminFilterActive {
-    color: #ffffff;
-
-    border-color:
-        rgba(204, 68, 235, 0.32);
-
-    background:
-        linear-gradient(135deg,
-            rgba(207, 54, 231, 0.14),
-            rgba(76, 91, 255, 0.1));
-}
-
-.topicAdminFilterActive strong {
-    color: #ffffff;
-
-    background:
-        rgba(207, 69, 235, 0.2);
 }
 
 .adminTopicList {
@@ -3674,9 +3661,9 @@
 .adminTopicTopLine time {
     flex: 0 0 auto;
 
-    color: #747784;
+    color: #9295a1;
 
-    font-size: 9px;
+    font-size: 10px;
     line-height: 1.4;
 }
 
@@ -3685,7 +3672,7 @@
 .adminTopicLocked,
 .adminTopicCategory {
     display: inline-flex;
-    min-height: 22px;
+    min-height: 23px;
 
     align-items: center;
     justify-content: center;
@@ -3694,8 +3681,9 @@
 
     border-radius: 999px;
 
-    font-size: 8px;
-    font-weight: 800;
+    font-size: 9px;
+    font-weight: 750;
+    line-height: 1;
     white-space: nowrap;
 }
 
@@ -3775,9 +3763,9 @@
 
     margin: 7px 0 0;
 
-    color: #95919f;
+    color: #aaa7b2;
 
-    font-size: 11px;
+    font-size: 12px;
     line-height: 1.6;
 
     line-clamp: 2;
@@ -3794,9 +3782,9 @@
 
     margin-top: 10px;
 
-    color: #777a87;
+    color: #9699a5;
 
-    font-size: 9px;
+    font-size: 10px;
     line-height: 1.4;
 }
 
@@ -3835,8 +3823,8 @@
     background:
         rgba(75, 211, 151, 0.07);
 
-    font-size: 9px;
-    font-weight: 800;
+    font-size: 10px;
+    font-weight: 750;
     text-decoration: none;
 }
 
@@ -3866,6 +3854,28 @@
 }
 
 @media (max-width: 620px) {
+        .topicSummaryCard {
+        min-height: 62px;
+
+        gap: 7px;
+
+        padding: 9px 10px;
+    }
+
+    .topicSummaryCard span {
+        min-height: 29px;
+
+        padding: 0 7px;
+
+        font-size: 10px;
+        white-space: normal;
+        text-align: center;
+    }
+
+    .topicSummaryCard strong {
+        font-size: 21px;
+    }
+
     .topicAdminSearch {
         display: grid;
         grid-template-columns:
@@ -3880,17 +3890,7 @@
     .topicAdminSearchClear {
         width: 100%;
     }
-
-    .topicAdminFilters {
-        display: grid;
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
-
-    .topicAdminFilterButton {
-        width: 100%;
-    }
-
+   
     .adminTopicTopLine {
         flex-direction: column;
     }
@@ -5710,87 +5710,84 @@
 /* ADMIN USER PROFILE LINK */
 
 .adminUserProfileLink {
-  color: #ffffff;
-  font-size: inherit;
-  font-weight: 850;
-  line-height: inherit;
-  text-decoration: none;
+    color: #ffffff;
+    font-size: inherit;
+    font-weight: 850;
+    line-height: inherit;
+    text-decoration: none;
 }
 
 .adminUserProfileLink:hover {
-  color: #ef78ff;
-  text-decoration: underline;
-  text-underline-offset: 4px;
+    color: #ef78ff;
+    text-decoration: underline;
+    text-underline-offset: 4px;
 }
 
 .userReportHistory {
-  margin: 5px 0 0;
+    margin: 5px 0 0;
 
-  color: rgba(255, 255, 255, 0.46);
+    color: rgba(255, 255, 255, 0.46);
 
-  font-size: 10px;
-  font-weight: 650;
-  line-height: 1.4;
+    font-size: 10px;
+    font-weight: 650;
+    line-height: 1.4;
 }
 
 /* ADMIN REPORT FILTERS */
 
 .reportSummaryCard {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
 
-  min-height: 104px;
-  padding: 18px;
+    min-height: 104px;
+    padding: 18px;
 
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
 
-  background: rgba(255, 255, 255, 0.025);
+    background: rgba(255, 255, 255, 0.025);
 
-  transition:
-    transform 160ms ease,
-    border-color 160ms ease,
-    background 160ms ease;
+    transition:
+        transform 160ms ease,
+        border-color 160ms ease,
+        background 160ms ease;
 }
 
 .reportSummaryCard:hover {
-  transform: translateY(-1px);
-  border-color: rgba(210, 71, 230, 0.28);
-  background: rgba(210, 71, 230, 0.05);
+    transform: translateY(-1px);
+    border-color: rgba(210, 71, 230, 0.28);
+    background: rgba(210, 71, 230, 0.05);
 }
 
 .reportSummaryCardActive {
-  border-color: rgba(210, 71, 230, 0.44);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(190, 35, 220, 0.16),
-      rgba(91, 78, 255, 0.08)
-    );
+    border-color: rgba(210, 71, 230, 0.44);
+    background:
+        linear-gradient(135deg,
+            rgba(190, 35, 220, 0.16),
+            rgba(91, 78, 255, 0.08));
 
-  box-shadow:
-    inset 0 0 0 1px
-      rgba(255, 255, 255, 0.025);
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.025);
 }
 
 .reportFilterReset {
-  display: flex;
-  justify-content: flex-end;
-  margin: -6px 0 14px;
+    display: flex;
+    justify-content: flex-end;
+    margin: -6px 0 14px;
 }
 
 .reportFilterReset a {
-  color: rgba(255, 255, 255, 0.62);
-  font-size: 11px;
-  font-weight: 750;
-  text-decoration: none;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 11px;
+    font-weight: 750;
+    text-decoration: none;
 }
 
 .reportFilterReset a:hover {
-  color: #ef78ff;
+    color: #ef78ff;
 }
