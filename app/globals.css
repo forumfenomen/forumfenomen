@@ -2846,11 +2846,14 @@ html[data-theme="light"] .ff-feed-page {
 
 .ff-ad-badge {
   position: absolute;
-  top: 8px;
-  left: 11px;
+  top: 10px;
+  left: 25px;
+
   color: #cf51ee;
-  font-size: 8px;
-  font-weight: 800;
+
+  font-size: 10px;
+  font-weight: 850;
+  line-height: 1;
   letter-spacing: 1.4px;
 }
 

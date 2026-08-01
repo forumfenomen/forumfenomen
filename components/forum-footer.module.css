@@ -265,7 +265,7 @@
 
   .brandArea {
     display: grid;
-    justify-items: center;
+    justify-items: start;
   }
 
   .logo {
@@ -273,9 +273,9 @@
   }
 
   .brandArea p {
-    margin-top: 5px;
-
+    margin: 5px 0 0;
     font-size: 11px;
+    text-align: left;
   }
 
   .links {
@@ -461,7 +461,7 @@
 
   .logo {
     transform: scale(1.34) !important;
-    transform-origin: center center !important;
+    transform-origin: left center !important;
   }
 
   .brandArea p {
