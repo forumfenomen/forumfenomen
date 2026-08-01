@@ -42,6 +42,11 @@ const activeItems: AdminNavItem[] = [
     showProfileReports: true,
   },
   {
+    href: "/admin/icerik-profilleri",
+    label: "İçerik Profilleri",
+    roles: ["admin"],
+  },
+  {
     href: "/admin/konular",
     label: "Konular",
     roles: ["admin", "moderator"],
