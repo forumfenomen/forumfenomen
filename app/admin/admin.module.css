@@ -3500,9 +3500,7 @@
     color: #ffffff;
 }
 
-.topicCountBadge,
 .topicSearchButton {
-    grid-column: 3;
 
     width: 92px;
     min-width: 92px;
@@ -3535,10 +3533,7 @@
 }
 
 .topicAdminSearch {
-    display: grid;
-    grid-template-columns:
-        minmax(0, 1fr) auto 92px;
-
+    display: flex;
     align-items: center;
 
     gap: 8px;
@@ -3553,8 +3548,6 @@
 
 .topicAdminSearchField {
     position: relative;
-
-    grid-column: 1;
 
     min-width: 0;
     flex: 1;
@@ -3645,7 +3638,6 @@
 }
 
 .topicAdminSearchClear {
-    grid-column: 2;
 
     color: #aaaab5;
 
@@ -3926,8 +3918,9 @@
 
 
     .topicAdminSearch {
-        grid-template-columns:
-            minmax(0, 1fr) auto 92px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
 
         padding-right: 0;
     }
@@ -3938,12 +3931,17 @@
     }
 
     .topicAdminSearchField {
-        grid-column: 1 / -1;
+        width: 100%;
+        flex: 0 0 100%;
     }
 
-    .topicAdminSearch>button,
     .topicAdminSearchClear {
-        width: 100%;
+        margin-left: auto;
+    }
+
+    .topicSearchButton {
+        width: 92px;
+        min-width: 92px;
     }
 
     .adminTopicTopLine {

@@ -376,13 +376,6 @@ export default async function AdminTopicsPage({
             />
           </div>
 
-          <button
-            type="submit"
-            className={styles.topicSearchButton}
-          >
-            Ara
-          </button>
-
           {search ? (
             <Link
               href={getFilterHref(
@@ -396,6 +389,13 @@ export default async function AdminTopicsPage({
               Temizle
             </Link>
           ) : null}
+
+          <button
+            type="submit"
+            className={styles.topicSearchButton}
+          >
+            Ara
+          </button>
         </form>
 
 
