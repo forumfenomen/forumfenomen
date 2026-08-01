@@ -12,7 +12,9 @@ type TopicStatus =
 
 type AdminTopic = {
   id: string;
-  author_id: string;
+  author_id: string | null;
+  content_profile_id: string | null;
+  author_source: "user" | "content_profile";
   author_display_name: string | null;
   author_username: string | null;
   category_id: number | string;
@@ -102,9 +104,15 @@ function getProfileHref(topic: AdminTopic) {
       ?.replace(/^@/, "")
       .trim();
 
-  return username
-    ? `/profil/${username}`
-    : `/profil/${topic.author_id}`;
+  if (username) {
+    return `/profil/${username}`;
+  }
+
+  if (topic.author_source === "user" && topic.author_id) {
+    return `/profil/${topic.author_id}`;
+  }
+
+  return "#";
 }
 
 function formatDate(value: string) {
