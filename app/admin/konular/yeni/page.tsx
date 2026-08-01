@@ -8,6 +8,8 @@ import {
 
 import { requireAdminAccess } from "@/lib/admin/require-admin-access";
 
+import { createAdminClient } from "@/lib/supabase/admin";
+
 import styles from "../../admin.module.css";
 import pageStyles from "./page.module.css";
 
@@ -17,9 +19,9 @@ type ContentProfile = {
   username: string;
   specialty: string;
   profile_type:
-    | "community"
-    | "editor"
-    | "expert";
+  | "community"
+  | "editor"
+  | "expert";
 };
 
 type CategoryGroup = {
@@ -249,7 +251,10 @@ export default async function NewAdminTopicPage({
     const safeContent =
       textToSafeHtml(content);
 
-    const { error } = await supabase
+    const adminSupabase =
+      createAdminClient();
+
+    const { error } = await adminSupabase
       .from("topics")
       .insert({
         author_id: null,
@@ -394,8 +399,8 @@ export default async function NewAdminTopicPage({
                       {" · "}
                       {
                         profileTypeNames[
-                          profile
-                            .profile_type
+                        profile
+                          .profile_type
                         ]
                       }
                     </option>
