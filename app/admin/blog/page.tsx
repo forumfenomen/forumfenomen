@@ -313,7 +313,20 @@ export default async function AdminBlogPage({
                     </p>
                 </div>
 
-                href="/admin/blog/yeni"
+                <Link
+                    href="/admin/blog/yeni"
+                    className={styles.newTopicButton}
+                    style={{
+                        minWidth: 150,
+                        paddingInline: 18,
+                        whiteSpace: "nowrap",
+                        justifyContent: "center",
+                    }}
+                >
+                    <span aria-hidden="true">+</span>
+
+                    Yeni Blog Yazısı
+                </Link>
             </header>
 
             <section className={styles.topicSummaryGrid}>
