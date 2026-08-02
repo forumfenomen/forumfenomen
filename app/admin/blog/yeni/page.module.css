@@ -1,294 +1,307 @@
 .backButton {
-  display: inline-flex;
-  min-height: 42px;
-  align-items: center;
-  justify-content: center;
-  padding: 0 18px;
-  border: 1px solid rgba(222, 74, 255, 0.45);
-  border-radius: 12px;
-  background: rgba(146, 39, 190, 0.1);
-  color: #f2ddff;
-  font-size: 13px;
-  font-weight: 800;
-  text-decoration: none;
-  white-space: nowrap;
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px;
+    border: 1px solid rgba(222, 74, 255, 0.45);
+    border-radius: 12px;
+    background: rgba(146, 39, 190, 0.1);
+    color: #f2ddff;
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
 }
 
 .backButton:hover {
-  border-color: rgba(238, 91, 255, 0.8);
-  background: rgba(170, 48, 220, 0.18);
+    border-color: rgba(238, 91, 255, 0.8);
+    background: rgba(170, 48, 220, 0.18);
 }
 
 .adminPublishBadge {
-  display: inline-flex;
-  min-height: 34px;
-  align-items: center;
-  justify-content: center;
-  padding: 0 13px;
-  border: 1px solid rgba(65, 214, 160, 0.35);
-  border-radius: 999px;
-  background: rgba(34, 172, 124, 0.1);
-  color: #7df0c1;
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  white-space: nowrap;
+    display: inline-flex;
+    min-height: 34px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 13px;
+    border: 1px solid rgba(65, 214, 160, 0.35);
+    border-radius: 999px;
+    background: rgba(34, 172, 124, 0.1);
+    color: #7df0c1;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
 }
 
 .errorMessage {
-  margin-bottom: 18px;
-  padding: 13px 15px;
-  border: 1px solid rgba(255, 76, 125, 0.38);
-  border-radius: 12px;
-  background: rgba(190, 32, 76, 0.1);
-  color: #ffc4d3;
-  font-size: 13px;
-  line-height: 1.55;
+    margin-bottom: 18px;
+    padding: 13px 15px;
+    border: 1px solid rgba(255, 76, 125, 0.38);
+    border-radius: 12px;
+    background: rgba(190, 32, 76, 0.1);
+    color: #ffc4d3;
+    font-size: 13px;
+    line-height: 1.55;
 }
 
 .form {
-  display: grid;
-  gap: 18px;
+    display: grid;
+    gap: 18px;
 }
 
 .formGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
 }
 
 .field {
-  display: grid;
-  gap: 8px;
+    display: grid;
+    gap: 8px;
 }
 
-.field > span {
-  color: #f3eaff;
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0.03em;
+.field>span {
+    color: #f3eaff;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.03em;
 }
 
 .field input,
 .field select,
 .field textarea {
-  width: 100%;
-  min-width: 0;
-  border: 1px solid rgba(147, 128, 181, 0.25);
-  border-radius: 12px;
-  outline: none;
-  background: rgba(6, 7, 15, 0.58);
-  color: #f8f5ff;
-  font: inherit;
-  transition:
-    border-color 160ms ease,
-    box-shadow 160ms ease,
-    background 160ms ease;
+    width: 100%;
+    min-width: 0;
+    border: 1px solid rgba(147, 128, 181, 0.25);
+    border-radius: 12px;
+    outline: none;
+    background: rgba(6, 7, 15, 0.58);
+    color: #f8f5ff;
+    font: inherit;
+    transition:
+        border-color 160ms ease,
+        box-shadow 160ms ease,
+        background 160ms ease;
 }
 
 .field input,
 .field select {
-  min-height: 46px;
-  padding: 0 14px;
+    min-height: 46px;
+    padding: 0 14px;
+}
+
+.field select {
+    padding-right: 42px;
+    background-position: right 16px center;
 }
 
 .field textarea {
-  resize: vertical;
-  padding: 13px 14px;
-  line-height: 1.65;
+    resize: vertical;
+    padding: 13px 14px;
+    line-height: 1.65;
 }
 
 .field input[type="file"] {
-  display: flex;
-  align-items: center;
-  padding: 9px 11px;
-  color: #bfb6d3;
+    display: flex;
+    align-items: center;
+    padding: 9px 11px;
+    color: #bfb6d3;
 }
 
 .field input::file-selector-button {
-  margin-right: 12px;
-  padding: 7px 12px;
-  border: 1px solid rgba(220, 71, 255, 0.42);
-  border-radius: 8px;
-  background: rgba(162, 42, 209, 0.15);
-  color: #f1d9ff;
-  font-weight: 800;
-  cursor: pointer;
+    margin-right: 12px;
+    padding: 7px 12px;
+    border: 1px solid rgba(220, 71, 255, 0.42);
+    border-radius: 8px;
+    background: rgba(162, 42, 209, 0.15);
+    color: #f1d9ff;
+    font-weight: 800;
+    cursor: pointer;
 }
 
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-  border-color: rgba(214, 65, 255, 0.75);
-  background: rgba(12, 9, 22, 0.8);
-  box-shadow: 0 0 0 3px rgba(180, 47, 231, 0.1);
+    border-color: rgba(214, 65, 255, 0.75);
+    background: rgba(12, 9, 22, 0.8);
+    box-shadow: 0 0 0 3px rgba(180, 47, 231, 0.1);
 }
 
 .field small {
-  color: #8f899e;
-  font-size: 11px;
-  line-height: 1.5;
+    color: #8f899e;
+    font-size: 11px;
+    line-height: 1.5;
 }
 
 .contentField textarea {
-  min-height: 420px;
+    min-height: 420px;
 }
 
 .checkboxField {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 15px;
-  border: 1px solid rgba(147, 128, 181, 0.22);
-  border-radius: 13px;
-  background: rgba(10, 9, 18, 0.42);
-  cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 15px;
+    border: 1px solid rgba(147, 128, 181, 0.22);
+    border-radius: 13px;
+    background: rgba(10, 9, 18, 0.42);
+    cursor: pointer;
 }
 
 .checkboxField input {
-  width: 18px;
-  height: 18px;
-  margin-top: 2px;
-  accent-color: #b53ce2;
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: #b53ce2;
 }
 
-.checkboxField > span {
-  display: grid;
-  gap: 4px;
+.checkboxField>span {
+    display: grid;
+    gap: 4px;
 }
 
 .checkboxField strong {
-  color: #f4edff;
-  font-size: 13px;
+    color: #f4edff;
+    font-size: 13px;
 }
 
 .checkboxField small {
-  color: #9890a8;
-  font-size: 11px;
-  line-height: 1.5;
+    color: #9890a8;
+    font-size: 11px;
+    line-height: 1.5;
 }
 
 .seoSection {
-  display: grid;
-  gap: 16px;
-  padding: 18px;
-  border: 1px solid rgba(75, 145, 225, 0.2);
-  border-radius: 15px;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(29, 61, 106, 0.14),
-      rgba(28, 14, 45, 0.22)
-    );
+    display: grid;
+    gap: 16px;
+    padding: 18px;
+    border: 1px solid rgba(75, 145, 225, 0.2);
+    border-radius: 15px;
+    background:
+        linear-gradient(135deg,
+            rgba(29, 61, 106, 0.14),
+            rgba(28, 14, 45, 0.22));
 }
 
-.seoSection > div:first-child > span {
-  color: #76b8ff;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 0.12em;
+.seoSection>div:first-child>span {
+    color: #76b8ff;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
 }
 
 .seoSection h3 {
-  margin: 4px 0 0;
-  color: #f7f3ff;
-  font-size: 17px;
+    margin: 4px 0 0;
+    color: #f7f3ff;
+    font-size: 17px;
 }
 
 .actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 12px;
-  padding-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 4px;
 }
 
 .cancelButton,
 .submitButton {
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
-  justify-content: center;
-  padding: 0 19px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 900;
-  text-decoration: none;
-  white-space: nowrap;
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 19px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 900;
+    text-decoration: none;
+    white-space: nowrap;
 }
 
 .cancelButton {
-  border: 1px solid rgba(151, 137, 177, 0.26);
-  background: rgba(23, 21, 31, 0.65);
-  color: #c9c2d4;
+    border: 1px solid rgba(151, 137, 177, 0.26);
+    background: rgba(23, 21, 31, 0.65);
+    color: #c9c2d4;
 }
 
 .submitButton {
-  border: 1px solid rgba(77, 229, 173, 0.42);
-  background:
-    linear-gradient(
-      135deg,
-      #2ca77d,
-      #248d70
-    );
-  color: #ffffff;
-  cursor: pointer;
-  box-shadow: 0 10px 25px rgba(28, 145, 105, 0.18);
+    border: 1px solid rgba(77, 229, 173, 0.42);
+    background:
+        linear-gradient(135deg,
+            #2ca77d,
+            #248d70);
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(28, 145, 105, 0.18);
 }
 
 .submitButton:hover {
-  filter: brightness(1.08);
+    filter: brightness(1.08);
 }
 
 @media (max-width: 800px) {
-  .formGrid {
-    grid-template-columns: 1fr;
-  }
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
 
-  .contentField textarea {
-    min-height: 340px;
-  }
+    .contentField textarea {
+        min-height: 340px;
+    }
 
-  .actions {
-    align-items: stretch;
-    flex-direction: column-reverse;
-  }
+    .actions {
+        align-items: stretch;
+        flex-direction: column-reverse;
+    }
 
-  .cancelButton,
-  .submitButton {
-    width: 100%;
-  }
+    .cancelButton,
+    .submitButton {
+        width: 100%;
+    }
 }
 
 
 .equalFieldGrid {
-  align-items: start;
+    align-items: start;
 }
 
 .equalFieldGrid .field {
-  grid-template-rows:
-    auto
-    46px
-    minmax(34px, auto);
-  align-content: start;
+    grid-template-rows:
+        auto 46px minmax(34px, auto);
+    align-content: start;
 }
 
 .equalFieldGrid .field input,
 .equalFieldGrid .field select {
-  height: 46px;
+    height: 46px;
 }
 
 .seoGrid {
-  align-items: stretch;
+    align-items: stretch;
 }
 
 .seoGrid .field {
-  grid-template-rows:
-    auto
-    minmax(108px, 1fr);
+    grid-template-rows:
+        auto minmax(108px, 1fr);
 }
 
 .seoGrid .field textarea {
-  min-height: 108px;
-  height: 100%;
+    min-height: 108px;
+    height: 100%;
+}
+
+.field select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image:
+        linear-gradient(45deg, transparent 50%, #f8f5ff 50%),
+        linear-gradient(135deg, #f8f5ff 50%, transparent 50%);
+    background-position:
+        calc(100% - 18px) 50%,
+        calc(100% - 13px) 50%;
+    background-size:
+        5px 5px,
+        5px 5px;
+    background-repeat: no-repeat;
 }
