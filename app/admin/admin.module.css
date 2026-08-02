@@ -1706,6 +1706,8 @@
 
     padding: 23px;
 
+    text-align: left;
+
     border:
         1px solid rgba(255, 255, 255, 0.09);
     border-radius: 20px;
