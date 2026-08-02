@@ -362,151 +362,47 @@ export default async function AdminLogsPage({
                 </div>
             </header>
 
-            <section className={styles.statsGrid}>
+            <section className={styles.topicSummaryGrid}>
                 <Link
                     href="/admin/islem-kayitlari"
-                    className={styles.statCard}
-                    style={{
-                        textDecoration: "none",
-                        borderColor:
-                            selectedType === "all"
-                                ? "rgba(204, 68, 235, 0.32)"
-                                : undefined,
-                        background:
-                            selectedType === "all"
-                                ? "linear-gradient(135deg, rgba(207, 54, 231, 0.14), rgba(76, 91, 255, 0.1))"
-                                : undefined,
-                    }}
+                    className={`${styles.topicSummaryCard} ${selectedType === "all"
+                            ? styles.topicSummaryActive
+                            : ""
+                        }`}
                 >
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            gap: 12,
-                        }}
-                    >
-                        <span className={styles.statLabel}>
-                            Toplam işlem
-                        </span>
+                    <span>Toplam işlem</span>
 
-                        <strong
-                            style={{
-                                marginTop: 0,
-                                color: "#ffffff",
-                                fontSize: 24,
-                                lineHeight: 1,
-                            }}
-                        >
-                            {totalCount}
-                        </strong>
-                    </div>
+                    <strong>{totalCount}</strong>
                 </Link>
 
                 <Link
                     href="/admin/islem-kayitlari?type=comment"
-                    className={styles.statCard}
-                    style={{
-                        textDecoration: "none",
-                        borderColor:
-                            selectedType === "comment"
-                                ? "rgba(204, 68, 235, 0.32)"
-                                : undefined,
-                        background:
-                            selectedType === "comment"
-                                ? "linear-gradient(135deg, rgba(207, 54, 231, 0.14), rgba(76, 91, 255, 0.1))"
-                                : undefined,
-                    }}
+                    className={`${styles.topicSummaryCard} ${selectedType === "comment"
+                            ? styles.topicSummaryActive
+                            : ""
+                        }`}
                 >
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            gap: 12,
-                        }}
-                    >
-                        <span className={styles.statLabel}>
-                            Yorum işlemleri
-                        </span>
+                    <span>Yorum işlemleri</span>
 
-                        <strong
-                            style={{
-                                marginTop: 0,
-                                color: "#ffffff",
-                                fontSize: 24,
-                                lineHeight: 1,
-                            }}
-                        >
-                            {commentCount}
-                        </strong>
-                    </div>
+                    <strong>{commentCount}</strong>
                 </Link>
 
                 <Link
                     href="/admin/islem-kayitlari?type=report"
-                    className={styles.statCard}
-                    style={{
-                        textDecoration: "none",
-                        borderColor:
-                            selectedType === "report"
-                                ? "rgba(204, 68, 235, 0.32)"
-                                : undefined,
-                        background:
-                            selectedType === "report"
-                                ? "linear-gradient(135deg, rgba(207, 54, 231, 0.14), rgba(76, 91, 255, 0.1))"
-                                : undefined,
-                    }}
+                    className={`${styles.topicSummaryCard} ${selectedType === "report"
+                            ? styles.topicSummaryActive
+                            : ""
+                        }`}
                 >
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            gap: 12,
-                        }}
-                    >
-                        <span className={styles.statLabel}>
-                            Şikâyet işlemleri
-                        </span>
+                    <span>Şikâyet işlemleri</span>
 
-                        <strong
-                            style={{
-                                marginTop: 0,
-                                color: "#ffffff",
-                                fontSize: 24,
-                                lineHeight: 1,
-                            }}
-                        >
-                            {reportCount}
-                        </strong>
-                    </div>
+                    <strong>{reportCount}</strong>
                 </Link>
 
-                <article className={styles.statCard}>
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            gap: 12,
-                        }}
-                    >
-                        <span className={styles.statLabel}>
-                            Listelenen
-                        </span>
+                <article className={styles.topicSummaryCard}>
+                    <span>Listelenen</span>
 
-                        <strong
-                            style={{
-                                marginTop: 0,
-                                color: "#ffffff",
-                                fontSize: 24,
-                                lineHeight: 1,
-                            }}
-                        >
-                            {filteredLogs.length}
-                        </strong>
-                    </div>
+                    <strong>{filteredLogs.length}</strong>
                 </article>
             </section>
 
