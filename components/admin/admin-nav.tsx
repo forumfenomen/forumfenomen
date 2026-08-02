@@ -47,6 +47,11 @@ const activeItems: AdminNavItem[] = [
     roles: ["admin"],
   },
   {
+    href: "/admin/blog",
+    label: "Blog Yönetimi",
+    roles: ["admin"],
+  },
+  {
     href: "/admin/konular",
     label: "Konular",
     roles: ["admin", "moderator"],
