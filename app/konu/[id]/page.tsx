@@ -76,7 +76,8 @@ type ReportMessage =
 
 type CommentRow = {
     id: string;
-    author_id: string;
+    author_id: string | null;
+    content_profile_id: string | null;
     content: string;
     created_at: string;
     parent_comment_id: string | null;
@@ -942,6 +943,7 @@ export default function TopicDetailPage() {
                 .select(`
         id,
         author_id,
+        content_profile_id,
         content,
         created_at,
         parent_comment_id,
@@ -982,14 +984,42 @@ export default function TopicDetailPage() {
                 avatar_url: string | null;
             };
 
+            type ManagedCommentProfile = {
+                id: string;
+                display_name: string | null;
+                username: string | null;
+                avatar_url: string | null;
+            };
+
             let profileRows:
                 CommentAuthorProfile[] = [];
 
+            let managedProfileRows:
+                ManagedCommentProfile[] = [];
+
+            const contentProfileIds = Array.from(
+                new Set(
+                    commentRows
+                        .map(
+                            (comment) =>
+                                comment.content_profile_id
+                        )
+                        .filter(
+                            (
+                                value
+                            ): value is string =>
+                                Boolean(value)
+                        )
+                )
+            );
+
+
+
             /*
-             * Oturum kapalı ziyaretçiye profil bilgisi
-             * gönderilmez. Yorum sahipleri
-             * "ForumFenomen Üyesi" olarak görünür.
-             */
+ * Normal kullanıcı profilleri yalnızca oturum
+ * açmış ziyaretçilere güvenli RPC ile gösterilir.
+ * Yönetilen içerik profilleri herkese açıktır.
+ */
             if (currentUserId) {
                 const {
                     data: profileData,
@@ -1017,6 +1047,38 @@ export default function TopicDetailPage() {
                 }
             }
 
+            if (contentProfileIds.length > 0) {
+                const {
+                    data: managedProfileData,
+                    error: managedProfileError,
+                } = await supabase
+                    .from("content_profiles")
+                    .select(`
+            id,
+            display_name,
+            username,
+            avatar_url
+        `)
+                    .in("id", contentProfileIds)
+                    .eq("is_active", true)
+                    .eq("is_archived", false);
+
+                if (!isActive) {
+                    return;
+                }
+
+                if (managedProfileError) {
+                    console.error(
+                        "Yorum içerik profilleri alınamadı:",
+                        managedProfileError.message
+                    );
+                } else {
+                    managedProfileRows =
+                        (managedProfileData ??
+                            []) as ManagedCommentProfile[];
+                }
+            }
+
             const profileMap = new Map<
                 string,
                 CommentRow["profiles"]
@@ -1034,14 +1096,47 @@ export default function TopicDetailPage() {
                 ])
             );
 
+            const managedProfileMap = new Map<
+                string,
+                CommentRow["profiles"]
+            >(
+                managedProfileRows.map((profile) => [
+                    profile.id,
+                    {
+                        display_name:
+                            profile.display_name,
+                        username:
+                            profile.username,
+                        avatar_url:
+                            profile.avatar_url,
+                    },
+                ])
+            );
+
             setComments(
-                commentRows.map((comment) => ({
-                    ...comment,
-                    profiles:
-                        profileMap.get(
-                            comment.author_id
-                        ) ?? null,
-                }))
+                commentRows.map((comment) => {
+                    const managedProfile =
+                        comment.content_profile_id
+                            ? managedProfileMap.get(
+                                comment.content_profile_id
+                            )
+                            : null;
+
+                    const normalProfile =
+                        comment.author_id
+                            ? profileMap.get(
+                                comment.author_id
+                            )
+                            : null;
+
+                    return {
+                        ...comment,
+                        profiles:
+                            managedProfile ??
+                            normalProfile ??
+                            null,
+                    };
+                })
             );
 
             setCommentsLoading(false);
@@ -1057,6 +1152,8 @@ export default function TopicDetailPage() {
         authChecked,
         currentUserId,
     ]);
+
+
 
     useEffect(() => {
         let isActive = true;
@@ -1301,9 +1398,17 @@ export default function TopicDetailPage() {
                 ?.replace(/^@/, "")
                 .trim();
 
-        return username
-            ? `/profil/${encodeURIComponent(username)}`
-            : null;
+        if (!username) {
+            return null;
+        }
+
+        return comment.content_profile_id
+            ? `/icerik-profili/${encodeURIComponent(
+                username
+            )}`
+            : `/profil/${encodeURIComponent(
+                username
+            )}`;
     }
 
     function formatCommentDate(value: string) {
@@ -1897,6 +2002,7 @@ export default function TopicDetailPage() {
                 .insert({
                     topic_id: topicId,
                     author_id: user.id,
+                    content_profile_id: null,
                     parent_comment_id:
                         replyingTo?.id ?? null,
                     content: normalizedComment,
@@ -1905,6 +2011,7 @@ export default function TopicDetailPage() {
                 .select(`
     id,
     author_id,
+    content_profile_id,
     content,
     created_at,
     parent_comment_id,

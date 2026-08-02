@@ -21,7 +21,8 @@ type AdminComment = {
     content: string;
     status: string;
     topic_id: string;
-    author_id: string;
+    author_id: string | null;
+    content_profile_id: string | null;
     created_at: string;
 };
 
@@ -80,6 +81,7 @@ export default async function AdminCommentsPage({
   status,
   topic_id,
   author_id,
+  content_profile_id,
   created_at
 `)
         .order("created_at", {
@@ -147,9 +149,33 @@ export default async function AdminCommentsPage({
 
     const profileIds = Array.from(
         new Set(
-            comments.map(
-                (comment) => comment.author_id
-            )
+            comments
+                .map(
+                    (comment) =>
+                        comment.author_id
+                )
+                .filter(
+                    (
+                        value
+                    ): value is string =>
+                        Boolean(value)
+                )
+        )
+    );
+
+    const contentProfileIds = Array.from(
+        new Set(
+            comments
+                .map(
+                    (comment) =>
+                        comment.content_profile_id
+                )
+                .filter(
+                    (
+                        value
+                    ): value is string =>
+                        Boolean(value)
+                )
         )
     );
 
@@ -162,7 +188,31 @@ export default async function AdminCommentsPage({
     );
 
     let profiles: ProfileSummary[] = [];
+    let contentProfiles: ProfileSummary[] = [];
     let topics: TopicSummary[] = [];
+
+    if (contentProfileIds.length > 0) {
+        const contentProfilesResult =
+            await supabase
+                .from("content_profiles")
+                .select(`
+                id,
+                display_name,
+                username
+            `)
+                .in("id", contentProfileIds);
+
+        if (contentProfilesResult.error) {
+            console.error(
+                "Yorum içerik profilleri alınamadı:",
+                contentProfilesResult.error.message
+            );
+        }
+
+        contentProfiles =
+            (contentProfilesResult.data ??
+                []) as ProfileSummary[];
+    }
 
     if (profileIds.length > 0) {
         const profilesResult = await supabase.rpc(
@@ -212,6 +262,13 @@ export default async function AdminCommentsPage({
         ])
     );
 
+    const contentProfileMap = new Map(
+        contentProfiles.map((profile) => [
+            profile.id,
+            profile,
+        ])
+    );
+
     const topicMap = new Map(
         topics.map((topic) => [
             topic.id,
@@ -247,9 +304,13 @@ export default async function AdminCommentsPage({
                     </p>
                 </div>
 
-                <div className={styles.securityBadge}>
-                    ● Yetkili erişimi
-                </div>
+                <Link
+                    href="/admin/yorumlar/yeni"
+                    className={styles.newTopicButton}
+                >
+                    <span>＋</span>
+                    Yeni Yorum
+                </Link>
             </header>
 
             <section
@@ -258,8 +319,8 @@ export default async function AdminCommentsPage({
                 <Link
                     href="/admin/yorumlar"
                     className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${selectedStatus === "all"
-                            ? styles.commentSummaryActive
-                            : ""
+                        ? styles.commentSummaryActive
+                        : ""
                         }`}
                 >
                     <span>Toplam yorum</span>
@@ -269,8 +330,8 @@ export default async function AdminCommentsPage({
                 <Link
                     href="/admin/yorumlar?status=published"
                     className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${selectedStatus === "published"
-                            ? styles.commentSummaryActive
-                            : ""
+                        ? styles.commentSummaryActive
+                        : ""
                         }`}
                 >
                     <span>Yayındaki</span>
@@ -280,8 +341,8 @@ export default async function AdminCommentsPage({
                 <Link
                     href="/admin/yorumlar?status=hidden"
                     className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${selectedStatus === "hidden"
-                            ? styles.commentSummaryActive
-                            : ""
+                        ? styles.commentSummaryActive
+                        : ""
                         }`}
                 >
                     <span>Gizlenen</span>
@@ -291,8 +352,8 @@ export default async function AdminCommentsPage({
                 <Link
                     href="/admin/yorumlar?status=banned"
                     className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${selectedStatus === "banned"
-                            ? styles.commentSummaryActive
-                            : ""
+                        ? styles.commentSummaryActive
+                        : ""
                         }`}
                 >
                     <span>Yasaklanan</span>
@@ -420,14 +481,14 @@ export default async function AdminCommentsPage({
                         <span>YORUM KAYITLARI</span>
 
                         <h2>
-    {selectedStatus === "published"
-        ? "Yayındaki Yorumlar"
-        : selectedStatus === "hidden"
-          ? "Gizlenen Yorumlar"
-          : selectedStatus === "banned"
-            ? "Yasaklanan Yorumlar"
-            : "Tüm Yorumlar"}
-</h2>
+                            {selectedStatus === "published"
+                                ? "Yayındaki Yorumlar"
+                                : selectedStatus === "hidden"
+                                    ? "Gizlenen Yorumlar"
+                                    : selectedStatus === "banned"
+                                        ? "Yasaklanan Yorumlar"
+                                        : "Tüm Yorumlar"}
+                        </h2>
                     </div>
 
                     <div className={styles.panelBadge}>
@@ -444,10 +505,23 @@ export default async function AdminCommentsPage({
                         className={styles.adminReportList}
                     >
                         {comments.map((comment) => {
+                            const normalAuthor =
+                                comment.author_id
+                                    ? profileMap.get(
+                                        comment.author_id
+                                    )
+                                    : undefined;
+
+                            const managedAuthor =
+                                comment.content_profile_id
+                                    ? contentProfileMap.get(
+                                        comment.content_profile_id
+                                    )
+                                    : undefined;
+
                             const author =
-                                profileMap.get(
-                                    comment.author_id
-                                );
+                                managedAuthor ??
+                                normalAuthor;
 
                             const topic =
                                 topicMap.get(
