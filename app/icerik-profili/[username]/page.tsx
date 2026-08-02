@@ -94,6 +94,45 @@ function ChevronIcon() {
     );
 }
 
+function HomeIcon() {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m3 11 9-8 9 8" />
+            <path d="M5.5 9.5V21h13V9.5" />
+            <path d="M9.5 21v-6h5v6" />
+        </svg>
+    );
+}
+
+function GridIcon() {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="2" />
+            <rect x="14" y="3" width="7" height="7" rx="2" />
+            <rect x="3" y="14" width="7" height="7" rx="2" />
+            <rect x="14" y="14" width="7" height="7" rx="2" />
+        </svg>
+    );
+}
+
+function BlogIcon() {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 3h9l4 4v14H6V3Z" />
+            <path d="M15 3v5h5M9 12h7M9 16h7" />
+        </svg>
+    );
+}
+
+function ProfileIcon() {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4.5 21c.7-4.3 3.2-6.5 7.5-6.5s6.8 2.2 7.5 6.5" />
+        </svg>
+    );
+}
+
 function formatRelativeTime(
     value: string,
     language: ForumLanguage
@@ -123,8 +162,7 @@ function formatRelativeTime(
     if (elapsedMinutes < 60) {
         return language === "tr"
             ? `${elapsedMinutes} dakika önce`
-            : `${elapsedMinutes} minute${
-                elapsedMinutes === 1 ? "" : "s"
+            : `${elapsedMinutes} minute${elapsedMinutes === 1 ? "" : "s"
             } ago`;
     }
 
@@ -135,8 +173,7 @@ function formatRelativeTime(
     if (elapsedHours < 24) {
         return language === "tr"
             ? `${elapsedHours} saat önce`
-            : `${elapsedHours} hour${
-                elapsedHours === 1 ? "" : "s"
+            : `${elapsedHours} hour${elapsedHours === 1 ? "" : "s"
             } ago`;
     }
 
@@ -146,8 +183,7 @@ function formatRelativeTime(
 
     return language === "tr"
         ? `${elapsedDays} gün önce`
-        : `${elapsedDays} day${
-            elapsedDays === 1 ? "" : "s"
+        : `${elapsedDays} day${elapsedDays === 1 ? "" : "s"
         } ago`;
 }
 
@@ -387,11 +423,24 @@ export default function ContentProfilePage() {
             ? "İçerik üreticisi"
             : "Content creator");
 
+    const rawProfileType =
+        profile?.profile_type?.trim().toLowerCase();
+
     const profileType =
-        profile?.profile_type?.trim() ||
-        (language === "tr"
-            ? "ForumFenomen İçerik Profili"
-            : "ForumFenomen Content Profile");
+        rawProfileType === "expert"
+            ? "Expert"
+            : rawProfileType === "editor"
+                ? language === "tr"
+                    ? "Editör"
+                    : "Editor"
+                : rawProfileType === "creator"
+                    ? language === "tr"
+                        ? "İçerik Üreticisi"
+                        : "Content Creator"
+                    : profile?.profile_type?.trim() ||
+                    (language === "tr"
+                        ? "ForumFenomen İçerik Profili"
+                        : "ForumFenomen Content Profile");
 
     return (
         <main className={styles.page}>
@@ -644,7 +693,7 @@ export default function ContentProfilePage() {
 
                                 <article>
                                     <strong>
-                                        FF
+                                        ✓
                                     </strong>
 
                                     <span>
@@ -779,14 +828,14 @@ export default function ContentProfilePage() {
                                                             .categories
                                                             ?.name ??
                                                             (language ===
-                                                            "tr"
+                                                                "tr"
                                                                 ? "Genel"
                                                                 : "General")}
                                                         {" · "}
                                                         {topic.comment_count ??
                                                             0}{" "}
                                                         {language ===
-                                                        "tr"
+                                                            "tr"
                                                             ? "yorum"
                                                             : "comments"}
                                                         {" · "}
@@ -809,6 +858,73 @@ export default function ContentProfilePage() {
             </div>
 
             <ForumFooter />
+
+            <nav
+                className="ff-bottom-nav"
+                aria-label={
+                    language === "tr"
+                        ? "Ana menü"
+                        : "Main menu"
+                }
+            >
+                <Link href="/akis">
+                    <HomeIcon />
+                    <span>
+                        {language === "tr"
+                            ? "Ana Sayfa"
+                            : "Home"}
+                    </span>
+                </Link>
+
+                <Link href="/kategoriler">
+                    <GridIcon />
+                    <span>
+                        {language === "tr"
+                            ? "Kategoriler"
+                            : "Categories"}
+                    </span>
+                </Link>
+
+                <Link
+                    href="/konu-ac"
+                    className="ff-center-nav-button"
+                    aria-label={
+                        language === "tr"
+                            ? "Yeni konu aç"
+                            : "Create new topic"
+                    }
+                >
+                    <span className="ff-center-nav-glow" />
+
+                    <span className="ff-center-nav-image">
+                        <Image
+                            src="/forumfenomen-icon-master.png"
+                            alt=""
+                            width={1254}
+                            height={1254}
+                            unoptimized
+                        />
+                    </span>
+                </Link>
+
+                <Link href="/blog">
+                    <BlogIcon />
+                    <span>
+                        {language === "tr"
+                            ? "Blog"
+                            : "Blog"}
+                    </span>
+                </Link>
+
+                <Link href="/profil">
+                    <ProfileIcon />
+                    <span>
+                        {language === "tr"
+                            ? "Profil"
+                            : "Profile"}
+                    </span>
+                </Link>
+            </nav>
         </main>
     );
 }
