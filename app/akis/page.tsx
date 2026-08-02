@@ -1772,11 +1772,21 @@ export default function FeedPage() {
             aria-busy={topicsLoading}
           >
             {topicsLoading ? (
-              <div className="ff-topics-loading">
+              <div
+                className="ff-topics-loading"
+                style={{
+                  paddingLeft: 13,
+                }}
+              >
                 Güncel konular yükleniyor...
               </div>
             ) : displayPosts.length === 0 ? (
-              <div className="ff-topics-loading">
+              <div
+                className="ff-topics-loading"
+                style={{
+                  paddingLeft: 13,
+                }}
+              >
                 Henüz yayınlanmış konu bulunmuyor.
               </div>
             ) : (
