@@ -534,11 +534,25 @@ export default async function AdminCommentsPage({
                                                 styles.adminReportTopMeta
                                             }
                                         >
-                                            <span
-                                                className={`${styles.adminReportStatus} ${styles.commentStatusBadge} ${statusClass}`}
+                                            <div
+                                                style={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "flex-end",
+                                                    gap: 8,
+                                                }}
                                             >
-                                                {statusLabel}
-                                            </span>
+                                                <span
+                                                    className={`${styles.adminReportStatus} ${styles.commentStatusBadge} ${statusClass}`}
+                                                >
+                                                    {statusLabel}
+                                                </span>
+
+                                                <CommentModerationActions
+                                                    commentId={comment.id}
+                                                    status={comment.status}
+                                                />
+                                            </div>
 
                                             <small>
                                                 {formatDate(
@@ -580,22 +594,7 @@ export default async function AdminCommentsPage({
                                         ) : null}
                                     </div>
 
-                                    <div
-                                        className={
-                                            styles.adminReportFooter
-                                        }
-                                    >
-                                        <span
-                                            className={`${styles.commentFooterStatus} ${statusClass}`}
-                                        >
-                                            Durum: {statusLabel}
-                                        </span>
 
-                                        <CommentModerationActions
-                                            commentId={comment.id}
-                                            status={comment.status}
-                                        />
-                                    </div>
                                 </article>
                             );
                         })}
