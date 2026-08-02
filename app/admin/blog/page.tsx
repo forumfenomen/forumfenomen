@@ -1,6 +1,7 @@
 import Link from "next/link";
 
-import { createClient } from "@/lib/supabase/server";
+import { requireAdminAccess } from "@/lib/admin/require-admin-access";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 import styles from "../admin.module.css";
 
@@ -251,9 +252,11 @@ export default async function AdminBlogPage({
                     ? "Arşivlenen Blog Yazıları"
                     : "Tüm Blog Yazıları";
 
-    const supabase = await createClient();
+    await requireAdminAccess();
 
-    const { data, error } = await supabase
+    const adminSupabase = createAdminClient();
+
+    const { data, error } = await adminSupabase
         .from("blog_posts")
         .select(`
       id,
