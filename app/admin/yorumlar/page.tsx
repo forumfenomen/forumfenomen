@@ -314,11 +314,11 @@ export default async function AdminCommentsPage({
             </header>
 
             <section
-                className={styles.reportSummaryGrid}
+                className={styles.topicSummaryGrid}
             >
                 <Link
                     href="/admin/yorumlar"
-                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${selectedStatus === "all"
+                    className={`${styles.topicSummaryCard} ${styles.commentSummaryLink} ${selectedStatus === "all"
                         ? styles.commentSummaryActive
                         : ""
                         }`}
@@ -329,7 +329,7 @@ export default async function AdminCommentsPage({
 
                 <Link
                     href="/admin/yorumlar?status=published"
-                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${selectedStatus === "published"
+                    className={`${styles.topicSummaryCard} ${styles.commentSummaryLink} ${selectedStatus === "published"
                         ? styles.commentSummaryActive
                         : ""
                         }`}
@@ -340,7 +340,7 @@ export default async function AdminCommentsPage({
 
                 <Link
                     href="/admin/yorumlar?status=hidden"
-                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${selectedStatus === "hidden"
+                    className={`${styles.topicSummaryCard} ${styles.commentSummaryLink} ${selectedStatus === "hidden"
                         ? styles.commentSummaryActive
                         : ""
                         }`}
@@ -351,7 +351,7 @@ export default async function AdminCommentsPage({
 
                 <Link
                     href="/admin/yorumlar?status=banned"
-                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${selectedStatus === "banned"
+                    className={`${styles.topicSummaryCard} ${styles.commentSummaryLink} ${selectedStatus === "banned"
                         ? styles.commentSummaryActive
                         : ""
                         }`}
@@ -364,121 +364,7 @@ export default async function AdminCommentsPage({
             <section className={styles.panel}>
                 <div className={styles.panelHeader}>
                     <div>
-                        <span>ARAMA VE FİLTRE</span>
-
-                        <h2>Yorumları Bul</h2>
-                    </div>
-
-                    <div className={styles.panelBadge}>
-                        Son 200 kayıt
-                    </div>
-                </div>
-
-                <form
-                    method="get"
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns:
-                            "minmax(220px, 1fr) 190px auto",
-                        gap: 12,
-                        alignItems: "end",
-                    }}
-                >
-                    <label
-                        style={{
-                            display: "grid",
-                            gap: 7,
-                        }}
-                    >
-                        <span
-                            style={{
-                                fontSize: 11,
-                                fontWeight: 700,
-                                opacity: 0.7,
-                            }}
-                        >
-                            Yorum içeriği
-                        </span>
-
-                        <input
-                            type="search"
-                            name="search"
-                            defaultValue={searchText}
-                            placeholder="Yorumlarda ara..."
-                            style={{
-                                minHeight: 44,
-                                padding: "0 14px",
-                                borderRadius: 12,
-                                border:
-                                    "1px solid rgba(255,255,255,0.12)",
-                                color: "inherit",
-                                background:
-                                    "rgba(255,255,255,0.05)",
-                            }}
-                        />
-                    </label>
-
-                    <label
-                        style={{
-                            display: "grid",
-                            gap: 7,
-                        }}
-                    >
-                        <span
-                            style={{
-                                fontSize: 11,
-                                fontWeight: 700,
-                                opacity: 0.7,
-                            }}
-                        >
-                            Durum
-                        </span>
-
-                        <select
-                            name="status"
-                            defaultValue={selectedStatus}
-                            style={{
-                                minHeight: 44,
-                                padding: "0 12px",
-                                borderRadius: 12,
-                                border:
-                                    "1px solid rgba(255,255,255,0.12)",
-                                color: "inherit",
-                                background: "#161521",
-                            }}
-                        >
-                            <option value="all">
-                                Tüm yorumlar
-                            </option>
-
-                            <option value="published">
-                                Yayındaki yorumlar
-                            </option>
-
-                            <option value="hidden">
-                                Gizlenen yorumlar
-                            </option>
-
-                            <option value="banned">
-                                Yasaklanan yorumlar
-                            </option>
-                        </select>
-                    </label>
-
-                    <button
-                        type="submit"
-                        className={styles.reviewReportButton}
-                        style={{ minHeight: 44 }}
-                    >
-                        Filtrele
-                    </button>
-                </form>
-            </section>
-
-            <section className={styles.panel}>
-                <div className={styles.panelHeader}>
-                    <div>
-                        <span>YORUM KAYITLARI</span>
+                        <span>YORUM LİSTESİ</span>
 
                         <h2>
                             {selectedStatus === "published"
@@ -491,10 +377,79 @@ export default async function AdminCommentsPage({
                         </h2>
                     </div>
 
-                    <div className={styles.panelBadge}>
+                    <div
+                        className={
+                            styles.topicCountBadge
+                        }
+                    >
                         {comments.length} yorum
                     </div>
                 </div>
+
+                <form
+                    method="get"
+                    className={
+                        styles.topicAdminSearch
+                    }
+                >
+                    {selectedStatus !== "all" ? (
+                        <input
+                            type="hidden"
+                            name="status"
+                            value={selectedStatus}
+                        />
+                    ) : null}
+
+                    <div
+                        className={
+                            styles.topicAdminSearchField
+                        }
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+                            <circle
+                                cx="11"
+                                cy="11"
+                                r="7"
+                            />
+
+                            <path d="m20 20-3.5-3.5" />
+                        </svg>
+
+                        <input
+                            type="search"
+                            name="search"
+                            defaultValue={searchText}
+                            placeholder="Yorum içeriği, kullanıcı veya konu ara..."
+                        />
+                    </div>
+
+                    {searchText ? (
+                        <Link
+                            href={
+                                selectedStatus === "all"
+                                    ? "/admin/yorumlar"
+                                    : `/admin/yorumlar?status=${selectedStatus}`
+                            }
+                            className={
+                                styles.topicAdminSearchClear
+                            }
+                        >
+                            Temizle
+                        </Link>
+                    ) : null}
+
+                    <button
+                        type="submit"
+                        className={
+                            styles.topicSearchButton
+                        }
+                    >
+                        Ara
+                    </button>
+                </form>
 
                 {comments.length === 0 ? (
                     <div className={styles.emptyState}>
