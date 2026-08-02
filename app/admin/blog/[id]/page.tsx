@@ -1316,9 +1316,7 @@ export default async function EditBlogPostPage({
                         className={`${pageStyles.formGrid} ${pageStyles.equalFieldGrid}`}
                     >
                         <label
-                            className={
-                                pageStyles.field
-                            }
+                            className={`${pageStyles.field} ${pageStyles.coverUploadField}`}
                         >
                             <span>
                                 Yeni Kapak Görseli
@@ -1354,7 +1352,7 @@ export default async function EditBlogPostPage({
                                 }
                             />
 
-                            <small>
+                            <small className={pageStyles.coverHelperText}>
                                 Erişilebilirlik ve görsel SEO için kullanılır.
                             </small>
                         </label>
