@@ -18,6 +18,26 @@ type ContentProfile = {
   username: string | null;
 };
 
+type StaffProfile = {
+  id: string;
+  display_name: string | null;
+  username: string | null;
+  role: "admin" | "moderator";
+};
+
+type CategoryGroup = {
+  id: number;
+  name: string;
+  sort_order: number;
+};
+
+type Category = {
+  id: number;
+  group_id: number;
+  name: string;
+  sort_order: number;
+};
+
 type PageProps = {
   searchParams: Promise<{
     error?: string;
@@ -112,6 +132,28 @@ function getProfileLabel(
     : displayName;
 }
 
+function getStaffLabel(
+  profile: StaffProfile
+) {
+  const username = profile.username
+    ?.replace(/^@/, "")
+    .trim();
+
+  const displayName =
+    profile.display_name?.trim() ||
+    username ||
+    "İsimsiz yönetici";
+
+  const roleLabel =
+    profile.role === "admin"
+      ? "ADMIN"
+      : "MODERATÖR";
+
+  return username
+    ? `${displayName} · @${username} · ${roleLabel}`
+    : `${displayName} · ${roleLabel}`;
+}
+
 export default async function NewBlogPostPage({
   searchParams,
 }: PageProps) {
@@ -120,28 +162,110 @@ export default async function NewBlogPostPage({
   const { supabase } =
     await requireAdminAccess();
 
-  const { data, error } = await supabase
-    .from("content_profiles")
-    .select(`
-      id,
-      display_name,
-      username
-    `)
-    .eq("is_active", true)
-    .eq("is_archived", false)
-    .order("display_name", {
-      ascending: true,
-    });
+  const [
+    contentProfilesResult,
+    staffProfilesResult,
+    groupsResult,
+    categoriesResult,
+  ] = await Promise.all([
+    supabase
+      .from("content_profiles")
+      .select(`
+        id,
+        display_name,
+        username
+      `)
+      .eq("is_active", true)
+      .eq("is_archived", false)
+      .order("display_name", {
+        ascending: true,
+      }),
 
-  if (error) {
+    supabase
+      .from("profiles")
+      .select(`
+        id,
+        display_name,
+        username,
+        role
+      `)
+      .in("role", [
+        "admin",
+        "moderator",
+      ])
+      .order("display_name", {
+        ascending: true,
+      }),
+
+    supabase
+      .from("category_groups")
+      .select(`
+        id,
+        name,
+        sort_order
+      `)
+      .eq("is_active", true)
+      .order("sort_order", {
+        ascending: true,
+      }),
+
+    supabase
+      .from("categories")
+      .select(`
+        id,
+        group_id,
+        name,
+        sort_order
+      `)
+      .eq("is_active", true)
+      .order("sort_order", {
+        ascending: true,
+      }),
+  ]);
+
+  if (contentProfilesResult.error) {
     console.error(
-      "Blog yazar profilleri alınamadı:",
-      error.message
+      "Blog içerik profilleri alınamadı:",
+      contentProfilesResult.error.message
     );
   }
 
-  const profiles =
-    (data ?? []) as ContentProfile[];
+  if (staffProfilesResult.error) {
+    console.error(
+      "Blog yönetim ekibi alınamadı:",
+      staffProfilesResult.error.message
+    );
+  }
+
+  if (groupsResult.error) {
+    console.error(
+      "Blog kategori grupları alınamadı:",
+      groupsResult.error.message
+    );
+  }
+
+  if (categoriesResult.error) {
+    console.error(
+      "Blog kategorileri alınamadı:",
+      categoriesResult.error.message
+    );
+  }
+
+  const contentProfiles =
+    (contentProfilesResult.data ??
+      []) as ContentProfile[];
+
+  const staffProfiles =
+    (staffProfilesResult.data ??
+      []) as StaffProfile[];
+
+  const categoryGroups =
+    (groupsResult.data ??
+      []) as CategoryGroup[];
+
+  const categories =
+    (categoriesResult.data ??
+      []) as Category[];
 
   async function createBlogPost(
     formData: FormData
@@ -170,14 +294,14 @@ export default async function NewBlogPostPage({
       "content"
     );
 
-    const category = getText(
+    const categoryIdText = getText(
       formData,
-      "category"
+      "category_id"
     );
 
-    const contentProfileId = getText(
+    const authorValue = getText(
       formData,
-      "content_profile_id"
+      "author"
     );
 
     const status = getText(
@@ -212,6 +336,14 @@ export default async function NewBlogPostPage({
       requestedSlug || title
     );
 
+    const categoryId =
+      Number(categoryIdText);
+
+    const [
+      authorType,
+      authorId,
+    ] = authorValue.split(":");
+
     const tags = Array.from(
       new Set(
         tagsText
@@ -231,8 +363,12 @@ export default async function NewBlogPostPage({
       excerpt.length > 320 ||
       content.length < 80 ||
       blocks.length === 0 ||
-      !category ||
-      !contentProfileId ||
+      !Number.isInteger(categoryId) ||
+      categoryId <= 0 ||
+      !authorId ||
+      !["content", "staff"].includes(
+        authorType
+      ) ||
       !["draft", "published"].includes(status)
     ) {
       redirect(
@@ -243,36 +379,68 @@ export default async function NewBlogPostPage({
     const adminSupabase =
       createAdminClient();
 
-    const {
-      data: profile,
-      error: profileError,
-    } = await adminSupabase
-      .from("content_profiles")
-      .select("id")
-      .eq("id", contentProfileId)
-      .eq("is_active", true)
-      .eq("is_archived", false)
-      .maybeSingle();
+    const [
+      categoryCheck,
+      authorCheck,
+      slugCheck,
+    ] = await Promise.all([
+      adminSupabase
+        .from("categories")
+        .select(`
+          id,
+          name
+        `)
+        .eq("id", categoryId)
+        .eq("is_active", true)
+        .maybeSingle(),
 
-    if (profileError || !profile) {
+      authorType === "content"
+        ? adminSupabase
+            .from("content_profiles")
+            .select("id")
+            .eq("id", authorId)
+            .eq("is_active", true)
+            .eq("is_archived", false)
+            .maybeSingle()
+        : adminSupabase
+            .from("profiles")
+            .select("id")
+            .eq("id", authorId)
+            .in("role", [
+              "admin",
+              "moderator",
+            ])
+            .maybeSingle(),
+
+      adminSupabase
+        .from("blog_posts")
+        .select("id")
+        .eq("slug", slug)
+        .maybeSingle(),
+    ]);
+
+    if (
+      categoryCheck.error ||
+      !categoryCheck.data
+    ) {
+      redirect(
+        "/admin/blog/yeni?error=category"
+      );
+    }
+
+    if (
+      authorCheck.error ||
+      !authorCheck.data
+    ) {
       redirect(
         "/admin/blog/yeni?error=profile"
       );
     }
 
-    const {
-      data: existingPost,
-      error: slugCheckError,
-    } = await adminSupabase
-      .from("blog_posts")
-      .select("id")
-      .eq("slug", slug)
-      .maybeSingle();
-
-    if (slugCheckError) {
+    if (slugCheck.error) {
       console.error(
         "Blog slug kontrolü yapılamadı:",
-        slugCheckError.message
+        slugCheck.error.message
       );
 
       redirect(
@@ -280,7 +448,7 @@ export default async function NewBlogPostPage({
       );
     }
 
-    if (existingPost) {
+    if (slugCheck.data) {
       redirect(
         "/admin/blog/yeni?error=slug"
       );
@@ -393,10 +561,18 @@ export default async function NewBlogPostPage({
           coverImageUrl,
         cover_image_alt:
           coverImageAlt || title,
-        category,
+        category:
+          categoryCheck.data.name,
+        category_id: categoryId,
         tags,
         content_profile_id:
-          contentProfileId,
+          authorType === "content"
+            ? authorId
+            : null,
+        author_id:
+          authorType === "staff"
+            ? authorId
+            : null,
         status,
         is_featured: isFeatured,
         reading_time: readingTime,
@@ -429,6 +605,16 @@ export default async function NewBlogPostPage({
 
     redirect("/admin/blog");
   }
+
+  const hasLoadError =
+    Boolean(contentProfilesResult.error) ||
+    Boolean(staffProfilesResult.error) ||
+    Boolean(groupsResult.error) ||
+    Boolean(categoriesResult.error);
+
+  const hasAuthors =
+    contentProfiles.length > 0 ||
+    staffProfiles.length > 0;
 
   return (
     <>
@@ -486,8 +672,19 @@ export default async function NewBlogPostPage({
               pageStyles.errorMessage
             }
           >
-            Seçilen içerik profili aktif değil
-            veya bulunamadı.
+            Seçilen yazar aktif değil veya
+            bulunamadı.
+          </div>
+        ) : null}
+
+        {params.error === "category" ? (
+          <div
+            className={
+              pageStyles.errorMessage
+            }
+          >
+            Seçilen kategori aktif değil veya
+            bulunamadı.
           </div>
         ) : null}
 
@@ -535,14 +732,19 @@ export default async function NewBlogPostPage({
           </div>
         ) : null}
 
-        {error ? (
+        {hasLoadError ? (
           <div className={styles.emptyState}>
-            İçerik profilleri alınamadı.
+            Yazar veya kategori bilgileri
+            alınamadı.
           </div>
-        ) : profiles.length === 0 ? (
+        ) : !hasAuthors ? (
           <div className={styles.emptyState}>
             Blog yazarı olarak kullanılabilecek
-            aktif içerik profili bulunmuyor.
+            profil bulunmuyor.
+          </div>
+        ) : categories.length === 0 ? (
+          <div className={styles.emptyState}>
+            Aktif kategori bulunmuyor.
           </div>
         ) : (
           <form
@@ -604,7 +806,7 @@ export default async function NewBlogPostPage({
                 <span>Yazar Profili</span>
 
                 <select
-                  name="content_profile_id"
+                  name="author"
                   required
                   defaultValue=""
                 >
@@ -612,21 +814,43 @@ export default async function NewBlogPostPage({
                     value=""
                     disabled
                   >
-                    İçerik profili seç
+                    Yazar seç
                   </option>
 
-                  {profiles.map(
-                    (profile) => (
-                      <option
-                        key={profile.id}
-                        value={profile.id}
-                      >
-                        {getProfileLabel(
-                          profile
-                        )}
-                      </option>
-                    )
-                  )}
+                  {contentProfiles.length >
+                  0 ? (
+                    <optgroup label="İçerik Profilleri">
+                      {contentProfiles.map(
+                        (profile) => (
+                          <option
+                            key={`content-${profile.id}`}
+                            value={`content:${profile.id}`}
+                          >
+                            {getProfileLabel(
+                              profile
+                            )}
+                          </option>
+                        )
+                      )}
+                    </optgroup>
+                  ) : null}
+
+                  {staffProfiles.length > 0 ? (
+                    <optgroup label="Yönetim Ekibi">
+                      {staffProfiles.map(
+                        (profile) => (
+                          <option
+                            key={`staff-${profile.id}`}
+                            value={`staff:${profile.id}`}
+                          >
+                            {getStaffLabel(
+                              profile
+                            )}
+                          </option>
+                        )
+                      )}
+                    </optgroup>
+                  ) : null}
                 </select>
               </label>
 
@@ -637,25 +861,65 @@ export default async function NewBlogPostPage({
               >
                 <span>Kategori</span>
 
-                <input
-                  type="text"
-                  name="category"
-                  maxLength={80}
+                <select
+                  name="category_id"
                   required
-                  placeholder="Sosyal Medya"
-                  list="blog-category-options"
-                />
+                  defaultValue=""
+                >
+                  <option
+                    value=""
+                    disabled
+                  >
+                    Kategori seç
+                  </option>
 
-                <datalist id="blog-category-options">
-                  <option value="Sosyal Medya" />
-                  <option value="İçerik Üretimi" />
-                  <option value="Yapay Zekâ" />
-                  <option value="Büyüme" />
-                  <option value="Para Kazanma" />
-                  <option value="Eğitim" />
-                  <option value="Yasal" />
-                  <option value="Ekipman" />
-                </datalist>
+                  {categoryGroups.map(
+                    (group) => {
+                      const groupCategories =
+                        categories.filter(
+                          (category) =>
+                            category.group_id ===
+                            group.id
+                        );
+
+                      if (
+                        groupCategories.length ===
+                        0
+                      ) {
+                        return null;
+                      }
+
+                      return (
+                        <optgroup
+                          key={group.id}
+                          label={group.name}
+                        >
+                          {groupCategories.map(
+                            (category) => (
+                              <option
+                                key={
+                                  category.id
+                                }
+                                value={
+                                  category.id
+                                }
+                              >
+                                {
+                                  category.name
+                                }
+                              </option>
+                            )
+                          )}
+                        </optgroup>
+                      );
+                    }
+                  )}
+                </select>
+
+                <small>
+                  Ana kategori grupları ve tüm
+                  aktif alt kategoriler listelenir.
+                </small>
               </label>
             </div>
 
@@ -757,9 +1021,7 @@ Devam eden içerik...`}
             </label>
 
             <div
-              className={
-                pageStyles.formGrid
-              }
+              className={`${pageStyles.formGrid} ${pageStyles.equalFieldGrid}`}
             >
               <label
                 className={
@@ -801,6 +1063,11 @@ Devam eden içerik...`}
                     Hemen yayınla
                   </option>
                 </select>
+
+                <small>
+                  Yazıyı taslak olarak sakla veya
+                  doğrudan yayınla.
+                </small>
               </label>
             </div>
 
@@ -841,9 +1108,7 @@ Devam eden içerik...`}
               </div>
 
               <div
-                className={
-                  pageStyles.formGrid
-                }
+                className={`${pageStyles.formGrid} ${pageStyles.seoGrid}`}
               >
                 <label
                   className={
@@ -852,10 +1117,10 @@ Devam eden içerik...`}
                 >
                   <span>SEO Başlığı</span>
 
-                  <input
-                    type="text"
+                  <textarea
                     name="seo_title"
                     maxLength={70}
+                    rows={3}
                     placeholder="Boş bırakırsan yazı başlığı kullanılır"
                   />
                 </label>
@@ -905,5 +1170,4 @@ Devam eden içerik...`}
       </section>
     </>
   );
-  
 }

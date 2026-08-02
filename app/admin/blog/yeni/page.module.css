@@ -258,5 +258,37 @@
   .submitButton {
     width: 100%;
   }
-  
+}
+
+
+.equalFieldGrid {
+  align-items: start;
+}
+
+.equalFieldGrid .field {
+  grid-template-rows:
+    auto
+    46px
+    minmax(34px, auto);
+  align-content: start;
+}
+
+.equalFieldGrid .field input,
+.equalFieldGrid .field select {
+  height: 46px;
+}
+
+.seoGrid {
+  align-items: stretch;
+}
+
+.seoGrid .field {
+  grid-template-rows:
+    auto
+    minmax(108px, 1fr);
+}
+
+.seoGrid .field textarea {
+  min-height: 108px;
+  height: 100%;
 }
