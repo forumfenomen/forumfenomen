@@ -61,10 +61,10 @@ type BlogPost = {
 
 type Placement = {
     placement_type:
-        | "featured_main"
-        | "featured_side"
-        | "quick_learn"
-        | "editor_pick";
+    | "featured_main"
+    | "featured_side"
+    | "quick_learn"
+    | "editor_pick";
     sort_order: number;
     is_active: boolean;
 };
@@ -745,7 +745,7 @@ export default async function EditBlogPostPage({
                     coverImage.type
                 ) ||
                 coverImage.size >
-                    8 * 1024 * 1024
+                8 * 1024 * 1024
             ) {
                 redirect(
                     `/admin/blog/${id}?error=image`
@@ -815,7 +815,7 @@ export default async function EditBlogPostPage({
                 content
                     .split(/\s+/)
                     .filter(Boolean).length /
-                    220
+                220
             )
         );
 
@@ -887,7 +887,7 @@ export default async function EditBlogPostPage({
         if (featuredMainSelected) {
             const {
                 error:
-                    deactivateMainError,
+                deactivateMainError,
             } = await adminSupabase
                 .from(
                     "blog_post_placements"
@@ -1173,7 +1173,7 @@ export default async function EditBlogPostPage({
                                 </option>
 
                                 {contentProfiles.length >
-                                0 ? (
+                                    0 ? (
                                     <optgroup label="İçerik Profilleri">
                                         {contentProfiles.map(
                                             (
@@ -1193,7 +1193,7 @@ export default async function EditBlogPostPage({
                                 ) : null}
 
                                 {staffProfiles.length >
-                                0 ? (
+                                    0 ? (
                                     <optgroup label="Yönetim Ekibi">
                                         {staffProfiles.map(
                                             (
@@ -1313,9 +1313,7 @@ export default async function EditBlogPostPage({
                     </label>
 
                     <div
-                        className={
-                            pageStyles.formGrid
-                        }
+                        className={`${pageStyles.formGrid} ${pageStyles.equalFieldGrid}`}
                     >
                         <label
                             className={
@@ -1355,6 +1353,10 @@ export default async function EditBlogPostPage({
                                     ""
                                 }
                             />
+
+                            <small>
+                                Erişilebilirlik ve görsel SEO için kullanılır.
+                            </small>
                         </label>
                     </div>
 
