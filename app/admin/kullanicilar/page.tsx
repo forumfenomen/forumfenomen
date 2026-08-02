@@ -109,6 +109,7 @@ export default async function AdminUsersPage({
 }: {
   searchParams: Promise<{
     filtre?: string;
+    search?: string;
   }>;
 }) {
   const { supabase } =
@@ -119,6 +120,12 @@ export default async function AdminUsersPage({
 
   const requestedFilter =
     resolvedSearchParams.filtre;
+
+  const searchText =
+    resolvedSearchParams.search?.trim() ?? "";
+
+  const normalizedSearch =
+    searchText.toLocaleLowerCase("tr-TR");
 
   const activeFilter: UserFilter =
     requestedFilter === "online" ||
@@ -209,34 +216,53 @@ export default async function AdminUsersPage({
   ).length;
 
   const filteredUsers = users.filter((user) => {
-    if (activeFilter === "all") {
-      return true;
-    }
+    const matchesFilter =
+      activeFilter === "all"
+        ? true
+        : activeFilter === "reported"
+          ? getCount(
+            user.open_profile_report_count
+          ) > 0
+          : activeFilter === "suspended"
+            ? user.account_status === "suspended"
+            : (() => {
+              if (!user.last_seen_at) {
+                return false;
+              }
 
-    if (activeFilter === "reported") {
-      return (
-        getCount(
-          user.open_profile_report_count
-        ) > 0
-      );
-    }
+              const lastSeenTime =
+                new Date(
+                  user.last_seen_at
+                ).getTime();
 
-    if (activeFilter === "suspended") {
-      return (
-        user.account_status === "suspended"
-      );
-    }
+              return (
+                now - lastSeenTime >= 0 &&
+                now - lastSeenTime <=
+                ONLINE_LIMIT_MS
+              );
+            })();
 
-    if (!user.last_seen_at) {
+    if (!matchesFilter) {
       return false;
     }
 
-    const lastSeenTime =
-      new Date(user.last_seen_at).getTime();
+    if (!normalizedSearch) {
+      return true;
+    }
 
-    return (
-      now - lastSeenTime >= 0 &&
-      now - lastSeenTime <= ONLINE_LIMIT_MS
+    const searchableText = [
+      user.display_name ?? "",
+      user.username ?? "",
+      roleNames[user.role] ?? user.role,
+      accountStatusNames[
+        user.account_status
+      ] ?? user.account_status,
+    ]
+      .join(" ")
+      .toLocaleLowerCase("tr-TR");
+
+    return searchableText.includes(
+      normalizedSearch
     );
   });
 
@@ -289,27 +315,50 @@ export default async function AdminUsersPage({
       </header>
 
       <nav
-        className={styles.userSummaryGrid}
+        className={styles.topicSummaryGrid}
         aria-label="Kullanıcı filtreleri"
       >
-        {userFilters.map((filter) => (
-          <Link
-            key={filter.value}
-            href={filter.href}
-            className={[
-              styles.userSummaryCard,
-              activeFilter === filter.value
-                ? styles.userSummaryCardActive
-                : "",
-            ]
-              .filter(Boolean)
-              .join(" ")}
-          >
-            <span>{filter.label}</span>
+        {userFilters.map((filter) => {
+          const query =
+            new URLSearchParams();
 
-            <strong>{filter.count}</strong>
-          </Link>
-        ))}
+          if (filter.value !== "all") {
+            query.set(
+              "filtre",
+              filter.value
+            );
+          }
+
+          if (searchText) {
+            query.set(
+              "search",
+              searchText
+            );
+          }
+
+          const queryString =
+            query.toString();
+
+          const href = queryString
+            ? `/admin/kullanicilar?${queryString}`
+            : "/admin/kullanicilar";
+
+          return (
+            <Link
+              key={filter.value}
+              href={href}
+              className={`${styles.topicSummaryCard} ${
+                activeFilter === filter.value
+                  ? styles.topicSummaryActive
+                  : ""
+              }`}
+            >
+              <span>{filter.label}</span>
+
+              <strong>{filter.count}</strong>
+            </Link>
+          );
+        })}
       </nav>
 
       <section className={styles.panel}>
@@ -336,10 +385,73 @@ export default async function AdminUsersPage({
             </h2>
           </div>
 
-          <div className={styles.panelBadge}>
-            {filteredUsers.length} kayıt
+          <div className={styles.topicCountBadge}>
+            {filteredUsers.length} kullanıcı
           </div>
         </div>
+
+        <form
+          method="get"
+          className={styles.topicAdminSearch}
+        >
+          {activeFilter !== "all" ? (
+            <input
+              type="hidden"
+              name="filtre"
+              value={activeFilter}
+            />
+          ) : null}
+
+          <div
+            className={
+              styles.topicAdminSearchField
+            }
+          >
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <circle
+                cx="11"
+                cy="11"
+                r="7"
+              />
+
+              <path d="m20 20-3.5-3.5" />
+            </svg>
+
+            <input
+              type="search"
+              name="search"
+              defaultValue={searchText}
+              placeholder="İsim, kullanıcı adı, rol veya hesap durumu ara..."
+            />
+          </div>
+
+          {searchText ? (
+            <Link
+              href={
+                activeFilter === "all"
+                  ? "/admin/kullanicilar"
+                  : `/admin/kullanicilar?filtre=${activeFilter}`
+              }
+              className={
+                styles.topicAdminSearchClear
+              }
+            >
+              Temizle
+            </Link>
+          ) : null}
+
+          <button
+            type="submit"
+            className={
+              styles.topicSearchButton
+            }
+          >
+            Ara
+          </button>
+        </form>
 
         {filteredUsers.length === 0 ? (
           <div className={styles.emptyState}>
