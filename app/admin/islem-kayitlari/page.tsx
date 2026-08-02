@@ -161,7 +161,7 @@ export default async function AdminLogsPage({
 
     const selectedType =
         params.type === "comment" ||
-        params.type === "report"
+            params.type === "report"
             ? params.type
             : "all";
 
@@ -301,7 +301,7 @@ export default async function AdminLogsPage({
             const searchableText = [
                 actorName,
                 actionNames[
-                    log.action_type
+                log.action_type
                 ] ?? log.action_type,
                 log.note ?? "",
                 commentContent,
@@ -362,74 +362,151 @@ export default async function AdminLogsPage({
                 </div>
             </header>
 
-            <section
-                className={
-                    styles.reportSummaryGrid
-                }
-            >
+            <section className={styles.statsGrid}>
                 <Link
                     href="/admin/islem-kayitlari"
-                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${
-                        selectedType === "all"
-                            ? styles.commentSummaryActive
-                            : ""
-                    }`}
+                    className={styles.statCard}
+                    style={{
+                        textDecoration: "none",
+                        borderColor:
+                            selectedType === "all"
+                                ? "rgba(204, 68, 235, 0.32)"
+                                : undefined,
+                        background:
+                            selectedType === "all"
+                                ? "linear-gradient(135deg, rgba(207, 54, 231, 0.14), rgba(76, 91, 255, 0.1))"
+                                : undefined,
+                    }}
                 >
-                    <span>
-                        Toplam işlem
-                    </span>
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            gap: 12,
+                        }}
+                    >
+                        <span className={styles.statLabel}>
+                            Toplam işlem
+                        </span>
 
-                    <strong>
-                        {totalCount}
-                    </strong>
+                        <strong
+                            style={{
+                                marginTop: 0,
+                                color: "#ffffff",
+                                fontSize: 24,
+                                lineHeight: 1,
+                            }}
+                        >
+                            {totalCount}
+                        </strong>
+                    </div>
                 </Link>
 
                 <Link
                     href="/admin/islem-kayitlari?type=comment"
-                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${
-                        selectedType === "comment"
-                            ? styles.commentSummaryActive
-                            : ""
-                    }`}
+                    className={styles.statCard}
+                    style={{
+                        textDecoration: "none",
+                        borderColor:
+                            selectedType === "comment"
+                                ? "rgba(204, 68, 235, 0.32)"
+                                : undefined,
+                        background:
+                            selectedType === "comment"
+                                ? "linear-gradient(135deg, rgba(207, 54, 231, 0.14), rgba(76, 91, 255, 0.1))"
+                                : undefined,
+                    }}
                 >
-                    <span>
-                        Yorum işlemleri
-                    </span>
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            gap: 12,
+                        }}
+                    >
+                        <span className={styles.statLabel}>
+                            Yorum işlemleri
+                        </span>
 
-                    <strong>
-                        {commentCount}
-                    </strong>
+                        <strong
+                            style={{
+                                marginTop: 0,
+                                color: "#ffffff",
+                                fontSize: 24,
+                                lineHeight: 1,
+                            }}
+                        >
+                            {commentCount}
+                        </strong>
+                    </div>
                 </Link>
 
                 <Link
                     href="/admin/islem-kayitlari?type=report"
-                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${
-                        selectedType === "report"
-                            ? styles.commentSummaryActive
-                            : ""
-                    }`}
+                    className={styles.statCard}
+                    style={{
+                        textDecoration: "none",
+                        borderColor:
+                            selectedType === "report"
+                                ? "rgba(204, 68, 235, 0.32)"
+                                : undefined,
+                        background:
+                            selectedType === "report"
+                                ? "linear-gradient(135deg, rgba(207, 54, 231, 0.14), rgba(76, 91, 255, 0.1))"
+                                : undefined,
+                    }}
                 >
-                    <span>
-                        Şikâyet işlemleri
-                    </span>
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            gap: 12,
+                        }}
+                    >
+                        <span className={styles.statLabel}>
+                            Şikâyet işlemleri
+                        </span>
 
-                    <strong>
-                        {reportCount}
-                    </strong>
+                        <strong
+                            style={{
+                                marginTop: 0,
+                                color: "#ffffff",
+                                fontSize: 24,
+                                lineHeight: 1,
+                            }}
+                        >
+                            {reportCount}
+                        </strong>
+                    </div>
                 </Link>
 
-                <article
-                    className={
-                        styles.reportSummaryCard
-                    }
-                >
-                    <span>
-                        Listelenen
-                    </span>
+                <article className={styles.statCard}>
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            gap: 12,
+                        }}
+                    >
+                        <span className={styles.statLabel}>
+                            Listelenen
+                        </span>
 
-                    <strong>
-                        {filteredLogs.length}
-                    </strong>
+                        <strong
+                            style={{
+                                marginTop: 0,
+                                color: "#ffffff",
+                                fontSize: 24,
+                                lineHeight: 1,
+                            }}
+                        >
+                            {filteredLogs.length}
+                        </strong>
+                    </div>
                 </article>
             </section>
 
@@ -631,7 +708,7 @@ export default async function AdminLogsPage({
 
                                 const commentId =
                                     log.target_type ===
-                                    "comment"
+                                        "comment"
                                         ? log.target_id
                                         : getMetadataString(
                                             log.metadata,
@@ -696,6 +773,12 @@ export default async function AdminLogsPage({
                                                 className={
                                                     styles.adminReportTopMeta
                                                 }
+                                                style={{
+                                                    display: "grid",
+                                                    justifyItems: "end",
+                                                    gap: 5,
+                                                    textAlign: "right",
+                                                }}
                                             >
                                                 <span
                                                     className={
@@ -714,9 +797,6 @@ export default async function AdminLogsPage({
                                                     className={
                                                         styles.adminLogValue
                                                     }
-                                                    style={{
-                                                        marginTop: 5,
-                                                    }}
                                                 >
                                                     Önceki durum:{" "}
                                                     <strong>
@@ -771,11 +851,10 @@ export default async function AdminLogsPage({
 
                                             {topicId ? (
                                                 <Link
-                                                    href={`/konu/${topicId}${
-                                                        commentId
-                                                            ? `#comment-${commentId}`
-                                                            : ""
-                                                    }`}
+                                                    href={`/konu/${topicId}${commentId
+                                                        ? `#comment-${commentId}`
+                                                        : ""
+                                                        }`}
                                                     className={
                                                         styles.reportTopicLink
                                                     }
