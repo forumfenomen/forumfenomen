@@ -2062,9 +2062,13 @@ export default function TopicDetailPage() {
 
     const topicAuthorProfileHref =
         topicAuthorUsername
-            ? `/profil/${encodeURIComponent(
-                topicAuthorUsername
-            )}`
+            ? topic?.content_profile_id
+                ? `/icerik-profili/${encodeURIComponent(
+                    topicAuthorUsername
+                )}`
+                : `/profil/${encodeURIComponent(
+                    topicAuthorUsername
+                )}`
             : null;
 
     const formattedDate = topic
