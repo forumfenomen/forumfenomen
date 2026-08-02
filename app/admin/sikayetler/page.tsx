@@ -144,6 +144,7 @@ export default async function AdminReportsPage({
 }: {
   searchParams: Promise<{
     durum?: string;
+    search?: string;
   }>;
 }) {
   const resolvedSearchParams =
@@ -151,6 +152,12 @@ export default async function AdminReportsPage({
 
   const requestedFilter =
     resolvedSearchParams.durum;
+
+  const searchText =
+    resolvedSearchParams.search?.trim() ?? "";
+
+  const normalizedSearch =
+    searchText.toLocaleLowerCase("tr-TR");
 
   const activeFilter: ReportFilter =
     requestedFilter === "pending" ||
@@ -396,48 +403,86 @@ export default async function AdminReportsPage({
       report.status === "dismissed"
   ).length;
 
-  const filteredReports =
-    activeFilter === "all"
-      ? reports
-      : reports.filter((report) =>
-          activeFilter === "pending"
+  const filteredReports = reports.filter(
+    (report) => {
+      const matchesFilter =
+        activeFilter === "all"
+          ? true
+          : activeFilter === "pending"
             ? isPendingStatus(
                 report.status
               )
             : report.status ===
-              activeFilter
-        );
+              activeFilter;
+
+      if (!matchesFilter) {
+        return false;
+      }
+
+      if (!normalizedSearch) {
+        return true;
+      }
+
+      const topic = report.topic_id
+        ? topicMap.get(report.topic_id)
+        : undefined;
+
+      const reporter = profileMap.get(
+        report.reporter_id
+      );
+
+      const contentAuthorId =
+        report.reportType === "comment"
+          ? report.reported_comment
+              ?.author_id
+          : topic?.author_id;
+
+      const contentAuthor = contentAuthorId
+        ? profileMap.get(contentAuthorId)
+        : undefined;
+
+      const searchableText = [
+        getProfileName(reporter),
+        getProfileName(contentAuthor),
+        reasonNames[report.reason] ??
+          report.reason,
+        statusNames[report.status] ??
+          report.status,
+        report.details ?? "",
+        report.resolution_note ?? "",
+        topic?.title ?? "",
+        report.reported_comment
+          ?.content ?? "",
+      ]
+        .join(" ")
+        .toLocaleLowerCase("tr-TR");
+
+      return searchableText.includes(
+        normalizedSearch
+      );
+    }
+  );
 
   const reportFilters = [
-    {
-      value: "all",
-      label: "Tümü",
-      count: reports.length,
-      href: "/admin/sikayetler",
-    },
     {
       value: "pending",
       label: "Bekleyen",
       count: pendingCount,
-      href: "/admin/sikayetler?durum=pending",
     },
     {
       value: "reviewing",
       label: "İncelenen",
       count: reviewingCount,
-      href: "/admin/sikayetler?durum=reviewing",
     },
     {
       value: "resolved",
       label: "İhlal doğrulandı",
       count: resolvedCount,
-      href: "/admin/sikayetler?durum=resolved",
     },
     {
       value: "dismissed",
       label: "Reddedilen",
       count: dismissedCount,
-      href: "/admin/sikayetler?durum=dismissed",
     },
   ] as const;
 
@@ -461,46 +506,42 @@ export default async function AdminReportsPage({
       </header>
 
       <nav
-        className={styles.reportSummaryGrid}
+        className={styles.topicSummaryGrid}
         aria-label="Şikâyet filtreleri"
       >
-        {reportFilters
-          .filter(
-            (filter) =>
-              filter.value !== "all"
-          )
-          .map((filter) => (
+        {reportFilters.map((filter) => {
+          const query =
+            new URLSearchParams();
+
+          query.set(
+            "durum",
+            filter.value
+          );
+
+          if (searchText) {
+            query.set(
+              "search",
+              searchText
+            );
+          }
+
+          return (
             <Link
               key={filter.value}
-              href={filter.href}
-              className={[
-                styles.reportSummaryCard,
-                activeFilter ===
-                filter.value
-                  ? styles.reportSummaryCardActive
-                  : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
+              href={`/admin/sikayetler?${query.toString()}`}
+              className={`${styles.topicSummaryCard} ${
+                activeFilter === filter.value
+                  ? styles.topicSummaryActive
+                  : ""
+              }`}
             >
               <span>{filter.label}</span>
 
               <strong>{filter.count}</strong>
             </Link>
-          ))}
+          );
+        })}
       </nav>
-
-      {activeFilter !== "all" ? (
-        <div
-          className={
-            styles.reportFilterReset
-          }
-        >
-          <Link href="/admin/sikayetler">
-            Tüm şikâyetleri göster
-          </Link>
-        </div>
-      ) : null}
 
       <section className={styles.panel}>
         <div className={styles.panelHeader}>
@@ -536,10 +577,76 @@ export default async function AdminReportsPage({
             </h2>
           </div>
 
-          <div className={styles.panelBadge}>
+          <div
+            className={
+              styles.topicCountBadge
+            }
+          >
             {filteredReports.length} kayıt
           </div>
         </div>
+
+        <form
+          method="get"
+          className={
+            styles.topicAdminSearch
+          }
+        >
+          {activeFilter !== "all" ? (
+            <input
+              type="hidden"
+              name="durum"
+              value={activeFilter}
+            />
+          ) : null}
+
+          <div
+            className={
+              styles.topicAdminSearchField
+            }
+          >
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <circle
+                cx="11"
+                cy="11"
+                r="7"
+              />
+
+              <path d="m20 20-3.5-3.5" />
+            </svg>
+
+            <input
+              type="search"
+              name="search"
+              defaultValue={searchText}
+              placeholder="Şikâyet eden, içerik, neden veya durum ara..."
+            />
+          </div>
+
+          {searchText ||
+          activeFilter !== "all" ? (
+            <Link
+              href="/admin/sikayetler"
+              className={
+                styles.topicAdminSearchClear
+              }
+            >
+              Temizle
+            </Link>
+          ) : null}
+
+          <button
+            type="submit"
+            className={
+              styles.topicSearchButton
+            }
+          >
+            Ara
+          </button>
+        </form>
 
         {filteredReports.length === 0 ? (
           <div className={styles.emptyState}>
@@ -617,7 +724,13 @@ export default async function AdminReportsPage({
                           ] ?? report.reason}
                         </span>
 
-                        <strong>
+                        <strong
+                          style={{
+                            display: "block",
+                            marginTop: 10,
+                            paddingLeft: 16,
+                          }}
+                        >
                           Şikâyet eden:{" "}
                           {getProfileName(
                             reporter
