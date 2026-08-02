@@ -614,16 +614,16 @@ export default function PublicProfilePage() {
                 commentActivityResult.data?.[0] as
                 | {
                     comment_count:
-                        | number
-                        | string
-                        | null;
+                    | number
+                    | string
+                    | null;
 
                     can_view_comments:
-                        boolean | null;
+                    boolean | null;
 
                     comments:
-                        PublicCommentRow[]
-                        | null;
+                    PublicCommentRow[]
+                    | null;
                 }
                 | undefined;
 
@@ -662,34 +662,34 @@ export default function PublicProfilePage() {
                 followDataResult.data?.[0] as
                 | {
                     follower_count:
-                        | number
-                        | string
-                        | null;
+                    | number
+                    | string
+                    | null;
 
                     following_count:
-                        | number
-                        | string
-                        | null;
+                    | number
+                    | string
+                    | null;
 
                     is_following:
-                        boolean | null;
+                    boolean | null;
 
                     owner_follows_current_user:
-                        boolean | null;
+                    boolean | null;
 
                     can_view_followers:
-                        boolean | null;
+                    boolean | null;
 
                     can_view_following:
-                        boolean | null;
+                    boolean | null;
 
                     followers:
-                        PublicFollowerRow[]
-                        | null;
+                    PublicFollowerRow[]
+                    | null;
 
                     following_users:
-                        PublicFollowingRow[]
-                        | null;
+                    PublicFollowingRow[]
+                    | null;
                 }
                 | undefined;
 
@@ -744,7 +744,7 @@ export default function PublicProfilePage() {
             setOwnerFollowsCurrentUser(
                 followData
                     ?.owner_follows_current_user ===
-                    true
+                true
             );
 
             setCanViewFollowersFromServer(
@@ -1283,31 +1283,59 @@ export default function PublicProfilePage() {
                                     <button
                                         type="button"
                                         className={
-                                            isFollowing
+                                            isFollowing ||
+                                                followRequestStatus === "pending"
                                                 ? styles.publicCompactFollowingButton
                                                 : styles.publicCompactFollowButton
                                         }
-                                        disabled={followLoading}
+                                        disabled={
+                                            followLoading ||
+                                            followRequestLoading ||
+                                            followRequestStatus === "pending"
+                                        }
                                         onClick={() => {
+                                            if (
+                                                profile.profile_visibility ===
+                                                "followers" &&
+                                                !isFollowing
+                                            ) {
+                                                if (
+                                                    followRequestStatus ===
+                                                    "pending"
+                                                ) {
+                                                    return;
+                                                }
+
+                                                void handleFollowRequest();
+                                                return;
+                                            }
+
                                             void handleFollowToggle();
                                         }}
                                     >
-                                        {isFollowing ? (
+                                        {isFollowing ||
+                                            followRequestStatus === "pending" ? (
                                             <CheckIcon />
                                         ) : (
                                             <UserPlusIcon />
                                         )}
 
                                         <span>
-                                            {followLoading
+                                            {followLoading ||
+                                                followRequestLoading
                                                 ? "..."
                                                 : isFollowing
                                                     ? language === "tr"
                                                         ? "Takiptesin"
                                                         : "Following"
-                                                    : language === "tr"
-                                                        ? "Takip Et"
-                                                        : "Follow"}
+                                                    : followRequestStatus ===
+                                                        "pending"
+                                                        ? language === "tr"
+                                                            ? "İstek Gönderildi"
+                                                            : "Request Sent"
+                                                        : language === "tr"
+                                                            ? "Takip Et"
+                                                            : "Follow"}
                                         </span>
                                     </button>
 
@@ -1423,8 +1451,17 @@ export default function PublicProfilePage() {
                                         ? styles.publicFollowingButton
                                         : styles.publicFollowButton
                                 }
-                                disabled={followRequestLoading}
+                                disabled={
+                                    followRequestLoading ||
+                                    followRequestStatus === "pending"
+                                }
                                 onClick={() => {
+                                    if (
+                                        followRequestStatus === "pending"
+                                    ) {
+                                        return;
+                                    }
+
                                     void handleFollowRequest();
                                 }}
                             >
