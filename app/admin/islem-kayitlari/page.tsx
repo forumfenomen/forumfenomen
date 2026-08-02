@@ -366,8 +366,8 @@ export default async function AdminLogsPage({
                 <Link
                     href="/admin/islem-kayitlari"
                     className={`${styles.topicSummaryCard} ${selectedType === "all"
-                            ? styles.topicSummaryActive
-                            : ""
+                        ? styles.topicSummaryActive
+                        : ""
                         }`}
                 >
                     <span>Toplam işlem</span>
@@ -378,8 +378,8 @@ export default async function AdminLogsPage({
                 <Link
                     href="/admin/islem-kayitlari?type=comment"
                     className={`${styles.topicSummaryCard} ${selectedType === "comment"
-                            ? styles.topicSummaryActive
-                            : ""
+                        ? styles.topicSummaryActive
+                        : ""
                         }`}
                 >
                     <span>Yorum işlemleri</span>
@@ -390,8 +390,8 @@ export default async function AdminLogsPage({
                 <Link
                     href="/admin/islem-kayitlari?type=report"
                     className={`${styles.topicSummaryCard} ${selectedType === "report"
-                            ? styles.topicSummaryActive
-                            : ""
+                        ? styles.topicSummaryActive
+                        : ""
                         }`}
                 >
                     <span>Şikâyet işlemleri</span>
@@ -555,7 +555,11 @@ export default async function AdminLogsPage({
                         </span>
 
                         <h2>
-                            Son İşlemler
+                            {selectedType === "comment"
+                                ? "Yorum İşlemleri"
+                                : selectedType === "report"
+                                    ? "Şikâyet İşlemleri"
+                                    : "Son İşlemler"}
                         </h2>
                     </div>
 
