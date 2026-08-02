@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   useEffect,
+  useRef,
   useState,
   type MouseEvent,
 } from "react";
@@ -636,6 +637,9 @@ export default function FeedPage() {
   const [topicsLoading, setTopicsLoading] =
     useState(true);
 
+  const topicsLoadedOnceRef =
+    useRef(false);
+
   const [currentUserId, setCurrentUserId] =
     useState<string | null>(null);
 
@@ -796,7 +800,9 @@ export default function FeedPage() {
     let isActive = true;
 
     async function loadTopics() {
-      setTopicsLoading(true);
+      if (!topicsLoadedOnceRef.current) {
+        setTopicsLoading(true);
+      }
 
       const supabase = createClient();
 
@@ -850,6 +856,7 @@ export default function FeedPage() {
           error.message
         );
 
+        topicsLoadedOnceRef.current = true;
         setTopicsLoading(false);
         return;
       }
@@ -1099,6 +1106,8 @@ export default function FeedPage() {
       );
 
       setTopicPosts(nextPosts);
+
+      topicsLoadedOnceRef.current = true;
       setTopicsLoading(false);
     }
 
