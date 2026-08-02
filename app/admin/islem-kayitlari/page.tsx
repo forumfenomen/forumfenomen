@@ -1,6 +1,8 @@
 import Link from "next/link";
 
-import { requireAdminAccess } from "@/lib/admin/require-admin-access";
+import {
+    requireAdminAccess,
+} from "@/lib/admin/require-admin-access";
 
 import styles from "../admin.module.css";
 
@@ -40,14 +42,19 @@ const actionNames: Record<string, string> = {
     topic_hidden: "Konu gizlendi",
     topic_banned: "Konu yasaklandı",
 
-    report_reviewing: "Şikâyet incelemeye alındı",
-    report_resolved: "Şikâyette ihlal doğrulandı",
-    report_dismissed: "Şikâyet reddedildi",
+    report_reviewing:
+        "Şikâyet incelemeye alındı",
+    report_resolved:
+        "Şikâyette ihlal doğrulandı",
+    report_dismissed:
+        "Şikâyet reddedildi",
 
-    user_suspended: "Kullanıcı askıya alındı",
-    user_banned: "Kullanıcı yasaklandı",
-    user_activated: "Kullanıcı yeniden aktifleştirildi",
-
+    user_suspended:
+        "Kullanıcı askıya alındı",
+    user_banned:
+        "Kullanıcı yasaklandı",
+    user_activated:
+        "Kullanıcı yeniden aktifleştirildi",
 };
 
 const statusNames: Record<string, string> = {
@@ -106,6 +113,44 @@ function getMetadataString(
         : null;
 }
 
+function getLogTypeLabel(
+    targetType: string
+) {
+    if (targetType === "comment") {
+        return "YORUM İŞLEMİ";
+    }
+
+    if (targetType === "topic") {
+        return "KONU İŞLEMİ";
+    }
+
+    if (targetType === "user") {
+        return "KULLANICI İŞLEMİ";
+    }
+
+    return "ŞİKÂYET İŞLEMİ";
+}
+
+function getLogStatusClass(
+    value: string | null
+) {
+    if (
+        value === "banned" ||
+        value === "resolved"
+    ) {
+        return styles.reportStatusDismissed;
+    }
+
+    if (
+        value === "published" ||
+        value === "dismissed"
+    ) {
+        return styles.reportStatusResolved;
+    }
+
+    return styles.reportStatusReviewing;
+}
+
 export default async function AdminLogsPage({
     searchParams,
 }: AdminLogsPageProps) {
@@ -116,7 +161,7 @@ export default async function AdminLogsPage({
 
     const selectedType =
         params.type === "comment" ||
-            params.type === "report"
+        params.type === "report"
             ? params.type
             : "all";
 
@@ -126,18 +171,18 @@ export default async function AdminLogsPage({
     let logsQuery = supabase
         .from("admin_action_logs")
         .select(`
-      id,
-      actor_id,
-      action_type,
-      target_type,
-      target_id,
-      target_user_id,
-      old_value,
-      new_value,
-      note,
-      metadata,
-      created_at
-    `)
+            id,
+            actor_id,
+            action_type,
+            target_type,
+            target_id,
+            target_user_id,
+            old_value,
+            new_value,
+            note,
+            metadata,
+            created_at
+        `)
         .order("created_at", {
             ascending: false,
         })
@@ -171,7 +216,10 @@ export default async function AdminLogsPage({
                 count: "exact",
                 head: true,
             })
-            .eq("target_type", "comment"),
+            .eq(
+                "target_type",
+                "comment"
+            ),
 
         supabase
             .from("admin_action_logs")
@@ -179,7 +227,10 @@ export default async function AdminLogsPage({
                 count: "exact",
                 head: true,
             })
-            .eq("target_type", "report"),
+            .eq(
+                "target_type",
+                "report"
+            ),
     ]);
 
     if (logsResult.error) {
@@ -195,19 +246,23 @@ export default async function AdminLogsPage({
 
     const actorIds = Array.from(
         new Set(
-            logs.map((log) => log.actor_id)
+            logs.map(
+                (log) => log.actor_id
+            )
         )
     );
 
     let profiles: ProfileSummary[] = [];
 
     if (actorIds.length > 0) {
-        const profilesResult = await supabase.rpc(
-            "get_profile_summaries_by_ids",
-            {
-                p_profile_ids: actorIds,
-            }
-        );
+        const profilesResult =
+            await supabase.rpc(
+                "get_profile_summaries_by_ids",
+                {
+                    p_profile_ids:
+                        actorIds,
+                }
+            );
 
         if (profilesResult.error) {
             console.error(
@@ -232,7 +287,9 @@ export default async function AdminLogsPage({
         ? logs.filter((log) => {
             const actorName =
                 getProfileName(
-                    profileMap.get(log.actor_id)
+                    profileMap.get(
+                        log.actor_id
+                    )
                 );
 
             const commentContent =
@@ -243,18 +300,23 @@ export default async function AdminLogsPage({
 
             const searchableText = [
                 actorName,
-                actionNames[log.action_type] ??
-                log.action_type,
+                actionNames[
+                    log.action_type
+                ] ?? log.action_type,
                 log.note ?? "",
                 commentContent,
                 log.old_value ?? "",
                 log.new_value ?? "",
             ]
                 .join(" ")
-                .toLocaleLowerCase("tr-TR");
+                .toLocaleLowerCase(
+                    "tr-TR"
+                );
 
             return searchableText.includes(
-                searchText.toLocaleLowerCase("tr-TR")
+                searchText.toLocaleLowerCase(
+                    "tr-TR"
+                )
             );
         })
         : logs;
@@ -270,76 +332,130 @@ export default async function AdminLogsPage({
 
     return (
         <>
-            <header className={styles.pageHeader}>
+            <header
+                className={
+                    styles.pageHeader
+                }
+            >
                 <div>
-                    <span>YÖNETİM DENETİMİ</span>
+                    <span>
+                        YÖNETİM DENETİMİ
+                    </span>
 
-                    <h1>İşlem Kayıtları</h1>
+                    <h1>
+                        İşlem Kayıtları
+                    </h1>
 
                     <p>
-                        Admin ve moderatörlerin yaptığı
-                        işlemleri tarih sırasıyla incele.
+                        Admin ve moderatörlerin
+                        yaptığı işlemleri tarih
+                        sırasıyla incele.
                     </p>
                 </div>
 
-                <div className={styles.securityBadge}>
+                <div
+                    className={
+                        styles.securityBadge
+                    }
+                >
                     ● Güvenli denetim kaydı
                 </div>
             </header>
 
             <section
-                className={styles.reportSummaryGrid}
+                className={
+                    styles.reportSummaryGrid
+                }
             >
                 <Link
                     href="/admin/islem-kayitlari"
-                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${selectedType === "all"
-                        ? styles.commentSummaryActive
-                        : ""
-                        }`}
+                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${
+                        selectedType === "all"
+                            ? styles.commentSummaryActive
+                            : ""
+                    }`}
                 >
-                    <span>Toplam işlem</span>
-                    <strong>{totalCount}</strong>
+                    <span>
+                        Toplam işlem
+                    </span>
+
+                    <strong>
+                        {totalCount}
+                    </strong>
                 </Link>
 
                 <Link
                     href="/admin/islem-kayitlari?type=comment"
-                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${selectedType === "comment"
-                        ? styles.commentSummaryActive
-                        : ""
-                        }`}
+                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${
+                        selectedType === "comment"
+                            ? styles.commentSummaryActive
+                            : ""
+                    }`}
                 >
-                    <span>Yorum işlemleri</span>
-                    <strong>{commentCount}</strong>
+                    <span>
+                        Yorum işlemleri
+                    </span>
+
+                    <strong>
+                        {commentCount}
+                    </strong>
                 </Link>
 
                 <Link
                     href="/admin/islem-kayitlari?type=report"
-                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${selectedType === "report"
-                        ? styles.commentSummaryActive
-                        : ""
-                        }`}
+                    className={`${styles.reportSummaryCard} ${styles.commentSummaryLink} ${
+                        selectedType === "report"
+                            ? styles.commentSummaryActive
+                            : ""
+                    }`}
                 >
-                    <span>Şikâyet işlemleri</span>
-                    <strong>{reportCount}</strong>
+                    <span>
+                        Şikâyet işlemleri
+                    </span>
+
+                    <strong>
+                        {reportCount}
+                    </strong>
                 </Link>
 
                 <article
-                    className={styles.reportSummaryCard}
+                    className={
+                        styles.reportSummaryCard
+                    }
                 >
-                    <span>Listelenen</span>
-                    <strong>{filteredLogs.length}</strong>
+                    <span>
+                        Listelenen
+                    </span>
+
+                    <strong>
+                        {filteredLogs.length}
+                    </strong>
                 </article>
             </section>
 
-            <section className={styles.panel}>
-                <div className={styles.panelHeader}>
+            <section
+                className={styles.panel}
+            >
+                <div
+                    className={
+                        styles.panelHeader
+                    }
+                >
                     <div>
-                        <span>ARAMA VE FİLTRE</span>
+                        <span>
+                            ARAMA VE FİLTRE
+                        </span>
 
-                        <h2>Kayıtları Bul</h2>
+                        <h2>
+                            Kayıtları Bul
+                        </h2>
                     </div>
 
-                    <div className={styles.panelBadge}>
+                    <div
+                        className={
+                            styles.panelBadge
+                        }
+                    >
                         Son 300 kayıt
                     </div>
                 </div>
@@ -373,11 +489,14 @@ export default async function AdminLogsPage({
                         <input
                             type="search"
                             name="search"
-                            defaultValue={searchText}
+                            defaultValue={
+                                searchText
+                            }
                             placeholder="Yetkili, not veya içerik ara..."
                             style={{
                                 minHeight: 44,
-                                padding: "0 14px",
+                                padding:
+                                    "0 14px",
                                 borderRadius: 12,
                                 border:
                                     "1px solid rgba(255,255,255,0.12)",
@@ -406,15 +525,19 @@ export default async function AdminLogsPage({
 
                         <select
                             name="type"
-                            defaultValue={selectedType}
+                            defaultValue={
+                                selectedType
+                            }
                             style={{
                                 minHeight: 44,
-                                padding: "0 12px",
+                                padding:
+                                    "0 12px",
                                 borderRadius: 12,
                                 border:
                                     "1px solid rgba(255,255,255,0.12)",
                                 color: "inherit",
-                                background: "#161521",
+                                background:
+                                    "#161521",
                             }}
                         >
                             <option value="all">
@@ -433,197 +556,256 @@ export default async function AdminLogsPage({
 
                     <button
                         type="submit"
-                        className={styles.reviewReportButton}
-                        style={{ minHeight: 44 }}
+                        className={
+                            styles.reviewReportButton
+                        }
+                        style={{
+                            minHeight: 44,
+                        }}
                     >
                         Filtrele
                     </button>
                 </form>
             </section>
 
-            <section className={styles.panel}>
-                <div className={styles.panelHeader}>
+            <section
+                className={styles.panel}
+            >
+                <div
+                    className={
+                        styles.panelHeader
+                    }
+                >
                     <div>
-                        <span>DENETİM GÜNLÜĞÜ</span>
+                        <span>
+                            DENETİM GÜNLÜĞÜ
+                        </span>
 
-                        <h2>Son İşlemler</h2>
+                        <h2>
+                            Son İşlemler
+                        </h2>
                     </div>
 
-                    <div className={styles.panelBadge}>
+                    <div
+                        className={
+                            styles.panelBadge
+                        }
+                    >
                         {filteredLogs.length} kayıt
                     </div>
                 </div>
 
                 {filteredLogs.length === 0 ? (
-                    <div className={styles.emptyState}>
-                        Filtrelere uygun işlem kaydı bulunamadı.
+                    <div
+                        className={
+                            styles.emptyState
+                        }
+                    >
+                        Filtrelere uygun işlem
+                        kaydı bulunamadı.
                     </div>
                 ) : (
                     <div
-                        className={styles.adminReportList}
+                        className={
+                            styles.adminReportList
+                        }
                     >
-                        {filteredLogs.map((log) => {
-                            const actor =
-                                profileMap.get(log.actor_id);
-
-                            const commentContent =
-                                getMetadataString(
-                                    log.metadata,
-                                    "comment_content"
-                                );
-
-                            const topicId =
-                                getMetadataString(
-                                    log.metadata,
-                                    "topic_id"
-                                );
-
-                            const commentId =
-                                log.target_type === "comment"
-                                    ? log.target_id
-                                    : getMetadataString(
-                                        log.metadata,
-                                        "comment_id"
+                        {filteredLogs.map(
+                            (log) => {
+                                const actor =
+                                    profileMap.get(
+                                        log.actor_id
                                     );
 
-                            return (
-                                <article
-                                    key={log.id}
-                                    className={
-                                        styles.adminReportCard
-                                    }
-                                >
-                                    <div
+                                const commentContent =
+                                    getMetadataString(
+                                        log.metadata,
+                                        "comment_content"
+                                    );
+
+                                const topicId =
+                                    getMetadataString(
+                                        log.metadata,
+                                        "topic_id"
+                                    );
+
+                                const commentId =
+                                    log.target_type ===
+                                    "comment"
+                                        ? log.target_id
+                                        : getMetadataString(
+                                            log.metadata,
+                                            "comment_id"
+                                        );
+
+                                return (
+                                    <article
+                                        key={log.id}
                                         className={
-                                            styles.adminReportTop
-                                        }
-                                    >
-                                        <div>
-                                            <span
-                                                className={
-                                                    styles.adminReportReason
-                                                }
-                                            >
-                                                {log.target_type === "comment"
-                                                    ? "YORUM İŞLEMİ"
-                                                    : log.target_type === "topic"
-                                                        ? "KONU İŞLEMİ"
-                                                        : log.target_type === "user"
-                                                            ? "KULLANICI İŞLEMİ"
-                                                            : "ŞİKÂYET İŞLEMİ"}
-                                            </span>
-
-                                            <strong>
-                                                {actionNames[
-                                                    log.action_type
-                                                ] ?? log.action_type}
-                                            </strong>
-                                        </div>
-
-                                        <div
-                                            className={
-                                                styles.adminReportTopMeta
-                                            }
-                                        >
-                                            <span
-                                                className={`${styles.adminReportStatus} ${styles.adminLogStatusBadge} ${log.new_value ===
-                                                    "banned" ||
-                                                    log.new_value ===
-                                                    "resolved"
-                                                    ? styles.reportStatusDismissed
-                                                    : log.new_value ===
-                                                        "published" ||
-                                                        log.new_value ===
-                                                        "dismissed"
-                                                        ? styles.reportStatusResolved
-                                                        : styles.reportStatusReviewing
-                                                    }`}
-                                            >
-                                                {getStatusName(log.new_value)}
-                                            </span>
-
-                                            <small>
-                                                {formatDate(
-                                                    log.created_at
-                                                )}
-                                            </small>
-                                        </div>
-                                    </div>
-
-                                    <div
-                                        className={
-                                            styles.reportedCommentBox
+                                            styles.adminReportCard
                                         }
                                     >
                                         <div
                                             className={
-                                                styles.reportedCommentHeader
+                                                styles.adminReportTop
                                             }
                                         >
-                                            <span>İşlemi yapan</span>
+                                            <div>
+                                                <div
+                                                    style={{
+                                                        display:
+                                                            "flex",
+                                                        alignItems:
+                                                            "center",
+                                                        gap: 8,
+                                                        flexWrap:
+                                                            "wrap",
+                                                    }}
+                                                >
+                                                    <span
+                                                        className={
+                                                            styles.adminReportReason
+                                                        }
+                                                    >
+                                                        {getLogTypeLabel(
+                                                            log.target_type
+                                                        )}
+                                                    </span>
 
-                                            <strong>
-                                                {getProfileName(actor)}
-                                            </strong>
-                                        </div>
+                                                    <span
+                                                        className={`${styles.adminReportStatus} ${styles.adminLogStatusBadge} ${getLogStatusClass(
+                                                            log.new_value
+                                                        )}`}
+                                                    >
+                                                        {getStatusName(
+                                                            log.new_value
+                                                        )}
+                                                    </span>
+                                                </div>
 
-                                        {commentContent ? (
-                                            <p>{commentContent}</p>
-                                        ) : (
-                                            <p>
-                                                Bu işlem için içerik özeti
-                                                bulunmuyor.
-                                            </p>
-                                        )}
+                                                <strong>
+                                                    {actionNames[
+                                                        log
+                                                            .action_type
+                                                    ] ??
+                                                        log.action_type}
+                                                </strong>
+                                            </div>
 
-                                        {topicId ? (
-                                            <Link
-                                                href={`/konu/${topicId}${commentId
-                                                    ? `#comment-${commentId}`
-                                                    : ""
-                                                    }`}
+                                            <div
                                                 className={
-                                                    styles.reportTopicLink
+                                                    styles.adminReportTopMeta
                                                 }
                                             >
-                                                İlgili içeriğe git
-                                            </Link>
+                                                <span
+                                                    className={
+                                                        styles.adminLogValue
+                                                    }
+                                                >
+                                                    Yeni durum:{" "}
+                                                    <strong>
+                                                        {getStatusName(
+                                                            log.new_value
+                                                        )}
+                                                    </strong>
+                                                </span>
+
+                                                <span
+                                                    className={
+                                                        styles.adminLogValue
+                                                    }
+                                                    style={{
+                                                        marginTop: 5,
+                                                    }}
+                                                >
+                                                    Önceki durum:{" "}
+                                                    <strong>
+                                                        {getStatusName(
+                                                            log.old_value
+                                                        )}
+                                                    </strong>
+                                                </span>
+
+                                                <small>
+                                                    {formatDate(
+                                                        log.created_at
+                                                    )}
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            className={
+                                                styles.reportedCommentBox
+                                            }
+                                        >
+                                            <div
+                                                className={
+                                                    styles.reportedCommentHeader
+                                                }
+                                            >
+                                                <span>
+                                                    İşlemi yapan
+                                                </span>
+
+                                                <strong>
+                                                    {getProfileName(
+                                                        actor
+                                                    )}
+                                                </strong>
+                                            </div>
+
+                                            {commentContent ? (
+                                                <p>
+                                                    {
+                                                        commentContent
+                                                    }
+                                                </p>
+                                            ) : (
+                                                <p>
+                                                    Bu işlem için
+                                                    içerik özeti
+                                                    bulunmuyor.
+                                                </p>
+                                            )}
+
+                                            {topicId ? (
+                                                <Link
+                                                    href={`/konu/${topicId}${
+                                                        commentId
+                                                            ? `#comment-${commentId}`
+                                                            : ""
+                                                    }`}
+                                                    className={
+                                                        styles.reportTopicLink
+                                                    }
+                                                >
+                                                    İlgili içeriğe git
+                                                </Link>
+                                            ) : null}
+                                        </div>
+
+                                        {log.note ? (
+                                            <div
+                                                className={
+                                                    styles.reportResolutionBox
+                                                }
+                                            >
+                                                <span>
+                                                    İşlem notu
+                                                </span>
+
+                                                <p>
+                                                    {
+                                                        log.note
+                                                    }
+                                                </p>
+                                            </div>
                                         ) : null}
-                                    </div>
-
-                                    <div
-                                        className={
-                                            styles.adminReportFooter
-                                        }
-                                    >
-                                        <span className={styles.adminLogValue}>
-                                            Önceki durum:{" "}
-                                            <strong>
-                                                {getStatusName(log.old_value)}
-                                            </strong>
-                                        </span>
-
-                                        <span className={styles.adminLogValue}>
-                                            Yeni durum:{" "}
-                                            <strong>
-                                                {getStatusName(log.new_value)}
-                                            </strong>
-                                        </span>
-                                    </div>
-
-                                    {log.note ? (
-                                        <div
-                                            className={
-                                                styles.reportResolutionBox
-                                            }
-                                        >
-                                            <span>İşlem notu</span>
-                                            <p>{log.note}</p>
-                                        </div>
-                                    ) : null}
-                                </article>
-                            );
-                        })}
+                                    </article>
+                                );
+                            }
+                        )}
                     </div>
                 )}
             </section>
