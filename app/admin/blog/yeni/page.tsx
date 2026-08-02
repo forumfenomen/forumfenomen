@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import {
     redirect,
 } from "next/navigation";
@@ -329,8 +329,92 @@ export default async function NewBlogPostPage({
             "tags"
         );
 
-        const isFeatured =
-            formData.get("is_featured") === "on";
+        const featuredMain =
+      formData.get("placement_featured_main") === "on";
+
+    const featuredSide =
+      formData.get("placement_featured_side") === "on";
+
+    const quickLearn =
+      formData.get("placement_quick_learn") === "on";
+
+    const editorPick =
+      formData.get("placement_editor_pick") === "on";
+
+    const getPlacementOrder = (
+      key: string
+    ) => {
+      const value = Number(
+        getText(formData, key)
+      );
+
+      return Number.isInteger(value) &&
+        value >= 1
+        ? value
+        : 1;
+    };
+
+    const placementRows = [
+      featuredMain
+        ? {
+            placement_type:
+              "featured_main",
+            sort_order:
+              getPlacementOrder(
+                "featured_main_order"
+              ),
+            is_active: true,
+          }
+        : null,
+      featuredSide
+        ? {
+            placement_type:
+              "featured_side",
+            sort_order:
+              getPlacementOrder(
+                "featured_side_order"
+              ),
+            is_active: true,
+          }
+        : null,
+      quickLearn
+        ? {
+            placement_type:
+              "quick_learn",
+            sort_order:
+              getPlacementOrder(
+                "quick_learn_order"
+              ),
+            is_active: true,
+          }
+        : null,
+      editorPick
+        ? {
+            placement_type:
+              "editor_pick",
+            sort_order:
+              getPlacementOrder(
+                "editor_pick_order"
+              ),
+            is_active: true,
+          }
+        : null,
+    ].filter(
+      (
+        placement
+      ): placement is {
+        placement_type:
+          | "featured_main"
+          | "featured_side"
+          | "quick_learn"
+          | "editor_pick";
+        sort_order: number;
+        is_active: boolean;
+      } => placement !== null
+    );
+
+    const hasFeaturedPlacement =
+      featuredMain || featuredSide;
 
         const slug = slugifyTurkish(
             requestedSlug || title
@@ -574,7 +658,7 @@ export default async function NewBlogPostPage({
                         ? authorId
                         : null,
                 status,
-                is_featured: isFeatured,
+                is_featured: hasFeaturedPlacement,
                 reading_time: readingTime,
                 seo_title:
                     seoTitle || title,
@@ -586,17 +670,71 @@ export default async function NewBlogPostPage({
             .single();
 
         if (insertError || !insertedPost) {
-            console.error(
-                "Blog yazısı oluşturulamadı:",
-                insertError?.message
-            );
+      console.error(
+        "Blog yazısı oluşturulamadı:",
+        insertError?.message
+      );
 
-            redirect(
-                "/admin/blog/yeni?error=insert"
-            );
+      redirect(
+        "/admin/blog/yeni?error=insert"
+      );
+    }
+
+    if (placementRows.length > 0) {
+      if (featuredMain) {
+        const {
+          error: deactivateMainError,
+        } = await adminSupabase
+          .from("blog_post_placements")
+          .update({
+            is_active: false,
+          })
+          .eq(
+            "placement_type",
+            "featured_main"
+          )
+          .eq("is_active", true);
+
+        if (deactivateMainError) {
+          console.error(
+            "Eski ana öne çıkan yazı kapatılamadı:",
+            deactivateMainError.message
+          );
         }
+      }
 
-        revalidatePath("/admin/blog");
+      const {
+        error: placementsError,
+      } = await adminSupabase
+        .from("blog_post_placements")
+        .insert(
+          placementRows.map(
+            (placement) => ({
+              blog_post_id:
+                insertedPost.id,
+              ...placement,
+            })
+          )
+        );
+
+      if (placementsError) {
+        console.error(
+          "Blog yerleşimleri kaydedilemedi:",
+          placementsError.message
+        );
+
+        await adminSupabase
+          .from("blog_posts")
+          .delete()
+          .eq("id", insertedPost.id);
+
+        redirect(
+          "/admin/blog/yeni?error=placement"
+        );
+      }
+    }
+
+revalidatePath("/admin/blog");
         revalidatePath("/blog");
 
         if (status === "published") {
@@ -722,15 +860,26 @@ export default async function NewBlogPostPage({
                 ) : null}
 
                 {params.error === "insert" ? (
-                    <div
-                        className={
-                            pageStyles.errorMessage
-                        }
-                    >
-                        Blog yazısı kaydedilemedi. Sunucu
-                        kayıtlarını kontrol et.
-                    </div>
-                ) : null}
+          <div
+            className={
+              pageStyles.errorMessage
+            }
+          >
+            Blog yazısı kaydedilemedi. Sunucu
+            kayıtlarını kontrol et.
+          </div>
+        ) : null}
+
+        {params.error === "placement" ? (
+          <div
+            className={
+              pageStyles.errorMessage
+            }
+          >
+            Blog yerleşim alanları
+            kaydedilemedi. Yazı oluşturulmadı.
+          </div>
+        ) : null}
 
                 {hasLoadError ? (
                     <div className={styles.emptyState}>
@@ -1076,28 +1225,209 @@ Devam eden içerik...`}
                             </label>
                         </div>
 
-                        <label
-                            className={
-                                pageStyles.checkboxField
-                            }
-                        >
-                            <input
-                                type="checkbox"
-                                name="is_featured"
-                            />
+                        <section
+              className={
+                pageStyles.placementSection
+              }
+            >
+              <div
+                className={
+                  pageStyles.placementHeader
+                }
+              >
+                <span>BLOG YERLEŞİMİ</span>
 
-                            <span>
-                                <strong>
-                                    Öne çıkan yazı
-                                </strong>
+                <h3>
+                  Yazının Görüneceği Alanlar
+                </h3>
 
-                                <small>
-                                    Blog ana sayfasındaki büyük
-                                    içerik alanında gösterilmeye
-                                    uygun olarak işaretle.
-                                </small>
-                            </span>
-                        </label>
+                <p>
+                  Son Eklenen Yazılar alanına
+                  yayınlanan tüm yazılar otomatik
+                  eklenir. Aşağıdaki özel alanları
+                  isteğe bağlı seç.
+                </p>
+              </div>
+
+              <div
+                className={
+                  pageStyles.placementGrid
+                }
+              >
+                <label
+                  className={
+                    pageStyles.placementCard
+                  }
+                >
+                  <span
+                    className={
+                      pageStyles.placementCheck
+                    }
+                  >
+                    <input
+                      type="checkbox"
+                      name="placement_featured_main"
+                    />
+
+                    <span>
+                      <strong>
+                        Ana Öne Çıkan
+                      </strong>
+
+                      <small>
+                        Sayfanın solundaki büyük
+                        blog kartı. Yeni seçim eski
+                        ana yazının yerini alır.
+                      </small>
+                    </span>
+                  </span>
+
+                  <span
+                    className={
+                      pageStyles.orderField
+                    }
+                  >
+                    <span>Sıra</span>
+
+                    <input
+                      type="number"
+                      name="featured_main_order"
+                      min={1}
+                      defaultValue={1}
+                    />
+                  </span>
+                </label>
+
+                <label
+                  className={
+                    pageStyles.placementCard
+                  }
+                >
+                  <span
+                    className={
+                      pageStyles.placementCheck
+                    }
+                  >
+                    <input
+                      type="checkbox"
+                      name="placement_featured_side"
+                    />
+
+                    <span>
+                      <strong>
+                        Yan Öne Çıkan
+                      </strong>
+
+                      <small>
+                        Büyük kartın sağındaki küçük
+                        öne çıkan yazılar.
+                      </small>
+                    </span>
+                  </span>
+
+                  <span
+                    className={
+                      pageStyles.orderField
+                    }
+                  >
+                    <span>Sıra</span>
+
+                    <input
+                      type="number"
+                      name="featured_side_order"
+                      min={1}
+                      defaultValue={1}
+                    />
+                  </span>
+                </label>
+
+                <label
+                  className={
+                    pageStyles.placementCard
+                  }
+                >
+                  <span
+                    className={
+                      pageStyles.placementCheck
+                    }
+                  >
+                    <input
+                      type="checkbox"
+                      name="placement_quick_learn"
+                    />
+
+                    <span>
+                      <strong>
+                        5 Dakikada Öğren
+                      </strong>
+
+                      <small>
+                        Kısa ve hızlı okunabilir
+                        içerikler bölümünde göster.
+                      </small>
+                    </span>
+                  </span>
+
+                  <span
+                    className={
+                      pageStyles.orderField
+                    }
+                  >
+                    <span>Sıra</span>
+
+                    <input
+                      type="number"
+                      name="quick_learn_order"
+                      min={1}
+                      defaultValue={1}
+                    />
+                  </span>
+                </label>
+
+                <label
+                  className={
+                    pageStyles.placementCard
+                  }
+                >
+                  <span
+                    className={
+                      pageStyles.placementCheck
+                    }
+                  >
+                    <input
+                      type="checkbox"
+                      name="placement_editor_pick"
+                    />
+
+                    <span>
+                      <strong>
+                        ForumFenomen Seçkisi
+                      </strong>
+
+                      <small>
+                        Editör tarafından seçilen
+                        özel içerikler bölümüne ekle.
+                      </small>
+                    </span>
+                  </span>
+
+                  <span
+                    className={
+                      pageStyles.orderField
+                    }
+                  >
+                    <span>Sıra</span>
+
+                    <input
+                      type="number"
+                      name="editor_pick_order"
+                      min={1}
+                      defaultValue={1}
+                    />
+                  </span>
+                </label>
+              </div>
+            </section>
 
                         <div
                             className={
