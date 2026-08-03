@@ -2367,7 +2367,10 @@ export default function CollaborationAssistantPage() {
 
                     <strong>
                       {pricingResult.confidenceScore}
-                      /100 ·{" "}
+                      /100
+                    </strong>
+
+                    <span>
                       {pricingResult.confidence ===
                       "high"
                         ? t.confidenceHigh
@@ -2375,7 +2378,7 @@ export default function CollaborationAssistantPage() {
                             "medium"
                           ? t.confidenceMedium
                           : t.confidenceLow}
-                    </strong>
+                    </span>
                   </div>
                 </div>
 

@@ -4884,3 +4884,50 @@ button > span {
     text-align: left !important;
   }
 }
+
+
+/* CONFIDENCE VALUE THREE ROWS V1 */
+
+.confidenceValue {
+  gap: 2px !important;
+}
+
+.confidenceValue small,
+.confidenceValue strong,
+.confidenceValue > span {
+  display: block;
+
+  width: 100%;
+
+  text-align: right !important;
+}
+
+.confidenceValue small {
+  color: #8e99ac;
+
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.confidenceValue strong {
+  color: #eef3fb;
+
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.confidenceValue > span {
+  color: #eef3fb;
+
+  font-size: 12.5px;
+  font-weight: 750;
+  line-height: 1.25;
+}
+
+:global(html[data-theme="light"])
+.confidenceValue strong,
+:global(html[data-theme="light"])
+.confidenceValue > span {
+  color: #2e3443;
+}
