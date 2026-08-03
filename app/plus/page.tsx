@@ -36,7 +36,7 @@ const translations = {
     negotiationTitle: "Pazarlığını Güçlendir",
     negotiationDescription:
       "Profesyonel karşı teklif, e-posta ve DM yanıtlarını hazırla.",
-    openAssistant: "Asistan Hazırlanıyor",
+    openAssistant: "Asistanı Aç",
     comingSoon: "YAKINDA",
     upcomingTitle: "Sıradaki Plus araçları",
     hashtagTitle: "Hashtag Stratejisti",
@@ -82,7 +82,7 @@ const translations = {
     negotiationTitle: "Strengthen Negotiations",
     negotiationDescription:
       "Prepare professional counteroffers, emails and direct-message replies.",
-    openAssistant: "Assistant in Development",
+    openAssistant: "Open Assistant",
     comingSoon: "COMING SOON",
     upcomingTitle: "Upcoming Plus tools",
     hashtagTitle: "Hashtag Strategist",
@@ -399,14 +399,13 @@ export default function PlusPage() {
             </article>
           </div>
 
-          <button
-            type="button"
+          <Link
+            href="/plus/is-birligi-asistani"
             className={styles.assistantButton}
-            disabled
           >
-            <LockIcon />
+            <SparkleIcon />
             {t.openAssistant}
-          </button>
+          </Link>
         </section>
 
         <section className={styles.includedSection}>
