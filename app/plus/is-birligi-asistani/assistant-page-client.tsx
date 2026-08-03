@@ -1090,9 +1090,7 @@ export default function CollaborationAssistantPage() {
           </div>
         </header>
 
-        <section className={styles.workspaceHero}>
-          <div className={styles.heroGlow} />
-
+        <div className={styles.backLinkRow}>
           <Link
             href="/plus"
             className={styles.backLink}
@@ -1100,6 +1098,10 @@ export default function CollaborationAssistantPage() {
             <ArrowLeftIcon />
             {t.backToPlus}
           </Link>
+        </div>
+
+        <section className={styles.workspaceHero}>
+          <div className={styles.heroGlow} />
 
           <div className={styles.heroMain}>
             <div className={styles.heroIcon}>
