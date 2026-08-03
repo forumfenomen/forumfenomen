@@ -4451,3 +4451,107 @@ button > span {
 .backLinkRow .backLink {
   overflow: hidden;
 }
+
+
+/* SOCIAL MANUAL ENGAGEMENT GRID V1 */
+
+.socialManualGrid {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+  gap: 8px;
+
+  margin-top: 20px;
+}
+
+.socialManualGrid label {
+  display: grid;
+  min-width: 0;
+  gap: 8px;
+
+  color: #dce1ed;
+
+  font-size: 11px;
+  font-weight: 720;
+}
+
+.socialManualGrid input {
+  width: 100%;
+  min-width: 0;
+  min-height: 45px;
+
+  padding: 0 13px;
+
+  color: #ffffff;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 13px;
+  outline: none;
+
+  background:
+    rgba(255, 255, 255, 0.028);
+}
+
+.socialManualGrid input::placeholder {
+  color: #596174;
+}
+
+.socialManualGrid input:focus {
+  border-color:
+    rgba(55, 165, 255, 0.52);
+
+  box-shadow:
+    0 0 0 3px rgba(42, 144, 236, 0.09);
+}
+
+:global(html[data-theme="light"])
+.socialManualGrid label {
+  color: #353b4b;
+}
+
+:global(html[data-theme="light"])
+.socialManualGrid input {
+  color: #242936;
+
+  border-color:
+    rgba(67, 81, 119, 0.14);
+
+  background:
+    rgba(55, 75, 124, 0.035);
+}
+
+:global(html[data-theme="light"])
+.socialManualGrid input::placeholder {
+  color: #8b93a2;
+}
+
+@media (max-width: 680px) {
+  .socialManualGrid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .socialManualGrid label {
+    gap: 6px;
+
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .socialManualGrid input {
+    min-height: 43px;
+
+    padding: 0 11px;
+
+    font-size: 14px;
+    font-weight: 650;
+  }
+
+  .socialManualGrid input::placeholder {
+    font-size: 14px;
+  }
+}

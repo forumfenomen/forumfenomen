@@ -104,8 +104,18 @@ const translations = {
     engagementPlaceholder: "Örn. %4,8",
     averageLikesPlaceholder: "Örn. 850",
     averageCommentsPlaceholder: "Örn. 42",
+    averageSaves: "Ortalama kaydetme",
+    averageSavesPlaceholder: "Örn. 65",
+    averageShares: "Ortalama paylaşım",
+    averageSharesPlaceholder: "Örn. 30",
     followerBasedEngagement: "Abone bazlı etkileşim",
+    followerCountBasedEngagement:
+      "Takipçi bazlı etkileşim",
     viewBasedEngagement: "İzlenme bazlı etkileşim",
+    socialEngagementCalculated:
+      "Beğeni, yorum, kaydetme ve paylaşım verilerinden otomatik hesaplandı",
+    enterSocialPerformance:
+      "Etkileşim oranını hesaplamak için içerik performans verilerini gir.",
     manualEngagementCalculated:
       "Beğeni ve yorum verilerinden otomatik hesaplandı",
     enterManualPerformance:
@@ -246,8 +256,18 @@ const translations = {
     engagementPlaceholder: "Example: 4.8%",
     averageLikesPlaceholder: "Example: 850",
     averageCommentsPlaceholder: "Example: 42",
+    averageSaves: "Average saves",
+    averageSavesPlaceholder: "Example: 65",
+    averageShares: "Average shares",
+    averageSharesPlaceholder: "Example: 30",
     followerBasedEngagement: "Subscriber-based engagement",
+    followerCountBasedEngagement:
+      "Follower-based engagement",
     viewBasedEngagement: "View-based engagement",
+    socialEngagementCalculated:
+      "Automatically calculated from likes, comments, saves and shares",
+    enterSocialPerformance:
+      "Enter content performance data to calculate the engagement rate.",
     manualEngagementCalculated:
       "Automatically calculated from like and comment data",
     enterManualPerformance:
@@ -566,6 +586,16 @@ export default function CollaborationAssistantPage() {
   ] = useState("");
 
   const [
+    manualAverageSaves,
+    setManualAverageSaves,
+  ] = useState("");
+
+  const [
+    manualAverageShares,
+    setManualAverageShares,
+  ] = useState("");
+
+  const [
     engagementSource,
     setEngagementSource,
   ] = useState<EngagementSource>(null);
@@ -638,10 +668,12 @@ export default function CollaborationAssistantPage() {
     usageRights.exclusivity,
   ]);
 
-  function updateManualYouTubeEngagement(
+  function updateManualEngagement(
     nextLikes: string,
     nextComments: string,
-    nextViews = averageViews
+    nextViews = averageViews,
+    nextSaves = manualAverageSaves,
+    nextShares = manualAverageShares
   ) {
     const parsedLikes =
       parseCountInput(nextLikes);
@@ -652,8 +684,20 @@ export default function CollaborationAssistantPage() {
     const parsedViews =
       parseCountInput(nextViews);
 
+    const parsedSaves =
+      parseCountInput(nextSaves);
+
+    const parsedShares =
+      parseCountInput(nextShares);
+
     const interactions =
-      parsedLikes + parsedComments;
+      parsedLikes +
+      parsedComments +
+      (
+        selectedPlatform === "youtube"
+          ? 0
+          : parsedSaves + parsedShares
+      );
 
     const calculatedRate =
       parsedViews > 0 &&
@@ -928,8 +972,21 @@ export default function CollaborationAssistantPage() {
   const manualCommentsValue =
     parseCountInput(manualAverageComments);
 
+  const manualSavesValue =
+    parseCountInput(manualAverageSaves);
+
+  const manualSharesValue =
+    parseCountInput(manualAverageShares);
+
   const manualTotalInteractions =
-    manualLikesValue + manualCommentsValue;
+    manualLikesValue +
+    manualCommentsValue +
+    (
+      selectedPlatform === "youtube"
+        ? 0
+        : manualSavesValue +
+          manualSharesValue
+    );
 
   const manualFollowerEngagement =
     manualFollowersValue > 0 &&
@@ -1511,6 +1568,8 @@ export default function CollaborationAssistantPage() {
                       setAverageViews("");
                       setManualAverageLikes("");
                       setManualAverageComments("");
+                      setManualAverageSaves("");
+                      setManualAverageShares("");
                       setEngagementRate("");
                       setAutomaticEngagementValue("");
                       setEngagementSource(null);
@@ -1567,7 +1626,7 @@ export default function CollaborationAssistantPage() {
                           engagementSource !==
                           "automatic"
                         ) {
-                          updateManualYouTubeEngagement(
+                          updateManualEngagement(
                             manualAverageLikes,
                             manualAverageComments,
                             nextValue
@@ -1595,7 +1654,7 @@ export default function CollaborationAssistantPage() {
                           nextValue
                         );
 
-                        updateManualYouTubeEngagement(
+                        updateManualEngagement(
                           nextValue,
                           manualAverageComments
                         );
@@ -1623,7 +1682,7 @@ export default function CollaborationAssistantPage() {
                           nextValue
                         );
 
-                        updateManualYouTubeEngagement(
+                        updateManualEngagement(
                           manualAverageLikes,
                           nextValue
                         );
@@ -1692,78 +1751,223 @@ export default function CollaborationAssistantPage() {
                 </div>
               </>
             ) : (
-              <div className={styles.inputGrid}>
-                <label>
-                  <span>{t.followers}</span>
+              <>
+                <div className={styles.socialManualGrid}>
+                  <label>
+                    <span>{t.followers}</span>
 
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    value={followers}
-                    placeholder={
-                      t.followersPlaceholder
-                    }
-                    onChange={(event) =>
-                      setFollowers(
-                        event.target.value
-                      )
-                    }
-                  />
-                </label>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={followers}
+                      placeholder={
+                        t.followersPlaceholder
+                      }
+                      onChange={(event) =>
+                        setFollowers(
+                          event.target.value
+                        )
+                      }
+                    />
+                  </label>
 
-                <label>
-                  <span>{t.averageViews}</span>
+                  <label>
+                    <span>{t.averageViews}</span>
 
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    value={averageViews}
-                    placeholder={
-                      t.averageViewsPlaceholder
-                    }
-                    onChange={(event) =>
-                      setAverageViews(
-                        event.target.value
-                      )
-                    }
-                  />
-                </label>
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={averageViews}
+                      placeholder={
+                        t.averageViewsPlaceholder
+                      }
+                      onChange={(event) => {
+                        const nextValue =
+                          event.target.value;
 
-                <label>
-                  <span>{t.engagement}</span>
+                        setAverageViews(nextValue);
 
-                  <input
-                    type="text"
-                    inputMode="decimal"
-                    value={engagementRate}
-                    placeholder={
-                      t.engagementPlaceholder
-                    }
-                    onChange={(event) => {
-                      const nextValue =
-                        event.target.value;
+                        updateManualEngagement(
+                          manualAverageLikes,
+                          manualAverageComments,
+                          nextValue
+                        );
+                      }}
+                    />
+                  </label>
 
-                      setEngagementRate(nextValue);
-                      setAutomaticEngagementValue("");
-                      setEngagementSource(
-                        nextValue.trim()
-                          ? "manual"
-                          : null
-                      );
-                    }}
-                  />
+                  <label>
+                    <span>{t.averageLikes}</span>
+
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={manualAverageLikes}
+                      placeholder={
+                        t.averageLikesPlaceholder
+                      }
+                      onChange={(event) => {
+                        const nextValue =
+                          event.target.value;
+
+                        setManualAverageLikes(
+                          nextValue
+                        );
+
+                        updateManualEngagement(
+                          nextValue,
+                          manualAverageComments
+                        );
+                      }}
+                    />
+                  </label>
+
+                  <label>
+                    <span>{t.averageComments}</span>
+
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={
+                        manualAverageComments
+                      }
+                      placeholder={
+                        t.averageCommentsPlaceholder
+                      }
+                      onChange={(event) => {
+                        const nextValue =
+                          event.target.value;
+
+                        setManualAverageComments(
+                          nextValue
+                        );
+
+                        updateManualEngagement(
+                          manualAverageLikes,
+                          nextValue
+                        );
+                      }}
+                    />
+                  </label>
+
+                  <label>
+                    <span>{t.averageSaves}</span>
+
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={manualAverageSaves}
+                      placeholder={
+                        t.averageSavesPlaceholder
+                      }
+                      onChange={(event) => {
+                        const nextValue =
+                          event.target.value;
+
+                        setManualAverageSaves(
+                          nextValue
+                        );
+
+                        updateManualEngagement(
+                          manualAverageLikes,
+                          manualAverageComments,
+                          averageViews,
+                          nextValue,
+                          manualAverageShares
+                        );
+                      }}
+                    />
+                  </label>
+
+                  <label>
+                    <span>{t.averageShares}</span>
+
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={manualAverageShares}
+                      placeholder={
+                        t.averageSharesPlaceholder
+                      }
+                      onChange={(event) => {
+                        const nextValue =
+                          event.target.value;
+
+                        setManualAverageShares(
+                          nextValue
+                        );
+
+                        updateManualEngagement(
+                          manualAverageLikes,
+                          manualAverageComments,
+                          averageViews,
+                          manualAverageSaves,
+                          nextValue
+                        );
+                      }}
+                    />
+                  </label>
+                </div>
+
+                <div
+                  className={
+                    styles.manualEngagementResult
+                  }
+                >
+                  <div>
+                    <span>
+                      {t.followerCountBasedEngagement}
+                    </span>
+
+                    <strong>
+                      {manualFollowerEngagement !==
+                      null
+                        ? `%${manualFollowerEngagement.toLocaleString(
+                            language === "tr"
+                              ? "tr-TR"
+                              : "en-US",
+                            {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            }
+                          )}`
+                        : "—"}
+                    </strong>
+                  </div>
+
+                  <div>
+                    <span>
+                      {t.viewBasedEngagement}
+                    </span>
+
+                    <strong>
+                      {manualViewEngagement !== null
+                        ? `%${manualViewEngagement.toLocaleString(
+                            language === "tr"
+                              ? "tr-TR"
+                              : "en-US",
+                            {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            }
+                          )}`
+                        : "—"}
+                    </strong>
+                  </div>
 
                   <small
                     className={
-                      engagementSource === "manual"
-                        ? styles.engagementManual
-                        : styles.engagementHint
+                      manualViewEngagement !== null
+                        ? styles.manualEngagementStatusReady
+                        : styles.manualEngagementStatus
                     }
                   >
-                    {t.engagementManual}
+                    {manualViewEngagement !== null
+                      ? t.socialEngagementCalculated
+                      : t.enterSocialPerformance}
                   </small>
-                </label>
-              </div>
+                </div>
+              </>
             )}
 
             <div className={styles.formSection}>
