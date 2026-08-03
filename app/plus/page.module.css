@@ -1071,3 +1071,15 @@
 :global(html[data-theme="light"]) .upcomingGrid article > svg {
   stroke: #58708d;
 }
+
+/* PLUS CLOSED BETA ACCESS V1 */
+
+.assistantButton:disabled {
+  opacity: 0.68;
+  cursor: not-allowed;
+  filter: saturate(0.72);
+}
+
+.assistantButton:disabled:hover {
+  transform: none;
+}

@@ -1937,3 +1937,927 @@ button > span {
 .optionGridThree button > span {
   color: var(--platform-color);
 }
+
+/* CREATOR ANALYSIS RESULT V1 */
+
+.analysisResultCard {
+  margin-top: 12px;
+  padding: 14px;
+
+  border:
+    1px solid rgba(66, 168, 255, 0.25);
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(25, 130, 220, 0.11),
+      rgba(84, 58, 210, 0.08)
+    );
+}
+
+.analysisAccountHeader {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.analysisAvatar {
+  width: 52px;
+  height: 52px;
+
+  flex: 0 0 52px;
+
+  border:
+    1px solid rgba(97, 186, 255, 0.28);
+  border-radius: 15px;
+
+  object-fit: cover;
+}
+
+.analysisAccountHeader > div {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.analysisAccountHeader span {
+  color: #5fc8ff;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+}
+
+.analysisAccountHeader strong {
+  overflow: hidden;
+
+  color: #ffffff;
+
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.analysisAccountHeader small {
+  color: #8792a6;
+
+  font-size: 11px;
+}
+
+.analysisMetrics {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 7px;
+
+  margin-top: 13px;
+}
+
+.analysisMetrics article {
+  display: grid;
+  min-height: 62px;
+
+  align-content: center;
+  gap: 6px;
+
+  padding: 9px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.065);
+  border-radius: 12px;
+
+  background:
+    rgba(3, 7, 16, 0.28);
+}
+
+.analysisMetrics span {
+  color: #818ca0;
+
+  font-size: 9.5px;
+  line-height: 1.35;
+}
+
+.analysisMetrics strong {
+  color: #eef3fb;
+
+  font-size: 13px;
+}
+
+.analysedVideoCount {
+  margin: 11px 0 0;
+
+  color: #7f8a9e;
+
+  font-size: 10.5px;
+  text-align: right;
+}
+
+.analysedVideoCount strong {
+  color: #65caff;
+}
+
+.analysisError {
+  margin: 10px 0 0;
+  padding: 10px 11px;
+
+  color: #ff9da8;
+
+  border:
+    1px solid rgba(255, 77, 97, 0.2);
+  border-radius: 11px;
+
+  background:
+    rgba(255, 57, 82, 0.07);
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+:global(html[data-theme="light"])
+.analysisResultCard {
+  border-color:
+    rgba(38, 134, 215, 0.22);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(41, 143, 225, 0.09),
+      rgba(94, 61, 211, 0.06)
+    );
+}
+
+:global(html[data-theme="light"])
+.analysisAccountHeader strong,
+:global(html[data-theme="light"])
+.analysisMetrics strong {
+  color: #2c3241;
+}
+
+:global(html[data-theme="light"])
+.analysisAccountHeader small,
+:global(html[data-theme="light"])
+.analysisMetrics span,
+:global(html[data-theme="light"])
+.analysedVideoCount {
+  color: #606b7c;
+}
+
+:global(html[data-theme="light"])
+.analysisMetrics article {
+  border-color:
+    rgba(64, 80, 116, 0.11);
+
+  background:
+    rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 760px) {
+  .analysisMetrics {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 390px) {
+  .analysisMetrics {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* READABILITY FONT OVERRIDES V2 */
+
+/* Sol üst: İş birliği detayları açıklaması */
+.workspaceCard > p,
+.sectionIntro p,
+.formIntro p,
+.toolIntro p {
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+}
+
+/* Otomatik analiz kartı */
+.analysisHeading > div:last-child > span {
+  font-size: 11px !important;
+  letter-spacing: 1.2px !important;
+}
+
+.analysisHeading h3 {
+  font-size: 28px !important;
+}
+
+.analysisHeading p {
+  font-size: 14px !important;
+  line-height: 1.7 !important;
+}
+
+/* Analiz sonucu placeholder / alt bilgi */
+.analysisResultPlaceholder strong {
+  font-size: 14px !important;
+}
+
+.analysisResultPlaceholder p {
+  font-size: 12px !important;
+  line-height: 1.65 !important;
+}
+
+.analysisFooter p {
+  font-size: 11px !important;
+  line-height: 1.6 !important;
+}
+
+/* Sağ panel: Tahmini iş birliği değeri */
+.previewCard h3,
+.previewCard h2 {
+  font-size: 19px !important;
+  line-height: 1.35 !important;
+}
+
+.previewCard > p,
+.previewCard p {
+  font-size: 13px !important;
+  line-height: 1.65 !important;
+}
+
+/* Sağ panel kutu başlıkları */
+.previewCard article span,
+.previewCard .metricLabel,
+.previewCard .infoLabel {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
+/* Sağ panel değerleri */
+.previewCard article strong,
+.previewCard .metricValue,
+.previewCard .infoValue {
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+}
+
+/* Sağ panel liste */
+.previewCard li {
+  font-size: 12px !important;
+  line-height: 1.65 !important;
+}
+
+/* Sağ panel en alt not */
+.previewCard small,
+.previewCard .footnote,
+.previewCard .helperText {
+  font-size: 11px !important;
+  line-height: 1.6 !important;
+}
+
+/* Genel küçük yardımcı yazılar */
+.analysisMetrics span {
+  font-size: 11px !important;
+}
+
+.analysedVideoCount {
+  font-size: 12px !important;
+  line-height: 1.55 !important;
+}
+
+/* Açık temada da aynı okunabilirlik */
+:global(html[data-theme="light"]) .analysisHeading p,
+:global(html[data-theme="light"]) .analysisResultPlaceholder p,
+:global(html[data-theme="light"]) .analysisFooter p,
+:global(html[data-theme="light"]) .previewCard p,
+:global(html[data-theme="light"]) .previewCard li,
+:global(html[data-theme="light"]) .previewCard small {
+  font-size: inherit;
+}
+
+/* ENGAGEMENT SOURCE STATUS V1 */
+
+.engagementAutomatic,
+.engagementManual,
+.engagementHint {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+
+  margin-top: -1px;
+
+  font-size: 10.5px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.engagementAutomatic {
+  color: #63caff;
+}
+
+.engagementAutomatic::before {
+  content: "✓";
+
+  flex: 0 0 auto;
+
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.engagementManual {
+  color: #d6a1ff;
+}
+
+.engagementManual::before {
+  content: "✎";
+
+  flex: 0 0 auto;
+
+  font-size: 11px;
+}
+
+.engagementHint {
+  color: #737e91;
+}
+
+.engagementHint::before {
+  content: "i";
+
+  display: grid;
+  width: 14px;
+  height: 14px;
+
+  flex: 0 0 14px;
+  place-items: center;
+
+  border:
+    1px solid rgba(132, 150, 177, 0.3);
+  border-radius: 50%;
+
+  font-size: 8px;
+  font-style: normal;
+}
+
+:global(html[data-theme="light"])
+.engagementAutomatic {
+  color: #0879ba;
+}
+
+:global(html[data-theme="light"])
+.engagementManual {
+  color: #7041a6;
+}
+
+:global(html[data-theme="light"])
+.engagementHint {
+  color: #687386;
+}
+
+/* ASSISTANT CRITICAL TEXT READABILITY V3 */
+
+/* Otomatik analiz ana açıklaması */
+.analysisHeading p {
+  margin-top: 8px !important;
+
+  color: #b2bbcc !important;
+
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1.65 !important;
+}
+
+/* Analiz sonucu boş durum kutusu */
+.analysisResultPlaceholder {
+  min-height: 92px !important;
+  padding: 15px !important;
+}
+
+.analysisResultPlaceholder strong {
+  color: #f1f4fa !important;
+
+  font-size: 14px !important;
+  font-weight: 750 !important;
+  line-height: 1.4 !important;
+}
+
+.analysisResultPlaceholder p {
+  margin-top: 6px !important;
+
+  color: #a6afc0 !important;
+
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+}
+
+/* Otomatik analiz kartının en alt bilgi metni */
+.analysisFooter p {
+  color: #929caf !important;
+
+  font-size: 11.5px !important;
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+}
+
+/* Sağ kart üst bilgi */
+.previewTop > span {
+  font-size: 10px !important;
+  letter-spacing: 1.15px !important;
+}
+
+.previewPulse {
+  font-size: 10px !important;
+}
+
+/* Tahmini iş birliği açıklaması */
+.previewIntro p {
+  max-width: 270px !important;
+
+  margin: 10px auto 0 !important;
+
+  color: #aab3c5 !important;
+
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+}
+
+/* Fiyat sonuç kutularının etiketleri */
+.pricePreview span {
+  color: #aab3c5 !important;
+
+  font-size: 12px !important;
+  font-weight: 550 !important;
+  line-height: 1.45 !important;
+}
+
+.pricePreview strong {
+  font-size: 15px !important;
+}
+
+/* Hesaplamaya dahil edilenler başlığı */
+.factorBox h3 {
+  margin-bottom: 13px !important;
+
+  color: #f0f3f9 !important;
+
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+}
+
+/* Hesaplamaya dahil edilenler maddeleri */
+.factorBox div {
+  gap: 9px !important;
+
+  margin-top: 10px !important;
+
+  color: #aeb7c8 !important;
+
+  font-size: 11.5px !important;
+  font-weight: 500 !important;
+  line-height: 1.55 !important;
+}
+
+.factorBox svg {
+  width: 15px !important;
+  height: 15px !important;
+
+  flex-basis: 15px !important;
+}
+
+/* Sağ kart en alt yasal/açıklayıcı not */
+.notice {
+  margin-top: 16px !important;
+
+  color: #909bad !important;
+
+  font-size: 11.5px !important;
+  font-weight: 500 !important;
+  line-height: 1.65 !important;
+}
+
+/* Etkileşim oranı altındaki kaynak bilgisi */
+.engagementAutomatic,
+.engagementManual,
+.engagementHint {
+  font-size: 11.5px !important;
+  line-height: 1.55 !important;
+}
+
+/* Açık tema kontrastı */
+:global(html[data-theme="light"]) .analysisHeading p,
+:global(html[data-theme="light"]) .analysisResultPlaceholder p,
+:global(html[data-theme="light"]) .analysisFooter p,
+:global(html[data-theme="light"]) .previewIntro p,
+:global(html[data-theme="light"]) .pricePreview span,
+:global(html[data-theme="light"]) .factorBox div,
+:global(html[data-theme="light"]) .notice {
+  color: #525d70 !important;
+}
+
+:global(html[data-theme="light"]) .analysisResultPlaceholder strong,
+:global(html[data-theme="light"]) .factorBox h3 {
+  color: #252b39 !important;
+}
+
+@media (max-width: 760px) {
+  .analysisHeading p {
+    font-size: 13.5px !important;
+  }
+
+  .analysisResultPlaceholder p,
+  .previewIntro p {
+    font-size: 12.5px !important;
+  }
+
+  .factorBox div,
+  .notice,
+  .analysisFooter p {
+    font-size: 11.5px !important;
+  }
+}
+
+/* ENGAGEMENT FIELD ALIGNMENT FIX V2 */
+
+.inputGrid {
+  align-items: start;
+}
+
+.inputGrid label {
+  grid-template-rows:
+    auto
+    45px
+    minmax(34px, auto);
+
+  align-content: start;
+}
+
+.inputGrid label > input {
+  align-self: start;
+}
+
+.engagementAutomatic,
+.engagementManual,
+.engagementHint {
+  min-height: 34px;
+
+  margin-top: 2px !important;
+
+  align-items: flex-start;
+}
+
+.inputGrid label:not(:has(
+  .engagementAutomatic,
+  .engagementManual,
+  .engagementHint
+))::after {
+  content: "";
+
+  display: block;
+  min-height: 34px;
+}
+
+/* İçerik türü alanıyla arayı koru */
+.inputGrid + .formSection {
+  margin-top: 14px;
+}
+
+@media (max-width: 760px) {
+  .inputGrid label {
+    grid-template-rows:
+      auto
+      45px
+      auto;
+  }
+
+  .inputGrid label:not(:has(
+    .engagementAutomatic,
+    .engagementManual,
+    .engagementHint
+  ))::after {
+    display: none;
+  }
+
+  .engagementAutomatic,
+  .engagementManual,
+  .engagementHint {
+    min-height: 0;
+  }
+}
+
+/* PRICING RESULT UI V1 */
+
+.calculateButton {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.calculateButton:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 17px 34px rgba(31, 109, 235, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.calculateButton:active {
+  transform: translateY(0);
+}
+
+.pricingError {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+
+  color: #ff9ca7;
+
+  border:
+    1px solid rgba(255, 78, 98, 0.22);
+  border-radius: 11px;
+
+  background:
+    rgba(255, 58, 81, 0.07);
+
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.previewReady {
+  color: #64d9a9;
+}
+
+.previewReady i {
+  background: #4ce09e;
+
+  box-shadow:
+    0 0 10px rgba(76, 224, 158, 0.75);
+}
+
+.pricePreview strong {
+  max-width: 58%;
+
+  text-align: right;
+  line-height: 1.35;
+}
+
+.confidenceCard {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  margin-top: 10px;
+  padding: 12px 13px;
+
+  border:
+    1px solid rgba(73, 172, 255, 0.18);
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(35, 139, 226, 0.08),
+      rgba(91, 61, 213, 0.07)
+    );
+}
+
+.confidenceCard > span {
+  color: #63caff;
+
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 1px;
+}
+
+.confidenceCard > div {
+  display: grid;
+  gap: 3px;
+
+  text-align: right;
+}
+
+.confidenceCard small {
+  color: #8e99ac;
+
+  font-size: 10px;
+}
+
+.confidenceCard strong {
+  color: #eef3fb;
+
+  font-size: 13px;
+}
+
+:global(html[data-theme="light"])
+.pricingError {
+  color: #ac2437;
+
+  border-color:
+    rgba(197, 47, 67, 0.2);
+
+  background:
+    rgba(218, 55, 75, 0.07);
+}
+
+:global(html[data-theme="light"])
+.confidenceCard {
+  border-color:
+    rgba(38, 133, 215, 0.18);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(42, 139, 220, 0.07),
+      rgba(101, 65, 212, 0.05)
+    );
+}
+
+:global(html[data-theme="light"])
+.confidenceCard strong {
+  color: #2e3443;
+}
+
+@media (max-width: 760px) {
+  .pricePreview article {
+    align-items: flex-start;
+    flex-direction: column;
+
+    padding: 13px;
+  }
+
+  .pricePreview strong {
+    max-width: 100%;
+
+    text-align: left;
+  }
+}
+
+/* CALCULATION SUMMARY UI V1 */
+
+.calculationSummary {
+  display: grid;
+  gap: 9px;
+
+  margin-top: 10px;
+  padding: 14px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+
+  background:
+    rgba(255, 255, 255, 0.022);
+}
+
+.calculationSummary h3 {
+  margin: 0 0 3px;
+
+  color: #eef2f9;
+
+  font-size: 14px;
+  font-weight: 720;
+}
+
+.calculationSummary > div {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.calculationSummary span {
+  color: #96a1b4;
+
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+
+.calculationSummary strong {
+  max-width: 58%;
+
+  color: #e5eaf4;
+
+  font-size: 11.5px;
+  font-weight: 680;
+  line-height: 1.45;
+  text-align: right;
+}
+
+:global(html[data-theme="light"])
+.calculationSummary {
+  border-color:
+    rgba(63, 78, 113, 0.12);
+
+  background:
+    rgba(60, 80, 125, 0.035);
+}
+
+:global(html[data-theme="light"])
+.calculationSummary h3,
+:global(html[data-theme="light"])
+.calculationSummary strong {
+  color: #303645;
+}
+
+:global(html[data-theme="light"])
+.calculationSummary span {
+  color: #5f697b;
+}
+
+@media (max-width: 760px) {
+  .calculationSummary > div {
+    align-items: flex-start;
+  }
+
+  .calculationSummary strong {
+    max-width: 62%;
+  }
+}
+
+/* ENGAGEMENT STATUS FULL ROW V3 */
+
+.inputGrid {
+  position: relative;
+
+  padding-bottom: 30px;
+}
+
+.inputGrid label {
+  grid-template-rows:
+    auto
+    45px;
+
+  min-width: 0;
+}
+
+.engagementAutomatic,
+.engagementManual,
+.engagementHint {
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  min-height: 20px;
+
+  margin: 0 !important;
+
+  align-items: center;
+
+  white-space: nowrap;
+}
+
+.inputGrid label:not(:has(
+  .engagementAutomatic,
+  .engagementManual,
+  .engagementHint
+))::after {
+  content: none !important;
+  display: none !important;
+}
+
+.inputGrid + .formSection {
+  margin-top: 14px;
+}
+
+@media (max-width: 760px) {
+  .inputGrid {
+    padding-bottom: 42px;
+  }
+
+  .engagementAutomatic,
+  .engagementManual,
+  .engagementHint {
+    align-items: flex-start;
+
+    white-space: normal;
+  }
+}
+
+/* CALCULATION FACTOR DETAILS V1 */
+
+.calculationDivider {
+  display: block !important;
+  width: 100%;
+  height: 1px;
+
+  margin: 3px 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(105, 177, 255, 0.22),
+      transparent
+    );
+}
+
+:global(html[data-theme="light"])
+.calculationDivider {
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(45, 112, 184, 0.2),
+      transparent
+    );
+}
