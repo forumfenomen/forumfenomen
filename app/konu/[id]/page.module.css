@@ -2630,3 +2630,19 @@
 }
 
 /* LIGHT THEME BACK LINK FIX END */
+
+/* TOPIC PROFILE AVATAR V31 START */
+
+.avatar {
+    overflow: hidden;
+}
+
+.avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+/* TOPIC PROFILE AVATAR V31 END */

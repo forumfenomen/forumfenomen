@@ -50,6 +50,7 @@ type TopicDetailRow = {
     profiles: {
         display_name: string | null;
         username: string | null;
+        avatar_url: string | null;
     } | null;
 };
 
@@ -612,7 +613,8 @@ export default function TopicDetailPage() {
                     .from("content_profiles")
                     .select(`
             display_name,
-            username
+            username,
+            avatar_url
         `)
                     .eq(
                         "id",
@@ -637,6 +639,8 @@ export default function TopicDetailPage() {
                             contentProfile.display_name,
                         username:
                             contentProfile.username,
+                        avatar_url:
+                            contentProfile.avatar_url,
                     };
                 }
             }
@@ -679,6 +683,10 @@ export default function TopicDetailPage() {
                                 profile.display_name,
                             username:
                                 profile.username,
+                            avatar_url:
+                                typeof profile.avatar_url === "string"
+                                    ? profile.avatar_url
+                                    : null,
                         };
                     }
                 }
@@ -2403,13 +2411,23 @@ export default function TopicDetailPage() {
                                         }
                                     >
                                         <span className={styles.avatar}>
-                                            {author
-                                                .slice(0, 1)
-                                                .toLocaleUpperCase(
-                                                    language === "tr"
-                                                        ? "tr-TR"
-                                                        : "en-US"
-                                                )}
+                                            {topic.profiles?.avatar_url ? (
+                                                <img
+                                                    src={
+                                                        topic.profiles
+                                                            .avatar_url
+                                                    }
+                                                    alt=""
+                                                />
+                                            ) : (
+                                                author
+                                                    .slice(0, 1)
+                                                    .toLocaleUpperCase(
+                                                        language === "tr"
+                                                            ? "tr-TR"
+                                                            : "en-US"
+                                                    )
+                                            )}
                                         </span>
 
                                         <span className={styles.topicAuthorText}>
@@ -2425,13 +2443,23 @@ export default function TopicDetailPage() {
                                 ) : (
                                     <div className={styles.topicAuthorFallback}>
                                         <span className={styles.avatar}>
-                                            {author
-                                                .slice(0, 1)
-                                                .toLocaleUpperCase(
-                                                    language === "tr"
-                                                        ? "tr-TR"
-                                                        : "en-US"
-                                                )}
+                                            {topic.profiles?.avatar_url ? (
+                                                <img
+                                                    src={
+                                                        topic.profiles
+                                                            .avatar_url
+                                                    }
+                                                    alt=""
+                                                />
+                                            ) : (
+                                                author
+                                                    .slice(0, 1)
+                                                    .toLocaleUpperCase(
+                                                        language === "tr"
+                                                            ? "tr-TR"
+                                                            : "en-US"
+                                                    )
+                                            )}
                                         </span>
 
                                         <span className={styles.topicAuthorText}>
