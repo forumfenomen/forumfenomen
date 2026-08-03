@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 :root {
   --background: #05070b;
@@ -14361,4 +14361,20 @@ html[data-theme="light"] .ff-bottom-nav.ff-blog-detail-bottom-nav {
   margin: 0 !important;
 
   transform: none !important;
+}
+
+/* BLOG DETAY MOBİL HEADER — BLOG ANA SAYFASIYLA AYNI GENİŞLİK */
+@media (max-width: 680px) {
+  html .ff-feed-header.ff-blog-detail-header,
+  html[data-theme="light"] .ff-feed-header.ff-blog-detail-header {
+    width: calc(100vw - 24px) !important;
+    max-width: 820px !important;
+
+    margin-top: 0 !important;
+    margin-right: 0 !important;
+    margin-bottom: 10px !important;
+    margin-left: calc(50% - 50vw + 12px) !important;
+
+    transform: none !important;
+  }
 }
