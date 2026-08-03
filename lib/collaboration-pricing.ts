@@ -482,7 +482,7 @@ function getPerformanceScore(
 function getPerformanceLevel(
   score: number
 ): PricingResult["performance"] {
-  if (score >= 75) {
+  if (score >= 80) {
     return "high";
   }
 

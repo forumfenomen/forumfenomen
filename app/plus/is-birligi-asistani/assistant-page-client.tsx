@@ -2483,10 +2483,6 @@ export default function CollaborationAssistantPage() {
                     <span>
                       {t.performanceScoreTitle}
                     </span>
-
-                    <p>
-                      {commercialAssessmentText}
-                    </p>
                   </div>
 
                   <div
