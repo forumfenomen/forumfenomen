@@ -1076,3 +1076,26 @@
     background: rgba(220, 38, 38, 0.12);
     color: #991b1b;
 }
+
+/* BLOG DETAIL MOBILE PAGE WIDTH FINAL */
+@media (max-width: 680px) {
+  .page {
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 118px;
+    padding-left: 10px;
+  }
+
+  .article {
+    width: 100%;
+    max-width: none;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .page :global(.ff-feed-header.ff-blog-detail-header) {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 0 10px !important;
+  }
+}
