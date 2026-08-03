@@ -65,7 +65,7 @@ export default function BlogDetailHeader() {
     }
 
     return (
-        <header className="ff-feed-header">
+        <header className="ff-feed-header ff-blog-detail-header">
             <Link
                 href="/akis"
                 className="ff-feed-logo-wrap"

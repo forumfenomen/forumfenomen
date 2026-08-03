@@ -90,7 +90,7 @@ export default function BlogDetailBottomNav() {
 
     return (
         <nav
-            className="ff-bottom-nav"
+            className="ff-bottom-nav ff-blog-detail-bottom-nav"
             aria-label="ForumFenomen"
         >
             <Link

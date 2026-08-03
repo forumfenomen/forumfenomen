@@ -287,21 +287,34 @@
     line-height: 1.65;
 }
 
-.shareCard div {
-    display: grid;
-    gap: 3px;
-    padding: 14px 0;
+.shareCard {
+    padding: 18px 20px;
+}
+
+.shareCard > span {
+    margin-bottom: 10px;
+}
+
+.infoRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    min-height: 38px;
+    padding: 10px 0;
     border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-.shareCard strong {
-    color: #ffffff;
-    font-size: 22px;
+.infoRow span {
+    color: #9b95a8;
+    font-size: 12px;
+    font-weight: 650;
 }
 
-.shareCard small {
-    color: #8f899f;
-    font-size: 12px;
+.infoRow strong {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 800;
 }
 
 
@@ -665,8 +678,21 @@
 }
 
 :global(.blog-post-actions button > span:first-child) {
-    font-size: 18px;
-    line-height: 1;
+    display: grid;
+    width: 17px;
+    height: 17px;
+    flex: 0 0 auto;
+    place-items: center;
+}
+
+:global(.blog-post-actions button > span:first-child svg) {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 :global(.blog-post-actions button strong) {
@@ -859,20 +885,6 @@
     transform: none !important;
 }
 
-.headerFlow > header,
-.headerFlow :global(.ff-feed-header) {
-    position: relative !important;
-    top: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    left: auto !important;
-    inset: auto !important;
-    z-index: 1 !important;
-    width: 100% !important;
-    max-width: none !important;
-    margin: 0 !important;
-    transform: none !important;
-}
 
 /* Blog detay sayfasında alt menü sayfayla birlikte hareket etsin */
 .bottomNavFlow {
@@ -884,16 +896,3 @@
     transform: none !important;
 }
 
-.bottomNavFlow :global(.ff-bottom-nav) {
-    position: relative !important;
-    top: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    left: auto !important;
-    inset: auto !important;
-    z-index: 1 !important;
-    width: 100% !important;
-    max-width: none !important;
-    margin: 0 !important;
-    transform: none !important;
-}

@@ -14315,3 +14315,50 @@ html[data-theme="light"] .ff-feed-page .ff-insight-grid button span {
 }
 
 /* AKIS FILTER CARDS FINAL END */
+
+/* =========================================================
+   BLOG DETAY — HEADER VE ALT NAV NORMAL SAYFA AKIŞI
+   Diğer sayfaların sticky/fixed davranışını etkilemez
+   ========================================================= */
+
+html .ff-feed-header.ff-blog-detail-header,
+html[data-theme="light"] .ff-feed-header.ff-blog-detail-header {
+  position: relative !important;
+  inset: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+
+  z-index: 1 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  margin-top: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 18px !important;
+  margin-left: 0 !important;
+
+  transform: none !important;
+}
+
+html .ff-bottom-nav.ff-blog-detail-bottom-nav,
+html[data-theme="light"] .ff-bottom-nav.ff-blog-detail-bottom-nav {
+  position: relative !important;
+
+  inset: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+
+  z-index: 1 !important;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  margin: 0 !important;
+
+  transform: none !important;
+}

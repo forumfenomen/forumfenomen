@@ -882,31 +882,27 @@ export default async function BlogPostPage({
                                 YAZI BİLGİSİ
                             </span>
 
-                            <div>
-                                <strong>
-                                    {
-                                        readingTime
-                                    }{" "}
-                                    dk
-                                </strong>
+                            <div className={styles.infoRow}>
+                                <span>
+                                    Okuma süresi
+                                </span>
 
-                                <small>
-                                    Tahmini okuma
-                                    süresi
-                                </small>
+                                <strong>
+                                    {readingTime} dk
+                                </strong>
                             </div>
 
-                            <div>
+                            <div className={styles.infoRow}>
+                                <span>
+                                    Görüntülenme
+                                </span>
+
                                 <BlogViewTracker
                                     postId={post.id}
                                     initialViewCount={getNumber(
                                         post.view_count
                                     )}
                                 />
-
-                                <small>
-                                    Görüntülenme
-                                </small>
                             </div>
                         </div>
                     </aside>

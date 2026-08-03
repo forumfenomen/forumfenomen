@@ -36,31 +36,92 @@ const reportReasons: Array<{
     value: ReportReason;
     label: string;
 }> = [
-    {
-        value: "yanlis_bilgi",
-        label: "Yanlış veya yanıltıcı bilgi",
-    },
-    {
-        value: "telif",
-        label: "Telif hakkı ihlali",
-    },
-    {
-        value: "uygunsuz_icerik",
-        label: "Uygunsuz içerik",
-    },
-    {
-        value: "reklam_spam",
-        label: "Reklam veya spam",
-    },
-    {
-        value: "nefret_taciz",
-        label: "Nefret söylemi veya taciz",
-    },
-    {
-        value: "diger",
-        label: "Diğer",
-    },
-];
+        {
+            value: "yanlis_bilgi",
+            label: "Yanlış veya yanıltıcı bilgi",
+        },
+        {
+            value: "telif",
+            label: "Telif hakkı ihlali",
+        },
+        {
+            value: "uygunsuz_icerik",
+            label: "Uygunsuz içerik",
+        },
+        {
+            value: "reklam_spam",
+            label: "Reklam veya spam",
+        },
+        {
+            value: "nefret_taciz",
+            label: "Nefret söylemi veya taciz",
+        },
+        {
+            value: "diger",
+            label: "Diğer",
+        },
+    ];
+
+function LikeIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+        >
+            <path d="M7 10v10H4V10h3Z" />
+            <path d="M7 10 11 3c.7 0 1.4.5 1.6 1.2.3 1 .1 2.4-.3 3.8H18a3 3 0 0 1 3 3l-1 6a3 3 0 0 1-3 2.5H7V10Z" />
+        </svg>
+    );
+}
+
+function DislikeIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+        >
+            <path d="M7 14V4H4v10h3Z" />
+            <path d="m7 14 4 7c.7 0 1.4-.5 1.6-1.2.3-1 .1-2.4-.3-3.8H18a3 3 0 0 0 3-3l-1-6A3 3 0 0 0 17 4.5H7V14Z" />
+        </svg>
+    );
+}
+
+function SaveIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+        >
+            <path d="M6 4h12v17l-6-4-6 4V4Z" />
+        </svg>
+    );
+}
+
+function ShareIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+        >
+            <circle cx="18" cy="5" r="2.5" />
+            <circle cx="6" cy="12" r="2.5" />
+            <circle cx="18" cy="19" r="2.5" />
+            <path d="m8.2 10.8 7.6-4.5M8.2 13.2l7.6 4.5" />
+        </svg>
+    );
+}
+
+function ReportIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+        >
+            <path d="M6 21V4" />
+            <path d="M6 5h10l-1.8 3L16 11H6" />
+        </svg>
+    );
+}
 
 function getCount(
     value: number | string | undefined
@@ -78,8 +139,8 @@ export default function BlogPostActions({
     slug,
 }: BlogPostActionsProps) {
     const [supabase] = useState(
-    () => createClient()
-);
+        () => createClient()
+    );
 
     const [userId, setUserId] =
         useState<string | null>(null);
@@ -237,7 +298,7 @@ export default function BlogPostActions({
                     "like" ||
                     reactionResult.data
                         ?.reaction_type ===
-                        "dislike"
+                    "dislike"
                     ? reactionResult.data
                         .reaction_type
                     : null
@@ -584,7 +645,7 @@ export default function BlogPostActions({
                     <span
                         aria-hidden="true"
                     >
-                        ♡
+                        <LikeIcon />
                     </span>
 
                     <span>Beğen</span>
@@ -598,7 +659,7 @@ export default function BlogPostActions({
                     type="button"
                     className={
                         reaction ===
-                        "dislike"
+                            "dislike"
                             ? "active negative"
                             : ""
                     }
@@ -615,7 +676,7 @@ export default function BlogPostActions({
                     <span
                         aria-hidden="true"
                     >
-                        ♢
+                         <DislikeIcon />
                     </span>
 
                     <span>
@@ -645,7 +706,7 @@ export default function BlogPostActions({
                     <span
                         aria-hidden="true"
                     >
-                        ▱
+                        <SaveIcon />
                     </span>
 
                     <span>
@@ -668,7 +729,7 @@ export default function BlogPostActions({
                     <span
                         aria-hidden="true"
                     >
-                        ↗
+                        <ShareIcon />
                     </span>
 
                     <span>Paylaş</span>
@@ -684,7 +745,7 @@ export default function BlogPostActions({
                     <span
                         aria-hidden="true"
                     >
-                        ⚑
+                        <ReportIcon />
                     </span>
 
                     <span>
