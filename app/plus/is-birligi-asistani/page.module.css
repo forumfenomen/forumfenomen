@@ -4217,3 +4217,192 @@ button > span {
     font-size: 9px;
   }
 }
+
+
+/* MOBILE ASSISTANT READABILITY V1 */
+
+@media (max-width: 680px) {
+  /*
+   * Mobilde arkaya taşan büyük dekorasyonu kaldır.
+   */
+  .workspaceHero .heroGlow,
+  .accountAnalysisCard::before,
+  .accountAnalysisCard::after {
+    display: none !important;
+  }
+
+  /*
+   * Hero başlığı ve açıklaması.
+   */
+  .heroMain > div:last-child > span {
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+  }
+
+  .heroMain h1 {
+    font-size: 25px !important;
+    line-height: 1.18 !important;
+  }
+
+  .heroMain p {
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+  }
+
+  /*
+   * Araç sekmeleri.
+   */
+  .tabText strong {
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+  }
+
+  .tabText small {
+    font-size: 9.5px !important;
+  }
+
+  /*
+   * Ana kart başlıkları.
+   */
+  .cardHeading strong,
+  .cardHeading h2 {
+    font-size: 18px !important;
+    line-height: 1.3 !important;
+  }
+
+  .cardHeading p {
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+  }
+
+  /*
+   * Otomatik analiz kartı.
+   */
+  .analysisHeading > div > span {
+    font-size: 11px !important;
+  }
+
+  .analysisHeading h2 {
+    font-size: 27px !important;
+    line-height: 1.35 !important;
+  }
+
+  .analysisHeading p {
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+  }
+
+  /*
+   * Form bölüm başlıkları ve alan etiketleri.
+   */
+  .formSection > label,
+  .deliveryField > span,
+  .youtubeManualGrid label,
+  .inputGrid label,
+  .inputGridTwo label {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+  }
+
+  /*
+   * Input ve select yazıları.
+   */
+  .youtubeManualGrid input,
+  .inputGrid input,
+  .inputGridTwo select {
+    font-size: 14px !important;
+    font-weight: 650 !important;
+  }
+
+  .youtubeManualGrid input::placeholder,
+  .inputGrid input::placeholder {
+    font-size: 14px !important;
+  }
+
+  /*
+   * Platform ve içerik türü butonları.
+   */
+  .optionGridThree button,
+  .optionGridFour button {
+    font-size: 10.5px !important;
+    line-height: 1.25 !important;
+  }
+
+  /*
+   * Etkileşim sonuçları.
+   */
+  .manualEngagementResult span {
+    font-size: 10.5px !important;
+    line-height: 1.35 !important;
+  }
+
+  .manualEngagementResult strong {
+    font-size: 14px !important;
+  }
+
+  .manualEngagementStatus,
+  .manualEngagementStatusReady {
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+  }
+
+  /*
+   * Teslim süresi ve kullanım hakları.
+   */
+  .deliveryOptions button {
+    font-size: 10.5px !important;
+  }
+
+  .usageGrid button {
+    font-size: 10.5px !important;
+    line-height: 1.3 !important;
+  }
+
+  /*
+   * Fiyat butonu.
+   */
+  .calculateButton {
+    font-size: 13px !important;
+  }
+
+  /*
+   * Canlı önizleme.
+   */
+  .previewLabel,
+  .previewStatus {
+    font-size: 10.5px !important;
+  }
+
+  .previewIntro h2 {
+    font-size: 21px !important;
+    line-height: 1.3 !important;
+  }
+
+  .previewIntro p {
+    font-size: 12.5px !important;
+    line-height: 1.55 !important;
+  }
+
+  .pricePreview span,
+  .calculationDetails span,
+  .factorBox div,
+  .notice {
+    font-size: 11.5px !important;
+    line-height: 1.5 !important;
+  }
+
+  .pricePreview strong,
+  .calculationDetails strong {
+    font-size: 13px !important;
+  }
+
+  /*
+   * Mobilde yatay taşmayı kesin olarak engelle.
+   */
+  .workspaceHero,
+  .formCard,
+  .accountAnalysisCard,
+  .pricePreview {
+    overflow: hidden !important;
+  }
+}
