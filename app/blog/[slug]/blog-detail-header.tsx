@@ -10,7 +10,6 @@ import {
 import NotificationBell from "@/components/notification-bell";
 import SiteSearch from "@/components/site-search";
 
-import styles from "./blog-detail-navigation.module.css";
 
 type Theme = "dark" | "light";
 
@@ -70,14 +69,14 @@ export default function BlogDetailHeader() {
     }
 
     return (
-        <header className={styles.header}>
+        <header className="ff-feed-header">
             <Link
                 href="/akis"
-                className={styles.logoWrap}
+                className="ff-feed-logo-wrap"
                 aria-label="ForumFenomen"
             >
                 <Image
-                    className={styles.logo}
+                    className="ff-feed-logo"
                     src="/forumfenomen-logo-transparent.png"
                     alt="ForumFenomen"
                     width={460}
@@ -86,10 +85,10 @@ export default function BlogDetailHeader() {
                 />
             </Link>
 
-            <div className={styles.actions}>
+            <div className="ff-feed-header-actions">
                 <button
                     type="button"
-                    className={styles.themeButton}
+                    className="ff-round-action"
                     onClick={toggleTheme}
                     aria-label="Temayı değiştir"
                 >
