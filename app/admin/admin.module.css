@@ -6886,3 +6886,150 @@
     padding: 0 10px;
   }
 }
+
+
+/* ADMIN NOTIFICATION LOG CARD FINAL V3 */
+
+.adminNotificationLogBox {
+  display: grid;
+  gap: 14px;
+
+  margin-top: 14px;
+  padding: 16px;
+
+  border:
+    1px solid rgba(71, 164, 255, 0.2);
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(36, 127, 226, 0.09),
+      rgba(89, 64, 198, 0.06)
+    );
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.035);
+}
+
+.adminNotificationLogHeader {
+  display: grid;
+  gap: 5px;
+}
+
+.adminNotificationLogHeader > span,
+.adminNotificationLogMeta span,
+.adminNotificationLogMessage > span {
+  color: #7f91aa;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+.adminNotificationLogHeader strong {
+  color: #eaf4ff;
+
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.adminNotificationLogMeta {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.adminNotificationLogMeta > div {
+  display: grid;
+  gap: 5px;
+
+  min-width: 0;
+  padding: 10px 11px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.055);
+  border-radius: 10px;
+
+  background:
+    rgba(255, 255, 255, 0.025);
+}
+
+.adminNotificationLogMeta strong {
+  overflow: hidden;
+
+  color: #dbe8f7;
+
+  font-size: 12px;
+  font-weight: 750;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.adminNotificationLogMessage {
+  display: grid;
+  gap: 7px;
+}
+
+.adminNotificationLogMessage p {
+  margin: 0;
+  padding: 11px 12px;
+
+  color: #b8c5d8;
+
+  border-left:
+    2px solid rgba(79, 171, 255, 0.44);
+  border-radius: 0 9px 9px 0;
+
+  background:
+    rgba(5, 11, 24, 0.28);
+
+  font-size: 12px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+:global(html[data-theme="light"])
+.adminNotificationLogBox {
+  border-color:
+    rgba(43, 120, 205, 0.17);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(54, 135, 220, 0.065),
+      rgba(110, 73, 200, 0.045)
+    );
+}
+
+:global(html[data-theme="light"])
+.adminNotificationLogHeader strong,
+:global(html[data-theme="light"])
+.adminNotificationLogMeta strong {
+  color: #263b55;
+}
+
+:global(html[data-theme="light"])
+.adminNotificationLogMessage p {
+  color: #58677b;
+
+  background:
+    rgba(54, 85, 125, 0.045);
+}
+
+@media (max-width: 640px) {
+  .adminNotificationLogBox {
+    padding: 13px;
+  }
+
+  .adminNotificationLogMeta {
+    grid-template-columns: 1fr;
+  }
+}

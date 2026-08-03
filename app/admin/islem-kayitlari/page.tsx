@@ -34,39 +34,41 @@ type AdminLogsPageProps = {
 };
 
 const actionNames: Record<string, string> = {
+    user_notification_sent:
+        "Bildirim gönderildi",
     comment_hidden: "Yorum gizlendi",
-    comment_banned: "Yorum yasaklandı",
-    comment_published: "Yorum yeniden yayınlandı",
+    comment_banned: "Yorum yasaklandÄ±",
+    comment_published: "Yorum yeniden yayÄ±nlandÄ±",
 
-    topic_published: "Konu yeniden yayınlandı",
+    topic_published: "Konu yeniden yayÄ±nlandÄ±",
     topic_hidden: "Konu gizlendi",
-    topic_banned: "Konu yasaklandı",
+    topic_banned: "Konu yasaklandÄ±",
 
     report_reviewing:
-        "Şikâyet incelemeye alındı",
+        "ÅikÃ¢yet incelemeye alÄ±ndÄ±",
     report_resolved:
-        "Şikâyette ihlal doğrulandı",
+        "ÅikÃ¢yette ihlal doÄŸrulandÄ±",
     report_dismissed:
-        "Şikâyet reddedildi",
+        "ÅikÃ¢yet reddedildi",
 
     user_suspended:
-        "Kullanıcı askıya alındı",
+        "KullanÄ±cÄ± askÄ±ya alÄ±ndÄ±",
     user_banned:
-        "Kullanıcı yasaklandı",
+        "KullanÄ±cÄ± yasaklandÄ±",
     user_activated:
-        "Kullanıcı yeniden aktifleştirildi",
+        "KullanÄ±cÄ± yeniden aktifleÅŸtirildi",
 };
 
 const statusNames: Record<string, string> = {
-    published: "Yayında",
+    published: "YayÄ±nda",
     hidden: "Gizlendi",
-    banned: "Yasaklandı",
+    banned: "YasaklandÄ±",
     pending: "Bekliyor",
-    reviewing: "İnceleniyor",
-    resolved: "İhlal doğrulandı",
+    reviewing: "Ä°nceleniyor",
+    resolved: "Ä°hlal doÄŸrulandÄ±",
     dismissed: "Reddedildi",
     active: "Aktif",
-    suspended: "Askıya alındı",
+    suspended: "AskÄ±ya alÄ±ndÄ±",
 };
 
 function getStatusName(
@@ -117,18 +119,18 @@ function getLogTypeLabel(
     targetType: string
 ) {
     if (targetType === "comment") {
-        return "YORUM İŞLEMİ";
+        return "YORUM Ä°ÅLEMÄ°";
     }
 
     if (targetType === "topic") {
-        return "KONU İŞLEMİ";
+        return "KONU Ä°ÅLEMÄ°";
     }
 
     if (targetType === "user") {
-        return "KULLANICI İŞLEMİ";
+        return "KULLANICI Ä°ÅLEMÄ°";
     }
 
-    return "ŞİKÂYET İŞLEMİ";
+    return "ÅÄ°KÃ‚YET Ä°ÅLEMÄ°";
 }
 
 function getLogStatusClass(
@@ -235,7 +237,7 @@ export default async function AdminLogsPage({
 
     if (logsResult.error) {
         console.error(
-            "İşlem kayıtları alınamadı:",
+            "Ä°ÅŸlem kayÄ±tlarÄ± alÄ±namadÄ±:",
             logsResult.error.message
         );
     }
@@ -266,7 +268,7 @@ export default async function AdminLogsPage({
 
         if (profilesResult.error) {
             console.error(
-                "İşlem yapan kullanıcılar alınamadı:",
+                "Ä°ÅŸlem yapan kullanÄ±cÄ±lar alÄ±namadÄ±:",
                 profilesResult.error.message
             );
         }
@@ -305,6 +307,14 @@ export default async function AdminLogsPage({
                 ] ?? log.action_type,
                 log.note ?? "",
                 commentContent,
+                getMetadataString(
+                    log.metadata,
+                    "title"
+                ) ?? "",
+                getMetadataString(
+                    log.metadata,
+                    "message_preview"
+                ) ?? "",
                 log.old_value ?? "",
                 log.new_value ?? "",
             ]
@@ -339,17 +349,17 @@ export default async function AdminLogsPage({
             >
                 <div>
                     <span>
-                        YÖNETİM DENETİMİ
+                        YÃ–NETÄ°M DENETÄ°MÄ°
                     </span>
 
                     <h1>
-                        İşlem Kayıtları
+                        Ä°ÅŸlem KayÄ±tlarÄ±
                     </h1>
 
                     <p>
-                        Admin ve moderatörlerin
-                        yaptığı işlemleri tarih
-                        sırasıyla incele.
+                        Admin ve moderatÃ¶rlerin
+                        yaptÄ±ÄŸÄ± iÅŸlemleri tarih
+                        sÄ±rasÄ±yla incele.
                     </p>
                 </div>
 
@@ -358,7 +368,7 @@ export default async function AdminLogsPage({
                         styles.securityBadge
                     }
                 >
-                    ● Güvenli denetim kaydı
+                    â— GÃ¼venli denetim kaydÄ±
                 </div>
             </header>
 
@@ -370,7 +380,7 @@ export default async function AdminLogsPage({
                         : ""
                         }`}
                 >
-                    <span>Toplam işlem</span>
+                    <span>Toplam iÅŸlem</span>
 
                     <strong>{totalCount}</strong>
                 </Link>
@@ -382,7 +392,7 @@ export default async function AdminLogsPage({
                         : ""
                         }`}
                 >
-                    <span>Yorum işlemleri</span>
+                    <span>Yorum iÅŸlemleri</span>
 
                     <strong>{commentCount}</strong>
                 </Link>
@@ -394,7 +404,7 @@ export default async function AdminLogsPage({
                         : ""
                         }`}
                 >
-                    <span>Şikâyet işlemleri</span>
+                    <span>ÅikÃ¢yet iÅŸlemleri</span>
 
                     <strong>{reportCount}</strong>
                 </Link>
@@ -416,11 +426,11 @@ export default async function AdminLogsPage({
                 >
                     <div>
                         <span>
-                            ARAMA VE FİLTRE
+                            ARAMA VE FÄ°LTRE
                         </span>
 
                         <h2>
-                            Kayıtları Bul
+                            KayÄ±tlarÄ± Bul
                         </h2>
                     </div>
 
@@ -429,7 +439,7 @@ export default async function AdminLogsPage({
                             styles.panelBadge
                         }
                     >
-                        Son 300 kayıt
+                        Son 300 kayÄ±t
                     </div>
                 </div>
 
@@ -456,7 +466,7 @@ export default async function AdminLogsPage({
                                 opacity: 0.7,
                             }}
                         >
-                            Kayıtlarda ara
+                            KayÄ±tlarda ara
                         </span>
 
                         <input
@@ -465,7 +475,7 @@ export default async function AdminLogsPage({
                             defaultValue={
                                 searchText
                             }
-                            placeholder="Yetkili, not veya içerik ara..."
+                            placeholder="Yetkili, not veya iÃ§erik ara..."
                             style={{
                                 minHeight: 44,
                                 padding:
@@ -493,7 +503,7 @@ export default async function AdminLogsPage({
                                 opacity: 0.7,
                             }}
                         >
-                            İşlem türü
+                            Ä°ÅŸlem tÃ¼rÃ¼
                         </span>
 
                         <select
@@ -514,15 +524,15 @@ export default async function AdminLogsPage({
                             }}
                         >
                             <option value="all">
-                                Tüm işlemler
+                                TÃ¼m iÅŸlemler
                             </option>
 
                             <option value="comment">
-                                Yorum işlemleri
+                                Yorum iÅŸlemleri
                             </option>
 
                             <option value="report">
-                                Şikâyet işlemleri
+                                ÅikÃ¢yet iÅŸlemleri
                             </option>
                         </select>
                     </label>
@@ -551,15 +561,15 @@ export default async function AdminLogsPage({
                 >
                     <div>
                         <span>
-                            DENETİM GÜNLÜĞÜ
+                            DENETÄ°M GÃœNLÃœÄÃœ
                         </span>
 
                         <h2>
                             {selectedType === "comment"
-                                ? "Yorum İşlemleri"
+                                ? "Yorum Ä°ÅŸlemleri"
                                 : selectedType === "report"
-                                    ? "Şikâyet İşlemleri"
-                                    : "Son İşlemler"}
+                                    ? "ÅikÃ¢yet Ä°ÅŸlemleri"
+                                    : "Son Ä°ÅŸlemler"}
                         </h2>
                     </div>
 
@@ -568,7 +578,7 @@ export default async function AdminLogsPage({
                             styles.panelBadge
                         }
                     >
-                        {filteredLogs.length} kayıt
+                        {filteredLogs.length} kayÄ±t
                     </div>
                 </div>
 
@@ -578,8 +588,8 @@ export default async function AdminLogsPage({
                             styles.emptyState
                         }
                     >
-                        Filtrelere uygun işlem
-                        kaydı bulunamadı.
+                        Filtrelere uygun iÅŸlem
+                        kaydÄ± bulunamadÄ±.
                     </div>
                 ) : (
                     <div
@@ -599,6 +609,45 @@ export default async function AdminLogsPage({
                                         log.metadata,
                                         "comment_content"
                                     );
+
+                                const isUserNotification =
+                                    log.action_type ===
+                                    "user_notification_sent";
+
+                                const notificationTitle =
+                                    getMetadataString(
+                                        log.metadata,
+                                        "title"
+                                    ) ??
+                                    log.note ??
+                                    "ForumFenomen bildirimi";
+
+                                const notificationPreview =
+                                    getMetadataString(
+                                        log.metadata,
+                                        "message_preview"
+                                    );
+
+                                const notificationType =
+                                    getMetadataString(
+                                        log.metadata,
+                                        "notification_type"
+                                    );
+
+                                const targetUser =
+                                    log.target_user_id
+                                        ? profileMap.get(
+                                            log.target_user_id
+                                        )
+                                        : null;
+
+                                const targetUserName =
+                                    targetUser
+                                        ? getProfileName(
+                                            targetUser
+                                        )
+                                        : log.target_user_id ??
+                                        "Kullanıcı bulunamadı";
 
                                 const topicId =
                                     getMetadataString(
@@ -654,9 +703,11 @@ export default async function AdminLogsPage({
                                                             log.new_value
                                                         )}`}
                                                     >
-                                                        {getStatusName(
-                                                            log.new_value
-                                                        )}
+                                                        {isUserNotification
+                                                            ? "GÖNDERİLDİ"
+                                                            : getStatusName(
+                                                                log.new_value
+                                                            )}
                                                     </span>
                                                 </div>
 
@@ -698,7 +749,7 @@ export default async function AdminLogsPage({
                                                         styles.adminLogValue
                                                     }
                                                 >
-                                                    Önceki durum:{" "}
+                                                    Ã–nceki durum:{" "}
                                                     <strong>
                                                         {getStatusName(
                                                             log.old_value
@@ -725,7 +776,7 @@ export default async function AdminLogsPage({
                                                 }
                                             >
                                                 <span>
-                                                    İşlemi yapan
+                                                    Ä°ÅŸlemi yapan
                                                 </span>
 
                                                 <strong>
@@ -743,8 +794,8 @@ export default async function AdminLogsPage({
                                                 </p>
                                             ) : (
                                                 <p>
-                                                    Bu işlem için
-                                                    içerik özeti
+                                                    Bu iÅŸlem iÃ§in
+                                                    iÃ§erik Ã¶zeti
                                                     bulunmuyor.
                                                 </p>
                                             )}
@@ -759,19 +810,87 @@ export default async function AdminLogsPage({
                                                         styles.reportTopicLink
                                                     }
                                                 >
-                                                    İlgili içeriğe git
+                                                    Ä°lgili iÃ§eriÄŸe git
                                                 </Link>
                                             ) : null}
                                         </div>
 
-                                        {log.note ? (
+                                        {isUserNotification ? (
+                                            <div
+                                                className={
+                                                    styles.adminNotificationLogBox
+                                                }
+                                            >
+                                                <div
+                                                    className={
+                                                        styles.adminNotificationLogHeader
+                                                    }
+                                                >
+                                                    <span>
+                                                        Gönderilen bildirim
+                                                    </span>
+
+                                                    <strong>
+                                                        {notificationTitle}
+                                                    </strong>
+                                                </div>
+
+                                                <div
+                                                    className={
+                                                        styles.adminNotificationLogMeta
+                                                    }
+                                                >
+                                                    <div>
+                                                        <span>
+                                                            Hedef kullanıcı
+                                                        </span>
+
+                                                        <strong>
+                                                            {targetUserName}
+                                                        </strong>
+                                                    </div>
+
+                                                    <div>
+                                                        <span>
+                                                            Bildirim türü
+                                                        </span>
+
+                                                        <strong>
+                                                            {notificationType ===
+                                                            "system"
+                                                                ? "Sistem bildirimi"
+                                                                : notificationType ??
+                                                                "Bildirim"}
+                                                        </strong>
+                                                    </div>
+                                                </div>
+
+                                                {notificationPreview ? (
+                                                    <div
+                                                        className={
+                                                            styles.adminNotificationLogMessage
+                                                        }
+                                                    >
+                                                        <span>
+                                                            Mesaj özeti
+                                                        </span>
+
+                                                        <p>
+                                                            {notificationPreview}
+                                                        </p>
+                                                    </div>
+                                                ) : null}
+                                            </div>
+                                        ) : null}
+
+                                        {log.note && !isUserNotification ? (
                                             <div
                                                 className={
                                                     styles.reportResolutionBox
                                                 }
                                             >
                                                 <span>
-                                                    İşlem notu
+                                                    Ä°ÅŸlem notu
                                                 </span>
 
                                                 <p>
