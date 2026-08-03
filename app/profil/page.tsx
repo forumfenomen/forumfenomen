@@ -184,6 +184,7 @@ const translations = {
     saved: "Kaydedilenler",
     notifications: "Bildirimler",
     settings: "Ayarlar",
+    plusMembership: "PLUS ÜYELİK",
     logout: "Çıkış Yap",
     editProfile: "Profili Düzenle",
     close: "Kapat",
@@ -266,6 +267,7 @@ const translations = {
     saved: "Saved Topics",
     notifications: "Notifications",
     settings: "Settings",
+    plusMembership: "PLUS MEMBERSHIP",
     logout: "Log Out",
     editProfile: "Edit Profile",
     close: "Close",
@@ -4950,6 +4952,22 @@ export default function ProfilePage() {
                   <ChevronIcon />
                 </span>
               </div>
+
+              <Link
+                href="/plus"
+                className={styles.plusMembershipButton}
+              >
+                <span
+                  className={styles.plusMembershipIcon}
+                  aria-hidden="true"
+                >
+                  ✦
+                </span>
+
+                <strong>{t.plusMembership}</strong>
+
+                <ChevronIcon />
+              </Link>
             </aside>
 
 
