@@ -9,6 +9,7 @@ import {
 } from "@/lib/forumfenomen-language";
 import {
   calculateCollaborationPrice,
+  type PricingContentType,
   type PricingResult,
 } from "@/lib/collaboration-pricing";
 import Image from "next/image";
@@ -112,6 +113,13 @@ const translations = {
     story: "Story",
     post: "Gönderi",
     video: "Video",
+    ugc: "UGC",
+    tiktokVideo: "TikTok Video",
+    adVideo: "Reklam Videosu",
+    liveStream: "Canlı Yayın",
+    shorts: "Shorts",
+    longVideo: "Uzun Video",
+    adIntegration: "Reklam Entegrasyonu",
     quantity: "İçerik adedi",
     delivery: "Teslim süresi",
     sevenDays: "7 gün",
@@ -239,6 +247,13 @@ const translations = {
     story: "Story",
     post: "Post",
     video: "Video",
+    ugc: "UGC",
+    tiktokVideo: "TikTok Video",
+    adVideo: "Advertising Video",
+    liveStream: "Live Stream",
+    shorts: "Shorts",
+    longVideo: "Long Video",
+    adIntegration: "Advertising Integration",
     quantity: "Content quantity",
     delivery: "Delivery period",
     sevenDays: "7 days",
@@ -507,7 +522,9 @@ export default function CollaborationAssistantPage() {
     useState("instagram");
 
   const [selectedContent, setSelectedContent] =
-    useState("reel");
+    useState<PricingContentType>(
+      "instagram_reel"
+    );
 
   const [analysisPlatform, setAnalysisPlatform] =
     useState("youtube");
@@ -657,6 +674,7 @@ export default function CollaborationAssistantPage() {
       setAnalysisResult(result);
 
       setSelectedPlatform("youtube");
+      setSelectedContent("youtube_shorts");
 
       setFollowers(
         String(result.channel.subscribers)
@@ -782,12 +800,7 @@ export default function CollaborationAssistantPage() {
           parsedAverageViews,
         engagementRate:
           parsedEngagement,
-        contentType:
-          selectedContent as
-            | "reel"
-            | "story"
-            | "post"
-            | "video",
+        contentType: selectedContent,
         quantity: parsedQuantity,
         delivery:
           selectedDelivery as
@@ -829,14 +842,72 @@ export default function CollaborationAssistantPage() {
 
   const t = translations[language];
 
+  const contentTypeOptions: Array<{
+    id: PricingContentType;
+    label: string;
+  }> =
+    selectedPlatform === "instagram"
+      ? [
+        {
+          id: "instagram_reel",
+          label: t.reel,
+        },
+        {
+          id: "instagram_story",
+          label: t.story,
+        },
+        {
+          id: "instagram_post",
+          label: t.post,
+        },
+        {
+          id: "instagram_ugc",
+          label: t.ugc,
+        },
+      ]
+      : selectedPlatform === "tiktok"
+        ? [
+          {
+            id: "tiktok_video",
+            label: t.tiktokVideo,
+          },
+          {
+            id: "tiktok_ugc",
+            label: t.ugc,
+          },
+          {
+            id: "tiktok_ad_video",
+            label: t.adVideo,
+          },
+          {
+            id: "tiktok_live",
+            label: t.liveStream,
+          },
+        ]
+        : [
+          {
+            id: "youtube_shorts",
+            label: t.shorts,
+          },
+          {
+            id: "youtube_long_video",
+            label: t.longVideo,
+          },
+          {
+            id: "youtube_ugc",
+            label: t.ugc,
+          },
+          {
+            id: "youtube_integration",
+            label: t.adIntegration,
+          },
+        ];
+
   const selectedContentLabel =
-    selectedContent === "reel"
-      ? t.reel
-      : selectedContent === "story"
-        ? t.story
-        : selectedContent === "post"
-          ? t.post
-          : t.video;
+    contentTypeOptions.find(
+      (contentType) =>
+        contentType.id === selectedContent
+    )?.label ?? t.video;
 
   const selectedPlatformLabel =
     selectedPlatform === "instagram"
@@ -1308,11 +1379,21 @@ export default function CollaborationAssistantPage() {
                         ? styles.selectedOption
                         : ""
                     }
-                    onClick={() =>
+                    onClick={() => {
                       setSelectedPlatform(
                         platform.id
-                      )
-                    }
+                      );
+
+                      setSelectedContent(
+                        platform.id === "instagram"
+                          ? "instagram_reel"
+                          : platform.id === "tiktok"
+                            ? "tiktok_video"
+                            : "youtube_shorts"
+                      );
+
+                      setPricingResult(null);
+                    }}
                   >
                     <span>{platform.icon}</span>
                     {platform.label}
@@ -1423,24 +1504,7 @@ export default function CollaborationAssistantPage() {
               <label>{t.contentType}</label>
 
               <div className={styles.optionGridFour}>
-                {[
-                  {
-                    id: "reel",
-                    label: t.reel,
-                  },
-                  {
-                    id: "story",
-                    label: t.story,
-                  },
-                  {
-                    id: "post",
-                    label: t.post,
-                  },
-                  {
-                    id: "video",
-                    label: t.video,
-                  },
-                ].map((contentType) => (
+                {contentTypeOptions.map((contentType) => (
                   <button
                     key={contentType.id}
                     type="button"

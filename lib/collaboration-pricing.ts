@@ -4,10 +4,18 @@ export type PricingPlatform =
   | "youtube";
 
 export type PricingContentType =
-  | "reel"
-  | "story"
-  | "post"
-  | "video";
+  | "instagram_reel"
+  | "instagram_story"
+  | "instagram_post"
+  | "instagram_ugc"
+  | "tiktok_video"
+  | "tiktok_ugc"
+  | "tiktok_ad_video"
+  | "tiktok_live"
+  | "youtube_shorts"
+  | "youtube_long_video"
+  | "youtube_ugc"
+  | "youtube_integration";
 
 export type PricingDelivery =
   | "seven"
@@ -73,25 +81,25 @@ function roundToNearest(
 */
 const VIEW_VALUE_TRY: Record<
   PricingPlatform,
-  Record<PricingContentType, number>
+  Partial<Record<PricingContentType, number>>
 > = {
   instagram: {
-    reel: 0.42,
-    story: 0.16,
-    post: 0.3,
-    video: 0.42,
+    instagram_reel: 0.42,
+    instagram_story: 0.16,
+    instagram_post: 0.3,
+    instagram_ugc: 0.34,
   },
   tiktok: {
-    reel: 0.38,
-    story: 0.16,
-    post: 0.25,
-    video: 0.38,
+    tiktok_video: 0.38,
+    tiktok_ugc: 0.34,
+    tiktok_ad_video: 0.46,
+    tiktok_live: 0.28,
   },
   youtube: {
-    reel: 0.3,
-    story: 0.12,
-    post: 0.22,
-    video: 0.72,
+    youtube_shorts: 0.3,
+    youtube_long_video: 0.72,
+    youtube_ugc: 0.4,
+    youtube_integration: 0.56,
   },
 };
 
@@ -202,9 +210,11 @@ function getBaseValue(
   if (validAverageViews) {
     return (
       input.averageViews *
-      VIEW_VALUE_TRY[input.platform][
-        input.contentType
-      ]
+      (
+        VIEW_VALUE_TRY[input.platform][
+          input.contentType
+        ] ?? 0.3
+      )
     );
   }
 
@@ -282,13 +292,25 @@ export function calculateCollaborationPrice(
     üretim emeği tabanı.
   */
   const productionFloor =
-    input.contentType === "video"
-      ? 2500
-      : input.contentType === "reel"
-        ? 1500
-        : input.contentType === "post"
-          ? 1000
-          : 750;
+    input.contentType === "youtube_long_video"
+      ? 3500
+      : input.contentType === "youtube_integration"
+        ? 2750
+        : input.contentType === "tiktok_ad_video"
+          ? 2250
+          : input.contentType === "instagram_ugc" ||
+              input.contentType === "tiktok_ugc" ||
+              input.contentType === "youtube_ugc"
+            ? 2000
+            : input.contentType === "instagram_reel" ||
+                input.contentType === "tiktok_video" ||
+                input.contentType === "youtube_shorts"
+              ? 1500
+              : input.contentType === "instagram_post"
+                ? 1000
+                : input.contentType === "tiktok_live"
+                  ? 1250
+                  : 750;
 
   const recommendedOffer =
     roundToNearest(
