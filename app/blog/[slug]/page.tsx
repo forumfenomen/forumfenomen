@@ -3,6 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import ForumFooter from "@/components/forum-footer";
 import BlogDetailHeader from "./blog-detail-header";
+import BlogPostActions from "./blog-post-actions";
+import BlogViewTracker from "./blog-view-tracker";
+import BlogDetailBottomNav from "./blog-detail-bottom-nav";
 import { notFound } from "next/navigation";
 
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -40,6 +43,20 @@ type BlogPost = {
 type AuthorInfo = {
     name: string;
     username: string;
+};
+
+type RelatedPost = {
+    id: string;
+    title: string;
+    slug: string;
+    excerpt: string;
+    cover_image_url: string | null;
+    cover_image_alt: string | null;
+    category: string;
+    tags: string[] | null;
+    reading_time: number | string | null;
+    published_at: string | null;
+    created_at: string;
 };
 
 type PageProps = {
@@ -167,6 +184,117 @@ async function getAuthor(
         }
     }
 
+    async function getRelatedPosts(
+        currentPost: BlogPost
+    ): Promise<RelatedPost[]> {
+        const adminSupabase =
+            createAdminClient();
+
+        const { data, error } =
+            await adminSupabase
+                .from("blog_posts")
+                .select(`
+                id,
+                title,
+                slug,
+                excerpt,
+                cover_image_url,
+                cover_image_alt,
+                category,
+                tags,
+                reading_time,
+                published_at,
+                created_at
+            `)
+                .eq("status", "published")
+                .neq("id", currentPost.id)
+                .order("published_at", {
+                    ascending: false,
+                    nullsFirst: false,
+                })
+                .limit(20);
+
+        if (error) {
+            console.error(
+                "Önerilen blog yazıları alınamadı:",
+                error.message
+            );
+
+            return [];
+        }
+
+        const currentTags = new Set(
+            (currentPost.tags ?? []).map(
+                (tag) =>
+                    tag
+                        .trim()
+                        .toLocaleLowerCase(
+                            "tr-TR"
+                        )
+            )
+        );
+
+        return (
+            (data ?? []) as RelatedPost[]
+        )
+            .map((relatedPost) => {
+                const sharedTagCount =
+                    (
+                        relatedPost.tags ?? []
+                    ).filter((tag) =>
+                        currentTags.has(
+                            tag
+                                .trim()
+                                .toLocaleLowerCase(
+                                    "tr-TR"
+                                )
+                        )
+                    ).length;
+
+                const sameCategory =
+                    relatedPost.category ===
+                    currentPost.category;
+
+                return {
+                    post: relatedPost,
+                    score:
+                        sharedTagCount * 10 +
+                        (sameCategory ? 5 : 0),
+                };
+            })
+            .sort((left, right) => {
+                if (
+                    right.score !==
+                    left.score
+                ) {
+                    return (
+                        right.score -
+                        left.score
+                    );
+                }
+
+                const rightDate =
+                    new Date(
+                        right.post
+                            .published_at ??
+                        right.post
+                            .created_at
+                    ).getTime();
+
+                const leftDate =
+                    new Date(
+                        left.post
+                            .published_at ??
+                        left.post
+                            .created_at
+                    ).getTime();
+
+                return rightDate - leftDate;
+            })
+            .slice(0, 4)
+            .map((item) => item.post);
+    }
+
     if (post.author_id) {
         const { data } =
             await adminSupabase
@@ -209,6 +337,108 @@ async function getAuthor(
         name: "ForumFenomen",
         username: "",
     };
+}
+
+async function getRelatedPosts(
+    currentPost: BlogPost
+): Promise<RelatedPost[]> {
+    const adminSupabase =
+        createAdminClient();
+
+    const { data, error } =
+        await adminSupabase
+            .from("blog_posts")
+            .select(`
+                id,
+                title,
+                slug,
+                excerpt,
+                cover_image_url,
+                cover_image_alt,
+                category,
+                tags,
+                reading_time,
+                published_at,
+                created_at
+            `)
+            .eq("status", "published")
+            .neq("id", currentPost.id)
+            .order("published_at", {
+                ascending: false,
+                nullsFirst: false,
+            })
+            .limit(20);
+
+    if (error) {
+        console.error(
+            "Önerilen blog yazıları alınamadı:",
+            error.message
+        );
+
+        return [];
+    }
+
+    const currentTags = new Set(
+        (currentPost.tags ?? []).map(
+            (tag) =>
+                tag
+                    .trim()
+                    .toLocaleLowerCase("tr-TR")
+        )
+    );
+
+    return ((data ?? []) as RelatedPost[])
+        .map((relatedPost) => {
+            const sharedTagCount =
+                (relatedPost.tags ?? []).filter(
+                    (tag) =>
+                        currentTags.has(
+                            tag
+                                .trim()
+                                .toLocaleLowerCase(
+                                    "tr-TR"
+                                )
+                        )
+                ).length;
+
+            const sameCategory =
+                relatedPost.category ===
+                currentPost.category;
+
+            return {
+                post: relatedPost,
+                score:
+                    sharedTagCount * 10 +
+                    (sameCategory ? 5 : 0),
+            };
+        })
+        .sort((left, right) => {
+            if (
+                right.score !==
+                left.score
+            ) {
+                return (
+                    right.score -
+                    left.score
+                );
+            }
+
+            const rightDate =
+                new Date(
+                    right.post.published_at ??
+                    right.post.created_at
+                ).getTime();
+
+            const leftDate =
+                new Date(
+                    left.post.published_at ??
+                    left.post.created_at
+                ).getTime();
+
+            return rightDate - leftDate;
+        })
+        .slice(0, 4)
+        .map((item) => item.post);
 }
 
 export async function generateMetadata({
@@ -373,6 +603,9 @@ export default async function BlogPostPage({
 
     const author =
         await getAuthor(post);
+
+    const relatedPosts =
+        await getRelatedPosts(post);
 
     const publishedDate =
         post.published_at ??
@@ -564,6 +797,12 @@ export default async function BlogPostPage({
                                 )
                         )}
 
+                        <BlogPostActions
+                            postId={post.id}
+                            title={post.title}
+                            slug={post.slug}
+                        />
+
                         {post.tags &&
                             post.tags.length >
                             0 ? (
@@ -658,11 +897,12 @@ export default async function BlogPostPage({
                             </div>
 
                             <div>
-                                <strong>
-                                    {getNumber(
+                                <BlogViewTracker
+                                    postId={post.id}
+                                    initialViewCount={getNumber(
                                         post.view_count
                                     )}
-                                </strong>
+                                />
 
                                 <small>
                                     Görüntülenme
@@ -672,42 +912,147 @@ export default async function BlogPostPage({
                     </aside>
                 </div>
 
-                <section
-                    className={
-                        styles.bottomCta
-                    }
-                >
-                    <div>
-                        <span>
-                            FORUMFENOMEN BLOG
-                        </span>
-
-                        <h2>
-                            Daha fazla rehber
-                            keşfet
-                        </h2>
-
-                        <p>
-                            İçerik üretimi,
-                            büyüme ve dijital
-                            dünyanın güncel
-                            konularını incele.
-                        </p>
-                    </div>
-
-                    <Link href="/blog">
-                        Tüm Yazılara Dön
-                        <span
-                            aria-hidden="true"
+                {relatedPosts.length > 0 ? (
+                    <section
+                        className={
+                            styles.relatedSection
+                        }
+                    >
+                        <div
+                            className={
+                                styles.relatedHeader
+                            }
                         >
-                            →
-                        </span>
-                    </Link>
-                </section>
+                            <div>
+                                <span>
+                                    İLGİNİ ÇEKEBİLİR
+                                </span>
+
+                                <h2>
+                                    Önerilen Yazılar
+                                </h2>
+
+                                <p>
+                                    Bu yazının etiketleri ve
+                                    kategorisiyle benzer içerikler.
+                                </p>
+                            </div>
+
+                            <Link href="/blog">
+                                Tüm Yazılar
+                                <span
+                                    aria-hidden="true"
+                                >
+                                    →
+                                </span>
+                            </Link>
+                        </div>
+
+                        <div
+                            className={
+                                styles.relatedGrid
+                            }
+                        >
+                            {relatedPosts.map(
+                                (relatedPost) => (
+                                    <Link
+                                        key={
+                                            relatedPost.id
+                                        }
+                                        href={`/blog/${relatedPost.slug}`}
+                                        className={
+                                            styles.relatedCard
+                                        }
+                                    >
+                                        {relatedPost.cover_image_url ? (
+                                            <div
+                                                className={
+                                                    styles.relatedImage
+                                                }
+                                            >
+                                                <Image
+                                                    src={
+                                                        relatedPost.cover_image_url
+                                                    }
+                                                    alt={
+                                                        relatedPost.cover_image_alt ??
+                                                        relatedPost.title
+                                                    }
+                                                    fill
+                                                    sizes="(max-width: 700px) 100vw, 500px"
+                                                />
+                                            </div>
+                                        ) : (
+                                            <div
+                                                className={
+                                                    styles.relatedFallback
+                                                }
+                                            >
+                                                BLOG
+                                            </div>
+                                        )}
+
+                                        <div
+                                            className={
+                                                styles.relatedBody
+                                            }
+                                        >
+                                            <span
+                                                className={
+                                                    styles.relatedCategory
+                                                }
+                                            >
+                                                {
+                                                    relatedPost.category
+                                                }
+                                            </span>
+
+                                            <h3>
+                                                {
+                                                    relatedPost.title
+                                                }
+                                            </h3>
+
+                                            <p>
+                                                {
+                                                    relatedPost.excerpt
+                                                }
+                                            </p>
+
+                                            <div
+                                                className={
+                                                    styles.relatedMeta
+                                                }
+                                            >
+                                                <span>
+                                                    {Math.max(
+                                                        1,
+                                                        getNumber(
+                                                            relatedPost.reading_time
+                                                        )
+                                                    )}{" "}
+                                                    dk okuma
+                                                </span>
+
+                                                <span>
+                                                    Devamını Oku →
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                )
+                            )}
+                        </div>
+                    </section>
+                ) : null}
             </article>
 
             <div className={styles.detailShell}>
                 <ForumFooter />
+            </div>
+
+            <div className={styles.detailShell}>
+                <BlogDetailBottomNav />
             </div>
 
         </main>
