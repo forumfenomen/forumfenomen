@@ -53,9 +53,9 @@ comment_hidden: "Yorum gizlendi",
     topic_banned: "Konu yasaklandı",
 
     report_reviewing:
-        "ÅikÃ¢yet incelemeye alÄ±ndÄ±",
+        "Şikâyet incelemeye alındı",
     report_resolved:
-        "ÅikÃ¢yette ihlal doÄŸrulandÄ±",
+        "Şikâyette ihlal doğrulandı",
     report_dismissed:
         "ÅikÃ¢yet reddedildi",
 
@@ -417,7 +417,7 @@ export default async function AdminLogsPage({
                         : ""
                         }`}
                 >
-                    <span>ÅikÃ¢yet iÅŸlemleri</span>
+                    <span>Şikâyet işlemleri</span>
 
                     <strong>{reportCount}</strong>
                 </Link>
@@ -545,7 +545,7 @@ export default async function AdminLogsPage({
                             </option>
 
                             <option value="report">
-                                ÅikÃ¢yet iÅŸlemleri
+                                Şikâyet işlemleri
                             </option>
                         </select>
                     </label>
@@ -574,14 +574,14 @@ export default async function AdminLogsPage({
                 >
                     <div>
                         <span>
-                            DENETÄ°M GÃœNLÃœÄÃœ
+                            DENETİM GÜNLÜĞÜ
                         </span>
 
                         <h2>
                             {selectedType === "comment"
                                 ? "Yorum İşlemleri"
                                 : selectedType === "report"
-                                    ? "ÅikÃ¢yet Ä°ÅŸlemleri"
+                                    ? "Şikâyet İşlemleri"
                                     : "Son İşlemler"}
                         </h2>
                     </div>
@@ -751,9 +751,11 @@ export default async function AdminLogsPage({
                                                 >
                                                     Yeni durum:{" "}
                                                     <strong>
-                                                        {getStatusName(
-                                                            log.new_value
-                                                        )}
+                                                        {isUserNotification
+                                                            ? "Gönderildi"
+                                                            : getStatusName(
+                                                                log.new_value
+                                                            )}
                                                     </strong>
                                                 </span>
 
@@ -764,9 +766,11 @@ export default async function AdminLogsPage({
                                                 >
                                                     Önceki durum:{" "}
                                                     <strong>
-                                                        {getStatusName(
-                                                            log.old_value
-                                                        )}
+                                                        {isUserNotification
+                                                            ? "-"
+                                                            : getStatusName(
+                                                                log.old_value
+                                                            )}
                                                     </strong>
                                                 </span>
 
