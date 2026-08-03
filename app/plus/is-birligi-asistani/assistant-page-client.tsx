@@ -12,6 +12,10 @@ import {
   type PricingContentType,
   type PricingResult,
 } from "@/lib/collaboration-pricing";
+import {
+  analyseCollaborationOffer,
+  type OfferAnalysisResult,
+} from "@/lib/collaboration-offer-analysis";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -764,6 +768,36 @@ export default function CollaborationAssistantPage() {
   const [pricingError, setPricingError] =
     useState("");
 
+  const [offerBrandName, setOfferBrandName] =
+    useState("");
+
+  const [offerText, setOfferText] =
+    useState("");
+
+  const [offeredPrice, setOfferedPrice] =
+    useState("");
+
+  const [offerPaymentDays, setOfferPaymentDays] =
+    useState("");
+
+  const [offerRevisionCount, setOfferRevisionCount] =
+    useState("");
+
+  const [offerUsageMonths, setOfferUsageMonths] =
+    useState("");
+
+  const [offerRights, setOfferRights] = useState({
+    ads: false,
+    raw: false,
+    exclusivity: false,
+  });
+
+  const [offerAnalysisResult, setOfferAnalysisResult] =
+    useState<OfferAnalysisResult | null>(null);
+
+  const [offerAnalysisError, setOfferAnalysisError] =
+    useState("");
+
   const [usageRights, setUsageRights] = useState({
     organic: true,
     ads: false,
@@ -1097,6 +1131,122 @@ export default function CollaborationAssistantPage() {
     );
 
     setPricingError("");
+  }
+
+  function calculateOfferAnalysis() {
+    if (!pricingResult) {
+      setOfferAnalysisResult(null);
+      setOfferAnalysisError(
+        language === "tr"
+          ? "Önce Fiyat Hesapla sekmesinde iş birliği değerini hesapla."
+          : "First calculate the collaboration value in the Calculate Price tab."
+      );
+      return;
+    }
+
+    const parsedOfferedPrice =
+      parseCountInput(offeredPrice);
+
+    if (
+      !offerBrandName.trim() ||
+      !offerText.trim() ||
+      parsedOfferedPrice <= 0
+    ) {
+      setOfferAnalysisResult(null);
+      setOfferAnalysisError(
+        language === "tr"
+          ? "Marka adı, teklif metni ve teklif edilen ücret alanlarını doldur."
+          : "Complete the brand name, offer text and offered fee fields."
+      );
+      return;
+    }
+
+    const parseOptionalNumber = (
+      value: string
+    ) => {
+      if (!value.trim()) {
+        return null;
+      }
+
+      const parsed =
+        parseCountInput(value);
+
+      return Number.isFinite(parsed)
+        ? Math.max(0, parsed)
+        : null;
+    };
+
+    const result =
+      analyseCollaborationOffer({
+        offerText,
+        offeredPrice:
+          parsedOfferedPrice,
+
+        platform:
+          selectedPlatform as
+            | "instagram"
+            | "tiktok"
+            | "youtube",
+
+        contentType:
+          selectedContent,
+
+        quantity:
+          Math.max(
+            1,
+            Math.floor(
+              parseCountInput(quantity)
+            )
+          ),
+
+        forumMinimumPrice:
+          pricingResult.minimumPrice,
+
+        forumRecommendedPrice:
+          pricingResult.recommendedOffer,
+
+        forumPremiumPrice:
+          pricingResult.premiumPrice,
+
+        paidAds:
+          offerRights.ads,
+
+        rawFiles:
+          offerRights.raw,
+
+        exclusivity:
+          offerRights.exclusivity,
+
+        revisionCount:
+          parseOptionalNumber(
+            offerRevisionCount
+          ),
+
+        paymentTermDays:
+          parseOptionalNumber(
+            offerPaymentDays
+          ),
+
+        usageDurationMonths:
+          parseOptionalNumber(
+            offerUsageMonths
+          ),
+      });
+
+    setOfferAnalysisResult(result);
+    setOfferAnalysisError("");
+  }
+
+  function toggleOfferRight(
+    key: keyof typeof offerRights
+  ) {
+    setOfferRights((current) => ({
+      ...current,
+      [key]: !current[key],
+    }));
+
+    setOfferAnalysisResult(null);
+    setOfferAnalysisError("");
   }
 
   function toggleUsage(
@@ -2806,43 +2956,320 @@ export default function CollaborationAssistantPage() {
 
                   <p>
                     {language === "tr"
-                      ? "Markadan gelen teklif metnini ve ücret detaylarını gir. ForumFenomen fiyat sonucuyla karşılaştırarak riskleri ve pazarlık alanını göstereceğiz."
-                      : "Enter the offer text and payment details. We will compare them with the ForumFenomen pricing result and identify risks and negotiation opportunities."}
+                      ? "Markadan gelen teklif metnini ve ticari şartları gir. Sistem teklifi mevcut fiyat sonucunla karşılaştıracak."
+                      : "Enter the brand offer and commercial terms. The system will compare it with your existing pricing result."}
                   </p>
                 </div>
               </div>
 
-              <section className={styles.accountAnalysisCard}>
-                <div className={styles.analysisHeading}>
-                  <div
-                    className={
-                      styles.analysisHeadingIcon
+              {!pricingResult && (
+                <div className={styles.offerPriceWarning}>
+                  <strong>
+                    {language === "tr"
+                      ? "Önce fiyatını hesapla"
+                      : "Calculate your price first"}
+                  </strong>
+
+                  <p>
+                    {language === "tr"
+                      ? "Teklifi değerlendirebilmek için Fiyat Hesapla sekmesinde güncel bir fiyat sonucu oluşturmalısın."
+                      : "Create a current pricing result in the Calculate Price tab before analysing an offer."}
+                  </p>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setActiveTab("price")
                     }
                   >
-                    <SparkleIcon />
+                    {language === "tr"
+                      ? "Fiyat Hesapla sekmesine git"
+                      : "Go to Calculate Price"}
+                  </button>
+                </div>
+              )}
+
+              {pricingResult && (
+                <div className={styles.offerReferenceStrip}>
+                  <div>
+                    <span>
+                      {language === "tr"
+                        ? "Minimum"
+                        : "Minimum"}
+                    </span>
+
+                    <strong>
+                      {formatCurrency(
+                        pricingResult.minimumPrice
+                      )}
+                    </strong>
                   </div>
 
                   <div>
                     <span>
                       {language === "tr"
-                        ? "TEKLİF ANALİZİ"
-                        : "OFFER ANALYSIS"}
+                        ? "Önerilen"
+                        : "Recommended"}
                     </span>
 
-                    <h3>
-                      {language === "tr"
-                        ? "Analiz formu hazırlanıyor"
-                        : "Analysis form is being prepared"}
-                    </h3>
+                    <strong>
+                      {formatCurrency(
+                        pricingResult.recommendedOffer
+                      )}
+                    </strong>
+                  </div>
 
-                    <p>
+                  <div>
+                    <span>
                       {language === "tr"
-                        ? "Bir sonraki adımda marka adı, teklif metni, teklif edilen ücret, kullanım hakları, ödeme süresi ve revizyon şartları bu alana eklenecek."
-                        : "The next step will add the brand name, offer text, offered fee, usage rights, payment term and revision conditions here."}
-                    </p>
+                        ? "Üst sınır"
+                        : "Ceiling"}
+                    </span>
+
+                    <strong>
+                      {formatCurrency(
+                        pricingResult.premiumPrice
+                      )}
+                    </strong>
                   </div>
                 </div>
-              </section>
+              )}
+
+              <div className={styles.offerForm}>
+                <div className={styles.offerInputGrid}>
+                  <label>
+                    <span>
+                      {language === "tr"
+                        ? "Marka adı"
+                        : "Brand name"}
+                    </span>
+
+                    <input
+                      type="text"
+                      value={offerBrandName}
+                      placeholder={
+                        language === "tr"
+                          ? "Örn. ForumFenomen"
+                          : "Example: ForumFenomen"
+                      }
+                      onChange={(event) => {
+                        setOfferBrandName(
+                          event.target.value
+                        );
+                        setOfferAnalysisResult(null);
+                      }}
+                    />
+                  </label>
+
+                  <label>
+                    <span>
+                      {language === "tr"
+                        ? "Teklif edilen ücret"
+                        : "Offered fee"}
+                    </span>
+
+                    <input
+                      type="text"
+                      inputMode="decimal"
+                      value={offeredPrice}
+                      placeholder={
+                        language === "tr"
+                          ? "Örn. 5.000"
+                          : "Example: 5,000"
+                      }
+                      onChange={(event) => {
+                        setOfferedPrice(
+                          event.target.value
+                        );
+                        setOfferAnalysisResult(null);
+                      }}
+                    />
+                  </label>
+                </div>
+
+                <label className={styles.offerTextField}>
+                  <span>
+                    {language === "tr"
+                      ? "Markadan gelen teklif metni"
+                      : "Brand offer text"}
+                  </span>
+
+                  <textarea
+                    value={offerText}
+                    rows={8}
+                    placeholder={
+                      language === "tr"
+                        ? "Markanın gönderdiği e-posta veya mesajı buraya yapıştır..."
+                        : "Paste the email or message received from the brand..."
+                    }
+                    onChange={(event) => {
+                      setOfferText(
+                        event.target.value
+                      );
+                      setOfferAnalysisResult(null);
+                    }}
+                  />
+                </label>
+
+                <div className={styles.offerInputGridThree}>
+                  <label>
+                    <span>
+                      {language === "tr"
+                        ? "Ödeme süresi"
+                        : "Payment term"}
+                    </span>
+
+                    <div className={styles.offerInputSuffix}>
+                      <input
+                        type="number"
+                        min="0"
+                        value={offerPaymentDays}
+                        placeholder="30"
+                        onChange={(event) => {
+                          setOfferPaymentDays(
+                            event.target.value
+                          );
+                          setOfferAnalysisResult(null);
+                        }}
+                      />
+
+                      <small>
+                        {language === "tr"
+                          ? "gün"
+                          : "days"}
+                      </small>
+                    </div>
+                  </label>
+
+                  <label>
+                    <span>
+                      {language === "tr"
+                        ? "Revizyon sınırı"
+                        : "Revision limit"}
+                    </span>
+
+                    <input
+                      type="number"
+                      min="0"
+                      value={offerRevisionCount}
+                      placeholder="2"
+                      onChange={(event) => {
+                        setOfferRevisionCount(
+                          event.target.value
+                        );
+                        setOfferAnalysisResult(null);
+                      }}
+                    />
+                  </label>
+
+                  <label>
+                    <span>
+                      {language === "tr"
+                        ? "Kullanım süresi"
+                        : "Usage duration"}
+                    </span>
+
+                    <div className={styles.offerInputSuffix}>
+                      <input
+                        type="number"
+                        min="0"
+                        value={offerUsageMonths}
+                        placeholder="3"
+                        onChange={(event) => {
+                          setOfferUsageMonths(
+                            event.target.value
+                          );
+                          setOfferAnalysisResult(null);
+                        }}
+                      />
+
+                      <small>
+                        {language === "tr"
+                          ? "ay"
+                          : "months"}
+                      </small>
+                    </div>
+                  </label>
+                </div>
+
+                <div className={styles.offerRightsSection}>
+                  <span>
+                    {language === "tr"
+                      ? "Teklifte açıkça istenen haklar"
+                      : "Rights explicitly requested"}
+                  </span>
+
+                  <div className={styles.usageGrid}>
+                    {[
+                      {
+                        id: "ads" as const,
+                        label:
+                          language === "tr"
+                            ? "Reklamlarda kullanım"
+                            : "Paid advertising usage",
+                      },
+                      {
+                        id: "raw" as const,
+                        label:
+                          language === "tr"
+                            ? "Ham görüntü teslimi"
+                            : "Raw footage delivery",
+                      },
+                      {
+                        id: "exclusivity" as const,
+                        label:
+                          language === "tr"
+                            ? "Rakip marka kısıtlaması"
+                            : "Competitor exclusivity",
+                      },
+                    ].map((right) => {
+                      const selected =
+                        offerRights[right.id];
+
+                      return (
+                        <button
+                          key={right.id}
+                          type="button"
+                          className={
+                            selected
+                              ? styles.selectedUsage
+                              : ""
+                          }
+                          onClick={() =>
+                            toggleOfferRight(
+                              right.id
+                            )
+                          }
+                        >
+                          <span className={styles.checkbox}>
+                            {selected && <CheckIcon />}
+                          </span>
+
+                          {right.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  className={styles.calculateButton}
+                  onClick={calculateOfferAnalysis}
+                >
+                  <SparkleIcon />
+
+                  {language === "tr"
+                    ? "Teklifi analiz et"
+                    : "Analyse offer"}
+                </button>
+
+                {offerAnalysisError && (
+                  <p className={styles.pricingError}>
+                    {offerAnalysisError}
+                  </p>
+                )}
+              </div>
             </div>
 
             <aside className={styles.previewCard}>
@@ -2853,61 +3280,375 @@ export default function CollaborationAssistantPage() {
                     : "OFFER RESULT"}
                 </span>
 
-                <div className={styles.previewPulse}>
+                <div
+                  className={
+                    offerAnalysisResult
+                      ? `${styles.previewPulse} ${styles.previewReady}`
+                      : styles.previewPulse
+                  }
+                >
                   <i />
 
-                  {language === "tr"
-                    ? "FORM BEKLENİYOR"
-                    : "WAITING FOR FORM"}
+                  {offerAnalysisResult
+                    ? language === "tr"
+                      ? "ANALİZ EDİLDİ"
+                      : "ANALYSED"
+                    : language === "tr"
+                      ? "FORM BEKLENİYOR"
+                      : "WAITING FOR FORM"}
                 </div>
               </div>
 
-              <div className={styles.previewIntro}>
-                <h2>
-                  {language === "tr"
-                    ? "Teklif değerlendirmesi"
-                    : "Offer assessment"}
-                </h2>
+              {!offerAnalysisResult && (
+                <>
+                  <div className={styles.previewIntro}>
+                    <h2>
+                      {language === "tr"
+                        ? "Teklif değerlendirmesi"
+                        : "Offer assessment"}
+                    </h2>
 
-                <p>
-                  {language === "tr"
-                    ? "Form tamamlandığında teklifin kabul edilebilir, pazarlığa açık veya minimum değerin altında olup olmadığı burada gösterilecek."
-                    : "Once the form is completed, this area will show whether the offer is acceptable, negotiable or below the minimum value."}
-                </p>
-              </div>
-
-              <div className={styles.factorBox}>
-                <h3>
-                  {language === "tr"
-                    ? "Analiz edilecek başlıklar"
-                    : "Terms to analyse"}
-                </h3>
-
-                {[
-                  language === "tr"
-                    ? "Teklif edilen ücret"
-                    : "Offered fee",
-                  language === "tr"
-                    ? "Kullanım hakları"
-                    : "Usage rights",
-                  language === "tr"
-                    ? "Ödeme ve teslim şartları"
-                    : "Payment and delivery terms",
-                  language === "tr"
-                    ? "Eksik veya riskli maddeler"
-                    : "Missing or risky terms",
-                ].map((item) => (
-                  <div key={item}>
-                    <CheckIcon />
-                    <span>{item}</span>
+                    <p>
+                      {language === "tr"
+                        ? "Form tamamlandığında fiyat seviyesi, riskler ve önerilen karşı teklif burada gösterilecek."
+                        : "The price level, risks and recommended counteroffer will appear here after completing the form."}
+                    </p>
                   </div>
-                ))}
-              </div>
+
+                  <div className={styles.factorBox}>
+                    <h3>
+                      {language === "tr"
+                        ? "Analiz edilecek başlıklar"
+                        : "Terms to analyse"}
+                    </h3>
+
+                    {[
+                      language === "tr"
+                        ? "Teklif edilen ücret"
+                        : "Offered fee",
+                      language === "tr"
+                        ? "Kullanım hakları"
+                        : "Usage rights",
+                      language === "tr"
+                        ? "Ödeme ve revizyon şartları"
+                        : "Payment and revision terms",
+                      language === "tr"
+                        ? "Eksik veya riskli maddeler"
+                        : "Missing or risky terms",
+                    ].map((item) => (
+                      <div key={item}>
+                        <CheckIcon />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {offerAnalysisResult && pricingResult && (
+                <>
+                  <div
+                    className={`${styles.offerStatusCard} ${
+                      styles[
+                        `offerStatus${offerAnalysisResult.status
+                          .charAt(0)
+                          .toUpperCase()}${offerAnalysisResult.status.slice(
+                          1
+                        )}`
+                      ]
+                    }`}
+                  >
+                    <span>
+                      {language === "tr"
+                        ? "Teklif kararı"
+                        : "Offer decision"}
+                    </span>
+
+                    <h2>
+                      {offerAnalysisResult.status === "strong"
+                        ? language === "tr"
+                          ? "Güçlü teklif"
+                          : "Strong offer"
+                        : offerAnalysisResult.status ===
+                            "acceptable"
+                          ? language === "tr"
+                            ? "Kabul edilebilir"
+                            : "Acceptable"
+                          : offerAnalysisResult.status ===
+                              "negotiate"
+                            ? language === "tr"
+                              ? "Pazarlık gerekli"
+                              : "Negotiation required"
+                            : language === "tr"
+                              ? "Minimumun altında"
+                              : "Below minimum"}
+                    </h2>
+
+                    <strong>
+                      {offerAnalysisResult.score}/100
+                    </strong>
+                  </div>
+
+                  <div className={styles.pricePreview}>
+                    <article>
+                      <span>
+                        {language === "tr"
+                          ? "Marka teklifi"
+                          : "Brand offer"}
+                      </span>
+
+                      <strong>
+                        {formatCurrency(
+                          parseCountInput(
+                            offeredPrice
+                          )
+                        )}
+                      </strong>
+                    </article>
+
+                    <article>
+                      <span>
+                        {language === "tr"
+                          ? "ForumFenomen minimumu"
+                          : "ForumFenomen minimum"}
+                      </span>
+
+                      <strong>
+                        {formatCurrency(
+                          pricingResult.minimumPrice
+                        )}
+                      </strong>
+                    </article>
+
+                    <article>
+                      <span>
+                        {language === "tr"
+                          ? "Önerilen profesyonel fiyat"
+                          : "Recommended professional price"}
+                      </span>
+
+                      <strong>
+                        {formatCurrency(
+                          pricingResult.recommendedOffer
+                        )}
+                      </strong>
+                    </article>
+
+                    <article
+                      className={
+                        styles.recommendedPriceCard
+                      }
+                    >
+                      <span>
+                        {language === "tr"
+                          ? "Önerilen karşı teklif"
+                          : "Recommended counteroffer"}
+                      </span>
+
+                      <strong>
+                        {formatCurrency(
+                          offerAnalysisResult
+                            .recommendedCounterOffer
+                        )}
+                      </strong>
+                    </article>
+                  </div>
+
+                  <div className={styles.offerDifferenceCard}>
+                    <span>
+                      {language === "tr"
+                        ? "Önerilen fiyata göre fark"
+                        : "Difference from recommendation"}
+                    </span>
+
+                    <strong>
+                      {offerAnalysisResult.priceDifference >
+                      0
+                        ? "+"
+                        : ""}
+                      {formatCurrency(
+                        offerAnalysisResult
+                          .priceDifference
+                      )}
+                    </strong>
+
+                    <small>
+                      %
+                      {offerAnalysisResult
+                        .priceDifferencePercent.toLocaleString(
+                          language === "tr"
+                            ? "tr-TR"
+                            : "en-US"
+                        )}
+                    </small>
+                  </div>
+
+                  {offerAnalysisResult.risks.length >
+                    0 && (
+                    <div className={styles.offerResultGroup}>
+                      <h3>
+                        {language === "tr"
+                          ? "Riskli maddeler"
+                          : "Risky terms"}
+                      </h3>
+
+                      {offerAnalysisResult.risks.map(
+                        (risk) => (
+                          <div key={risk}>
+                            <span
+                              className={
+                                styles.offerRiskMarker
+                              }
+                            >
+                              !
+                            </span>
+
+                            <span>
+                              {risk === "perpetual_usage"
+                                ? language === "tr"
+                                  ? "Süresiz kullanım hakkı talep ediliyor."
+                                  : "Perpetual usage rights are requested."
+                                : risk ===
+                                    "unlimited_revision"
+                                  ? language === "tr"
+                                    ? "Sınırsız revizyon talebi bulunuyor."
+                                    : "Unlimited revisions are requested."
+                                  : risk ===
+                                      "product_only_offer"
+                                    ? language === "tr"
+                                      ? "Teklif yalnızca ürün karşılığı olabilir."
+                                      : "The offer may be product-only."
+                                    : risk ===
+                                        "performance_guarantee"
+                                      ? language === "tr"
+                                        ? "Performans garantisi talep ediliyor."
+                                        : "A performance guarantee is requested."
+                                      : risk ===
+                                          "multi_platform_usage"
+                                        ? language === "tr"
+                                          ? "Birden fazla platformda kullanım talep ediliyor."
+                                          : "Multi-platform usage is requested."
+                                        : risk ===
+                                            "undisclosed_paid_ads"
+                                          ? language === "tr"
+                                            ? "Metinde reklam kullanımı var ancak formda belirtilmedi."
+                                            : "Paid advertising appears in the text but was not selected."
+                                          : risk ===
+                                              "undisclosed_raw_files"
+                                            ? language === "tr"
+                                              ? "Metinde ham görüntü talebi var ancak formda belirtilmedi."
+                                              : "Raw footage appears in the text but was not selected."
+                                            : risk ===
+                                                "undisclosed_exclusivity"
+                                              ? language === "tr"
+                                                ? "Metinde münhasırlık var ancak formda belirtilmedi."
+                                                : "Exclusivity appears in the text but was not selected."
+                                              : language === "tr"
+                                                ? "Teklif ForumFenomen minimum fiyatının altında."
+                                                : "The offer is below the ForumFenomen minimum price."}
+                            </span>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  )}
+
+                  {offerAnalysisResult.missingTerms
+                    .length > 0 && (
+                    <div className={styles.offerResultGroup}>
+                      <h3>
+                        {language === "tr"
+                          ? "Eksik şartlar"
+                          : "Missing terms"}
+                      </h3>
+
+                      {offerAnalysisResult.missingTerms.map(
+                        (term) => (
+                          <div key={term}>
+                            <span
+                              className={
+                                styles.offerMissingMarker
+                              }
+                            >
+                              ?
+                            </span>
+
+                            <span>
+                              {term === "payment_term"
+                                ? language === "tr"
+                                  ? "Ödeme süresi belirtilmemiş."
+                                  : "Payment term is not specified."
+                                : term ===
+                                    "usage_duration"
+                                  ? language === "tr"
+                                    ? "Kullanım süresi belirtilmemiş."
+                                    : "Usage duration is not specified."
+                                  : term ===
+                                      "revision_limit"
+                                    ? language === "tr"
+                                      ? "Revizyon sınırı belirtilmemiş."
+                                      : "Revision limit is not specified."
+                                    : language === "tr"
+                                      ? "Teslim tarihi belirtilmemiş."
+                                      : "Delivery date is not specified."}
+                            </span>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  )}
+
+                  {offerAnalysisResult.positiveTerms
+                    .length > 0 && (
+                    <div className={styles.offerResultGroup}>
+                      <h3>
+                        {language === "tr"
+                          ? "Olumlu şartlar"
+                          : "Positive terms"}
+                      </h3>
+
+                      {offerAnalysisResult.positiveTerms.map(
+                        (term) => (
+                          <div key={term}>
+                            <CheckIcon />
+
+                            <span>
+                              {term ===
+                              "price_above_premium"
+                                ? language === "tr"
+                                  ? "Teklif güçlü pazarlık üst sınırının üzerinde."
+                                  : "The offer is above the strong negotiation ceiling."
+                                : term ===
+                                    "price_meets_recommendation"
+                                  ? language === "tr"
+                                    ? "Teklif önerilen profesyonel fiyatı karşılıyor."
+                                    : "The offer meets the recommended professional price."
+                                  : term ===
+                                      "clear_payment_term"
+                                    ? language === "tr"
+                                      ? "Ödeme süresi açık ve makul."
+                                      : "The payment term is clear and reasonable."
+                                    : term ===
+                                        "limited_usage_duration"
+                                      ? language === "tr"
+                                        ? "Kullanım süresi sınırlandırılmış."
+                                        : "The usage duration is limited."
+                                      : language === "tr"
+                                        ? "Revizyon sınırı makul."
+                                        : "The revision limit is reasonable."}
+                            </span>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  )}
+                </>
+              )}
 
               <p className={styles.notice}>
                 {language === "tr"
-                  ? "Mevcut fiyat hesaplayıcı ve sonuçları değiştirilmedi."
-                  : "The existing pricing calculator and its results remain unchanged."}
+                  ? "Bu analiz sözleşme veya hukuki danışmanlık yerine geçmez; ticari karar desteği sağlar."
+                  : "This analysis provides commercial decision support and does not replace legal or contract advice."}
               </p>
             </aside>
           </section>
