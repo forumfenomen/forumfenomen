@@ -1083,3 +1083,13 @@
 .assistantButton:disabled:hover {
   transform: none;
 }
+
+/* PLUS ASSISTANT POINTER V1 */
+
+.assistantButton {
+  cursor: pointer;
+}
+
+.assistantButton:disabled {
+  cursor: not-allowed;
+}
