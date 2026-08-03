@@ -2,7 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import {
+    useEffect,
+    useLayoutEffect,
+    useRef,
+    useState,
+} from "react";
 
 import NotificationBell from "@/components/notification-bell";
 import SiteSearch from "@/components/site-search";
@@ -25,6 +30,66 @@ function SunIcon() {
         </svg>
     );
 }
+
+const headerRef =
+    useRef<HTMLElement | null>(null);
+
+useLayoutEffect(() => {
+    const header =
+        headerRef.current;
+
+    if (!header) {
+        return;
+    }
+
+    header.style.setProperty(
+        "position",
+        "relative",
+        "important"
+    );
+
+    header.style.setProperty(
+        "inset",
+        "auto",
+        "important"
+    );
+
+    header.style.setProperty(
+        "top",
+        "auto",
+        "important"
+    );
+
+    header.style.setProperty(
+        "right",
+        "auto",
+        "important"
+    );
+
+    header.style.setProperty(
+        "bottom",
+        "auto",
+        "important"
+    );
+
+    header.style.setProperty(
+        "left",
+        "auto",
+        "important"
+    );
+
+    header.style.setProperty(
+        "transform",
+        "none",
+        "important"
+    );
+
+    header.style.setProperty(
+        "z-index",
+        "1",
+        "important"
+    );
+}, []);
 
 export default function BlogDetailHeader() {
     const [theme, setTheme] =
@@ -65,7 +130,10 @@ export default function BlogDetailHeader() {
     }
 
     return (
-        <header className="ff-feed-header ff-blog-detail-header">
+        <header
+    ref={headerRef}
+    className="ff-feed-header ff-blog-detail-header"
+>
             <Link
                 href="/akis"
                 className="ff-feed-logo-wrap"
