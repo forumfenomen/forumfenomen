@@ -132,18 +132,18 @@ function getLogTypeLabel(
     targetType: string
 ) {
     if (targetType === "comment") {
-        return "YORUM Ä°ÅLEMÄ°";
+        return "YORUM İŞLEMİ";
     }
 
     if (targetType === "topic") {
-        return "KONU Ä°ÅLEMÄ°";
+        return "KONU İŞLEMİ";
     }
 
     if (targetType === "user") {
-        return "KULLANICI Ä°ÅLEMÄ°";
+        return "KULLANICI İŞLEMİ";
     }
 
-    return "ÅÄ°KÃ‚YET Ä°ÅLEMÄ°";
+    return "ŞİKÂYET İŞLEMİ";
 }
 
 function getLogStatusClass(
