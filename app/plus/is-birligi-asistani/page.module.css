@@ -4406,3 +4406,48 @@ button > span {
     overflow: hidden !important;
   }
 }
+
+
+/* BACK LINK GIANT DECORATION FIX V1 */
+
+/*
+ * Eski Plus'a dön butonunun pseudo dekorasyonu,
+ * buton hero dışına taşındıktan sonra sayfaya yayılıyordu.
+ */
+.backLinkRow .backLink::before,
+.backLinkRow .backLink::after {
+  content: none !important;
+  display: none !important;
+
+  position: static !important;
+
+  width: 0 !important;
+  height: 0 !important;
+
+  inset: auto !important;
+
+  background: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+
+  pointer-events: none !important;
+}
+
+/*
+ * Buton kendi sınırları içinde kalsın.
+ */
+.backLinkRow,
+.backLinkRow .backLink {
+  isolation: isolate;
+}
+
+.backLinkRow {
+  position: relative;
+  z-index: 3;
+
+  overflow: visible;
+}
+
+.backLinkRow .backLink {
+  overflow: hidden;
+}
