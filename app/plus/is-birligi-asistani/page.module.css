@@ -2861,3 +2861,212 @@ button > span {
       transparent
     );
 }
+
+/* AUTOMATIC ANALYSIS COMING SOON PLATFORMS V1 */
+
+.analysisPlatformGrid button {
+  min-width: 0;
+  padding: 0 10px;
+}
+
+.analysisPlatformIdentity {
+  display: inline-flex !important;
+
+  width: auto !important;
+  height: auto !important;
+
+  min-width: 0;
+
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  color: inherit !important;
+
+  font-size: inherit !important;
+}
+
+.analysisPlatformIcon {
+  display: grid;
+
+  width: 18px;
+  height: 18px;
+
+  flex: 0 0 18px;
+
+  place-items: center;
+
+  color: var(--platform-color);
+}
+
+.analysisPlatformIcon svg {
+  width: 18px;
+  height: 18px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.analysisPlatformLabel {
+  display: block;
+
+  width: auto !important;
+  height: auto !important;
+
+  overflow: hidden;
+
+  color: inherit !important;
+
+  font-size: 10.5px !important;
+  font-weight: 680;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.analysisPlatformGrid
+.analysisPlatformComingSoon {
+  justify-content: space-between;
+
+  opacity: 0.54;
+
+  color: #858da0;
+
+  border-color:
+    rgba(145, 155, 180, 0.13);
+
+  background:
+    rgba(255, 255, 255, 0.016);
+
+  box-shadow: none;
+
+  cursor: not-allowed;
+  filter: saturate(0.62);
+}
+
+.analysisPlatformGrid
+.analysisPlatformComingSoon:hover {
+  color: #858da0;
+
+  border-color:
+    rgba(145, 155, 180, 0.13);
+
+  background:
+    rgba(255, 255, 255, 0.016);
+
+  box-shadow: none;
+  transform: none;
+}
+
+.analysisPlatformGrid
+.analysisPlatformComingSoon
+.analysisPlatformIcon {
+  filter: grayscale(0.22);
+}
+
+.analysisSoonBadge {
+  display: inline-flex !important;
+
+  width: auto !important;
+  height: 22px !important;
+
+  flex: 0 0 auto;
+
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  padding: 0 7px;
+
+  color: #a7afd0 !important;
+
+  border:
+    1px solid rgba(139, 153, 196, 0.17);
+  border-radius: 999px;
+
+  background:
+    rgba(111, 126, 174, 0.075);
+
+  font-size: 7.5px !important;
+  font-weight: 820;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.analysisSoonBadge svg {
+  width: 10px !important;
+  height: 10px !important;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.analysisPlatformGrid
+.selectedAnalysisPlatform
+.analysisPlatformIcon {
+  filter:
+    drop-shadow(
+      0 0 6px color-mix(
+        in srgb,
+        var(--platform-color) 50%,
+        transparent
+      )
+    );
+}
+
+:global(html[data-theme="light"])
+.analysisPlatformGrid
+.analysisPlatformComingSoon {
+  opacity: 0.58;
+
+  color: #737c8e;
+
+  border-color:
+    rgba(73, 88, 120, 0.11);
+
+  background:
+    rgba(60, 75, 110, 0.025);
+}
+
+:global(html[data-theme="light"])
+.analysisPlatformGrid
+.analysisPlatformComingSoon:hover {
+  color: #737c8e;
+
+  border-color:
+    rgba(73, 88, 120, 0.11);
+
+  background:
+    rgba(60, 75, 110, 0.025);
+}
+
+:global(html[data-theme="light"])
+.analysisSoonBadge {
+  color: #667399 !important;
+
+  border-color:
+    rgba(71, 90, 140, 0.13);
+
+  background:
+    rgba(69, 88, 138, 0.055);
+}
+
+@media (max-width: 560px) {
+  .analysisPlatformGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .analysisPlatformGrid button {
+    min-height: 46px;
+  }
+
+  .analysisSoonBadge {
+    margin-left: auto;
+  }
+}

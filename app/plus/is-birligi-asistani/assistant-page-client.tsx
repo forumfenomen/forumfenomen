@@ -341,6 +341,15 @@ function SparkleIcon() {
   );
 }
 
+function SoonIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="8" />
+      <path d="M12 8v4l2.5 2" />
+    </svg>
+  );
+}
+
 function InstagramIcon() {
   return (
     <svg
@@ -501,7 +510,7 @@ export default function CollaborationAssistantPage() {
     useState("reel");
 
   const [analysisPlatform, setAnalysisPlatform] =
-    useState("instagram");
+    useState("youtube");
 
   const [accountUsername, setAccountUsername] =
     useState("");
@@ -990,36 +999,94 @@ export default function CollaborationAssistantPage() {
                     id: "instagram",
                     label: t.instagram,
                     icon: <InstagramIcon />,
+                    comingSoon: true,
                   },
                   {
                     id: "tiktok",
                     label: t.tiktok,
                     icon: <TikTokIcon />,
+                    comingSoon: true,
                   },
                   {
                     id: "youtube",
                     label: t.youtube,
                     icon: <YouTubeIcon />,
+                    comingSoon: false,
                   },
-                ].map((platform) => (
-                  <button
-                    key={platform.id}
-                    type="button"
-                    className={
-                      analysisPlatform === platform.id
-                        ? styles.selectedAnalysisPlatform
-                        : ""
-                    }
-                    onClick={() => {
-                      setAnalysisPlatform(platform.id);
-                      setAnalysisResult(null);
-                      setAnalysisError("");
-                    }}
-                  >
-                    <span>{platform.icon}</span>
-                    {platform.label}
-                  </button>
-                ))}
+                ].map((platform) => {
+                  const isDisabled =
+                    platform.comingSoon;
+
+                  return (
+                    <button
+                      key={platform.id}
+                      type="button"
+                      className={[
+                        analysisPlatform ===
+                          platform.id
+                          ? styles.selectedAnalysisPlatform
+                          : "",
+                        isDisabled
+                          ? styles.analysisPlatformComingSoon
+                          : "",
+                      ]
+                        .filter(Boolean)
+                        .join(" ")}
+                      disabled={isDisabled}
+                      aria-disabled={isDisabled}
+                      title={
+                        isDisabled
+                          ? t.platformComingSoon
+                          : platform.label
+                      }
+                      onClick={() => {
+                        if (isDisabled) {
+                          return;
+                        }
+
+                        setAnalysisPlatform(
+                          platform.id
+                        );
+
+                        setAnalysisResult(null);
+                        setAnalysisError("");
+                      }}
+                    >
+                      <span
+                        className={
+                          styles.analysisPlatformIdentity
+                        }
+                      >
+                        <span
+                          className={
+                            styles.analysisPlatformIcon
+                          }
+                        >
+                          {platform.icon}
+                        </span>
+
+                        <span
+                          className={
+                            styles.analysisPlatformLabel
+                          }
+                        >
+                          {platform.label}
+                        </span>
+                      </span>
+
+                      {isDisabled ? (
+                        <span
+                          className={
+                            styles.analysisSoonBadge
+                          }
+                        >
+                          <SoonIcon />
+                          {t.soon}
+                        </span>
+                      ) : null}
+                    </button>
+                  );
+                })}
               </div>
 
               <div className={styles.usernameRow}>
@@ -1775,41 +1842,7 @@ export default function CollaborationAssistantPage() {
             </p>
           </aside>
         </section>
-
-        <section className={styles.howSection}>
-          <div className={styles.sectionHeading}>
-            <span>3 ADIM</span>
-            <h2>{t.howTitle}</h2>
-          </div>
-
-          <div className={styles.howGrid}>
-            {[
-              {
-                number: "01",
-                title: t.howOneTitle,
-                text: t.howOneText,
-              },
-              {
-                number: "02",
-                title: t.howTwoTitle,
-                text: t.howTwoText,
-              },
-              {
-                number: "03",
-                title: t.howThreeTitle,
-                text: t.howThreeText,
-              },
-            ].map((step) => (
-              <article key={step.number}>
-                <span>{step.number}</span>
-                <h3>{step.title}</h3>
-                <p>{step.text}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <ForumFooter />
+<ForumFooter />
       </div>
 
       <nav
