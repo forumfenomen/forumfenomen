@@ -1083,7 +1083,15 @@ export default function CollaborationAssistantPage() {
                           <SoonIcon />
                           {t.soon}
                         </span>
-                      ) : null}
+                      ) : (
+                        <span
+                          className={
+                            styles.analysisPlatformActiveName
+                          }
+                        >
+                          {platform.label}
+                        </span>
+                      )}
                     </button>
                   );
                 })}

@@ -3070,3 +3070,633 @@ button > span {
     margin-left: auto;
   }
 }
+
+
+/* COMPACT PLATFORM GRID FINAL V4 */
+
+/* Otomatik ve manuel platformlar her ekranda 3 sütun */
+
+.analysisPlatformGrid,
+.optionGridThree {
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr)) !important;
+
+  gap: 7px !important;
+}
+
+.analysisPlatformGrid button,
+.optionGridThree button {
+  min-width: 0;
+  min-height: 43px;
+
+  overflow: hidden;
+}
+
+/* Otomatik analiz kutuları */
+
+.analysisPlatformGrid button {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  padding: 0 8px !important;
+}
+
+/* Instagram/TikTok isimlerini otomatik analizde gizle */
+
+.analysisPlatformGrid
+.analysisPlatformComingSoon
+.analysisPlatformLabel {
+  display: none !important;
+}
+
+/* YouTube için eski iç label'ı da gizle;
+   yeni active name kullanılır */
+
+.analysisPlatformGrid
+.selectedAnalysisPlatform
+.analysisPlatformLabel {
+  display: none !important;
+}
+
+.analysisPlatformIdentity {
+  display: inline-flex !important;
+
+  width: auto !important;
+  height: auto !important;
+
+  min-width: 0;
+
+  flex: 0 0 auto;
+
+  align-items: center;
+  justify-content: center;
+  gap: 0 !important;
+}
+
+.analysisPlatformIcon {
+  display: grid !important;
+
+  width: 17px !important;
+  height: 17px !important;
+
+  flex: 0 0 17px;
+
+  place-items: center;
+
+  color: var(--platform-color);
+}
+
+.analysisPlatformIcon svg {
+  width: 17px !important;
+  height: 17px !important;
+}
+
+/* Aktif YouTube yazısı */
+
+.analysisPlatformActiveName {
+  display: block !important;
+
+  width: auto !important;
+  height: auto !important;
+
+  min-width: 0;
+
+  overflow: hidden;
+
+  color: #ffffff !important;
+
+  font-size: 10px !important;
+  font-weight: 760;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Yakında rozeti */
+
+.analysisSoonBadge {
+  display: inline-flex !important;
+
+  width: auto !important;
+  height: 19px !important;
+
+  flex: 0 0 auto;
+
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+
+  margin-left: 0 !important;
+  padding: 0 5px !important;
+
+  border:
+    1px solid rgba(139, 153, 196, 0.16);
+  border-radius: 999px;
+
+  color: #a1a9c2 !important;
+  background:
+    rgba(110, 125, 170, 0.07);
+
+  font-size: 6.7px !important;
+  font-weight: 850;
+  letter-spacing: 0.035em;
+  white-space: nowrap;
+}
+
+.analysisSoonBadge svg {
+  width: 8px !important;
+  height: 8px !important;
+}
+
+/* Yakında platform kutuları */
+
+.analysisPlatformGrid
+.analysisPlatformComingSoon {
+  justify-content: center !important;
+  gap: 6px !important;
+
+  opacity: 0.54;
+
+  color: #858da0;
+
+  border-color:
+    rgba(145, 155, 180, 0.13);
+
+  background:
+    rgba(255, 255, 255, 0.016);
+
+  box-shadow: none;
+
+  cursor: not-allowed;
+  filter: saturate(0.65);
+}
+
+.analysisPlatformGrid
+.analysisPlatformComingSoon:hover {
+  color: #858da0;
+
+  border-color:
+    rgba(145, 155, 180, 0.13);
+
+  background:
+    rgba(255, 255, 255, 0.016);
+
+  box-shadow: none;
+  transform: none;
+}
+
+/* Manuel giriş platformları */
+
+.optionGridThree button {
+  gap: 5px !important;
+
+  padding-inline: 7px !important;
+
+  font-size: 9.5px !important;
+}
+
+.optionGridThree button > span {
+  width: 17px !important;
+  height: 17px !important;
+
+  flex: 0 0 17px;
+}
+
+.optionGridThree button > span svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* Açık tema */
+
+:global(html[data-theme="light"])
+.analysisPlatformActiveName {
+  color: #1e3b5b !important;
+}
+
+:global(html[data-theme="light"])
+.analysisPlatformGrid
+.analysisPlatformComingSoon {
+  opacity: 0.58;
+
+  color: #737c8e;
+
+  border-color:
+    rgba(73, 88, 120, 0.11);
+
+  background:
+    rgba(60, 75, 110, 0.025);
+}
+
+:global(html[data-theme="light"])
+.analysisSoonBadge {
+  color: #687493 !important;
+
+  border-color:
+    rgba(71, 90, 140, 0.13);
+
+  background:
+    rgba(69, 88, 138, 0.055);
+}
+
+/* Mobilde de 3 kutu korunur */
+
+@media (max-width: 560px) {
+  .analysisPlatformGrid,
+  .optionGridThree {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr)) !important;
+
+    gap: 5px !important;
+  }
+
+  .analysisPlatformGrid button,
+  .optionGridThree button {
+    min-height: 42px;
+
+    padding-inline: 5px !important;
+  }
+
+  .analysisPlatformGrid button {
+    gap: 4px !important;
+  }
+
+  .analysisPlatformIcon {
+    width: 15px !important;
+    height: 15px !important;
+
+    flex-basis: 15px;
+  }
+
+  .analysisPlatformIcon svg {
+    width: 15px !important;
+    height: 15px !important;
+  }
+
+  .analysisPlatformActiveName {
+    font-size: 8.5px !important;
+  }
+
+  .analysisSoonBadge {
+    height: 18px !important;
+
+    padding-inline: 4px !important;
+
+    font-size: 5.8px !important;
+    letter-spacing: 0.02em;
+  }
+
+  .analysisSoonBadge svg {
+    display: none;
+  }
+
+  .optionGridThree button {
+    gap: 3px !important;
+
+    font-size: 8px !important;
+  }
+
+  .optionGridThree button > span {
+    width: 14px !important;
+    height: 14px !important;
+
+    flex-basis: 14px;
+  }
+
+  .optionGridThree button > span svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+}
+
+/* Önceki tek sütun mobil kuralını kesin biçimde ezer */
+
+@media (max-width: 420px) {
+  .analysisPlatformGrid,
+  .optionGridThree {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+
+/* PREMIUM PLUS BACK BUTTON V2 */
+
+.backLink {
+  position: relative;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  min-height: 42px;
+  padding: 0 16px;
+
+  overflow: hidden;
+
+  color: #eef6ff;
+
+  border:
+    1px solid rgba(101, 177, 255, 0.3);
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(23, 117, 223, 0.24),
+      rgba(93, 53, 214, 0.22)
+    );
+
+  box-shadow:
+    0 12px 30px rgba(20, 68, 151, 0.2),
+    0 0 0 1px rgba(111, 185, 255, 0.035) inset,
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  font-size: 13px;
+  font-weight: 790;
+  line-height: 1;
+  letter-spacing: 0.015em;
+  text-decoration: none;
+
+  cursor: pointer;
+
+  isolation: isolate;
+
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease,
+    background 180ms ease;
+}
+
+.backLink::before {
+  content: "";
+
+  position: absolute;
+  z-index: -2;
+
+  inset: -1px;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      120deg,
+      rgba(64, 189, 255, 0.26),
+      rgba(116, 84, 255, 0.2),
+      rgba(209, 72, 255, 0.18)
+    );
+
+  opacity: 0.7;
+}
+
+.backLink::after {
+  content: "";
+
+  position: absolute;
+  z-index: -1;
+
+  top: -70%;
+  left: -35%;
+
+  width: 46%;
+  height: 240%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+
+  transform:
+    rotate(18deg)
+    translateX(-180%);
+
+  transition:
+    transform 520ms ease;
+}
+
+.backLink:hover {
+  transform: translateY(-2px);
+
+  color: #ffffff;
+
+  border-color:
+    rgba(115, 194, 255, 0.5);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(28, 134, 244, 0.3),
+      rgba(109, 61, 230, 0.28)
+    );
+
+  box-shadow:
+    0 18px 40px rgba(26, 89, 186, 0.26),
+    0 0 24px rgba(64, 167, 255, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.backLink:hover::after {
+  transform:
+    rotate(18deg)
+    translateX(420%);
+}
+
+.backLink:active {
+  transform: translateY(0) scale(0.985);
+
+  box-shadow:
+    0 9px 22px rgba(24, 74, 157, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.backLink:focus-visible {
+  outline: none;
+
+  box-shadow:
+    0 0 0 3px rgba(86, 177, 255, 0.2),
+    0 16px 34px rgba(24, 83, 174, 0.24);
+}
+
+.backLink svg {
+  width: 15px;
+  height: 15px;
+
+  flex: 0 0 15px;
+
+  color: #9ed8ff;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  filter:
+    drop-shadow(
+      0 0 5px rgba(71, 174, 255, 0.36)
+    );
+
+  transition:
+    transform 180ms ease,
+    color 180ms ease;
+}
+
+.backLink:hover svg {
+  color: #d4efff;
+
+  transform: translateX(-2px);
+}
+
+/* Eski metin karakteriyle kullanılan ok varsa */
+
+.backLink > span:first-child {
+  display: inline-grid;
+
+  width: 19px;
+  height: 19px;
+
+  flex: 0 0 19px;
+
+  place-items: center;
+
+  color: #b5e2ff;
+
+  border:
+    1px solid rgba(116, 192, 255, 0.2);
+  border-radius: 50%;
+
+  background:
+    rgba(79, 155, 255, 0.09);
+
+  font-size: 13px;
+  font-weight: 850;
+  line-height: 1;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease;
+}
+
+.backLink:hover > span:first-child {
+  transform: translateX(-2px);
+
+  background:
+    rgba(92, 173, 255, 0.15);
+}
+
+/* Açık tema */
+
+:global(html[data-theme="light"])
+.backLink {
+  color: #183f6b;
+
+  border-color:
+    rgba(42, 127, 218, 0.23);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(58, 143, 232, 0.1),
+      rgba(125, 76, 220, 0.09)
+    );
+
+  box-shadow:
+    0 12px 27px rgba(37, 85, 153, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+:global(html[data-theme="light"])
+.backLink::before {
+  background:
+    linear-gradient(
+      120deg,
+      rgba(61, 156, 236, 0.19),
+      rgba(118, 84, 222, 0.14),
+      rgba(184, 69, 223, 0.1)
+    );
+}
+
+:global(html[data-theme="light"])
+.backLink:hover {
+  color: #102e51;
+
+  border-color:
+    rgba(47, 132, 225, 0.36);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(61, 150, 242, 0.16),
+      rgba(133, 82, 228, 0.14)
+    );
+
+  box-shadow:
+    0 16px 34px rgba(37, 87, 160, 0.14),
+    0 0 20px rgba(76, 149, 230, 0.08);
+}
+
+:global(html[data-theme="light"])
+.backLink > span:first-child {
+  color: #2869a8;
+
+  border-color:
+    rgba(47, 132, 225, 0.19);
+
+  background:
+    rgba(54, 137, 225, 0.08);
+}
+
+/* Mobil */
+
+@media (max-width: 640px) {
+  .backLink {
+    min-height: 39px;
+
+    padding: 0 13px;
+
+    gap: 7px;
+
+    font-size: 12px;
+  }
+
+  .backLink > span:first-child {
+    width: 18px;
+    height: 18px;
+
+    flex-basis: 18px;
+
+    font-size: 12px;
+  }
+}
+
+/* Hareket azaltma tercihi */
+
+@media (prefers-reduced-motion: reduce) {
+  .backLink,
+  .backLink::after,
+  .backLink svg,
+  .backLink > span:first-child {
+    transition: none;
+  }
+
+  .backLink:hover {
+    transform: none;
+  }
+
+  .backLink:hover::after {
+    transform: none;
+  }
+}
