@@ -1238,11 +1238,6 @@
     translate: none !important;
 }
 
-/* BLOG DETAIL SEARCH CATEGORY ALIGNMENT FINAL */
-:global(.ff-feed-header.ff-blog-detail-header) {
-    position: relative !important;
-    overflow: visible !important;
-}
 
 :global(.ff-feed-header.ff-blog-detail-header:has(.ff-site-search-popover)) {
     margin-bottom: 86px !important;
@@ -1259,4 +1254,16 @@
 
     margin: 0 !important;
     z-index: 30 !important;
+}
+
+/* BLOG DETAIL SEARCH HERO GAP FINAL */
+/*
+   Header ve arama genişliğini değiştirmez.
+   Arama açıkken yalnızca hero kartının üstünde,
+   kategoriler sayfasındaki gibi boşluk oluşturur.
+*/
+.page
+  > :global(.ff-feed-header:has(.ff-site-search-popover))
+  + .article {
+    margin-top: 14px;
 }
