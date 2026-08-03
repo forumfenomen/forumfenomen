@@ -7,6 +7,7 @@ import BlogPostActions from "./blog-post-actions";
 import BlogViewTracker from "./blog-view-tracker";
 import BlogDetailBottomNav from "./blog-detail-bottom-nav";
 import { notFound } from "next/navigation";
+import type { ReactNode } from "react";
 
 import { createAdminClient } from "@/lib/supabase/admin";
 
@@ -91,6 +92,71 @@ function getParagraphs(text: string) {
         .split("\n")
         .map((line) => line.trim())
         .filter(Boolean);
+}
+
+function renderInlineContent(
+    text: string,
+    keyPrefix: string
+): ReactNode[] {
+    const pattern =
+        /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|\*\*([^*]+)\*\*|\*([^*\n]+)\*)/g;
+
+    const nodes: ReactNode[] = [];
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+    let partIndex = 0;
+
+    while ((match = pattern.exec(text)) !== null) {
+        if (match.index > lastIndex) {
+            nodes.push(
+                text.slice(lastIndex, match.index)
+            );
+        }
+
+        const fullMatch = match[0];
+
+        if (match[2] && match[3]) {
+            nodes.push(
+                <a
+                    key={`${keyPrefix}-link-${partIndex}`}
+                    href={match[3]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    {match[2]}
+                </a>
+            );
+        } else if (match[4]) {
+            nodes.push(
+                <strong
+                    key={`${keyPrefix}-bold-${partIndex}`}
+                >
+                    {match[4]}
+                </strong>
+            );
+        } else if (match[5]) {
+            nodes.push(
+                <em
+                    key={`${keyPrefix}-italic-${partIndex}`}
+                >
+                    {match[5]}
+                </em>
+            );
+        } else {
+            nodes.push(fullMatch);
+        }
+
+        lastIndex =
+            match.index + fullMatch.length;
+
+        partIndex += 1;
+    }
+
+    if (lastIndex < text.length) {
+        nodes.push(text.slice(lastIndex));
+    }
+
+    return nodes;
 }
 
 async function getPublishedPost(
@@ -524,7 +590,10 @@ function renderContentBlock(
     ) {
         return (
             <h2 key={index}>
-                {text}
+                {renderInlineContent(
+                    text,
+                    `heading-2-${index}`
+                )}
             </h2>
         );
     }
@@ -535,7 +604,10 @@ function renderContentBlock(
     ) {
         return (
             <h3 key={index}>
-                {text}
+                {renderInlineContent(
+                    text,
+                    `heading-3-${index}`
+                )}
             </h3>
         );
     }
@@ -544,18 +616,14 @@ function renderContentBlock(
         return (
             <aside
                 key={index}
-                className={
-                    styles.infoBox
-                }
+                className={styles.infoBox}
             >
                 <strong>
                     {block.title?.trim() ||
                         "Önemli bilgi"}
                 </strong>
 
-                {getParagraphs(
-                    text
-                ).map(
+                {getParagraphs(text).map(
                     (
                         paragraph,
                         paragraphIndex
@@ -565,13 +633,81 @@ function renderContentBlock(
                                 paragraphIndex
                             }
                         >
-                            {
-                                paragraph
-                            }
+                            {renderInlineContent(
+                                paragraph,
+                                `info-${index}-${paragraphIndex}`
+                            )}
                         </p>
                     )
                 )}
             </aside>
+        );
+    }
+
+    const lines = text
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(Boolean);
+
+    const isBulletList =
+        lines.length > 0 &&
+        lines.every((line) =>
+            /^-\s+/.test(line)
+        );
+
+    if (isBulletList) {
+        return (
+            <ul
+                key={index}
+                className={
+                    styles.contentList
+                }
+            >
+                {lines.map(
+                    (line, lineIndex) => (
+                        <li key={lineIndex}>
+                            {renderInlineContent(
+                                line.replace(
+                                    /^-\s+/,
+                                    ""
+                                ),
+                                `bullet-${index}-${lineIndex}`
+                            )}
+                        </li>
+                    )
+                )}
+            </ul>
+        );
+    }
+
+    const isNumberedList =
+        lines.length > 0 &&
+        lines.every((line) =>
+            /^\d+\.\s+/.test(line)
+        );
+
+    if (isNumberedList) {
+        return (
+            <ol
+                key={index}
+                className={
+                    styles.contentList
+                }
+            >
+                {lines.map(
+                    (line, lineIndex) => (
+                        <li key={lineIndex}>
+                            {renderInlineContent(
+                                line.replace(
+                                    /^\d+\.\s+/,
+                                    ""
+                                ),
+                                `numbered-${index}-${lineIndex}`
+                            )}
+                        </li>
+                    )
+                )}
+            </ol>
         );
     }
 
@@ -583,7 +719,10 @@ function renderContentBlock(
             <p
                 key={`${index}-${paragraphIndex}`}
             >
-                {paragraph}
+                {renderInlineContent(
+                    paragraph,
+                    `paragraph-${index}-${paragraphIndex}`
+                )}
             </p>
         )
     );
@@ -648,7 +787,7 @@ export default async function BlogPostPage({
                     styles.article
                 }
             >
-                
+
                 <header
                     className={
                         styles.hero
@@ -807,7 +946,7 @@ export default async function BlogPostPage({
                         ) : null}
                     </div>
 
-                    
+
                 </div>
 
                 {relatedPosts.length > 0 ? (

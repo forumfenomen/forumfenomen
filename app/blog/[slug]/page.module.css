@@ -167,6 +167,46 @@
     line-height: 1.9;
 }
 
+.content a {
+    color: #ed65f5;
+    font-weight: 750;
+    text-decoration: underline;
+    text-decoration-color:
+        rgba(237, 101, 245, 0.5);
+    text-underline-offset: 3px;
+}
+
+.content a:hover {
+    color: #ffffff;
+}
+
+.content strong {
+    color: #ffffff;
+    font-weight: 850;
+}
+
+.content em {
+    color: #e7dfea;
+}
+
+.contentList {
+    margin: 0 0 24px;
+    padding-left: 26px;
+    color: #c7c3d1;
+    font-size: 17px;
+    line-height: 1.85;
+}
+
+.contentList li {
+    padding-left: 6px;
+    margin-bottom: 8px;
+}
+
+.contentList li::marker {
+    color: #e55cf0;
+    font-weight: 850;
+}
+
 .infoBox {
     margin: 30px 0;
     padding: 24px 25px;
@@ -777,7 +817,7 @@
     }
 }
 
-.page > :global(.ff-feed-header) {
+.page> :global(.ff-feed-header) {
     width: min(820px, 100%) !important;
     margin: 0 auto 18px !important;
 }
@@ -788,16 +828,12 @@
 
 :global(html[data-theme="light"]) .page {
     background:
-        radial-gradient(
-            circle at 18% 10%,
+        radial-gradient(circle at 18% 10%,
             rgba(168, 85, 247, 0.10),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 86% 20%,
+            transparent 28%),
+        radial-gradient(circle at 86% 20%,
             rgba(59, 130, 246, 0.08),
-            transparent 30%
-        ),
+            transparent 30%),
         #f6f7fb;
     color: #17131f;
 }
@@ -806,28 +842,22 @@
 :global(html[data-theme="light"]) .hero {
     border-color: rgba(174, 38, 195, 0.24);
     background:
-        radial-gradient(
-            circle at 85% 15%,
+        radial-gradient(circle at 85% 15%,
             rgba(126, 34, 206, 0.12),
-            transparent 38%
-        ),
-        linear-gradient(
-            135deg,
+            transparent 38%),
+        linear-gradient(135deg,
             #ffffff,
-            #f2effc
-        );
+            #f2effc);
     box-shadow:
         0 22px 60px rgba(41, 31, 61, 0.12);
 }
 
 :global(html[data-theme="light"]) .heroGlow {
     background:
-        radial-gradient(
-            circle,
+        radial-gradient(circle,
             rgba(217, 70, 239, 0.18),
             rgba(59, 130, 246, 0.08) 45%,
-            transparent 70%
-        );
+            transparent 70%);
 }
 
 :global(html[data-theme="light"]) .hero h1 {
@@ -858,11 +888,9 @@
 :global(html[data-theme="light"]) .content {
     border-color: rgba(42, 35, 55, 0.10);
     background:
-        linear-gradient(
-            180deg,
+        linear-gradient(180deg,
             #ffffff,
-            #faf9fd
-        );
+            #faf9fd);
     box-shadow:
         0 18px 50px rgba(45, 35, 62, 0.08);
 }
@@ -883,11 +911,9 @@
     border-color: rgba(190, 24, 206, 0.28);
     border-left-color: #c026d3;
     background:
-        linear-gradient(
-            135deg,
+        linear-gradient(135deg,
             rgba(192, 38, 211, 0.08),
-            rgba(37, 99, 235, 0.05)
-        );
+            rgba(37, 99, 235, 0.05));
 }
 
 :global(html[data-theme="light"]) .infoBox strong {
@@ -902,7 +928,7 @@
     border-top-color: rgba(42, 35, 55, 0.10);
 }
 
-:global(html[data-theme="light"]) .tags > span {
+:global(html[data-theme="light"]) .tags>span {
     color: #716a79;
 }
 
@@ -915,21 +941,15 @@
 :global(html[data-theme="light"]) .relatedSection {
     border-color: rgba(190, 24, 206, 0.22);
     background:
-        radial-gradient(
-            circle at 0 0,
+        radial-gradient(circle at 0 0,
             rgba(217, 70, 239, 0.09),
-            transparent 34%
-        ),
-        radial-gradient(
-            circle at 100% 100%,
+            transparent 34%),
+        radial-gradient(circle at 100% 100%,
             rgba(59, 130, 246, 0.07),
-            transparent 38%
-        ),
-        linear-gradient(
-            135deg,
+            transparent 38%),
+        linear-gradient(135deg,
             #ffffff,
-            #f5f3fa
-        );
+            #f5f3fa);
 }
 
 :global(html[data-theme="light"]) .relatedHeader h2 {
@@ -940,7 +960,7 @@
     color: #6c6575;
 }
 
-:global(html[data-theme="light"]) .relatedHeader > a {
+:global(html[data-theme="light"]) .relatedHeader>a {
     border-color: rgba(190, 24, 206, 0.36);
     background: rgba(192, 38, 211, 0.07);
     color: #7f168d;
@@ -974,22 +994,85 @@
     border-bottom-color: rgba(42, 35, 55, 0.10);
 }
 
-:global(html[data-theme="light"])
-    :global(.blog-post-actions button) {
+:global(html[data-theme="light"]) :global(.blog-post-actions button) {
     border-color: rgba(42, 35, 55, 0.12);
     background: rgba(255, 255, 255, 0.85);
     color: #514a59;
 }
 
-:global(html[data-theme="light"])
-    :global(.blog-post-actions button:hover:not(:disabled)) {
+:global(html[data-theme="light"]) :global(.blog-post-actions button:hover:not(:disabled)) {
     border-color: rgba(190, 24, 206, 0.34);
     background: rgba(192, 38, 211, 0.07);
     color: #211825;
 }
 
-:global(html[data-theme="light"])
-    :global(.blog-post-actions button strong) {
+:global(html[data-theme="light"]) :global(.blog-post-actions button strong) {
     background: rgba(70, 60, 80, 0.08);
     color: #2b2530;
+}
+
+:global(html[data-theme="light"]) .content a {
+    color: #a512b5;
+}
+
+:global(html[data-theme="light"]) .content a:hover {
+    color: #681174;
+}
+
+:global(html[data-theme="light"]) .content strong {
+    color: #211825;
+}
+
+:global(html[data-theme="light"]) .content em {
+    color: #514858;
+}
+
+:global(html[data-theme="light"]) .contentList {
+    color: #47414f;
+}
+
+:global(html[data-theme="light"]) .contentList li::marker {
+    color: #a512b5;
+}
+
+/* Açık temada seçili blog etkileşimleri */
+
+:global(html[data-theme="light"])
+    :global(.blog-post-actions button.active) {
+    border-color: #b519c5 !important;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(192, 38, 211, 0.18),
+            rgba(59, 130, 246, 0.12)
+        ) !important;
+    color: #8e159c !important;
+    box-shadow:
+        0 0 0 3px rgba(192, 38, 211, 0.08),
+        0 8px 20px rgba(126, 34, 206, 0.10);
+}
+
+:global(html[data-theme="light"])
+    :global(.blog-post-actions button.active svg) {
+    fill: currentColor;
+    stroke: currentColor;
+}
+
+:global(html[data-theme="light"])
+    :global(.blog-post-actions button.active strong) {
+    background: rgba(192, 38, 211, 0.14);
+    color: #7d168a;
+}
+
+:global(html[data-theme="light"])
+    :global(.blog-post-actions button.active.negative) {
+    border-color: #dc2626 !important;
+    background: rgba(220, 38, 38, 0.10) !important;
+    color: #b91c1c !important;
+}
+
+:global(html[data-theme="light"])
+    :global(.blog-post-actions button.active.negative strong) {
+    background: rgba(220, 38, 38, 0.12);
+    color: #991b1b;
 }

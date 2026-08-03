@@ -9,6 +9,8 @@ import {
 import { requireAdminAccess } from "@/lib/admin/require-admin-access";
 import { createAdminClient } from "@/lib/supabase/admin";
 
+import BlogContentEditor from "./blog-content-editor";
+
 import styles from "../../admin.module.css";
 import pageStyles from "./page.module.css";
 
@@ -1155,35 +1157,19 @@ export default async function NewBlogPostPage({
                             </label>
                         </div>
 
-                        <label
+                        <div
                             className={`${pageStyles.field} ${pageStyles.contentField}`}
                         >
                             <span>Yazı İçeriği</span>
 
-                            <textarea
-                                name="content"
-                                minLength={80}
-                                required
-                                rows={18}
-                                placeholder={`Giriş paragrafını yaz...
-
-## Ana başlık
-
-Kısa ve okunabilir paragraflar kullan.
-
-> Önemli bilgileri bu biçimde bilgi kutusuna dönüştürebilirsin.
-
-### Alt başlık
-
-Devam eden içerik...`}
-                            />
+                            <BlogContentEditor />
 
                             <small>
-                                Paragrafları boş satırla ayır.
-                                “##” ana başlık, “###” alt başlık,
-                                “&gt;” bilgi kutusu oluşturur.
+                                Metni seçip araç çubuğundan kalın, italik,
+                                başlık, liste, bağlantı, bilgi kutusu veya
+                                emoji ekleyebilirsin.
                             </small>
-                        </label>
+                        </div>
 
                         <div
                             className={`${pageStyles.formGrid} ${pageStyles.equalFieldGrid}`}
