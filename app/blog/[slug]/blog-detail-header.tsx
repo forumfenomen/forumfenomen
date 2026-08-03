@@ -4,14 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import {
     useEffect,
-    useRef,
     useState,
 } from "react";
 
 import NotificationBell from "@/components/notification-bell";
 import SiteSearch from "@/components/site-search";
 
-import styles from "./page.module.css";
 
 type Theme = "dark" | "light";
 
@@ -35,7 +33,8 @@ function SunIcon() {
 export default function BlogDetailHeader() {
     const [theme, setTheme] =
         useState<Theme>("dark");
-useEffect(() => {
+
+    useEffect(() => {
         const stored =
             window.localStorage.getItem(
                 "forumfenomen-theme"
@@ -70,7 +69,7 @@ useEffect(() => {
     }
 
     return (
-        <header className={styles.detailHeader}>
+        <header className="ff-feed-header">
             <Link
                 href="/akis"
                 className="ff-feed-logo-wrap"

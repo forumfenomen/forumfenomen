@@ -780,12 +780,13 @@ export default async function BlogPostPage({
             }
         >
 
+            <BlogDetailHeader />
+
             <article
                 className={
                     styles.article
                 }
             >
-                <BlogDetailHeader />
 
                 <header
                     className={
