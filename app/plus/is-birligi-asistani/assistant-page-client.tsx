@@ -77,7 +77,7 @@ const translations = {
     analysing: "Hesap analiz ediliyor...",
     accountFound: "Hesap bulundu",
     analysedContent: "Analiz edilen içerik",
-    subscribers: "Abone",
+    subscribers: "Abone sayısı",
     averageLikes: "Ortalama beğeni",
     averageComments: "Ortalama yorum",
     followerEngagement: "Takipçi bazlı etkileşim",
@@ -219,7 +219,7 @@ const translations = {
     analysing: "Analysing account...",
     accountFound: "Account found",
     analysedContent: "Analysed content",
-    subscribers: "Subscribers",
+    subscribers: "Subscriber count",
     averageLikes: "Average likes",
     averageComments: "Average comments",
     followerEngagement: "Follower engagement",
@@ -1505,12 +1505,15 @@ export default function CollaborationAssistantPage() {
                             : "youtube_shorts"
                       );
 
+                      setFollowers("");
+                      setAverageViews("");
                       setManualAverageLikes("");
                       setManualAverageComments("");
                       setEngagementRate("");
                       setAutomaticEngagementValue("");
                       setEngagementSource(null);
                       setAnalysisResult(null);
+                      setPricingError("");
                       setPricingResult(null);
                     }}
                   >
@@ -1525,7 +1528,7 @@ export default function CollaborationAssistantPage() {
               <>
                 <div className={styles.youtubeManualGrid}>
                   <label>
-                    <span>{t.followers}</span>
+                    <span>{t.subscribers}</span>
 
                     <input
                       type="text"
@@ -1676,8 +1679,8 @@ export default function CollaborationAssistantPage() {
                   <small
                     className={
                       manualViewEngagement !== null
-                        ? styles.engagementAutomatic
-                        : styles.engagementHint
+                        ? styles.manualEngagementStatusReady
+                        : styles.manualEngagementStatus
                     }
                   >
                     {manualViewEngagement !== null

@@ -3857,3 +3857,84 @@ button > span {
     grid-column: auto;
   }
 }
+
+
+/* MANUAL ENGAGEMENT STATUS CONTAINMENT V1 */
+
+.manualEngagementStatus,
+.manualEngagementStatusReady {
+  position: static;
+
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 22px;
+
+  grid-column: 1 / -1;
+  align-items: flex-start;
+  gap: 6px;
+
+  margin: 2px 0 0;
+  padding: 0;
+
+  overflow-wrap: anywhere;
+
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.manualEngagementStatus {
+  color: #737e91;
+}
+
+.manualEngagementStatusReady {
+  color: #63caff;
+}
+
+.manualEngagementStatus::before {
+  content: "i";
+
+  display: grid;
+  width: 14px;
+  height: 14px;
+
+  flex: 0 0 14px;
+  place-items: center;
+
+  margin-top: 1px;
+
+  border:
+    1px solid rgba(132, 150, 177, 0.3);
+  border-radius: 50%;
+
+  font-size: 8px;
+  font-style: normal;
+  line-height: 1;
+}
+
+.manualEngagementStatusReady::before {
+  content: "✓";
+
+  flex: 0 0 auto;
+
+  font-size: 11px;
+  font-weight: 900;
+}
+
+:global(html[data-theme="light"])
+.manualEngagementStatus {
+  color: #687386;
+}
+
+:global(html[data-theme="light"])
+.manualEngagementStatusReady {
+  color: #0879ba;
+}
+
+@media (max-width: 680px) {
+  .manualEngagementStatus,
+  .manualEngagementStatusReady {
+    grid-column: auto;
+  }
+}
