@@ -36,13 +36,21 @@ type AdminLogsPageProps = {
 const actionNames: Record<string, string> = {
     user_notification_sent:
         "Bildirim gönderildi",
-    comment_hidden: "Yorum gizlendi",
-    comment_banned: "Yorum yasaklandÄ±",
-    comment_published: "Yorum yeniden yayÄ±nlandÄ±",
+    user_promoted_to_moderator:
+        "Kullanıcı moderatör yapıldı",
+    user_demoted_to_user:
+        "Moderatör rolü kaldırıldı",
+    user_plus_access_granted:
+        "Plus erişimi açıldı",
+    user_plus_access_revoked:
+        "Plus erişimi kapatıldı",
+comment_hidden: "Yorum gizlendi",
+    comment_banned: "Yorum yasaklandı",
+    comment_published: "Yorum yeniden yayınlandı",
 
-    topic_published: "Konu yeniden yayÄ±nlandÄ±",
+    topic_published: "Konu yeniden yayınlandı",
     topic_hidden: "Konu gizlendi",
-    topic_banned: "Konu yasaklandÄ±",
+    topic_banned: "Konu yasaklandı",
 
     report_reviewing:
         "ÅikÃ¢yet incelemeye alÄ±ndÄ±",
@@ -52,23 +60,28 @@ const actionNames: Record<string, string> = {
         "ÅikÃ¢yet reddedildi",
 
     user_suspended:
-        "KullanÄ±cÄ± askÄ±ya alÄ±ndÄ±",
+        "Kullanıcı askıya alındı",
     user_banned:
-        "KullanÄ±cÄ± yasaklandÄ±",
+        "Kullanıcı yasaklandı",
     user_activated:
-        "KullanÄ±cÄ± yeniden aktifleÅŸtirildi",
+        "Kullanıcı yeniden aktifleştirildi",
 };
 
 const statusNames: Record<string, string> = {
-    published: "YayÄ±nda",
+    moderator: "Moderatör",
+    user: "Kullanıcı",
+    admin: "Yönetici",
+    true: "Açık",
+    false: "Kapalı",
+    published: "Yayında",
     hidden: "Gizlendi",
-    banned: "YasaklandÄ±",
+    banned: "Yasaklandı",
     pending: "Bekliyor",
-    reviewing: "Ä°nceleniyor",
-    resolved: "Ä°hlal doÄŸrulandÄ±",
+    reviewing: "İnceleniyor",
+    resolved: "İhlal doğrulandı",
     dismissed: "Reddedildi",
     active: "Aktif",
-    suspended: "AskÄ±ya alÄ±ndÄ±",
+    suspended: "Askıya alındı",
 };
 
 function getStatusName(
@@ -237,7 +250,7 @@ export default async function AdminLogsPage({
 
     if (logsResult.error) {
         console.error(
-            "Ä°ÅŸlem kayÄ±tlarÄ± alÄ±namadÄ±:",
+            "İşlem kayıtları alınamadı:",
             logsResult.error.message
         );
     }
@@ -268,7 +281,7 @@ export default async function AdminLogsPage({
 
         if (profilesResult.error) {
             console.error(
-                "Ä°ÅŸlem yapan kullanÄ±cÄ±lar alÄ±namadÄ±:",
+                "İşlem yapan kullanıcılar alınamadı:",
                 profilesResult.error.message
             );
         }
@@ -349,17 +362,17 @@ export default async function AdminLogsPage({
             >
                 <div>
                     <span>
-                        YÃ–NETÄ°M DENETÄ°MÄ°
+                        YÖNETİM DENETİMİ
                     </span>
 
                     <h1>
-                        Ä°ÅŸlem KayÄ±tlarÄ±
+                        İşlem Kayıtları
                     </h1>
 
                     <p>
-                        Admin ve moderatÃ¶rlerin
-                        yaptÄ±ÄŸÄ± iÅŸlemleri tarih
-                        sÄ±rasÄ±yla incele.
+                        Admin ve moderatörlerin
+                        yaptığı işlemleri tarih
+                        sırasıyla incele.
                     </p>
                 </div>
 
@@ -368,7 +381,7 @@ export default async function AdminLogsPage({
                         styles.securityBadge
                     }
                 >
-                    â— GÃ¼venli denetim kaydÄ±
+                    ● Güvenli denetim kaydı
                 </div>
             </header>
 
@@ -380,7 +393,7 @@ export default async function AdminLogsPage({
                         : ""
                         }`}
                 >
-                    <span>Toplam iÅŸlem</span>
+                    <span>Toplam işlem</span>
 
                     <strong>{totalCount}</strong>
                 </Link>
@@ -392,7 +405,7 @@ export default async function AdminLogsPage({
                         : ""
                         }`}
                 >
-                    <span>Yorum iÅŸlemleri</span>
+                    <span>Yorum işlemleri</span>
 
                     <strong>{commentCount}</strong>
                 </Link>
@@ -426,11 +439,11 @@ export default async function AdminLogsPage({
                 >
                     <div>
                         <span>
-                            ARAMA VE FÄ°LTRE
+                            ARAMA VE FİLTRE
                         </span>
 
                         <h2>
-                            KayÄ±tlarÄ± Bul
+                            Kayıtları Bul
                         </h2>
                     </div>
 
@@ -439,7 +452,7 @@ export default async function AdminLogsPage({
                             styles.panelBadge
                         }
                     >
-                        Son 300 kayÄ±t
+                        Son 300 kayıt
                     </div>
                 </div>
 
@@ -466,7 +479,7 @@ export default async function AdminLogsPage({
                                 opacity: 0.7,
                             }}
                         >
-                            KayÄ±tlarda ara
+                            Kayıtlarda ara
                         </span>
 
                         <input
@@ -475,7 +488,7 @@ export default async function AdminLogsPage({
                             defaultValue={
                                 searchText
                             }
-                            placeholder="Yetkili, not veya iÃ§erik ara..."
+                            placeholder="Yetkili, not veya içerik ara..."
                             style={{
                                 minHeight: 44,
                                 padding:
@@ -503,7 +516,7 @@ export default async function AdminLogsPage({
                                 opacity: 0.7,
                             }}
                         >
-                            Ä°ÅŸlem tÃ¼rÃ¼
+                            İşlem türü
                         </span>
 
                         <select
@@ -524,11 +537,11 @@ export default async function AdminLogsPage({
                             }}
                         >
                             <option value="all">
-                                TÃ¼m iÅŸlemler
+                                Tüm işlemler
                             </option>
 
                             <option value="comment">
-                                Yorum iÅŸlemleri
+                                Yorum işlemleri
                             </option>
 
                             <option value="report">
@@ -566,10 +579,10 @@ export default async function AdminLogsPage({
 
                         <h2>
                             {selectedType === "comment"
-                                ? "Yorum Ä°ÅŸlemleri"
+                                ? "Yorum İşlemleri"
                                 : selectedType === "report"
                                     ? "ÅikÃ¢yet Ä°ÅŸlemleri"
-                                    : "Son Ä°ÅŸlemler"}
+                                    : "Son İşlemler"}
                         </h2>
                     </div>
 
@@ -578,7 +591,7 @@ export default async function AdminLogsPage({
                             styles.panelBadge
                         }
                     >
-                        {filteredLogs.length} kayÄ±t
+                        {filteredLogs.length} kayıt
                     </div>
                 </div>
 
@@ -588,8 +601,8 @@ export default async function AdminLogsPage({
                             styles.emptyState
                         }
                     >
-                        Filtrelere uygun iÅŸlem
-                        kaydÄ± bulunamadÄ±.
+                        Filtrelere uygun işlem
+                        kaydı bulunamadı.
                     </div>
                 ) : (
                     <div
@@ -749,7 +762,7 @@ export default async function AdminLogsPage({
                                                         styles.adminLogValue
                                                     }
                                                 >
-                                                    Ã–nceki durum:{" "}
+                                                    Önceki durum:{" "}
                                                     <strong>
                                                         {getStatusName(
                                                             log.old_value
@@ -776,7 +789,7 @@ export default async function AdminLogsPage({
                                                 }
                                             >
                                                 <span>
-                                                    Ä°ÅŸlemi yapan
+                                                    İşlemi yapan
                                                 </span>
 
                                                 <strong>
@@ -794,8 +807,8 @@ export default async function AdminLogsPage({
                                                 </p>
                                             ) : (
                                                 <p>
-                                                    Bu iÅŸlem iÃ§in
-                                                    iÃ§erik Ã¶zeti
+                                                    Bu işlem için
+                                                    içerik özeti
                                                     bulunmuyor.
                                                 </p>
                                             )}
@@ -810,7 +823,7 @@ export default async function AdminLogsPage({
                                                         styles.reportTopicLink
                                                     }
                                                 >
-                                                    Ä°lgili iÃ§eriÄŸe git
+                                                    İlgili içeriğe git
                                                 </Link>
                                             ) : null}
                                         </div>
@@ -890,7 +903,7 @@ export default async function AdminLogsPage({
                                                 }
                                             >
                                                 <span>
-                                                    Ä°ÅŸlem notu
+                                                    İşlem notu
                                                 </span>
 
                                                 <p>
