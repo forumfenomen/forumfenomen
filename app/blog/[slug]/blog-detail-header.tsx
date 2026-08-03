@@ -9,6 +9,7 @@ import {
 
 import NotificationBell from "@/components/notification-bell";
 import SiteSearch from "@/components/site-search";
+import styles from "./page.module.css";
 
 
 type Theme = "dark" | "light";
@@ -69,7 +70,7 @@ export default function BlogDetailHeader() {
     }
 
     return (
-        <header className="ff-feed-header ff-blog-detail-header">
+        <header className={styles.detailHeader}>
             <Link
                 href="/akis"
                 className="ff-feed-logo-wrap"
