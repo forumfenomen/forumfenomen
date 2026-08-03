@@ -1,0 +1,703 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+
+import { createAdminClient } from "@/lib/supabase/admin";
+
+import styles from "./page.module.css";
+
+type ContentBlock = {
+    type?: string;
+    level?: number;
+    title?: string;
+    text?: string;
+};
+
+type BlogPost = {
+    id: string;
+    title: string;
+    slug: string;
+    excerpt: string;
+    content: ContentBlock[] | string | null;
+    cover_image_url: string | null;
+    cover_image_alt: string | null;
+    category: string;
+    category_id: number | null;
+    tags: string[] | null;
+    content_profile_id: string | null;
+    author_id: string | null;
+    reading_time: number | string | null;
+    view_count: number | string | null;
+    seo_title: string | null;
+    seo_description: string | null;
+    published_at: string | null;
+    created_at: string;
+};
+
+type AuthorInfo = {
+    name: string;
+    username: string;
+};
+
+type PageProps = {
+    params: Promise<{
+        slug: string;
+    }>;
+};
+
+function getNumber(
+    value: number | string | null
+) {
+    const parsed = Number(value);
+
+    return Number.isFinite(parsed)
+        ? parsed
+        : 0;
+}
+
+function formatDate(value: string) {
+    return new Intl.DateTimeFormat(
+        "tr-TR",
+        {
+            dateStyle: "long",
+            timeZone:
+                "Europe/Istanbul",
+        }
+    ).format(new Date(value));
+}
+
+function getParagraphs(text: string) {
+    return text
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(Boolean);
+}
+
+async function getPublishedPost(
+    slug: string
+) {
+    const adminSupabase =
+        createAdminClient();
+
+    const { data, error } =
+        await adminSupabase
+            .from("blog_posts")
+            .select(`
+                id,
+                title,
+                slug,
+                excerpt,
+                content,
+                cover_image_url,
+                cover_image_alt,
+                category,
+                category_id,
+                tags,
+                content_profile_id,
+                author_id,
+                reading_time,
+                view_count,
+                seo_title,
+                seo_description,
+                published_at,
+                created_at
+            `)
+            .eq("slug", slug)
+            .eq("status", "published")
+            .maybeSingle();
+
+    if (error) {
+        console.error(
+            "Blog yazısı alınamadı:",
+            error.message
+        );
+
+        return null;
+    }
+
+    return data as BlogPost | null;
+}
+
+async function getAuthor(
+    post: BlogPost
+): Promise<AuthorInfo> {
+    const adminSupabase =
+        createAdminClient();
+
+    if (post.content_profile_id) {
+        const { data } =
+            await adminSupabase
+                .from(
+                    "content_profiles"
+                )
+                .select(`
+                    display_name,
+                    username
+                `)
+                .eq(
+                    "id",
+                    post.content_profile_id
+                )
+                .maybeSingle();
+
+        if (data) {
+            return {
+                name:
+                    data.display_name
+                        ?.trim() ||
+                    data.username
+                        ?.replace(
+                            /^@/,
+                            ""
+                        )
+                        .trim() ||
+                    "ForumFenomen",
+                username:
+                    data.username
+                        ?.replace(
+                            /^@/,
+                            ""
+                        )
+                        .trim() ||
+                    "",
+            };
+        }
+    }
+
+    if (post.author_id) {
+        const { data } =
+            await adminSupabase
+                .from("profiles")
+                .select(`
+                    display_name,
+                    username
+                `)
+                .eq(
+                    "id",
+                    post.author_id
+                )
+                .maybeSingle();
+
+        if (data) {
+            return {
+                name:
+                    data.display_name
+                        ?.trim() ||
+                    data.username
+                        ?.replace(
+                            /^@/,
+                            ""
+                        )
+                        .trim() ||
+                    "ForumFenomen",
+                username:
+                    data.username
+                        ?.replace(
+                            /^@/,
+                            ""
+                        )
+                        .trim() ||
+                    "",
+            };
+        }
+    }
+
+    return {
+        name: "ForumFenomen",
+        username: "",
+    };
+}
+
+export async function generateMetadata({
+    params,
+}: PageProps): Promise<Metadata> {
+    const { slug } = await params;
+
+    const post =
+        await getPublishedPost(slug);
+
+    if (!post) {
+        return {
+            title:
+                "Blog yazısı bulunamadı",
+        };
+    }
+
+    const title =
+        post.seo_title?.trim() ||
+        post.title;
+
+    const description =
+        post.seo_description
+            ?.trim() ||
+        post.excerpt;
+
+    return {
+        title,
+        description,
+        alternates: {
+            canonical:
+                `/blog/${post.slug}`,
+        },
+        openGraph: {
+            type: "article",
+            title,
+            description,
+            publishedTime:
+                post.published_at ??
+                post.created_at,
+            images:
+                post.cover_image_url
+                    ? [
+                        {
+                            url:
+                                post.cover_image_url,
+                            alt:
+                                post.cover_image_alt ??
+                                post.title,
+                        },
+                    ]
+                    : undefined,
+        },
+        twitter: {
+            card:
+                "summary_large_image",
+            title,
+            description,
+            images:
+                post.cover_image_url
+                    ? [
+                        post.cover_image_url,
+                    ]
+                    : undefined,
+        },
+    };
+}
+
+function renderContentBlock(
+    block: ContentBlock,
+    index: number
+) {
+    const text =
+        block.text?.trim() ?? "";
+
+    if (!text) {
+        return null;
+    }
+
+    if (
+        block.type === "heading" &&
+        block.level === 2
+    ) {
+        return (
+            <h2 key={index}>
+                {text}
+            </h2>
+        );
+    }
+
+    if (
+        block.type === "heading" &&
+        block.level === 3
+    ) {
+        return (
+            <h3 key={index}>
+                {text}
+            </h3>
+        );
+    }
+
+    if (block.type === "info") {
+        return (
+            <aside
+                key={index}
+                className={
+                    styles.infoBox
+                }
+            >
+                <strong>
+                    {block.title?.trim() ||
+                        "Önemli bilgi"}
+                </strong>
+
+                {getParagraphs(
+                    text
+                ).map(
+                    (
+                        paragraph,
+                        paragraphIndex
+                    ) => (
+                        <p
+                            key={
+                                paragraphIndex
+                            }
+                        >
+                            {
+                                paragraph
+                            }
+                        </p>
+                    )
+                )}
+            </aside>
+        );
+    }
+
+    return getParagraphs(text).map(
+        (
+            paragraph,
+            paragraphIndex
+        ) => (
+            <p
+                key={`${index}-${paragraphIndex}`}
+            >
+                {paragraph}
+            </p>
+        )
+    );
+}
+
+export default async function BlogPostPage({
+    params,
+}: PageProps) {
+    const { slug } = await params;
+
+    const post =
+        await getPublishedPost(slug);
+
+    if (!post) {
+        notFound();
+    }
+
+    const author =
+        await getAuthor(post);
+
+    const publishedDate =
+        post.published_at ??
+        post.created_at;
+
+    const readingTime =
+        Math.max(
+            1,
+            getNumber(
+                post.reading_time
+            )
+        );
+
+    const contentBlocks =
+        Array.isArray(post.content)
+            ? post.content
+            : typeof post.content ===
+                "string"
+                ? [
+                    {
+                        type:
+                            "paragraph",
+                        text:
+                            post.content,
+                    },
+                ]
+                : [];
+
+    return (
+        <main
+            className={
+                styles.page
+            }
+        >
+            <article
+                className={
+                    styles.article
+                }
+            >
+                <nav
+                    className={
+                        styles.breadcrumb
+                    }
+                    aria-label="Sayfa yolu"
+                >
+                    <Link href="/">
+                        Ana Sayfa
+                    </Link>
+
+                    <span>/</span>
+
+                    <Link href="/blog">
+                        Blog
+                    </Link>
+
+                    <span>/</span>
+
+                    <span>
+                        {post.category}
+                    </span>
+                </nav>
+
+                <header
+                    className={
+                        styles.hero
+                    }
+                >
+                    <div
+                        className={
+                            styles.heroGlow
+                        }
+                    />
+
+                    <div
+                        className={
+                            styles.heroContent
+                        }
+                    >
+                        <Link
+                            href={`/blog?category=${encodeURIComponent(
+                                post.category
+                            )}`}
+                            className={
+                                styles.category
+                            }
+                        >
+                            {post.category}
+                        </Link>
+
+                        <h1>
+                            {post.title}
+                        </h1>
+
+                        <p
+                            className={
+                                styles.excerpt
+                            }
+                        >
+                            {post.excerpt}
+                        </p>
+
+                        <div
+                            className={
+                                styles.meta
+                            }
+                        >
+                            <span>
+                                {author.name}
+                                {author.username
+                                    ? ` · @${author.username}`
+                                    : ""}
+                            </span>
+
+                            <span
+                                aria-hidden="true"
+                            >
+                                •
+                            </span>
+
+                            <time
+                                dateTime={
+                                    publishedDate
+                                }
+                            >
+                                {formatDate(
+                                    publishedDate
+                                )}
+                            </time>
+
+                            <span
+                                aria-hidden="true"
+                            >
+                                •
+                            </span>
+
+                            <span>
+                                {readingTime} dk
+                                okuma
+                            </span>
+                        </div>
+                    </div>
+                </header>
+
+                {post.cover_image_url ? (
+                    <figure
+                        className={
+                            styles.cover
+                        }
+                    >
+                        <Image
+                            src={
+                                post.cover_image_url
+                            }
+                            alt={
+                                post.cover_image_alt ??
+                                post.title
+                            }
+                            width={1600}
+                            height={900}
+                            priority
+                            sizes="(max-width: 900px) 100vw, 1000px"
+                        />
+                    </figure>
+                ) : null}
+
+                <div
+                    className={
+                        styles.layout
+                    }
+                >
+                    <div
+                        className={
+                            styles.content
+                        }
+                    >
+                        {contentBlocks.map(
+                            (
+                                block,
+                                index
+                            ) =>
+                                renderContentBlock(
+                                    block,
+                                    index
+                                )
+                        )}
+
+                        {post.tags &&
+                        post.tags.length >
+                            0 ? (
+                            <footer
+                                className={
+                                    styles.tags
+                                }
+                            >
+                                <span>
+                                    Etiketler
+                                </span>
+
+                                <div>
+                                    {post.tags.map(
+                                        (
+                                            tag
+                                        ) => (
+                                            <span
+                                                key={
+                                                    tag
+                                                }
+                                            >
+                                                #
+                                                {
+                                                    tag
+                                                }
+                                            </span>
+                                        )
+                                    )}
+                                </div>
+                            </footer>
+                        ) : null}
+                    </div>
+
+                    <aside
+                        className={
+                            styles.sidebar
+                        }
+                    >
+                        <div
+                            className={
+                                styles.authorCard
+                            }
+                        >
+                            <span>
+                                YAZAR
+                            </span>
+
+                            <strong>
+                                {author.name}
+                            </strong>
+
+                            {author.username ? (
+                                <small>
+                                    @
+                                    {
+                                        author.username
+                                    }
+                                </small>
+                            ) : null}
+
+                            <p>
+                                İçerik üretimi,
+                                sosyal medya ve
+                                dijital büyüme
+                                üzerine güvenilir
+                                rehberler.
+                            </p>
+                        </div>
+
+                        <div
+                            className={
+                                styles.shareCard
+                            }
+                        >
+                            <span>
+                                YAZI BİLGİSİ
+                            </span>
+
+                            <div>
+                                <strong>
+                                    {
+                                        readingTime
+                                    }{" "}
+                                    dk
+                                </strong>
+
+                                <small>
+                                    Tahmini okuma
+                                    süresi
+                                </small>
+                            </div>
+
+                            <div>
+                                <strong>
+                                    {getNumber(
+                                        post.view_count
+                                    )}
+                                </strong>
+
+                                <small>
+                                    Görüntülenme
+                                </small>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+
+                <section
+                    className={
+                        styles.bottomCta
+                    }
+                >
+                    <div>
+                        <span>
+                            FORUMFENOMEN BLOG
+                        </span>
+
+                        <h2>
+                            Daha fazla rehber
+                            keşfet
+                        </h2>
+
+                        <p>
+                            İçerik üretimi,
+                            büyüme ve dijital
+                            dünyanın güncel
+                            konularını incele.
+                        </p>
+                    </div>
+
+                    <Link href="/blog">
+                        Tüm Yazılara Dön
+                        <span
+                            aria-hidden="true"
+                        >
+                            →
+                        </span>
+                    </Link>
+                </section>
+            </article>
+        </main>
+    );
+}

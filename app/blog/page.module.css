@@ -18,14 +18,12 @@
   margin: 0 0 10px !important;
 }
 
-.shell
-  :global(.ff-feed-header:has(.ff-site-search-popover)) {
+.shell :global(.ff-feed-header:has(.ff-site-search-popover)) {
   margin-bottom: 75px !important;
 }
 
 @media (max-width: 680px) {
-  .shell
-    :global(.ff-feed-header:has(.ff-site-search-popover)) {
+  .shell :global(.ff-feed-header:has(.ff-site-search-popover)) {
     margin-bottom: 69px !important;
   }
 }
@@ -435,7 +433,7 @@
   min-height: 100%;
 }
 
-.sideCard > div:last-child {
+.sideCard>div:last-child {
   min-width: 0;
   padding: 15px 13px;
 }
@@ -617,7 +615,7 @@
   font-weight: 900;
 }
 
-.quickCard > div > span {
+.quickCard>div>span {
   color: color-mix(in srgb, var(--accent) 80%, #fff);
   font-size: 8px;
   font-weight: 750;
@@ -654,7 +652,7 @@
   margin-bottom: 14px;
 }
 
-.editorHeading > span {
+.editorHeading>span {
   display: grid;
   width: 43px;
   height: 43px;
@@ -695,7 +693,7 @@
   background: rgba(255, 255, 255, 0.025);
 }
 
-.editorGrid article > span {
+.editorGrid article>span {
   color: color-mix(in srgb, var(--accent) 80%, #fff);
   font-size: 8px;
   font-weight: 760;
@@ -786,18 +784,39 @@
 }
 
 @keyframes paperFloatOne {
-  0%, 100% { transform: translateY(0) rotate(-16deg); }
-  50% { transform: translateY(-5px) rotate(-12deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(-16deg);
+  }
+
+  50% {
+    transform: translateY(-5px) rotate(-12deg);
+  }
 }
 
 @keyframes paperFloatTwo {
-  0%, 100% { transform: translateY(0) rotate(13deg); }
-  50% { transform: translateY(4px) rotate(17deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(13deg);
+  }
+
+  50% {
+    transform: translateY(4px) rotate(17deg);
+  }
 }
 
 @keyframes paperFloatThree {
-  0%, 100% { transform: translateY(0) rotate(0); }
-  50% { transform: translateY(-6px) rotate(2deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+
+  50% {
+    transform: translateY(-6px) rotate(2deg);
+  }
 }
 
 @keyframes sparkPulse {
@@ -950,7 +969,7 @@
     min-height: 105px;
   }
 
-  .sideCard > div:last-child {
+  .sideCard>div:last-child {
     padding: 12px;
   }
 
@@ -1085,8 +1104,7 @@
 
 .featuredGrid {
   grid-template-columns:
-    minmax(0, 1.55fr)
-    minmax(285px, 0.9fr) !important;
+    minmax(0, 1.55fr) minmax(285px, 0.9fr) !important;
 
   gap: 11px !important;
 }
@@ -1095,8 +1113,7 @@
 
 .sideCard {
   grid-template-columns:
-    132px
-    minmax(0, 1fr) !important;
+    132px minmax(0, 1fr) !important;
 
   min-height: 182px !important;
 }
@@ -1111,10 +1128,9 @@
 
 /* Sağ taraftaki metne yeterli nefes alanı bırak */
 
-.sideCard > div:last-child {
+.sideCard>div:last-child {
   padding:
-    15px
-    14px !important;
+    15px 14px !important;
 }
 
 /* FF yerine gelen BLOG yazısını kapaklara uygun hale getir */
@@ -1144,14 +1160,12 @@
 @media (max-width: 800px) and (min-width: 681px) {
   .featuredGrid {
     grid-template-columns:
-      minmax(0, 1.45fr)
-      minmax(260px, 0.9fr) !important;
+      minmax(0, 1.45fr) minmax(260px, 0.9fr) !important;
   }
 
   .sideCard {
     grid-template-columns:
-      118px
-      minmax(0, 1fr) !important;
+      118px minmax(0, 1fr) !important;
   }
 
   .sideCard .cover {
@@ -1191,8 +1205,7 @@
   .sideCard {
     display: grid !important;
     grid-template-columns:
-      112px
-      minmax(0, 1fr) !important;
+      112px minmax(0, 1fr) !important;
   }
 
   .sideCard .cover {
@@ -1212,7 +1225,7 @@
 
 /* Eski FF kutusu yerine gerçek ForumFenomen ikonu */
 
-.editorHeading > .editorLogo {
+.editorHeading>.editorLogo {
   position: relative;
 
   display: block;
@@ -1247,7 +1260,7 @@
 
 /* Logonun arkasında hafif renk hareketi */
 
-.editorHeading > .editorLogo::after {
+.editorHeading>.editorLogo::after {
   content: "";
 
   position: absolute;
@@ -1257,22 +1270,17 @@
   border-radius: 18px;
 
   background:
-    conic-gradient(
-      from 0deg,
+    conic-gradient(from 0deg,
       rgba(229, 51, 235, 0.5),
       rgba(64, 90, 255, 0.38),
       rgba(13, 179, 240, 0.4),
-      rgba(229, 51, 235, 0.5)
-    );
+      rgba(229, 51, 235, 0.5));
 
   opacity: 0.28;
   filter: blur(8px);
 
   animation:
-    editorLogoGlow
-    5s
-    linear
-    infinite;
+    editorLogoGlow 5s linear infinite;
 }
 
 @keyframes editorLogoGlow {
@@ -1286,7 +1294,7 @@
 }
 
 @media (max-width: 680px) {
-  .editorHeading > .editorLogo {
+  .editorHeading>.editorLogo {
     width: 43px;
     height: 43px;
 
@@ -1323,8 +1331,7 @@
 
   .articleCard {
     grid-template-columns:
-      110px
-      minmax(0, 1fr) !important;
+      110px minmax(0, 1fr) !important;
 
     min-height: 154px !important;
   }
@@ -1472,7 +1479,7 @@
 
   /* 5 Dakikada Öğren */
 
-  .quickCard > div > span {
+  .quickCard>div>span {
     font-size: 9px !important;
   }
 
@@ -1496,7 +1503,7 @@
     font-size: 19px !important;
   }
 
-  .editorGrid article > span {
+  .editorGrid article>span {
     font-size: 8.9px !important;
   }
 
@@ -1515,8 +1522,7 @@
 
   .articleCard {
     grid-template-columns:
-      102px
-      minmax(0, 1fr) !important;
+      102px minmax(0, 1fr) !important;
   }
 
   .articleCard .cover {
@@ -1607,8 +1613,8 @@
   line-height: 1.4 !important;
 }
 
-.quickCard > div > span,
-.editorGrid article > span {
+.quickCard>div>span,
+.editorGrid article>span {
   font-size: 9.8px !important;
   font-weight: 700 !important;
 }
@@ -1684,6 +1690,7 @@
     font-size: 9.8px !important;
   }
 }
+
 /* BLOG GLOBAL READABLE SECONDARY TEXT V6 END */
 
 
@@ -1718,3 +1725,23 @@
   color: #666974 !important;
 }
 
+/* Yan öne çıkan yazı yoksa ana kart tam genişlik kullanır */
+
+.featuredGridSingle {
+  grid-template-columns: 1fr !important;
+}
+
+.featuredGridSingle .featuredMain {
+  width: 100%;
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+}
+
+/* Mobilde yazı alanı için yeterli yükseklik korunsun */
+
+@media (max-width: 680px) {
+  .featuredGridSingle .featuredMain {
+    min-height: 350px;
+    aspect-ratio: auto;
+  }
+}
