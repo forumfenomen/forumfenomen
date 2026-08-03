@@ -1076,3 +1076,18 @@
     background: rgba(220, 38, 38, 0.12);
     color: #991b1b;
 }
+
+/* BLOG DETAIL HEADER MOBILE FINAL ALIGNMENT */
+@media (max-width: 680px) {
+  .page :global(.ff-feed-header.ff-blog-detail-header) {
+    width: calc(100% + 16px) !important;
+    max-width: none !important;
+
+    margin-top: 0 !important;
+    margin-right: -8px !important;
+    margin-bottom: 10px !important;
+    margin-left: -8px !important;
+
+    transform: none !important;
+  }
+}
