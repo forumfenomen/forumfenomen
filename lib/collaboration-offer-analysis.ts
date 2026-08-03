@@ -78,6 +78,20 @@ function roundToNearest(
   );
 }
 
+function roundSignedToNearest(
+  value: number,
+  step = 250
+) {
+  if (!Number.isFinite(value)) {
+    return 0;
+  }
+
+  return (
+    Math.round(value / step) *
+    step
+  );
+}
+
 function normalizeOfferText(
   value: string
 ) {
@@ -108,6 +122,10 @@ function detectOfferTerms(
         "reklamda kullanım",
         "reklamlarda kullanım",
         "reklam amaçlı",
+        "reklam için",
+        "reklam olarak",
+        "reklam kampanyası",
+        "reklam videosu",
         "sponsorlu reklam",
         "paid media",
         "paid ads",
@@ -534,7 +552,7 @@ export function analyseCollaborationOffer(
     );
 
   const priceDifference =
-    roundToNearest(
+    roundSignedToNearest(
       safeInput.offeredPrice -
         safeInput.forumRecommendedPrice
     );
