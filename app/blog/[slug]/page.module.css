@@ -13,7 +13,7 @@
 }
 
 .article {
-    width: min(1040px, 100%);
+    width: min(820px, 100%);
     margin: 0 auto;
 }
 
@@ -308,7 +308,7 @@
 }
 
 .detailShell {
-    width: min(1040px, 100%);
+    width: min(820px, 100%);
     margin: 0 auto 18px;
 }
 
@@ -796,7 +796,7 @@
     }
 }
 
-.page> :global(.ff-feed-header) {
-    width: min(1040px, 100%) !important;
+.page > :global(.ff-feed-header) {
+    width: min(820px, 100%) !important;
     margin: 0 auto 18px !important;
 }
