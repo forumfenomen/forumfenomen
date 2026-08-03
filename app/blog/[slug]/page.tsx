@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import ForumFooter from "@/components/forum-footer";
+import BlogDetailHeader from "./blog-detail-header";
 import { notFound } from "next/navigation";
 
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -405,6 +407,11 @@ export default async function BlogPostPage({
                 styles.page
             }
         >
+
+            <div className={styles.detailShell}>
+                <BlogDetailHeader />
+            </div>
+
             <article
                 className={
                     styles.article
@@ -558,7 +565,7 @@ export default async function BlogPostPage({
                         )}
 
                         {post.tags &&
-                        post.tags.length >
+                            post.tags.length >
                             0 ? (
                             <footer
                                 className={
@@ -698,6 +705,11 @@ export default async function BlogPostPage({
                     </Link>
                 </section>
             </article>
+
+            <div className={styles.detailShell}>
+                <ForumFooter />
+            </div>
+
         </main>
     );
 }
