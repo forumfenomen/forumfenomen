@@ -4,13 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import {
     useEffect,
+    useRef,
     useState,
 } from "react";
 
 import NotificationBell from "@/components/notification-bell";
 import SiteSearch from "@/components/site-search";
-import styles from "./page.module.css";
 
+import styles from "./page.module.css";
 
 type Theme = "dark" | "light";
 
@@ -35,6 +36,9 @@ export default function BlogDetailHeader() {
     const [theme, setTheme] =
         useState<Theme>("dark");
 
+    const headerRef =
+        useRef<HTMLElement | null>(null);
+
     useEffect(() => {
         const stored =
             window.localStorage.getItem(
@@ -50,6 +54,135 @@ export default function BlogDetailHeader() {
 
         document.documentElement.dataset.theme =
             resolved;
+    }, []);
+
+    useEffect(() => {
+        const header = headerRef.current;
+
+        /*
+         * Global header kurallarından gelebilecek sticky/fixed
+         * davranışını yalnızca blog detay header'ında kesin olarak
+         * iptal eder. Boyut ve genişliklere dokunmaz.
+         */
+        if (header) {
+            header.style.setProperty(
+                "position",
+                "static",
+                "important"
+            );
+
+            header.style.setProperty(
+                "top",
+                "auto",
+                "important"
+            );
+
+            header.style.setProperty(
+                "right",
+                "auto",
+                "important"
+            );
+
+            header.style.setProperty(
+                "bottom",
+                "auto",
+                "important"
+            );
+
+            header.style.setProperty(
+                "left",
+                "auto",
+                "important"
+            );
+
+            header.style.setProperty(
+                "inset",
+                "auto",
+                "important"
+            );
+
+            header.style.setProperty(
+                "transform",
+                "none",
+                "important"
+            );
+
+            header.style.setProperty(
+                "translate",
+                "none",
+                "important"
+            );
+        }
+
+        const previousScrollRestoration =
+            window.history.scrollRestoration;
+
+        window.history.scrollRestoration =
+            "manual";
+
+        function resetScroll() {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "auto",
+            });
+
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+
+            /*
+             * Sayfanın herhangi bir üst kapsayıcısı kendi içinde
+             * scroll kullanıyorsa onu da sıfırlar.
+             */
+            let element =
+                header?.parentElement ?? null;
+
+            while (element) {
+                if (element.scrollTop !== 0) {
+                    element.scrollTop = 0;
+                }
+
+                element = element.parentElement;
+            }
+        }
+
+        resetScroll();
+
+        window.requestAnimationFrame(() => {
+            resetScroll();
+
+            window.requestAnimationFrame(() => {
+                resetScroll();
+            });
+        });
+
+        const firstTimer =
+            window.setTimeout(resetScroll, 100);
+
+        const secondTimer =
+            window.setTimeout(resetScroll, 350);
+
+        function handlePageShow() {
+            resetScroll();
+        }
+
+        window.addEventListener(
+            "pageshow",
+            handlePageShow
+        );
+
+        return () => {
+            window.clearTimeout(firstTimer);
+            window.clearTimeout(secondTimer);
+
+            window.removeEventListener(
+                "pageshow",
+                handlePageShow
+            );
+
+            window.history.scrollRestoration =
+                previousScrollRestoration;
+        };
     }, []);
 
     function toggleTheme() {
@@ -70,7 +203,10 @@ export default function BlogDetailHeader() {
     }
 
     return (
-        <header className={styles.detailHeader}>
+        <header
+            ref={headerRef}
+            className={styles.detailHeader}
+        >
             <Link
                 href="/akis"
                 className="ff-feed-logo-wrap"
