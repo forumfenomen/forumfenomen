@@ -2,10 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import {
+    useEffect,
+    useState,
+} from "react";
 
 import NotificationBell from "@/components/notification-bell";
 import SiteSearch from "@/components/site-search";
+
+import styles from "./blog-detail-navigation.module.css";
 
 type Theme = "dark" | "light";
 
@@ -65,14 +70,14 @@ export default function BlogDetailHeader() {
     }
 
     return (
-        <header className="ff-feed-header ff-blog-detail-header">
+        <header className={styles.header}>
             <Link
                 href="/akis"
-                className="ff-feed-logo-wrap"
+                className={styles.logoWrap}
                 aria-label="ForumFenomen"
             >
                 <Image
-                    className="ff-feed-logo"
+                    className={styles.logo}
                     src="/forumfenomen-logo-transparent.png"
                     alt="ForumFenomen"
                     width={460}
@@ -81,10 +86,10 @@ export default function BlogDetailHeader() {
                 />
             </Link>
 
-            <div className="ff-feed-header-actions">
+            <div className={styles.actions}>
                 <button
                     type="button"
-                    className="ff-round-action"
+                    className={styles.themeButton}
                     onClick={toggleTheme}
                     aria-label="Temayı değiştir"
                 >

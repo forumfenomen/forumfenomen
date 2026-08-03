@@ -6,6 +6,8 @@ import {
     type MouseEvent,
 } from "react";
 
+import styles from "./blog-detail-navigation.module.css";
+
 function HomeIcon() {
     return (
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -90,11 +92,12 @@ export default function BlogDetailBottomNav() {
 
     return (
         <nav
-            className="ff-bottom-nav ff-blog-detail-bottom-nav"
+            className={styles.bottomNav}
             aria-label="ForumFenomen"
         >
             <Link
                 href="/akis"
+                className={styles.navLink}
                 onClick={(event) =>
                     handleNavigation(
                         event,
@@ -108,6 +111,7 @@ export default function BlogDetailBottomNav() {
 
             <Link
                 href="/kategoriler"
+                className={styles.navLink}
                 onClick={(event) =>
                     handleNavigation(
                         event,
@@ -121,12 +125,20 @@ export default function BlogDetailBottomNav() {
 
             <Link
                 href="/konu-ac"
-                className="ff-center-nav-button"
+                className={styles.centerButton}
                 aria-label="Konu Oluştur"
             >
-                <span className="ff-center-nav-glow" />
+                <span
+                    className={
+                        styles.centerGlow
+                    }
+                />
 
-                <span className="ff-center-nav-image">
+                <span
+                    className={
+                        styles.centerImage
+                    }
+                >
                     <Image
                         src="/forumfenomen-icon-master.png"
                         alt=""
@@ -139,7 +151,7 @@ export default function BlogDetailBottomNav() {
 
             <Link
                 href="/blog"
-                className="active"
+                className={`${styles.navLink} ${styles.active}`}
                 aria-current="page"
                 onClick={(event) =>
                     handleNavigation(
@@ -154,6 +166,7 @@ export default function BlogDetailBottomNav() {
 
             <Link
                 href="/profil"
+                className={styles.navLink}
                 onClick={(event) =>
                     handleNavigation(
                         event,
