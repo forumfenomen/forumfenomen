@@ -117,7 +117,7 @@
 .cover {
     position: relative;
     overflow: hidden;
-    width: min(900px, 100%);
+    width: 100%;
     margin: 22px auto 0;
     aspect-ratio: 16 / 9;
     border: 1px solid rgba(255, 255, 255, 0.10);
@@ -850,32 +850,50 @@
     }
 }
 
-/* Blog detay sayfasında üst menü normal akışta kalsın */
-.page :global(.ff-feed-header) {
+.headerFlow {
     position: relative !important;
-    top: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    left: auto !important;
-    z-index: 10 !important;
-    width: 100% !important;
-    max-width: none !important;
-    margin: 0 0 18px !important;
+    inset: auto !important;
+    z-index: 1;
+    width: min(1040px, 100%);
+    margin: 0 auto 18px;
     transform: none !important;
 }
 
-/* Blog detay sayfasında alt menü sayfayla birlikte hareket etsin */
-.page :global(.ff-bottom-nav) {
+.headerFlow > header,
+.headerFlow :global(.ff-feed-header) {
     position: relative !important;
     top: auto !important;
     right: auto !important;
     bottom: auto !important;
     left: auto !important;
     inset: auto !important;
-    z-index: 10 !important;
+    z-index: 1 !important;
     width: 100% !important;
     max-width: none !important;
-    margin: 26px auto 0 !important;
+    margin: 0 !important;
     transform: none !important;
-    box-sizing: border-box;
+}
+
+/* Blog detay sayfasında alt menü sayfayla birlikte hareket etsin */
+.bottomNavFlow {
+    position: relative !important;
+    inset: auto !important;
+    z-index: 1;
+    width: min(1040px, 100%);
+    margin: 26px auto 0;
+    transform: none !important;
+}
+
+.bottomNavFlow :global(.ff-bottom-nav) {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    inset: auto !important;
+    z-index: 1 !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    transform: none !important;
 }

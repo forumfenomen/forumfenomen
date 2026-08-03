@@ -641,7 +641,7 @@ export default async function BlogPostPage({
             }
         >
 
-            <div className={styles.detailShell}>
+            <div className={styles.headerFlow}>
                 <BlogDetailHeader />
             </div>
 
@@ -1051,7 +1051,7 @@ export default async function BlogPostPage({
                 <ForumFooter />
             </div>
 
-            <div className={styles.detailShell}>
+            <div className={styles.bottomNavFlow}>
                 <BlogDetailBottomNav />
             </div>
 
