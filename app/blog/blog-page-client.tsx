@@ -599,12 +599,7 @@ export default function BlogPageClient({
                             <h2>{t.featured}</h2>
                         </div>
 
-                        <div
-                            className={`${styles.featuredGrid} ${featuredSide.length === 0
-                                    ? styles.featuredGridSingle
-                                    : ""
-                                }`}
-                        >
+                        <div className={styles.featuredGrid}>
                             <article
                                 data-blog-id={featuredMain.id}
                                 className={styles.featuredMain}

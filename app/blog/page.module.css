@@ -1725,23 +1725,3 @@
   color: #666974 !important;
 }
 
-/* Yan öne çıkan yazı yoksa ana kart tam genişlik kullanır */
-
-.featuredGridSingle {
-  grid-template-columns: 1fr !important;
-}
-
-.featuredGridSingle .featuredMain {
-  width: 100%;
-  min-height: 0;
-  aspect-ratio: 16 / 9;
-}
-
-/* Mobilde yazı alanı için yeterli yükseklik korunsun */
-
-@media (max-width: 680px) {
-  .featuredGridSingle .featuredMain {
-    min-height: 350px;
-    aspect-ratio: auto;
-  }
-}
