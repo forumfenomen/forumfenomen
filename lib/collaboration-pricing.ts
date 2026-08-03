@@ -45,6 +45,13 @@ export type PricingResult = {
   confidence: "low" | "medium" | "high";
   confidenceScore: number;
 
+  performance:
+    | "low"
+    | "medium"
+    | "high";
+  performanceScore: number;
+  commercialAssessment: string;
+
   positiveReasons: string[];
   warningReasons: string[];
 
@@ -416,6 +423,114 @@ function getWarningReasons(
 
   return warnings;
 }
+function getPerformanceScore(
+  input: PricingInput
+) {
+  const viewFollowerRatio =
+    input.followers > 0
+      ? input.averageViews / input.followers
+      : 0;
+
+  let viewScore = 10;
+
+  if (viewFollowerRatio >= 1) {
+    viewScore = 50;
+  } else if (viewFollowerRatio >= 0.75) {
+    viewScore = 45;
+  } else if (viewFollowerRatio >= 0.5) {
+    viewScore = 40;
+  } else if (viewFollowerRatio >= 0.25) {
+    viewScore = 32;
+  } else if (viewFollowerRatio >= 0.15) {
+    viewScore = 25;
+  } else if (viewFollowerRatio >= 0.08) {
+    viewScore = 18;
+  }
+
+  let engagementScore = 8;
+
+  if (input.engagementRate >= 8) {
+    engagementScore = 40;
+  } else if (input.engagementRate >= 5) {
+    engagementScore = 34;
+  } else if (input.engagementRate >= 3) {
+    engagementScore = 28;
+  } else if (input.engagementRate >= 1.5) {
+    engagementScore = 22;
+  } else if (input.engagementRate >= 0.75) {
+    engagementScore = 15;
+  }
+
+  const completenessScore =
+    input.followers > 0 &&
+    input.averageViews > 0 &&
+    input.engagementRate > 0
+      ? 10
+      : 0;
+
+  return Math.round(
+    clamp(
+      viewScore +
+        engagementScore +
+        completenessScore,
+      20,
+      95
+    )
+  );
+}
+
+function getPerformanceLevel(
+  score: number
+): PricingResult["performance"] {
+  if (score >= 75) {
+    return "high";
+  }
+
+  if (score >= 50) {
+    return "medium";
+  }
+
+  return "low";
+}
+
+function getCommercialAssessment(
+  input: PricingInput
+) {
+  const viewFollowerRatio =
+    input.followers > 0
+      ? input.averageViews / input.followers
+      : 0;
+
+  if (
+    viewFollowerRatio >= 0.75 &&
+    input.engagementRate < 1.5
+  ) {
+    return "strong_views_low_engagement";
+  }
+
+  if (
+    viewFollowerRatio >= 0.5 &&
+    input.engagementRate >= 3
+  ) {
+    return "strong_overall_performance";
+  }
+
+  if (
+    viewFollowerRatio >= 0.15 &&
+    input.engagementRate >= 1.5
+  ) {
+    return "balanced_performance";
+  }
+
+  if (
+    viewFollowerRatio < 0.15 &&
+    input.engagementRate < 1.5
+  ) {
+    return "limited_performance";
+  }
+
+  return "standard_performance";
+}
 export function calculateCollaborationPrice(
   input: PricingInput
 ): PricingResult {
@@ -536,6 +651,17 @@ export function calculateCollaborationPrice(
   const warningReasons =
     getWarningReasons(input);
 
+  const performanceScore =
+    getPerformanceScore(input);
+
+  const performance =
+    getPerformanceLevel(
+      performanceScore
+    );
+
+  const commercialAssessment =
+    getCommercialAssessment(input);
+
   return {
     recommendedOffer,
     negotiationLow,
@@ -544,6 +670,9 @@ export function calculateCollaborationPrice(
     premiumPrice,
     confidence,
     confidenceScore,
+    performance,
+    performanceScore,
+    commercialAssessment,
     positiveReasons,
     warningReasons,
     factors: {

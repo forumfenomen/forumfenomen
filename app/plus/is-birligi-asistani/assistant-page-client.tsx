@@ -165,6 +165,36 @@ const translations = {
     priceStrengths: "Fiyatı güçlendiren nedenler",
     priceWarnings: "Dikkat edilmesi gerekenler",
 
+    performanceScoreTitle:
+      "Hesap performansı",
+    performanceLabel:
+      "Performans",
+    commercialAssessmentTitle:
+      "Ticari değerlendirme",
+
+    minimumPriceDescription:
+      "Kapsam azaltılmadan bunun altına inilmemeli.",
+    recommendedOfferDescription:
+      "Markaya sunulacak ana teklif rakamı.",
+    premiumPriceDescription:
+      "Büyük marka veya ek haklarda kullanılabilir.",
+
+    analysisScope:
+      "Analiz kapsamı",
+    analysedContentResult:
+      "içerik incelendi",
+
+    assessmentStrongViewsLowEngagement:
+      "İzlenme performansı güçlü, ancak etkileşim seviyesi düşük. Önerilen teklif ana referans olarak kullanılmalı.",
+    assessmentStrongOverallPerformance:
+      "İzlenme ve etkileşim performansı güçlü. Önerilen teklif güvenle sunulabilir; ek haklarda üst sınır savunulabilir.",
+    assessmentBalancedPerformance:
+      "Hesap dengeli bir ticari performansa sahip. Önerilen teklif ana pazarlık rakamı olarak kullanılmalı.",
+    assessmentLimitedPerformance:
+      "İzlenme ve etkileşim performansı sınırlı. Minimum fiyat korunmalı, daha yüksek teklif için kapsam ve haklar gerekçelendirilmelidir.",
+    assessmentStandardPerformance:
+      "Hesap standart performans aralığında. Önerilen fiyat içerik üretim emeği ve kampanya kapsamına göre kullanılmalı.",
+
     reasonViewsAboveFollowerCount:
       "Ortalama izlenme takipçi sayısının üzerinde.",
     reasonStrongViewPerformance:
@@ -355,6 +385,36 @@ const translations = {
       "Calculated from data entered manually by the user.",
     priceStrengths: "Reasons strengthening the price",
     priceWarnings: "Points requiring attention",
+
+    performanceScoreTitle:
+      "Account performance",
+    performanceLabel:
+      "Performance",
+    commercialAssessmentTitle:
+      "Commercial assessment",
+
+    minimumPriceDescription:
+      "Do not go below this without reducing the scope.",
+    recommendedOfferDescription:
+      "The primary offer to present to the brand.",
+    premiumPriceDescription:
+      "Use for major brands or additional commercial rights.",
+
+    analysisScope:
+      "Analysis scope",
+    analysedContentResult:
+      "items analysed",
+
+    assessmentStrongViewsLowEngagement:
+      "View performance is strong, but engagement is low. Use the recommended offer as the primary reference.",
+    assessmentStrongOverallPerformance:
+      "View and engagement performance are strong. The recommended offer is defensible, with the ceiling available for additional rights.",
+    assessmentBalancedPerformance:
+      "The account has balanced commercial performance. Use the recommended offer as the main negotiation figure.",
+    assessmentLimitedPerformance:
+      "View and engagement performance are limited. Protect the minimum price and justify higher figures through scope and rights.",
+    assessmentStandardPerformance:
+      "The account is within a standard performance range. Base the offer on production work and campaign scope.",
 
     reasonViewsAboveFollowerCount:
       "Average views are higher than the follower count.",
@@ -1101,6 +1161,23 @@ export default function CollaborationAssistantPage() {
     missing_follower_data:
       t.warningMissingFollowerData,
   };
+
+  const commercialAssessmentText =
+    pricingResult
+      ? pricingResult.commercialAssessment ===
+        "strong_views_low_engagement"
+        ? t.assessmentStrongViewsLowEngagement
+        : pricingResult.commercialAssessment ===
+            "strong_overall_performance"
+          ? t.assessmentStrongOverallPerformance
+          : pricingResult.commercialAssessment ===
+              "balanced_performance"
+            ? t.assessmentBalancedPerformance
+            : pricingResult.commercialAssessment ===
+                "limited_performance"
+              ? t.assessmentLimitedPerformance
+              : t.assessmentStandardPerformance
+      : "";
 
   const manualFollowersValue =
     parseCountInput(followers);
@@ -2291,7 +2368,12 @@ export default function CollaborationAssistantPage() {
               <article
                 className={styles.minimumPriceCard}
               >
-                <span>{t.minimumPrice}</span>
+                <div className={styles.priceText}>
+                  <span>{t.minimumPrice}</span>
+                  <small>
+                    {t.minimumPriceDescription}
+                  </small>
+                </div>
 
                 <strong>
                   {pricingResult
@@ -2307,9 +2389,14 @@ export default function CollaborationAssistantPage() {
                   styles.recommendedPriceCard
                 }
               >
-                <span>
-                  {t.recommendedOffer}
-                </span>
+                <div className={styles.priceText}>
+                  <span>
+                    {t.recommendedOffer}
+                  </span>
+                  <small>
+                    {t.recommendedOfferDescription}
+                  </small>
+                </div>
 
                 <strong>
                   {pricingResult
@@ -2323,9 +2410,14 @@ export default function CollaborationAssistantPage() {
               <article
                 className={styles.premiumPriceCard}
               >
-                <span>
-                  {t.premiumPrice}
-                </span>
+                <div className={styles.priceText}>
+                  <span>
+                    {t.premiumPrice}
+                  </span>
+                  <small>
+                    {t.premiumPriceDescription}
+                  </small>
+                </div>
 
                 <strong>
                   {pricingResult
@@ -2382,6 +2474,60 @@ export default function CollaborationAssistantPage() {
                   </div>
                 </div>
 
+                <div className={styles.performanceCard}>
+                  <div
+                    className={
+                      styles.performanceHeading
+                    }
+                  >
+                    <span>
+                      {t.performanceScoreTitle}
+                    </span>
+
+                    <p>
+                      {commercialAssessmentText}
+                    </p>
+                  </div>
+
+                  <div
+                    className={
+                      styles.performanceValue
+                    }
+                  >
+                    <small>
+                      {t.performanceLabel}
+                    </small>
+
+                    <strong>
+                      {pricingResult.performanceScore}
+                      /100
+                    </strong>
+
+                    <span>
+                      {pricingResult.performance ===
+                      "high"
+                        ? t.confidenceHigh
+                        : pricingResult.performance ===
+                            "medium"
+                          ? t.confidenceMedium
+                          : t.confidenceLow}
+                    </span>
+                  </div>
+                </div>
+
+                <div
+                  className={
+                    styles.commercialAssessment
+                  }
+                >
+                  <strong>
+                    {t.commercialAssessmentTitle}
+                  </strong>
+
+                  <p>
+                    {commercialAssessmentText}
+                  </p>
+                </div>
                 <div className={styles.pricingReasons}>
                   <section
                     className={
@@ -2464,6 +2610,22 @@ export default function CollaborationAssistantPage() {
                         : t.manualData}
                     </strong>
                   </div>
+
+                  {engagementSource ===
+                    "automatic" &&
+                    analysisResult && (
+                    <div>
+                      <span>{t.analysisScope}</span>
+
+                      <strong>
+                        {
+                          analysisResult.analysis
+                            .analysedVideoCount
+                        }{" "}
+                        {t.analysedContentResult}
+                      </strong>
+                    </div>
+                  )}
 
                   <div>
                     <span>{t.usedPlatform}</span>
