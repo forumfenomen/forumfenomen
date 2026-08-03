@@ -17,25 +17,6 @@
     margin: 0 auto;
 }
 
-.breadcrumb {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 9px;
-    margin-bottom: 18px;
-    color: #88839e;
-    font-size: 13px;
-}
-
-.breadcrumb a {
-    color: #c8c3da;
-    text-decoration: none;
-    transition: color 160ms ease;
-}
-
-.breadcrumb a:hover {
-    color: #f05cff;
-}
 
 .hero {
     position: relative;
@@ -799,4 +780,216 @@
 .page > :global(.ff-feed-header) {
     width: min(820px, 100%) !important;
     margin: 0 auto 18px !important;
+}
+
+/* =========================================================
+   BLOG DETAY — AÇIK TEMA
+   ========================================================= */
+
+:global(html[data-theme="light"]) .page {
+    background:
+        radial-gradient(
+            circle at 18% 10%,
+            rgba(168, 85, 247, 0.10),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 86% 20%,
+            rgba(59, 130, 246, 0.08),
+            transparent 30%
+        ),
+        #f6f7fb;
+    color: #17131f;
+}
+
+
+:global(html[data-theme="light"]) .hero {
+    border-color: rgba(174, 38, 195, 0.24);
+    background:
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(126, 34, 206, 0.12),
+            transparent 38%
+        ),
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f2effc
+        );
+    box-shadow:
+        0 22px 60px rgba(41, 31, 61, 0.12);
+}
+
+:global(html[data-theme="light"]) .heroGlow {
+    background:
+        radial-gradient(
+            circle,
+            rgba(217, 70, 239, 0.18),
+            rgba(59, 130, 246, 0.08) 45%,
+            transparent 70%
+        );
+}
+
+:global(html[data-theme="light"]) .hero h1 {
+    color: #17131f;
+}
+
+:global(html[data-theme="light"]) .excerpt {
+    color: #585264;
+}
+
+:global(html[data-theme="light"]) .meta {
+    color: #756e80;
+}
+
+:global(html[data-theme="light"]) .category {
+    border-color: rgba(190, 24, 206, 0.38);
+    background: rgba(192, 38, 211, 0.08);
+    color: #a512b5;
+}
+
+:global(html[data-theme="light"]) .cover {
+    border-color: rgba(42, 35, 55, 0.12);
+    background: #ffffff;
+    box-shadow:
+        0 18px 45px rgba(40, 31, 57, 0.13);
+}
+
+:global(html[data-theme="light"]) .content {
+    border-color: rgba(42, 35, 55, 0.10);
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #faf9fd
+        );
+    box-shadow:
+        0 18px 50px rgba(45, 35, 62, 0.08);
+}
+
+:global(html[data-theme="light"]) .content h2 {
+    color: #19151f;
+}
+
+:global(html[data-theme="light"]) .content h3 {
+    color: #2b2132;
+}
+
+:global(html[data-theme="light"]) .content p {
+    color: #47414f;
+}
+
+:global(html[data-theme="light"]) .infoBox {
+    border-color: rgba(190, 24, 206, 0.28);
+    border-left-color: #c026d3;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(192, 38, 211, 0.08),
+            rgba(37, 99, 235, 0.05)
+        );
+}
+
+:global(html[data-theme="light"]) .infoBox strong {
+    color: #a512b5;
+}
+
+:global(html[data-theme="light"]) .infoBox p {
+    color: #443b4c;
+}
+
+:global(html[data-theme="light"]) .tags {
+    border-top-color: rgba(42, 35, 55, 0.10);
+}
+
+:global(html[data-theme="light"]) .tags > span {
+    color: #716a79;
+}
+
+:global(html[data-theme="light"]) .tags div span {
+    border-color: rgba(190, 24, 206, 0.20);
+    background: rgba(192, 38, 211, 0.06);
+    color: #4e4656;
+}
+
+:global(html[data-theme="light"]) .relatedSection {
+    border-color: rgba(190, 24, 206, 0.22);
+    background:
+        radial-gradient(
+            circle at 0 0,
+            rgba(217, 70, 239, 0.09),
+            transparent 34%
+        ),
+        radial-gradient(
+            circle at 100% 100%,
+            rgba(59, 130, 246, 0.07),
+            transparent 38%
+        ),
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f5f3fa
+        );
+}
+
+:global(html[data-theme="light"]) .relatedHeader h2 {
+    color: #19151f;
+}
+
+:global(html[data-theme="light"]) .relatedHeader p {
+    color: #6c6575;
+}
+
+:global(html[data-theme="light"]) .relatedHeader > a {
+    border-color: rgba(190, 24, 206, 0.36);
+    background: rgba(192, 38, 211, 0.07);
+    color: #7f168d;
+}
+
+:global(html[data-theme="light"]) .relatedCard {
+    border-color: rgba(42, 35, 55, 0.10);
+    background: #ffffff;
+    box-shadow:
+        0 12px 32px rgba(45, 35, 62, 0.07);
+}
+
+:global(html[data-theme="light"]) .relatedCard:hover {
+    border-color: rgba(190, 24, 206, 0.34);
+}
+
+:global(html[data-theme="light"]) .relatedBody h3 {
+    color: #201a25;
+}
+
+:global(html[data-theme="light"]) .relatedBody p {
+    color: #68616f;
+}
+
+:global(html[data-theme="light"]) .relatedMeta {
+    color: #807887;
+}
+
+:global(html[data-theme="light"]) :global(.blog-post-actions) {
+    border-top-color: rgba(42, 35, 55, 0.10);
+    border-bottom-color: rgba(42, 35, 55, 0.10);
+}
+
+:global(html[data-theme="light"])
+    :global(.blog-post-actions button) {
+    border-color: rgba(42, 35, 55, 0.12);
+    background: rgba(255, 255, 255, 0.85);
+    color: #514a59;
+}
+
+:global(html[data-theme="light"])
+    :global(.blog-post-actions button:hover:not(:disabled)) {
+    border-color: rgba(190, 24, 206, 0.34);
+    background: rgba(192, 38, 211, 0.07);
+    color: #211825;
+}
+
+:global(html[data-theme="light"])
+    :global(.blog-post-actions button strong) {
+    background: rgba(70, 60, 80, 0.08);
+    color: #2b2530;
 }

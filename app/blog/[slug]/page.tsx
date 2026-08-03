@@ -648,29 +648,7 @@ export default async function BlogPostPage({
                     styles.article
                 }
             >
-                <nav
-                    className={
-                        styles.breadcrumb
-                    }
-                    aria-label="Sayfa yolu"
-                >
-                    <Link href="/">
-                        Ana Sayfa
-                    </Link>
-
-                    <span>/</span>
-
-                    <Link href="/blog">
-                        Blog
-                    </Link>
-
-                    <span>/</span>
-
-                    <span>
-                        {post.category}
-                    </span>
-                </nav>
-
+                
                 <header
                     className={
                         styles.hero
