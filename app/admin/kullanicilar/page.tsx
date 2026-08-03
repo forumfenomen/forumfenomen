@@ -3,6 +3,7 @@ import Link from "next/link";
 import UserAccountActions from "@/components/admin/user-account-actions";
 import UserRoleActions from "@/components/admin/user-role-actions";
 import UserPlusAccessActions from "@/components/admin/user-plus-access-actions";
+import UserNotificationActions from "@/components/admin/user-notification-actions";
 
 import ProfileReportActions, {
   type ProfileReport,
@@ -834,6 +835,11 @@ export default async function AdminUsersPage({
                         userId={user.id}
                         displayName={displayName}
                         hasPlusAccess={user.plus_access}
+                      />
+
+                      <UserNotificationActions
+                        userId={user.id}
+                        displayName={displayName}
                       />
 
                       <UserRoleActions
