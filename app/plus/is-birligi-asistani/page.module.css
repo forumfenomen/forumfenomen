@@ -4835,3 +4835,52 @@ button > span {
     max-width: 43%;
   }
 }
+
+
+/* DATA CONFIDENCE LEFT ALIGN FIX V1 */
+
+.confidenceHeading {
+  align-items: start !important;
+  justify-items: start !important;
+
+  text-align: left !important;
+}
+
+.confidenceHeading > span,
+.confidenceHeading p {
+  width: 100%;
+
+  text-align: left !important;
+}
+
+.confidenceHeading p {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.confidenceValue {
+  align-items: end !important;
+  justify-items: end !important;
+
+  text-align: right !important;
+}
+
+.confidenceValue small,
+.confidenceValue strong {
+  text-align: right !important;
+}
+
+@media (max-width: 760px) {
+  .confidenceHeading {
+    align-items: start !important;
+    justify-items: start !important;
+
+    text-align: left !important;
+  }
+
+  .confidenceHeading p {
+    max-width: 100% !important;
+
+    text-align: left !important;
+  }
+}
