@@ -1225,3 +1225,15 @@
         padding: 6px 8px;
     }
 }
+
+/* BLOG DETAIL HEADER SCROLL FINAL */
+.detailHeader {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    inset: auto !important;
+    transform: none !important;
+    translate: none !important;
+}
