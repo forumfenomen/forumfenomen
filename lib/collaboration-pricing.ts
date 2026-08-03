@@ -40,7 +40,14 @@ export type PricingResult = {
   negotiationLow: number;
   negotiationHigh: number;
   minimumPrice: number;
+  premiumPrice: number;
+
   confidence: "low" | "medium" | "high";
+  confidenceScore: number;
+
+  positiveReasons: string[];
+  warningReasons: string[];
+
   factors: {
     baseValue: number;
     engagementMultiplier: number;
@@ -256,6 +263,164 @@ function getConfidence(
   return "low";
 }
 
+function getConfidenceScore(
+  input: PricingInput
+) {
+  let score = 35;
+
+  if (input.followers > 0) {
+    score += 10;
+  }
+
+  if (input.averageViews > 0) {
+    score += 20;
+  }
+
+  if (input.engagementRate > 0) {
+    score += 15;
+  }
+
+  const viewFollowerRatio =
+    input.followers > 0
+      ? input.averageViews / input.followers
+      : 0;
+
+  if (viewFollowerRatio >= 0.75) {
+    score += 10;
+  } else if (viewFollowerRatio >= 0.35) {
+    score += 6;
+  } else if (viewFollowerRatio >= 0.15) {
+    score += 3;
+  }
+
+  if (input.quantity > 0) {
+    score += 5;
+  }
+
+  if (
+    input.paidAds ||
+    input.rawFiles ||
+    input.exclusivity
+  ) {
+    score += 5;
+  }
+
+  return Math.round(
+    clamp(score, 35, 95)
+  );
+}
+
+function getPositiveReasons(
+  input: PricingInput
+) {
+  const reasons: string[] = [];
+
+  const viewFollowerRatio =
+    input.followers > 0
+      ? input.averageViews / input.followers
+      : 0;
+
+  if (viewFollowerRatio >= 1) {
+    reasons.push(
+      "views_above_follower_count"
+    );
+  } else if (viewFollowerRatio >= 0.5) {
+    reasons.push(
+      "strong_view_performance"
+    );
+  }
+
+  if (input.engagementRate >= 8) {
+    reasons.push(
+      "exceptional_engagement"
+    );
+  } else if (input.engagementRate >= 4) {
+    reasons.push(
+      "strong_engagement"
+    );
+  }
+
+  if (input.paidAds) {
+    reasons.push(
+      "paid_ad_usage"
+    );
+  }
+
+  if (input.exclusivity) {
+    reasons.push(
+      "category_exclusivity"
+    );
+  }
+
+  if (input.rawFiles) {
+    reasons.push(
+      "raw_file_delivery"
+    );
+  }
+
+  if (input.delivery === "seven") {
+    reasons.push(
+      "fast_delivery"
+    );
+  }
+
+  if (input.quantity >= 2) {
+    reasons.push(
+      "multiple_content_package"
+    );
+  }
+
+  if (reasons.length === 0) {
+    reasons.push(
+      "standard_creator_performance"
+    );
+  }
+
+  return reasons;
+}
+
+function getWarningReasons(
+  input: PricingInput
+) {
+  const warnings: string[] = [];
+
+  const viewFollowerRatio =
+    input.followers > 0
+      ? input.averageViews / input.followers
+      : 0;
+
+  if (
+    input.followers > 0 &&
+    viewFollowerRatio < 0.15
+  ) {
+    warnings.push(
+      "low_view_follower_ratio"
+    );
+  }
+
+  if (
+    input.engagementRate > 0 &&
+    input.engagementRate < 1.5
+  ) {
+    warnings.push(
+      "low_engagement_rate"
+    );
+  }
+
+  if (input.averageViews <= 0) {
+    warnings.push(
+      "missing_view_data"
+    );
+  }
+
+  if (input.followers <= 0) {
+    warnings.push(
+      "missing_follower_data"
+    );
+  }
+
+  return warnings;
+}
 export function calculateCollaborationPrice(
   input: PricingInput
 ): PricingResult {
@@ -321,28 +486,71 @@ export function calculateCollaborationPrice(
       )
     );
 
+  /*
+   * Minimum kabul fiyatı:
+   * Profesyonel teklifin yaklaşık %82'si.
+   * Kullanıcıya pazarlık tabanı sağlar.
+   */
+  const minimumPrice =
+    roundToNearest(
+      recommendedOffer * 0.82
+    );
+
+  /*
+   * Normal pazarlık aralığı.
+   */
   const negotiationLow =
     roundToNearest(
-      recommendedOffer * 0.88
+      recommendedOffer * 0.92
     );
 
   const negotiationHigh =
     roundToNearest(
-      recommendedOffer * 1.2
+      recommendedOffer * 1.15
     );
 
-  const minimumPrice =
+  /*
+   * Güçlü marka, geniş kullanım hakkı veya
+   * güçlü performans halinde savunulabilir üst fiyat.
+   */
+  const premiumMultiplier =
+    1.25 +
+    (input.paidAds ? 0.08 : 0) +
+    (input.exclusivity ? 0.07 : 0) +
+    (input.rawFiles ? 0.03 : 0);
+
+  const premiumPrice =
     roundToNearest(
-      recommendedOffer * 0.75
+      recommendedOffer *
+        clamp(
+          premiumMultiplier,
+          1.25,
+          1.45
+        )
     );
+
+  const confidence =
+    getConfidence(input);
+
+  const confidenceScore =
+    getConfidenceScore(input);
+
+  const positiveReasons =
+    getPositiveReasons(input);
+
+  const warningReasons =
+    getWarningReasons(input);
 
   return {
     recommendedOffer,
     negotiationLow,
     negotiationHigh,
     minimumPrice,
-    confidence:
-      getConfidence(input),
+    premiumPrice,
+    confidence,
+    confidenceScore,
+    positiveReasons,
+    warningReasons,
     factors: {
       baseValue:
         roundToNearest(baseValue),

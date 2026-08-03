@@ -4555,3 +4555,216 @@ button > span {
     font-size: 14px;
   }
 }
+
+
+/* PROFESSIONAL PRICING RESULT UI V1 */
+
+.pricePreview article {
+  position: relative;
+
+  overflow: hidden;
+}
+
+.minimumPriceCard {
+  border-color:
+    rgba(130, 151, 184, 0.15) !important;
+}
+
+.recommendedPriceCard {
+  border-color:
+    rgba(74, 181, 255, 0.3) !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(31, 135, 225, 0.11),
+      rgba(88, 59, 207, 0.09)
+    ) !important;
+
+  box-shadow:
+    inset 3px 0 0
+      rgba(85, 198, 255, 0.7);
+}
+
+.recommendedPriceCard strong {
+  color: #80d8ff !important;
+
+  font-size: 17px !important;
+}
+
+.premiumPriceCard {
+  border-color:
+    rgba(190, 114, 255, 0.25) !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(112, 64, 218, 0.1),
+      rgba(184, 68, 221, 0.07)
+    ) !important;
+
+  box-shadow:
+    inset 3px 0 0
+      rgba(180, 103, 255, 0.65);
+}
+
+.premiumPriceCard strong {
+  color: #d9b7ff !important;
+}
+
+.pricingReasons {
+  display: grid;
+  gap: 9px;
+
+  margin-top: 10px;
+}
+
+.pricingReasons section {
+  padding: 14px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+
+  background:
+    rgba(255, 255, 255, 0.022);
+}
+
+.pricingReasons h3 {
+  margin: 0 0 10px;
+
+  color: #edf2fa;
+
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+.pricingReasons section > div {
+  display: flex;
+
+  align-items: flex-start;
+  gap: 8px;
+
+  margin-top: 8px;
+
+  color: #aab4c6;
+
+  font-size: 11.5px;
+  line-height: 1.55;
+}
+
+.positiveReasonGroup {
+  border-color:
+    rgba(67, 190, 151, 0.16) !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(32, 154, 117, 0.055),
+      rgba(39, 113, 170, 0.035)
+    ) !important;
+}
+
+.positiveReasonGroup svg {
+  width: 15px;
+  height: 15px;
+
+  flex: 0 0 15px;
+
+  fill: none;
+  stroke: #54d4a9;
+  stroke-width: 2;
+}
+
+.warningReasonGroup {
+  border-color:
+    rgba(239, 178, 80, 0.19) !important;
+
+  background:
+    rgba(201, 135, 35, 0.045) !important;
+}
+
+.warningMarker {
+  display: inline-grid;
+
+  width: 16px;
+  height: 16px;
+
+  flex: 0 0 16px;
+  place-items: center;
+
+  color: #ffd184;
+
+  border:
+    1px solid rgba(255, 190, 86, 0.34);
+  border-radius: 50%;
+
+  font-size: 10px;
+  font-weight: 850;
+  line-height: 1;
+}
+
+:global(html[data-theme="light"])
+.recommendedPriceCard {
+  border-color:
+    rgba(44, 137, 219, 0.23) !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(54, 148, 229, 0.09),
+      rgba(102, 77, 204, 0.06)
+    ) !important;
+}
+
+:global(html[data-theme="light"])
+.recommendedPriceCard strong {
+  color: #17649d !important;
+}
+
+:global(html[data-theme="light"])
+.premiumPriceCard strong {
+  color: #7540a9 !important;
+}
+
+:global(html[data-theme="light"])
+.pricingReasons section {
+  border-color:
+    rgba(63, 78, 113, 0.12);
+
+  background:
+    rgba(60, 80, 125, 0.035);
+}
+
+:global(html[data-theme="light"])
+.pricingReasons h3 {
+  color: #303645;
+}
+
+:global(html[data-theme="light"])
+.pricingReasons section > div {
+  color: #566174;
+}
+
+@media (max-width: 760px) {
+  .recommendedPriceCard strong {
+    font-size: 16px !important;
+  }
+
+  .pricingReasons section {
+    padding: 13px;
+  }
+
+  .pricingReasons h3 {
+    font-size: 13px;
+  }
+
+  .pricingReasons section > div {
+    font-size: 11.5px;
+  }
+
+  .confidenceCard strong {
+    font-size: 13px;
+  }
+}

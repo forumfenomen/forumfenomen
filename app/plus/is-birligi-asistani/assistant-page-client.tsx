@@ -153,9 +153,44 @@ const translations = {
     previewTitle: "Tahmini iş birliği değeri",
     previewDescription:
       "Bilgileri tamamladığında önerilen fiyat aralığın burada görünecek.",
-    recommendedOffer: "Önerilen teklif",
+    recommendedOffer: "Önerilen profesyonel teklif",
     negotiationRange: "Pazarlık aralığı",
-    minimumPrice: "Önerilen alt sınır",
+    minimumPrice: "Minimum kabul fiyatı",
+    premiumPrice: "Güçlü pazarlık üst sınırı",
+    forumConfidenceScore: "ForumFenomen güven skoru",
+    priceStrengths: "Fiyatı güçlendiren nedenler",
+    priceWarnings: "Dikkat edilmesi gerekenler",
+
+    reasonViewsAboveFollowerCount:
+      "Ortalama izlenme takipçi sayısının üzerinde.",
+    reasonStrongViewPerformance:
+      "İzlenme performansı takipçi kitlesine göre güçlü.",
+    reasonExceptionalEngagement:
+      "Etkileşim oranı olağanüstü seviyede.",
+    reasonStrongEngagement:
+      "Etkileşim oranı güçlü seviyede.",
+    reasonPaidAdUsage:
+      "İçeriğin reklamda kullanım hakkı fiyata dahil edildi.",
+    reasonCategoryExclusivity:
+      "Kategori münhasırlığı ticari değeri artırdı.",
+    reasonRawFileDelivery:
+      "Ham görüntü teslimi ek üretim değeri oluşturdu.",
+    reasonFastDelivery:
+      "Hızlı teslim süresi fiyatı yükseltti.",
+    reasonMultipleContentPackage:
+      "Birden fazla içerik üretimi toplam proje değerini artırdı.",
+    reasonStandardCreatorPerformance:
+      "Fiyat standart hesap performansı ve üretim emeğine göre oluşturuldu.",
+
+    warningLowViewFollowerRatio:
+      "İzlenme/takipçi oranı düşük; teklif verirken performans verilerini güncelle.",
+    warningLowEngagementRate:
+      "Etkileşim oranı düşük olduğu için fiyatın üst sınırı sınırlı tutuldu.",
+    warningMissingViewData:
+      "Ortalama izlenme verisi bulunmadığı için tahmin güveni düştü.",
+    warningMissingFollowerData:
+      "Takipçi verisi bulunmadığı için karşılaştırma kapsamı sınırlı.",
+
     waiting: "Bilgiler bekleniyor",
     calculated: "Hesaplandı",
     completeRequiredFields:
@@ -305,9 +340,44 @@ const translations = {
     previewTitle: "Estimated collaboration value",
     previewDescription:
       "Your suggested pricing range will appear here after completing the details.",
-    recommendedOffer: "Suggested offer",
+    recommendedOffer: "Recommended professional offer",
     negotiationRange: "Negotiation range",
-    minimumPrice: "Suggested minimum",
+    minimumPrice: "Minimum acceptable price",
+    premiumPrice: "Strong negotiation ceiling",
+    forumConfidenceScore: "ForumFenomen confidence score",
+    priceStrengths: "Reasons strengthening the price",
+    priceWarnings: "Points requiring attention",
+
+    reasonViewsAboveFollowerCount:
+      "Average views are higher than the follower count.",
+    reasonStrongViewPerformance:
+      "View performance is strong relative to the audience size.",
+    reasonExceptionalEngagement:
+      "The engagement rate is at an exceptional level.",
+    reasonStrongEngagement:
+      "The engagement rate is at a strong level.",
+    reasonPaidAdUsage:
+      "Paid advertising usage rights were included in the price.",
+    reasonCategoryExclusivity:
+      "Category exclusivity increased the commercial value.",
+    reasonRawFileDelivery:
+      "Raw-file delivery added production value.",
+    reasonFastDelivery:
+      "Fast delivery increased the project price.",
+    reasonMultipleContentPackage:
+      "Multiple deliverables increased the total project value.",
+    reasonStandardCreatorPerformance:
+      "The price was based on standard account performance and production work.",
+
+    warningLowViewFollowerRatio:
+      "The view-to-follower ratio is low; update performance data before quoting.",
+    warningLowEngagementRate:
+      "The upper price limit was restricted because engagement is low.",
+    warningMissingViewData:
+      "Confidence is lower because average-view data is missing.",
+    warningMissingFollowerData:
+      "Comparison coverage is limited because follower data is missing.",
+
     waiting: "Waiting for information",
     calculated: "Calculated",
     completeRequiredFields:
@@ -931,15 +1001,27 @@ export default function CollaborationAssistantPage() {
           usageRights.exclusivity,
       });
 
+    const hasVerifiedAutomaticData =
+      engagementSource === "automatic" &&
+      Boolean(analysisResult);
+
     const sourceAdjustedResult: PricingResult = {
       ...result,
+
       confidence:
-        engagementSource === "automatic" &&
-        analysisResult
+        hasVerifiedAutomaticData
           ? result.confidence
           : result.confidence === "high"
             ? "medium"
             : result.confidence,
+
+      confidenceScore:
+        hasVerifiedAutomaticData
+          ? result.confidenceScore
+          : Math.max(
+              35,
+              result.confidenceScore - 15
+            ),
     };
 
     setPricingResult(
@@ -959,6 +1041,58 @@ export default function CollaborationAssistantPage() {
   }
 
   const t = translations[language];
+
+  const positiveReasonLabels: Record<
+    string,
+    string
+  > = {
+    views_above_follower_count:
+      t.reasonViewsAboveFollowerCount,
+
+    strong_view_performance:
+      t.reasonStrongViewPerformance,
+
+    exceptional_engagement:
+      t.reasonExceptionalEngagement,
+
+    strong_engagement:
+      t.reasonStrongEngagement,
+
+    paid_ad_usage:
+      t.reasonPaidAdUsage,
+
+    category_exclusivity:
+      t.reasonCategoryExclusivity,
+
+    raw_file_delivery:
+      t.reasonRawFileDelivery,
+
+    fast_delivery:
+      t.reasonFastDelivery,
+
+    multiple_content_package:
+      t.reasonMultipleContentPackage,
+
+    standard_creator_performance:
+      t.reasonStandardCreatorPerformance,
+  };
+
+  const warningReasonLabels: Record<
+    string,
+    string
+  > = {
+    low_view_follower_ratio:
+      t.warningLowViewFollowerRatio,
+
+    low_engagement_rate:
+      t.warningLowEngagementRate,
+
+    missing_view_data:
+      t.warningMissingViewData,
+
+    missing_follower_data:
+      t.warningMissingFollowerData,
+  };
 
   const manualFollowersValue =
     parseCountInput(followers);
@@ -2146,10 +2280,29 @@ export default function CollaborationAssistantPage() {
             </div>
 
             <div className={styles.pricePreview}>
-              <article>
+              <article
+                className={styles.minimumPriceCard}
+              >
+                <span>{t.minimumPrice}</span>
+
+                <strong>
+                  {pricingResult
+                    ? formatCurrency(
+                        pricingResult.minimumPrice
+                      )
+                    : "— TL"}
+                </strong>
+              </article>
+
+              <article
+                className={
+                  styles.recommendedPriceCard
+                }
+              >
                 <span>
                   {t.recommendedOffer}
                 </span>
+
                 <strong>
                   {pricingResult
                     ? formatCurrency(
@@ -2159,27 +2312,17 @@ export default function CollaborationAssistantPage() {
                 </strong>
               </article>
 
-              <article>
+              <article
+                className={styles.premiumPriceCard}
+              >
                 <span>
-                  {t.negotiationRange}
+                  {t.premiumPrice}
                 </span>
-                <strong>
-                  {pricingResult
-                    ? `${formatCurrency(
-                        pricingResult.negotiationLow
-                      )} – ${formatCurrency(
-                        pricingResult.negotiationHigh
-                      )}`
-                    : "— / — TL"}
-                </strong>
-              </article>
 
-              <article>
-                <span>{t.minimumPrice}</span>
                 <strong>
                   {pricingResult
                     ? formatCurrency(
-                        pricingResult.minimumPrice
+                        pricingResult.premiumPrice
                       )
                     : "— TL"}
                 </strong>
@@ -2189,12 +2332,16 @@ export default function CollaborationAssistantPage() {
             {pricingResult && (
               <>
                 <div className={styles.confidenceCard}>
-                  <span>{t.betaEstimate}</span>
+                  <span>
+                    {t.forumConfidenceScore}
+                  </span>
 
                   <div>
                     <small>{t.confidence}</small>
 
                     <strong>
+                      {pricingResult.confidenceScore}
+                      /100 ·{" "}
                       {pricingResult.confidence ===
                       "high"
                         ? t.confidenceHigh
@@ -2206,8 +2353,77 @@ export default function CollaborationAssistantPage() {
                   </div>
                 </div>
 
+                <div className={styles.pricingReasons}>
+                  <section
+                    className={
+                      styles.positiveReasonGroup
+                    }
+                  >
+                    <h3>{t.priceStrengths}</h3>
+
+                    {pricingResult.positiveReasons.map(
+                      (reason) => (
+                        <div key={reason}>
+                          <CheckIcon />
+
+                          <span>
+                            {positiveReasonLabels[
+                              reason
+                            ] ?? reason}
+                          </span>
+                        </div>
+                      )
+                    )}
+                  </section>
+
+                  {pricingResult.warningReasons
+                    .length > 0 && (
+                    <section
+                      className={
+                        styles.warningReasonGroup
+                      }
+                    >
+                      <h3>{t.priceWarnings}</h3>
+
+                      {pricingResult.warningReasons.map(
+                        (reason) => (
+                          <div key={reason}>
+                            <span
+                              className={
+                                styles.warningMarker
+                              }
+                            >
+                              !
+                            </span>
+
+                            <span>
+                              {warningReasonLabels[
+                                reason
+                              ] ?? reason}
+                            </span>
+                          </div>
+                        )
+                      )}
+                    </section>
+                  )}
+                </div>
+
                 <div className={styles.calculationSummary}>
                   <h3>{t.calculationDetails}</h3>
+
+                  <div>
+                    <span>{t.negotiationRange}</span>
+
+                    <strong>
+                      {formatCurrency(
+                        pricingResult.negotiationLow
+                      )}{" "}
+                      –{" "}
+                      {formatCurrency(
+                        pricingResult.negotiationHigh
+                      )}
+                    </strong>
+                  </div>
 
                   <div>
                     <span>{t.dataSource}</span>
