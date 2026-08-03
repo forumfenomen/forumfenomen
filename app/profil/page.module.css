@@ -6579,3 +6579,36 @@
     0 12px 28px rgba(48, 103, 202, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
+
+
+/* DESKTOP PLUS BUTTON ABOVE PROFILE MENU V1 */
+
+/*
+ * Yalnızca masaüstünde Plus Üyelik butonunu
+ * Profilim menüsünün üstüne taşır.
+ *
+ * JSX sırası ve mobil görünüm değiştirilmez.
+ */
+
+@media (min-width: 681px) {
+  .profileSidebar > .plusMembershipButton {
+    order: -1;
+
+    margin-bottom: 2px;
+  }
+
+  .profileSidebar > .profileMenuWrap {
+    order: 0;
+  }
+}
+
+/*
+ * Mobilde mevcut JSX sırası korunur.
+ */
+
+@media (max-width: 680px) {
+  .profileSidebar > .plusMembershipButton,
+  .profileSidebar > .profileMenuWrap {
+    order: initial;
+  }
+}
