@@ -4,8 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
     type MouseEvent,
-    useLayoutEffect,
-    useRef,
 } from "react";
 
 function HomeIcon() {
@@ -72,78 +70,6 @@ function UserIcon() {
     );
 }
 
-const navRef =
-    useRef<HTMLElement | null>(null);
-
-useLayoutEffect(() => {
-    const nav =
-        navRef.current;
-
-    if (!nav) {
-        return;
-    }
-
-    nav.style.setProperty(
-        "position",
-        "relative",
-        "important"
-    );
-
-    nav.style.setProperty(
-        "inset",
-        "auto",
-        "important"
-    );
-
-    nav.style.setProperty(
-        "top",
-        "auto",
-        "important"
-    );
-
-    nav.style.setProperty(
-        "right",
-        "auto",
-        "important"
-    );
-
-    nav.style.setProperty(
-        "bottom",
-        "auto",
-        "important"
-    );
-
-    nav.style.setProperty(
-        "left",
-        "auto",
-        "important"
-    );
-
-    nav.style.setProperty(
-        "transform",
-        "none",
-        "important"
-    );
-
-    nav.style.setProperty(
-        "z-index",
-        "1",
-        "important"
-    );
-
-    nav.style.setProperty(
-        "width",
-        "100%",
-        "important"
-    );
-
-    nav.style.setProperty(
-        "max-width",
-        "none",
-        "important"
-    );
-}, []);
-
 export default function BlogDetailBottomNav() {
     function handleNavigation(
         event: MouseEvent<HTMLAnchorElement>,
@@ -164,7 +90,6 @@ export default function BlogDetailBottomNav() {
 
     return (
         <nav
-            ref={navRef}
             className="ff-bottom-nav ff-blog-detail-bottom-nav"
             aria-label="ForumFenomen"
         >
