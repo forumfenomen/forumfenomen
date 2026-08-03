@@ -358,11 +358,6 @@ function getPositiveReasons(
     );
   }
 
-  if (input.delivery === "seven") {
-    reasons.push(
-      "fast_delivery"
-    );
-  }
 
   if (input.quantity >= 2) {
     reasons.push(

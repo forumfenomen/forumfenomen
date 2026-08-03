@@ -4768,3 +4768,70 @@ button > span {
     font-size: 13px;
   }
 }
+
+
+/* DATA CONFIDENCE CARD CLARITY V1 */
+
+.confidenceHeading {
+  display: grid;
+  gap: 5px;
+
+  min-width: 0;
+}
+
+.confidenceHeading > span {
+  color: #63caff;
+
+  font-size: 10px;
+  font-weight: 850;
+  line-height: 1.35;
+  letter-spacing: 0.7px;
+}
+
+.confidenceHeading p {
+  max-width: 220px;
+  margin: 0;
+
+  color: #8995a9;
+
+  font-size: 10.5px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.confidenceValue {
+  display: grid;
+  gap: 3px;
+
+  flex: 0 0 auto;
+
+  text-align: right;
+}
+
+:global(html[data-theme="light"])
+.confidenceHeading > span {
+  color: #1670ab;
+}
+
+:global(html[data-theme="light"])
+.confidenceHeading p {
+  color: #5f697b;
+}
+
+@media (max-width: 760px) {
+  .confidenceCard {
+    align-items: flex-start;
+  }
+
+  .confidenceHeading {
+    max-width: 57%;
+  }
+
+  .confidenceHeading p {
+    font-size: 10.5px;
+  }
+
+  .confidenceValue {
+    max-width: 43%;
+  }
+}

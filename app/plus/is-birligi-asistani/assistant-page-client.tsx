@@ -157,7 +157,11 @@ const translations = {
     negotiationRange: "Pazarlık aralığı",
     minimumPrice: "Minimum kabul fiyatı",
     premiumPrice: "Güçlü pazarlık üst sınırı",
-    forumConfidenceScore: "ForumFenomen güven skoru",
+    forumConfidenceScore: "Veri güven skoru",
+    verifiedConfidenceNote:
+      "Erişilebilir hesap verileri otomatik analiz edilerek hesaplandı.",
+    manualConfidenceNote:
+      "Kullanıcının manuel girdiği verilere göre hesaplandı.",
     priceStrengths: "Fiyatı güçlendiren nedenler",
     priceWarnings: "Dikkat edilmesi gerekenler",
 
@@ -344,7 +348,11 @@ const translations = {
     negotiationRange: "Negotiation range",
     minimumPrice: "Minimum acceptable price",
     premiumPrice: "Strong negotiation ceiling",
-    forumConfidenceScore: "ForumFenomen confidence score",
+    forumConfidenceScore: "Data confidence score",
+    verifiedConfidenceNote:
+      "Calculated from automatically analysed accessible account data.",
+    manualConfidenceNote:
+      "Calculated from data entered manually by the user.",
     priceStrengths: "Reasons strengthening the price",
     priceWarnings: "Points requiring attention",
 
@@ -2332,11 +2340,29 @@ export default function CollaborationAssistantPage() {
             {pricingResult && (
               <>
                 <div className={styles.confidenceCard}>
-                  <span>
-                    {t.forumConfidenceScore}
-                  </span>
+                  <div
+                    className={
+                      styles.confidenceHeading
+                    }
+                  >
+                    <span>
+                      {t.forumConfidenceScore}
+                    </span>
 
-                  <div>
+                    <p>
+                      {engagementSource ===
+                        "automatic" &&
+                      analysisResult
+                        ? t.verifiedConfidenceNote
+                        : t.manualConfidenceNote}
+                    </p>
+                  </div>
+
+                  <div
+                    className={
+                      styles.confidenceValue
+                    }
+                  >
                     <small>{t.confidence}</small>
 
                     <strong>
