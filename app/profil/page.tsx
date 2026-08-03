@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import ForumFooter from "@/components/forum-footer";
 import NotificationBell from "@/components/notification-bell";
@@ -82,6 +82,25 @@ type SavedTopicRow = {
   } | null;
 };
 
+type SavedBlogSaveRow = {
+  blog_post_id: string;
+  created_at: string;
+};
+
+type SavedBlogPostRow = {
+  id: string;
+  slug: string;
+  title: string;
+  category: string;
+  reading_time: number | string | null;
+  status: string;
+  published_at: string | null;
+};
+
+type SavedBlogRow = SavedBlogSaveRow & {
+  blogPost: SavedBlogPostRow;
+};
+
 type ProfileTopicRow = {
   id: string;
   title: string;
@@ -162,7 +181,7 @@ const translations = {
     comments: "Yorumlarım",
     followers: "Takipçilerim",
     following: "Takip Ettiklerim",
-    saved: "Kaydedilen Konular",
+    saved: "Kaydedilenler",
     notifications: "Bildirimler",
     settings: "Ayarlar",
     logout: "Çıkış Yap",
@@ -752,6 +771,15 @@ export default function ProfilePage() {
     useState(true);
 
   const [removingSavedTopicId, setRemovingSavedTopicId] =
+    useState<string | null>(null);
+
+  const [savedBlogs, setSavedBlogs] =
+    useState<SavedBlogRow[]>([]);
+
+  const [savedBlogsLoading, setSavedBlogsLoading] =
+    useState(true);
+
+  const [removingSavedBlogId, setRemovingSavedBlogId] =
     useState<string | null>(null);
 
   const [profileTopics, setProfileTopics] =
@@ -1349,6 +1377,161 @@ export default function ProfilePage() {
   useEffect(() => {
     let isActive = true;
 
+    async function loadSavedBlogs() {
+      const supabase = createClient();
+
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (userError || !user) {
+        setSavedBlogs([]);
+        setSavedBlogsLoading(false);
+        return;
+      }
+
+      const {
+        data: saveData,
+        error: saveError,
+      } = await supabase
+        .from("blog_post_saves")
+        .select(`
+          blog_post_id,
+          created_at
+        `)
+        .eq("user_id", user.id)
+        .order("created_at", {
+          ascending: false,
+        });
+
+      if (!isActive) {
+        return;
+      }
+
+      if (saveError) {
+        console.error(
+          "Kaydedilen blog yazıları alınamadı:",
+          saveError.message
+        );
+
+        setSavedBlogs([]);
+        setSavedBlogsLoading(false);
+        return;
+      }
+
+      const saves =
+        (saveData ?? []) as unknown as SavedBlogSaveRow[];
+
+      if (saves.length === 0) {
+        setSavedBlogs([]);
+        setSavedBlogsLoading(false);
+        return;
+      }
+
+      const blogPostIds = Array.from(
+        new Set(
+          saves.map((save) => save.blog_post_id)
+        )
+      );
+
+      const now = new Date().toISOString();
+
+      const {
+        data: postData,
+        error: postError,
+      } = await supabase
+        .from("blog_posts")
+        .select(`
+          id,
+          slug,
+          title,
+          category,
+          reading_time,
+          status,
+          published_at
+        `)
+        .in("id", blogPostIds)
+        .eq("status", "published")
+        .not("published_at", "is", null)
+        .lte("published_at", now);
+
+      if (!isActive) {
+        return;
+      }
+
+      if (postError) {
+        console.error(
+          "Kaydedilen blog yazılarının detayları alınamadı:",
+          postError.message
+        );
+
+        setSavedBlogs([]);
+        setSavedBlogsLoading(false);
+        return;
+      }
+
+      const posts =
+        (postData ?? []) as unknown as SavedBlogPostRow[];
+
+      const postsById = new Map(
+        posts.map(
+          (post) =>
+            [post.id, post] as const
+        )
+      );
+
+      const rows = saves
+        .map((save) => {
+          const blogPost =
+            postsById.get(save.blog_post_id);
+
+          if (!blogPost) {
+            return null;
+          }
+
+          return {
+            ...save,
+            blogPost,
+          };
+        })
+        .filter(
+          (item): item is SavedBlogRow =>
+            item !== null
+        );
+
+      setSavedBlogs(rows);
+      setSavedBlogsLoading(false);
+    }
+
+    void loadSavedBlogs();
+
+    function handleSavedBlogsChanged() {
+      void loadSavedBlogs();
+    }
+
+    window.addEventListener(
+      "focus",
+      handleSavedBlogsChanged
+    );
+
+    return () => {
+      isActive = false;
+
+      window.removeEventListener(
+        "focus",
+        handleSavedBlogsChanged
+      );
+    };
+  }, []);
+
+  useEffect(() => {
+    let isActive = true;
+
     async function loadProfileTopics() {
       const supabase = createClient();
 
@@ -1873,7 +2056,7 @@ export default function ProfilePage() {
     {
       id: "saved",
       icon: <BookmarkIcon />,
-      count: savedTopics.length,
+      count: savedTopics.length + savedBlogs.length,
     },
     {
       id: "notifications",
@@ -2147,6 +2330,70 @@ export default function ProfilePage() {
       );
     } finally {
       setRemovingSavedTopicId(null);
+    }
+  }
+
+  async function removeSavedBlog(
+    blogPostId: string
+  ) {
+    if (removingSavedBlogId === blogPostId) {
+      return;
+    }
+
+    setRemovingSavedBlogId(blogPostId);
+
+    try {
+      const supabase = createClient();
+
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError || !user) {
+        window.alert(
+          language === "tr"
+            ? "Blog kaydını kaldırmak için giriş yapmalısın."
+            : "You must sign in to remove the saved blog post."
+        );
+
+        return;
+      }
+
+      const { error } = await supabase
+        .from("blog_post_saves")
+        .delete()
+        .eq("blog_post_id", blogPostId)
+        .eq("user_id", user.id);
+
+      if (error) {
+        console.error(
+          "Blog kaydı kaldırılamadı:",
+          error.message
+        );
+
+        window.alert(
+          language === "tr"
+            ? "Blog yazısı kayıtlardan kaldırılamadı."
+            : "The blog post could not be removed from saved items."
+        );
+
+        return;
+      }
+
+      setSavedBlogs((current) =>
+        current.filter(
+          (item) =>
+            item.blog_post_id !== blogPostId
+        )
+      );
+    } catch (error) {
+      console.error(
+        "Beklenmeyen blog kaydı kaldırma hatası:",
+        error
+      );
+    } finally {
+      setRemovingSavedBlogId(null);
     }
   }
 
@@ -3466,128 +3713,240 @@ export default function ProfilePage() {
   }
 
   function renderSaved() {
+    const savedItemCount =
+      savedTopics.length + savedBlogs.length;
+
     return (
       <>
         <div className={styles.contentHeading}>
           <div>
             <span>{t.profile}</span>
             <h2>{t.saved}</h2>
-            <p>{t.savedDescription}</p>
+
+            <p>
+              {language === "tr"
+                ? "Daha sonra okumak için kaydettiğin konu ve blog yazıları."
+                : "Topics and blog posts you saved to read later."}
+            </p>
           </div>
         </div>
 
         <div className={styles.simpleList}>
-          {savedTopicsLoading ? (
+          {savedTopicsLoading ||
+          savedBlogsLoading ? (
             <div className={styles.emptyState}>
               <p>
                 {language === "tr"
-                  ? "Kaydedilen konular yükleniyor..."
-                  : "Loading saved topics..."}
+                  ? "Kaydedilenler yükleniyor..."
+                  : "Loading saved items..."}
               </p>
             </div>
-          ) : savedTopics.length === 0 ? (
+          ) : savedItemCount === 0 ? (
             <div className={styles.emptyState}>
               <p>
                 {language === "tr"
-                  ? "Henüz kaydettiğin bir konu bulunmuyor."
-                  : "You have not saved any topics yet."}
+                  ? "Henüz kaydettiğin bir konu veya blog yazısı bulunmuyor."
+                  : "You have not saved any topics or blog posts yet."}
               </p>
             </div>
           ) : (
-            savedTopics.map((savedTopic) => {
-              const topic = savedTopic.topics;
+            <>
+              {savedTopics.map((savedTopic) => {
+                const topic = savedTopic.topics;
 
-              if (!topic) {
-                return null;
-              }
+                if (!topic) {
+                  return null;
+                }
 
-              const categoryName =
-                topic.categories?.name ??
-                (language === "tr"
-                  ? "Genel"
-                  : "General");
+                const categoryName =
+                  topic.categories?.name ??
+                  (language === "tr"
+                    ? "Genel"
+                    : "General");
 
-              const commentText =
-                language === "tr"
-                  ? `${topic.comment_count ?? 0} yorum`
-                  : `${topic.comment_count ?? 0} comments`;
+                const commentText =
+                  language === "tr"
+                    ? `${topic.comment_count ?? 0} yorum`
+                    : `${topic.comment_count ?? 0} comments`;
 
-              return (
-                <div
-                  key={savedTopic.topic_id}
-                  className={styles.savedTopicRow}
-                >
-                  <button
-                    type="button"
-                    className={styles.savedTopicLink}
-                    onClick={() => {
-                      window.location.assign(
-                        `/konu/${topic.id}`
-                      );
-                    }}
+                return (
+                  <div
+                    key={`topic-${savedTopic.topic_id}`}
+                    className={styles.savedTopicRow}
                   >
-                    <span
+                    <button
+                      type="button"
+                      className={styles.savedTopicLink}
+                      onClick={() => {
+                        window.location.assign(
+                          `/konu/${topic.id}`
+                        );
+                      }}
+                    >
+                      <span
+                        className={
+                          styles.simpleListIcon
+                        }
+                      >
+                        <BookmarkIcon />
+                      </span>
+
+                      <span>
+                        <strong>{topic.title}</strong>
+
+                        <small>
+                          {language === "tr"
+                            ? "Konu"
+                            : "Topic"}{" "}
+                          · {categoryName} ·{" "}
+                          {commentText}
+                        </small>
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
                       className={
-                        styles.simpleListIcon
+                        styles.removeSavedButton
+                      }
+                      disabled={
+                        removingSavedTopicId ===
+                        topic.id
+                      }
+                      onClick={() => {
+                        void removeSavedTopic(
+                          topic.id
+                        );
+                      }}
+                      aria-label={
+                        language === "tr"
+                          ? "Konu kaydını kaldır"
+                          : "Remove saved topic"
+                      }
+                      title={
+                        language === "tr"
+                          ? "Konu kaydını kaldır"
+                          : "Remove saved topic"
                       }
                     >
-                      <BookmarkIcon />
-                    </span>
+                      {removingSavedTopicId ===
+                      topic.id ? (
+                        "…"
+                      ) : (
+                        <svg
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                        >
+                          <path d="M7 7l10 10M17 7 7 17" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                );
+              })}
 
-                    <span>
-                      <strong>{topic.title}</strong>
+              {savedBlogs.map((savedBlog) => {
+                const blogPost =
+                  savedBlog.blogPost;
 
-                      <small>
-                        {categoryName} · {commentText}
-                      </small>
-                    </span>
-                  </button>
+                const categoryName =
+                  blogPost.category?.trim() ||
+                  (language === "tr"
+                    ? "Genel"
+                    : "General");
 
-                  <button
-                    type="button"
-                    className={
-                      styles.removeSavedButton
-                    }
-                    disabled={
-                      removingSavedTopicId ===
-                      topic.id
-                    }
-                    onClick={() => {
-                      void removeSavedTopic(
-                        topic.id
-                      );
-                    }}
-                    aria-label={
-                      language === "tr"
-                        ? "Kaydı kaldır"
-                        : "Remove saved topic"
-                    }
-                    title={
-                      language === "tr"
-                        ? "Kaydı kaldır"
-                        : "Remove saved topic"
-                    }
+                const readingTime = Math.max(
+                  1,
+                  Number(
+                    blogPost.reading_time
+                  ) || 1
+                );
+
+                const readingText =
+                  language === "tr"
+                    ? `${readingTime} dk okuma`
+                    : `${readingTime} min read`;
+
+                return (
+                  <div
+                    key={`blog-${savedBlog.blog_post_id}`}
+                    className={styles.savedTopicRow}
                   >
-                    {removingSavedTopicId === topic.id ? (
-                      "…"
-                    ) : (
-                      <svg
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
+                    <button
+                      type="button"
+                      className={styles.savedTopicLink}
+                      onClick={() => {
+                        window.location.assign(
+                          `/blog/${blogPost.slug}`
+                        );
+                      }}
+                    >
+                      <span
+                        className={
+                          styles.simpleListIcon
+                        }
                       >
-                        <path d="M7 7l10 10M17 7 7 17" />
-                      </svg>
-                    )}
-                  </button>
-                </div>
-              );
-            })
+                        <BlogIcon />
+                      </span>
+
+                      <span>
+                        <strong>
+                          {blogPost.title}
+                        </strong>
+
+                        <small>
+                          Blog · {categoryName} ·{" "}
+                          {readingText}
+                        </small>
+                      </span>
+                    </button>
+
+                    <button
+                      type="button"
+                      className={
+                        styles.removeSavedButton
+                      }
+                      disabled={
+                        removingSavedBlogId ===
+                        blogPost.id
+                      }
+                      onClick={() => {
+                        void removeSavedBlog(
+                          blogPost.id
+                        );
+                      }}
+                      aria-label={
+                        language === "tr"
+                          ? "Blog kaydını kaldır"
+                          : "Remove saved blog post"
+                      }
+                      title={
+                        language === "tr"
+                          ? "Blog kaydını kaldır"
+                          : "Remove saved blog post"
+                      }
+                    >
+                      {removingSavedBlogId ===
+                      blogPost.id ? (
+                        "…"
+                      ) : (
+                        <svg
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                        >
+                          <path d="M7 7l10 10M17 7 7 17" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                );
+              })}
+            </>
           )}
         </div>
       </>
     );
   }
-
   function renderNotifications() {
     return (
       <>
