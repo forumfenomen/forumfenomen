@@ -1014,3 +1014,60 @@
     font-size: 11px;
   }
 }
+
+/* PLUS LIGHT THEME READABILITY V2 */
+
+:global(html[data-theme="light"]) .premiumBadge {
+  color: #087bbd;
+  border-color: rgba(13, 129, 194, 0.34);
+  background: rgba(40, 166, 227, 0.1);
+}
+
+:global(html[data-theme="light"]) .heroContent p {
+  color: #4c5365;
+}
+
+:global(html[data-theme="light"])
+.assistantHeader > div:first-child > span,
+:global(html[data-theme="light"]) .sectionHeading span {
+  color: #0877b9;
+}
+
+:global(html[data-theme="light"]) .assistantHeader p {
+  color: #555d70;
+}
+
+:global(html[data-theme="light"]) .featureGrid p {
+  color: #606779;
+}
+
+:global(html[data-theme="light"]) .assistantButton {
+  color: #315f91;
+  border-color: rgba(40, 113, 190, 0.2);
+  background: rgba(46, 127, 214, 0.08);
+}
+
+:global(html[data-theme="light"]) .includedGrid strong {
+  color: #33394a;
+}
+
+:global(html[data-theme="light"]) .upcomingGrid small {
+  color: #45698e;
+}
+
+:global(html[data-theme="light"]) .upcomingGrid h3 {
+  color: #303646;
+}
+
+:global(html[data-theme="light"]) .upcomingGrid p {
+  color: #62697a;
+}
+
+:global(html[data-theme="light"]) .upcomingIcon {
+  color: #4a6e97;
+  background: rgba(56, 117, 182, 0.1);
+}
+
+:global(html[data-theme="light"]) .upcomingGrid article > svg {
+  stroke: #58708d;
+}
