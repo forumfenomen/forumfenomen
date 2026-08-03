@@ -710,11 +710,7 @@ export default async function BlogPostPage({
                             {post.excerpt}
                         </p>
 
-                        <div
-                            className={
-                                styles.meta
-                            }
-                        >
+                        <div className={styles.meta}>
                             <span>
                                 {author.name}
                                 {author.username
@@ -722,31 +718,29 @@ export default async function BlogPostPage({
                                     : ""}
                             </span>
 
-                            <span
-                                aria-hidden="true"
-                            >
-                                •
-                            </span>
+                            <span aria-hidden="true">•</span>
 
-                            <time
-                                dateTime={
-                                    publishedDate
-                                }
-                            >
-                                {formatDate(
-                                    publishedDate
-                                )}
+                            <time dateTime={publishedDate}>
+                                {formatDate(publishedDate)}
                             </time>
 
-                            <span
-                                aria-hidden="true"
-                            >
-                                •
-                            </span>
+                            <span aria-hidden="true">•</span>
 
                             <span>
-                                {readingTime} dk
-                                okuma
+                                {readingTime} dk okuma
+                            </span>
+
+                            <span aria-hidden="true">•</span>
+
+                            <span className={styles.metaViews}>
+                                <span>Görüntülenme</span>
+
+                                <BlogViewTracker
+                                    postId={post.id}
+                                    initialViewCount={getNumber(
+                                        post.view_count
+                                    )}
+                                />
                             </span>
                         </div>
                     </div>
@@ -835,75 +829,7 @@ export default async function BlogPostPage({
                         ) : null}
                     </div>
 
-                    <aside
-                        className={
-                            styles.sidebar
-                        }
-                    >
-                        <div
-                            className={
-                                styles.authorCard
-                            }
-                        >
-                            <span>
-                                YAZAR
-                            </span>
-
-                            <strong>
-                                {author.name}
-                            </strong>
-
-                            {author.username ? (
-                                <small>
-                                    @
-                                    {
-                                        author.username
-                                    }
-                                </small>
-                            ) : null}
-
-                            <p>
-                                İçerik üretimi,
-                                sosyal medya ve
-                                dijital büyüme
-                                üzerine güvenilir
-                                rehberler.
-                            </p>
-                        </div>
-
-                        <div
-                            className={
-                                styles.shareCard
-                            }
-                        >
-                            <span>
-                                YAZI BİLGİSİ
-                            </span>
-
-                            <div className={styles.infoRow}>
-                                <span>
-                                    Okuma süresi
-                                </span>
-
-                                <strong>
-                                    {readingTime} dk
-                                </strong>
-                            </div>
-
-                            <div className={styles.infoRow}>
-                                <span>
-                                    Görüntülenme
-                                </span>
-
-                                <BlogViewTracker
-                                    postId={post.id}
-                                    initialViewCount={getNumber(
-                                        post.view_count
-                                    )}
-                                />
-                            </div>
-                        </div>
-                    </aside>
+                    
                 </div>
 
                 {relatedPosts.length > 0 ? (

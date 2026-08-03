@@ -114,6 +114,16 @@
     font-size: 13px;
 }
 
+.metaViews {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.metaViews>span {
+    color: inherit;
+}
+
 .cover {
     position: relative;
     overflow: hidden;
@@ -134,11 +144,8 @@
 }
 
 .layout {
-    display: grid;
-    grid-template-columns:
-        minmax(0, 1fr) 250px;
-    gap: 28px;
-    align-items: start;
+    display: block;
+    width: 100%;
     margin-top: 32px;
 }
 
@@ -240,82 +247,6 @@
     font-size: 12px;
 }
 
-.sidebar {
-    position: sticky;
-    top: 28px;
-    display: grid;
-    gap: 16px;
-}
-
-.authorCard,
-.shareCard {
-    padding: 23px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 22px;
-    background:
-        linear-gradient(145deg,
-            rgba(20, 10, 30, 0.96),
-            rgba(7, 12, 27, 0.96));
-}
-
-.authorCard>span,
-.shareCard>span {
-    display: block;
-    margin-bottom: 15px;
-    color: #f05cff;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-}
-
-.authorCard strong {
-    display: block;
-    color: #ffffff;
-    font-size: 20px;
-}
-
-.authorCard small {
-    display: block;
-    margin-top: 3px;
-    color: #9992aa;
-}
-
-.authorCard p {
-    margin: 16px 0 0;
-    color: #aaa4b8;
-    font-size: 13px;
-    line-height: 1.65;
-}
-
-.shareCard {
-    padding: 18px 20px;
-}
-
-.shareCard > span {
-    margin-bottom: 10px;
-}
-
-.infoRow {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    min-height: 38px;
-    padding: 10px 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
-}
-
-.infoRow span {
-    color: #9b95a8;
-    font-size: 12px;
-    font-weight: 650;
-}
-
-.infoRow strong {
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 800;
-}
 
 
 
@@ -325,17 +256,13 @@
         gap: 20px;
     }
 
-    .sidebar {
-        position: static;
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
+
 }
 
 @media (max-width: 640px) {
     .page {
         padding:
-             18px 12px calc(110px + env(safe-area-inset-bottom));
+            18px 12px calc(110px + env(safe-area-inset-bottom));
     }
 
     .hero {
@@ -376,9 +303,6 @@
         line-height: 1.8;
     }
 
-    .sidebar {
-        grid-template-columns: 1fr;
-    }
 
 
 }
@@ -871,7 +795,8 @@
             repeat(2, minmax(0, 1fr));
     }
 }
-.page > :global(.ff-feed-header) {
+
+.page> :global(.ff-feed-header) {
     width: min(1040px, 100%) !important;
     margin: 0 auto 18px !important;
 }
