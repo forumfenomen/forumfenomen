@@ -2,6 +2,7 @@ import { requireAdminAccess } from "@/lib/admin/require-admin-access";
 import Link from "next/link";
 import UserAccountActions from "@/components/admin/user-account-actions";
 import UserRoleActions from "@/components/admin/user-role-actions";
+import UserPlusAccessActions from "@/components/admin/user-plus-access-actions";
 
 import ProfileReportActions, {
   type ProfileReport,
@@ -31,6 +32,10 @@ type AdminUser = {
   email_notifications: boolean;
   push_notifications: boolean;
 
+
+  plus_access: boolean;
+  plus_access_granted_at: string | null;
+  plus_access_granted_by: string | null;
   account_status: string;
   suspended_until: string | null;
   moderation_reason: string | null;
@@ -825,6 +830,12 @@ export default async function AdminUsersPage({
 
                   <div className={styles.userManagementBar}>
                     <div className={styles.userManagementLeft}>
+                      <UserPlusAccessActions
+                        userId={user.id}
+                        displayName={displayName}
+                        hasPlusAccess={user.plus_access}
+                      />
+
                       <UserRoleActions
                         userId={user.id}
                         displayName={displayName}

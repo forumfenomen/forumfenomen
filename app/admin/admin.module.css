@@ -5912,3 +5912,129 @@
 .reportFilterReset a:hover {
     color: #ef78ff;
 }
+
+/* ADMIN PLUS ACCESS V1 */
+
+.userPlusAccess {
+  display: flex;
+  position: relative;
+  align-items: center;
+  gap: 8px;
+}
+
+.userPlusStatusActive,
+.userPlusStatusInactive {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 32px;
+  padding: 0 10px;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.userPlusStatusActive {
+  border: 1px solid rgba(53, 211, 153, 0.28);
+  color: #72e6b8;
+  background: rgba(31, 180, 125, 0.1);
+}
+
+.userPlusStatusInactive {
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  color: #95a1b4;
+  background: rgba(148, 163, 184, 0.06);
+}
+
+.userPlusEnableButton,
+.userPlusDisableButton {
+  min-height: 34px;
+  padding: 0 13px;
+
+  border-radius: 9px;
+
+  font-size: 12px;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    opacity 160ms ease;
+}
+
+.userPlusEnableButton {
+  border: 1px solid rgba(53, 211, 153, 0.32);
+  color: #78e7bb;
+  background: rgba(31, 180, 125, 0.1);
+}
+
+.userPlusEnableButton:hover {
+  background: rgba(31, 180, 125, 0.17);
+}
+
+.userPlusDisableButton {
+  border: 1px solid rgba(248, 113, 113, 0.26);
+  color: #f3a0a0;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.userPlusDisableButton:hover {
+  background: rgba(239, 68, 68, 0.14);
+}
+
+.userPlusEnableButton:disabled,
+.userPlusDisableButton:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.userPlusError {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+
+  width: max-content;
+  max-width: 280px;
+
+  color: #f4a0a0;
+
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+:global(html[data-theme="light"])
+.userPlusStatusActive {
+  color: #137a55;
+  background: rgba(24, 150, 101, 0.09);
+}
+
+:global(html[data-theme="light"])
+.userPlusStatusInactive {
+  color: #687386;
+  background: rgba(88, 105, 132, 0.06);
+}
+
+:global(html[data-theme="light"])
+.userPlusEnableButton {
+  color: #137a55;
+  background: rgba(24, 150, 101, 0.08);
+}
+
+:global(html[data-theme="light"])
+.userPlusDisableButton {
+  color: #b64545;
+  background: rgba(205, 67, 67, 0.07);
+}
+
+@media (max-width: 760px) {
+  .userPlusAccess {
+    flex-wrap: wrap;
+  }
+}
