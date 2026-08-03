@@ -20,25 +20,32 @@ export default function UserPlusAccessActions({
 }: UserPlusAccessActionsProps) {
   const router = useRouter();
 
+  const [isModalOpen, setIsModalOpen] =
+    useState(false);
+
   const [isSaving, setIsSaving] =
     useState(false);
 
   const [errorMessage, setErrorMessage] =
     useState<string | null>(null);
 
-  async function updateAccess() {
-    const nextAccess = !hasPlusAccess;
+  const nextAccess = !hasPlusAccess;
 
-    const confirmed = window.confirm(
-      nextAccess
-        ? `${displayName} kullanıcısına Plus beta erişimi açılsın mı?`
-        : `${displayName} kullanıcısının Plus beta erişimi kapatılsın mı?`
-    );
+  function openModal() {
+    setErrorMessage(null);
+    setIsModalOpen(true);
+  }
 
-    if (!confirmed) {
+  function closeModal() {
+    if (isSaving) {
       return;
     }
 
+    setErrorMessage(null);
+    setIsModalOpen(false);
+  }
+
+  async function updateAccess() {
     setIsSaving(true);
     setErrorMessage(null);
 
@@ -57,6 +64,7 @@ export default function UserPlusAccessActions({
         throw error;
       }
 
+      setIsModalOpen(false);
       router.refresh();
     } catch (error) {
       const message =
@@ -84,41 +92,160 @@ export default function UserPlusAccessActions({
   }
 
   return (
-    <div className={styles.userPlusAccess}>
-      <span
-        className={
-          hasPlusAccess
-            ? styles.userPlusStatusActive
-            : styles.userPlusStatusInactive
-        }
-      >
-        {hasPlusAccess
-          ? "PLUS AÇIK"
-          : "PLUS KAPALI"}
-      </span>
+    <>
+      <div className={styles.userPlusAccess}>
+        <span
+          className={
+            hasPlusAccess
+              ? styles.userPlusStatusActive
+              : styles.userPlusStatusInactive
+          }
+        >
+          {hasPlusAccess
+            ? "PLUS AÇIK"
+            : "PLUS KAPALI"}
+        </span>
 
-      <button
-        type="button"
-        className={
-          hasPlusAccess
-            ? styles.userPlusDisableButton
-            : styles.userPlusEnableButton
-        }
-        onClick={updateAccess}
-        disabled={isSaving}
-      >
-        {isSaving
-          ? "İşleniyor..."
-          : hasPlusAccess
+        <button
+          type="button"
+          className={
+            hasPlusAccess
+              ? styles.userPlusDisableButton
+              : styles.userPlusEnableButton
+          }
+          onClick={openModal}
+        >
+          {hasPlusAccess
             ? "Plus kapat"
             : "Plus aç"}
-      </button>
+        </button>
+      </div>
 
-      {errorMessage ? (
-        <small className={styles.userPlusError}>
-          {errorMessage}
-        </small>
+      {isModalOpen ? (
+        <div
+          className={styles.userPlusModalBackdrop}
+          role="presentation"
+          onMouseDown={(event) => {
+            if (
+              event.target ===
+              event.currentTarget
+            ) {
+              closeModal();
+            }
+          }}
+        >
+          <section
+            className={styles.userPlusModal}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="user-plus-modal-title"
+          >
+            <header
+              className={
+                styles.userPlusModalHeader
+              }
+            >
+              <div
+                className={
+                  nextAccess
+                    ? styles.userPlusModalIconEnable
+                    : styles.userPlusModalIconDisable
+                }
+              >
+                {nextAccess ? "＋" : "−"}
+              </div>
+
+              <div>
+                <span>PLUS ERİŞİM YÖNETİMİ</span>
+
+                <h3 id="user-plus-modal-title">
+                  {nextAccess
+                    ? "Plus erişimini aç"
+                    : "Plus erişimini kapat"}
+                </h3>
+              </div>
+
+              <button
+                type="button"
+                className={
+                  styles.userPlusModalClose
+                }
+                onClick={closeModal}
+                disabled={isSaving}
+                aria-label="Pencereyi kapat"
+              >
+                ×
+              </button>
+            </header>
+
+            <div className={styles.userPlusModalBody}>
+              <p>
+                <strong>{displayName}</strong>
+                {" kullanıcısının Plus beta erişimi "}
+                {nextAccess
+                  ? "açılacak."
+                  : "kapatılacak."}
+              </p>
+
+              <div
+                className={
+                  nextAccess
+                    ? styles.userPlusModalNoticeEnable
+                    : styles.userPlusModalNoticeDisable
+                }
+              >
+                {nextAccess
+                  ? "Kullanıcı Plus araçlarına ve İş Birliği Asistanı'na erişebilecek."
+                  : "Kullanıcı Plus araçlarına erişemeyecek ve Çok Yakında ekranını görecek."}
+              </div>
+
+              {errorMessage ? (
+                <div
+                  className={
+                    styles.userPlusModalError
+                  }
+                >
+                  {errorMessage}
+                </div>
+              ) : null}
+            </div>
+
+            <footer
+              className={
+                styles.userPlusModalButtons
+              }
+            >
+              <button
+                type="button"
+                className={
+                  styles.userPlusModalCancel
+                }
+                onClick={closeModal}
+                disabled={isSaving}
+              >
+                Vazgeç
+              </button>
+
+              <button
+                type="button"
+                className={
+                  nextAccess
+                    ? styles.userPlusModalConfirm
+                    : styles.userPlusModalDanger
+                }
+                onClick={updateAccess}
+                disabled={isSaving}
+              >
+                {isSaving
+                  ? "İşleniyor..."
+                  : nextAccess
+                    ? "Plus erişimini aç"
+                    : "Plus erişimini kapat"}
+              </button>
+            </footer>
+          </section>
+        </div>
       ) : null}
-    </div>
+    </>
   );
 }

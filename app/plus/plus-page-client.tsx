@@ -31,7 +31,7 @@ const translations = {
     assistantTitle: "İş Birliği Asistanı",
     assistantDescription:
       "Marka tekliflerini analiz et, içerik bedelini hesapla ve profesyonel karşı teklifini saniyeler içinde hazırla.",
-    priceTitle: "Fiyatını Hesapla",
+    priceTitle: "Fiyatı Hesapla",
     priceDescription:
       "İzlenme, etkileşim, içerik türü ve kullanım haklarına göre teklif aralığını oluştur.",
     analyseTitle: "Teklifi Analiz Et",

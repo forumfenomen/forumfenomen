@@ -6038,3 +6038,372 @@
     flex-wrap: wrap;
   }
 }
+
+/* ADMIN PLUS CUSTOM MODAL V1 */
+
+.userPlusModalBackdrop {
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  padding: 20px;
+
+  background: rgba(2, 4, 12, 0.78);
+  backdrop-filter: blur(9px);
+}
+
+.userPlusModal {
+  width: min(460px, 100%);
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(146, 60, 255, 0.28);
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(20, 18, 35, 0.99),
+      rgba(10, 11, 23, 0.99)
+    );
+
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.5),
+    0 0 45px rgba(139, 52, 255, 0.1);
+}
+
+.userPlusModalHeader {
+  display: grid;
+  grid-template-columns: 48px 1fr 34px;
+
+  align-items: center;
+  gap: 13px;
+
+  padding: 20px 20px 16px;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.07);
+}
+
+.userPlusModalHeader > div:nth-child(2) {
+  min-width: 0;
+}
+
+.userPlusModalHeader span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #c66cff;
+
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.13em;
+}
+
+.userPlusModalHeader h3 {
+  margin: 0;
+
+  color: #f5f2ff;
+
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.userPlusModalIconEnable,
+.userPlusModalIconDisable {
+  display: grid;
+  place-items: center;
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 14px;
+
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.userPlusModalIconEnable {
+  border: 1px solid rgba(63, 226, 164, 0.3);
+
+  color: #74ebba;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(31, 190, 126, 0.22),
+      rgba(27, 120, 96, 0.1)
+    );
+}
+
+.userPlusModalIconDisable {
+  border: 1px solid rgba(248, 113, 113, 0.28);
+
+  color: #ffaaa9;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(239, 68, 68, 0.18),
+      rgba(120, 30, 50, 0.08)
+    );
+}
+
+.userPlusModalClose {
+  display: grid;
+  place-items: center;
+
+  width: 34px;
+  height: 34px;
+
+  padding: 0;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 10px;
+
+  color: #aeb4c3;
+  background: rgba(255, 255, 255, 0.035);
+
+  font-size: 21px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.userPlusModalClose:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.userPlusModalBody {
+  display: grid;
+  gap: 15px;
+
+  padding: 22px 20px;
+}
+
+.userPlusModalBody p {
+  margin: 0;
+
+  color: #aeb6c8;
+
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.userPlusModalBody strong {
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.userPlusModalNoticeEnable,
+.userPlusModalNoticeDisable {
+  padding: 13px 14px;
+
+  border-radius: 12px;
+
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.userPlusModalNoticeEnable {
+  border: 1px solid rgba(60, 220, 158, 0.19);
+
+  color: #a7eace;
+  background: rgba(31, 175, 118, 0.08);
+}
+
+.userPlusModalNoticeDisable {
+  border: 1px solid rgba(248, 113, 113, 0.18);
+
+  color: #efb2b2;
+  background: rgba(220, 60, 70, 0.07);
+}
+
+.userPlusModalError {
+  padding: 11px 13px;
+
+  border:
+    1px solid rgba(248, 113, 113, 0.24);
+  border-radius: 11px;
+
+  color: #ffaaaa;
+  background: rgba(239, 68, 68, 0.09);
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.userPlusModalButtons {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+
+  padding: 16px 20px 20px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.06);
+}
+
+.userPlusModalCancel,
+.userPlusModalConfirm,
+.userPlusModalDanger {
+  min-height: 42px;
+  padding: 0 18px;
+
+  border-radius: 11px;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.userPlusModalCancel {
+  border:
+    1px solid rgba(255, 255, 255, 0.1);
+
+  color: #b6bdca;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.userPlusModalCancel:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.userPlusModalConfirm {
+  border:
+    1px solid rgba(78, 227, 169, 0.28);
+
+  color: #071a13;
+
+  background:
+    linear-gradient(
+      135deg,
+      #58e3ad,
+      #32bf91
+    );
+}
+
+.userPlusModalDanger {
+  border:
+    1px solid rgba(255, 120, 120, 0.32);
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e84d64,
+      #b92f4b
+    );
+}
+
+.userPlusModalCancel:disabled,
+.userPlusModalConfirm:disabled,
+.userPlusModalDanger:disabled,
+.userPlusModalClose:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+:global(html[data-theme="light"])
+.userPlusModalBackdrop {
+  background: rgba(24, 27, 39, 0.48);
+}
+
+:global(html[data-theme="light"])
+.userPlusModal {
+  border-color: rgba(123, 56, 190, 0.2);
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f6f4fb
+    );
+
+  box-shadow:
+    0 25px 75px rgba(33, 30, 48, 0.22);
+}
+
+:global(html[data-theme="light"])
+.userPlusModalHeader {
+  border-bottom-color:
+    rgba(39, 43, 60, 0.08);
+}
+
+:global(html[data-theme="light"])
+.userPlusModalHeader h3,
+:global(html[data-theme="light"])
+.userPlusModalBody strong {
+  color: #292635;
+}
+
+:global(html[data-theme="light"])
+.userPlusModalBody p {
+  color: #626879;
+}
+
+:global(html[data-theme="light"])
+.userPlusModalClose {
+  border-color: rgba(40, 45, 65, 0.11);
+  color: #61697a;
+  background: rgba(50, 55, 75, 0.04);
+}
+
+:global(html[data-theme="light"])
+.userPlusModalCancel {
+  border-color: rgba(50, 55, 75, 0.12);
+  color: #52596a;
+  background: rgba(50, 55, 75, 0.04);
+}
+
+@media (max-width: 600px) {
+  .userPlusModalBackdrop {
+    align-items: end;
+    padding: 12px;
+  }
+
+  .userPlusModal {
+    border-radius: 19px;
+  }
+
+  .userPlusModalHeader {
+    grid-template-columns: 42px 1fr 32px;
+    padding: 17px;
+  }
+
+  .userPlusModalIconEnable,
+  .userPlusModalIconDisable {
+    width: 42px;
+    height: 42px;
+  }
+
+  .userPlusModalHeader h3 {
+    font-size: 17px;
+  }
+
+  .userPlusModalBody {
+    padding: 18px 17px;
+  }
+
+  .userPlusModalButtons {
+    padding: 14px 17px 17px;
+  }
+
+  .userPlusModalCancel,
+  .userPlusModalConfirm,
+  .userPlusModalDanger {
+    flex: 1;
+    padding: 0 10px;
+  }
+}
