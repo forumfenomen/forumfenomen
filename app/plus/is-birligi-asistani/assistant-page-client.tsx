@@ -1316,7 +1316,7 @@ export default function CollaborationAssistantPage() {
       id: "analyse" as WorkspaceTab,
       label: t.analyseTab,
       icon: <DocumentIcon />,
-      enabled: false,
+      enabled: true,
     },
     {
       id: "reply" as WorkspaceTab,
@@ -1429,6 +1429,7 @@ export default function CollaborationAssistantPage() {
           ))}
         </nav>
 
+        {activeTab === "price" && (
         <section className={styles.workspaceGrid}>
           <div className={styles.formCard}>
             <div className={styles.cardHeading}>
@@ -2787,6 +2788,130 @@ export default function CollaborationAssistantPage() {
             </p>
           </aside>
         </section>
+        )}
+        {activeTab === "analyse" && (
+          <section className={styles.workspaceGrid}>
+            <div className={styles.formCard}>
+              <div className={styles.cardHeading}>
+                <span>
+                  <DocumentIcon />
+                </span>
+
+                <div>
+                  <h2>
+                    {language === "tr"
+                      ? "Marka teklifini analiz et"
+                      : "Analyse the brand offer"}
+                  </h2>
+
+                  <p>
+                    {language === "tr"
+                      ? "Markadan gelen teklif metnini ve ücret detaylarını gir. ForumFenomen fiyat sonucuyla karşılaştırarak riskleri ve pazarlık alanını göstereceğiz."
+                      : "Enter the offer text and payment details. We will compare them with the ForumFenomen pricing result and identify risks and negotiation opportunities."}
+                  </p>
+                </div>
+              </div>
+
+              <section className={styles.accountAnalysisCard}>
+                <div className={styles.analysisHeading}>
+                  <div
+                    className={
+                      styles.analysisHeadingIcon
+                    }
+                  >
+                    <SparkleIcon />
+                  </div>
+
+                  <div>
+                    <span>
+                      {language === "tr"
+                        ? "TEKLİF ANALİZİ"
+                        : "OFFER ANALYSIS"}
+                    </span>
+
+                    <h3>
+                      {language === "tr"
+                        ? "Analiz formu hazırlanıyor"
+                        : "Analysis form is being prepared"}
+                    </h3>
+
+                    <p>
+                      {language === "tr"
+                        ? "Bir sonraki adımda marka adı, teklif metni, teklif edilen ücret, kullanım hakları, ödeme süresi ve revizyon şartları bu alana eklenecek."
+                        : "The next step will add the brand name, offer text, offered fee, usage rights, payment term and revision conditions here."}
+                    </p>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <aside className={styles.previewCard}>
+              <div className={styles.previewTop}>
+                <span>
+                  {language === "tr"
+                    ? "TEKLİF SONUCU"
+                    : "OFFER RESULT"}
+                </span>
+
+                <div className={styles.previewPulse}>
+                  <i />
+
+                  {language === "tr"
+                    ? "FORM BEKLENİYOR"
+                    : "WAITING FOR FORM"}
+                </div>
+              </div>
+
+              <div className={styles.previewIntro}>
+                <h2>
+                  {language === "tr"
+                    ? "Teklif değerlendirmesi"
+                    : "Offer assessment"}
+                </h2>
+
+                <p>
+                  {language === "tr"
+                    ? "Form tamamlandığında teklifin kabul edilebilir, pazarlığa açık veya minimum değerin altında olup olmadığı burada gösterilecek."
+                    : "Once the form is completed, this area will show whether the offer is acceptable, negotiable or below the minimum value."}
+                </p>
+              </div>
+
+              <div className={styles.factorBox}>
+                <h3>
+                  {language === "tr"
+                    ? "Analiz edilecek başlıklar"
+                    : "Terms to analyse"}
+                </h3>
+
+                {[
+                  language === "tr"
+                    ? "Teklif edilen ücret"
+                    : "Offered fee",
+                  language === "tr"
+                    ? "Kullanım hakları"
+                    : "Usage rights",
+                  language === "tr"
+                    ? "Ödeme ve teslim şartları"
+                    : "Payment and delivery terms",
+                  language === "tr"
+                    ? "Eksik veya riskli maddeler"
+                    : "Missing or risky terms",
+                ].map((item) => (
+                  <div key={item}>
+                    <CheckIcon />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              <p className={styles.notice}>
+                {language === "tr"
+                  ? "Mevcut fiyat hesaplayıcı ve sonuçları değiştirilmedi."
+                  : "The existing pricing calculator and its results remain unchanged."}
+              </p>
+            </aside>
+          </section>
+        )}
 <ForumFooter />
       </div>
 
