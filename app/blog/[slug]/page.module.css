@@ -1237,3 +1237,24 @@
     transform: none !important;
     translate: none !important;
 }
+
+/* BLOG DETAIL SEARCH FLOW FIX */
+.detailHeader {
+    position: relative !important;
+}
+
+.detailHeader:has(:global(.ff-site-search-popover)) {
+    margin-bottom: 82px !important;
+}
+
+.detailHeader :global(.ff-site-search-popover) {
+    position: absolute !important;
+    top: calc(100% + 10px) !important;
+    right: 0 !important;
+    left: 0 !important;
+
+    width: 100% !important;
+    max-width: none !important;
+
+    z-index: 30 !important;
+}
