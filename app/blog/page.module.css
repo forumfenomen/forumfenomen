@@ -1,4 +1,4 @@
-﻿.page {
+.page {
   min-height: 100svh;
   padding: 10px 0 118px;
   color: #f7f7fb;
@@ -1725,3 +1725,11 @@
   color: #666974 !important;
 }
 
+
+/* BLOG SELECTED SECTION HEADINGS ALIGN V1 START */
+
+.shiftedSectionHeading {
+    padding-left: 10px;
+}
+
+/* BLOG SELECTED SECTION HEADINGS ALIGN V1 END */

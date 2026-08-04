@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import ForumFooter from "@/components/forum-footer";
 import NotificationBell from "@/components/notification-bell";
@@ -595,7 +595,9 @@ export default function BlogPageClient({
 
                 {featuredMain ? (
                     <section className={styles.section}>
-                        <div className={styles.sectionHeading}>
+                        <div
+                            className={`${styles.sectionHeading} ${styles.shiftedSectionHeading}`}
+                        >
                             <h2>{t.featured}</h2>
                         </div>
 
@@ -735,7 +737,9 @@ export default function BlogPageClient({
                 </aside>
 
                 <section className={styles.section}>
-                    <div className={styles.sectionHeading}>
+                    <div
+                        className={`${styles.sectionHeading} ${styles.shiftedSectionHeading}`}
+                    >
                         <h2>{t.latest}</h2>
                     </div>
 
