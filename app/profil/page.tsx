@@ -2362,11 +2362,12 @@ export default function ProfilePage() {
         return;
       }
 
-      const { error } = await supabase
-        .from("blog_post_saves")
-        .delete()
-        .eq("blog_post_id", blogPostId)
-        .eq("user_id", user.id);
+      const { data, error } = await supabase.rpc(
+        "toggle_saved_blog_post",
+        {
+          p_blog_post_id: blogPostId,
+        }
+      );
 
       if (error) {
         console.error(
@@ -2374,6 +2375,21 @@ export default function ProfilePage() {
           error.message
         );
 
+        window.alert(
+          language === "tr"
+            ? "Blog yazısı kayıtlardan kaldırılamadı."
+            : "The blog post could not be removed from saved items."
+        );
+
+        return;
+      }
+
+      const isSaved =
+        Array.isArray(data)
+          ? data[0] === true
+          : data === true;
+
+      if (isSaved) {
         window.alert(
           language === "tr"
             ? "Blog yazısı kayıtlardan kaldırılamadı."
