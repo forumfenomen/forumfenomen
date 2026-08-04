@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getPlusAccessState } from "@/lib/plus/plus-access";
+import { createClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -145,7 +147,7 @@ async function youtubeFetch<T>(
   if (!response.ok) {
     throw new Error(
       data.error?.message ||
-        "YouTube API isteği başarısız oldu."
+      "YouTube API isteği başarısız oldu."
     );
   }
 
@@ -155,6 +157,93 @@ async function youtubeFetch<T>(
 export async function GET(
   request: NextRequest
 ) {
+  const access = await getPlusAccessState();
+
+  if (!access.isAuthenticated) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "AUTHENTICATION_REQUIRED",
+      },
+      {
+        status: 401,
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      }
+    );
+  }
+
+  if (!access.hasAccess) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "PLUS_ACCESS_REQUIRED",
+      },
+      {
+        status: 403,
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      }
+    );
+  }
+
+  const supabase = await createClient();
+
+  const {
+    data: quotaData,
+    error: quotaError,
+  } = await supabase.rpc(
+    "consume_creator_analysis_quota",
+    {
+      p_user_id: access.userId,
+    }
+  );
+
+  if (quotaError) {
+    console.error(
+      "Creator analysis quota check failed:",
+      quotaError.message
+    );
+
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "QUOTA_CHECK_FAILED",
+      },
+      {
+        status: 500,
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      }
+    );
+  }
+
+  const quota =
+    quotaData?.[0] ?? null;
+
+  if (!quota?.allowed) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "RATE_LIMIT_EXCEEDED",
+        retryAfterSeconds:
+          quota?.retry_after_seconds ?? 600,
+      },
+      {
+        status: 429,
+        headers: {
+          "Cache-Control": "no-store",
+          "Retry-After": String(
+            quota?.retry_after_seconds ?? 600
+          ),
+        },
+      }
+    );
+  }
+
   try {
     const rawHandle =
       request.nextUrl.searchParams.get(
@@ -342,22 +431,22 @@ export async function GET(
     const averageViews =
       videoCount > 0
         ? Math.round(
-            totalViews / videoCount
-          )
+          totalViews / videoCount
+        )
         : 0;
 
     const averageLikes =
       videoCount > 0
         ? Math.round(
-            totalLikes / videoCount
-          )
+          totalLikes / videoCount
+        )
         : 0;
 
     const averageComments =
       videoCount > 0
         ? Math.round(
-            totalComments / videoCount
-          )
+          totalComments / videoCount
+        )
         : 0;
 
     const subscribers =
@@ -369,21 +458,21 @@ export async function GET(
     const followerEngagementRate =
       subscribers > 0
         ? round(
-            ((averageLikes +
-              averageComments) /
-              subscribers) *
-              100
-          )
+          ((averageLikes +
+            averageComments) /
+            subscribers) *
+          100
+        )
         : null;
 
     const viewEngagementRate =
       totalViews > 0
         ? round(
-            ((totalLikes +
-              totalComments) /
-              totalViews) *
-              100
-          )
+          ((totalLikes +
+            totalComments) /
+            totalViews) *
+          100
+        )
         : null;
 
     return NextResponse.json({

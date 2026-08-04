@@ -349,121 +349,54 @@ export default function BlogPostActions({
 
         setBusy(true);
 
-        const previousReaction =
-            reaction;
-
-        if (
-            previousReaction ===
-            nextReaction
-        ) {
-            const { error } =
-                await supabase
-                    .from(
-                        "blog_post_reactions"
-                    )
-                    .delete()
-                    .eq(
-                        "blog_post_id",
-                        postId
-                    )
-                    .eq(
-                        "user_id",
-                        userId
-                    );
-
-            if (!error) {
-                setReaction(null);
-
-                if (
-                    nextReaction ===
-                    "like"
-                ) {
-                    setLikeCount(
-                        (count) =>
-                            Math.max(
-                                0,
-                                count - 1
-                            )
-                    );
-                } else {
-                    setDislikeCount(
-                        (count) =>
-                            Math.max(
-                                0,
-                                count - 1
-                            )
-                    );
+        const { data, error } =
+            await supabase.rpc(
+                "toggle_blog_post_reaction",
+                {
+                    p_blog_post_id:
+                        postId,
+                    p_reaction_type:
+                        nextReaction,
                 }
-            }
+            );
+
+        if (error) {
+            console.error(
+                "Blog reaction error:",
+                error
+            );
 
             setBusy(false);
             return;
         }
 
-        const { error } =
-            await supabase
-                .from(
-                    "blog_post_reactions"
-                )
-                .upsert(
-                    {
-                        blog_post_id:
-                            postId,
-                        user_id: userId,
-                        reaction_type:
-                            nextReaction,
-                    },
-                    {
-                        onConflict:
-                            "blog_post_id,user_id",
-                    }
-                );
+        const result =
+            Array.isArray(data)
+                ? data[0]
+                : null;
 
-        if (!error) {
+        if (result) {
             setReaction(
-                nextReaction
+                result.reaction_type ===
+                    "like" ||
+                    result.reaction_type ===
+                    "dislike"
+                    ? result.reaction_type
+                    : null
             );
 
-            if (
-                previousReaction ===
-                "like"
-            ) {
-                setLikeCount(
-                    (count) =>
-                        Math.max(
-                            0,
-                            count - 1
-                        )
-                );
-            }
+            setLikeCount(
+                Number(
+                    result.like_count ?? 0
+                )
+            );
 
-            if (
-                previousReaction ===
-                "dislike"
-            ) {
-                setDislikeCount(
-                    (count) =>
-                        Math.max(
-                            0,
-                            count - 1
-                        )
-                );
-            }
-
-            if (
-                nextReaction ===
-                "like"
-            ) {
-                setLikeCount(
-                    (count) =>
-                        count + 1
-                );
-            } else {
-                setDislikeCount(
-                    (count) =>
-                        count + 1
-                );
-            }
+            setDislikeCount(
+                Number(
+                    result.dislike_count ??
+                    0
+                )
+            );
         }
 
         setBusy(false);
@@ -480,56 +413,39 @@ export default function BlogPostActions({
 
         setBusy(true);
 
-        if (saved) {
-            const { error } =
-                await supabase
-                    .from(
-                        "blog_post_saves"
-                    )
-                    .delete()
-                    .eq(
-                        "blog_post_id",
-                        postId
-                    )
-                    .eq(
-                        "user_id",
-                        userId
-                    );
+        try {
+            const {
+                data: nextSavedState,
+                error,
+            } = await supabase.rpc(
+                "toggle_saved_blog_post",
+                {
+                    p_blog_post_id: postId,
+                }
+            );
 
-            if (!error) {
-                setSaved(false);
-
-                setSaveCount(
-                    (count) =>
-                        Math.max(
-                            0,
-                            count - 1
-                        )
+            if (error) {
+                console.error(
+                    "Blog kaydetme işlemi başarısız:",
+                    error.message
                 );
-            }
-        } else {
-            const { error } =
-                await supabase
-                    .from(
-                        "blog_post_saves"
-                    )
-                    .insert({
-                        blog_post_id:
-                            postId,
-                        user_id: userId,
-                    });
 
-            if (!error) {
-                setSaved(true);
-
-                setSaveCount(
-                    (count) =>
-                        count + 1
-                );
+                return;
             }
+
+            const isNowSaved =
+                nextSavedState === true;
+
+            setSaved(isNowSaved);
+
+            setSaveCount((count) =>
+                isNowSaved
+                    ? count + 1
+                    : Math.max(0, count - 1)
+            );
+        } finally {
+            setBusy(false);
         }
-
-        setBusy(false);
     }
 
     async function handleShare() {
@@ -579,44 +495,47 @@ export default function BlogPostActions({
         setBusy(true);
         setReportMessage("");
 
-        const { error } =
-            await supabase
-                .from(
-                    "blog_post_reports"
-                )
-                .upsert(
+        try {
+            const { error } =
+                await supabase.rpc(
+                    "submit_blog_post_report",
                     {
-                        blog_post_id:
+                        p_blog_post_id:
                             postId,
-                        user_id: userId,
-                        reason:
+                        p_reason:
                             reportReason,
-                        details:
+                        p_details:
                             reportDetails
                                 .trim() ||
                             null,
-                        status:
-                            "pending",
-                    },
-                    {
-                        onConflict:
-                            "blog_post_id,user_id",
                     }
                 );
 
-        if (error) {
-            setReportMessage(
-                "Şikâyet gönderilemedi. Daha sonra tekrar deneyin."
-            );
-        } else {
+            if (error) {
+                console.error(
+                    "Blog şikâyeti gönderilemedi:",
+                    error.message
+                );
+
+                setReportMessage(
+                    error.message.includes(
+                        "duplicate key"
+                    )
+                        ? "Bu yazıyı daha önce şikâyet ettiniz."
+                        : "Şikâyet gönderilemedi. Daha sonra tekrar deneyin."
+                );
+
+                return;
+            }
+
             setReportMessage(
                 "Şikâyetiniz inceleme için gönderildi."
             );
 
             setReportDetails("");
+        } finally {
+            setBusy(false);
         }
-
-        setBusy(false);
     }
 
     return (
@@ -676,7 +595,7 @@ export default function BlogPostActions({
                     <span
                         aria-hidden="true"
                     >
-                         <DislikeIcon />
+                        <DislikeIcon />
                     </span>
 
                     <span>

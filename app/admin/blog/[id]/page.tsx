@@ -752,17 +752,21 @@ export default async function EditBlogPostPage({
                 );
             }
 
+            const extensionByMimeType: Record<string, string> = {
+                "image/jpeg": "jpg",
+                "image/png": "png",
+                "image/webp": "webp",
+                "image/avif": "avif",
+            };
+
             const extension =
-                coverImage.name
-                    .split(".")
-                    .pop()
-                    ?.toLocaleLowerCase(
-                        "tr-TR"
-                    )
-                    .replace(
-                        /[^a-z0-9]/g,
-                        ""
-                    ) || "webp";
+                extensionByMimeType[coverImage.type];
+
+            if (!extension) {
+                redirect(
+                    "/admin/blog/yeni?error=image"
+                );
+            }
 
             const imagePath =
                 `covers/${Date.now()}-${crypto.randomUUID()}.${extension}`;

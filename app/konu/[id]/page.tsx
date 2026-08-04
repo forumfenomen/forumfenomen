@@ -9,6 +9,7 @@ import {
     type ForumLanguage,
 } from "@/lib/forumfenomen-language";
 import { createClient } from "@/lib/supabase/client";
+import DOMPurify from "dompurify";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -287,7 +288,9 @@ export default function TopicDetailPage() {
         useState(false);
 
     const [commentMessage, setCommentMessage] =
-        useState<"login" | "error" | null>(null);
+        useState<
+            "login" | "error" | "rate_limit" | null
+        >(null);
 
     const [replyingTo, setReplyingTo] =
         useState<CommentRow | null>(null);
@@ -945,6 +948,18 @@ export default function TopicDetailPage() {
             setCommentsLoading(true);
 
             const supabase = createClient();
+
+            const {
+                data: quotaAllowed,
+                error: quotaError,
+            } = await supabase.rpc(
+                "consume_comment_quota"
+            );
+
+            if (quotaError || quotaAllowed !== true) {
+                setCommentMessage("rate_limit");
+                return;
+            }
 
             const { data, error } = await supabase
                 .from("topic_comments")
@@ -2629,7 +2644,38 @@ export default function TopicDetailPage() {
                                 <div
                                     className={styles.content}
                                     dangerouslySetInnerHTML={{
-                                        __html: topic.content,
+                                        __html: DOMPurify.sanitize(
+                                            topic.content,
+                                            {
+                                                USE_PROFILES: {
+                                                    html: true,
+                                                },
+                                                ALLOWED_TAGS: [
+                                                    "p",
+                                                    "br",
+                                                    "strong",
+                                                    "b",
+                                                    "em",
+                                                    "i",
+                                                    "u",
+                                                    "s",
+                                                    "ul",
+                                                    "ol",
+                                                    "li",
+                                                    "blockquote",
+                                                    "a",
+                                                    "h2",
+                                                    "h3",
+                                                    "h4",
+                                                ],
+                                                ALLOWED_ATTR: [
+                                                    "href",
+                                                    "target",
+                                                    "rel",
+                                                ],
+                                                ALLOW_DATA_ATTR: false,
+                                            }
+                                        ),
                                     }}
                                 />
                             ) : (
@@ -2784,6 +2830,14 @@ export default function TopicDetailPage() {
                                                     ? "Giriş yap"
                                                     : "Sign in"}
                                             </Link>
+                                        </p>
+                                    )}
+
+                                    {commentMessage === "rate_limit" && (
+                                        <p className={styles.commentFeedback}>
+                                            {language === "tr"
+                                                ? "Çok hızlı yorum gönderiyorsun. Lütfen birkaç dakika sonra tekrar dene."
+                                                : "You are posting comments too quickly. Please try again in a few minutes."}
                                         </p>
                                     )}
 

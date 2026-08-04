@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import ForumFooter from "@/components/forum-footer";
 import NotificationBell from "@/components/notification-bell";
@@ -1749,26 +1749,26 @@ export default function ProfilePage() {
 
       const followData =
         followDataResult.data?.[0] as
-          | {
-              follower_count:
-                | number
-                | string
-                | null;
+        | {
+          follower_count:
+          | number
+          | string
+          | null;
 
-              following_count:
-                | number
-                | string
-                | null;
+          following_count:
+          | number
+          | string
+          | null;
 
-              followers:
-                FollowerUserRow[]
-                | null;
+          followers:
+          FollowerUserRow[]
+          | null;
 
-              following_users:
-                FollowedUserRow[]
-                | null;
-            }
-          | undefined;
+          following_users:
+          FollowedUserRow[]
+          | null;
+        }
+        | undefined;
 
       const followedRows =
         Array.isArray(
@@ -2729,7 +2729,7 @@ export default function ProfilePage() {
       }
 
       const normalizedName =
-        profileName.trim() ||
+        profileName.trim().slice(0, 30) ||
         "ForumFenomen Üyesi";
 
       const normalizedBio =
@@ -3735,7 +3735,7 @@ export default function ProfilePage() {
 
         <div className={styles.simpleList}>
           {savedTopicsLoading ||
-          savedBlogsLoading ? (
+            savedBlogsLoading ? (
             <div className={styles.emptyState}>
               <p>
                 {language === "tr"
@@ -3832,7 +3832,7 @@ export default function ProfilePage() {
                       }
                     >
                       {removingSavedTopicId ===
-                      topic.id ? (
+                        topic.id ? (
                         "…"
                       ) : (
                         <svg
@@ -3929,7 +3929,7 @@ export default function ProfilePage() {
                       }
                     >
                       {removingSavedBlogId ===
-                      blogPost.id ? (
+                        blogPost.id ? (
                         "…"
                       ) : (
                         <svg
@@ -4761,6 +4761,7 @@ export default function ProfilePage() {
                       event.target.value
                     )
                   }
+                  maxLength={30}
                   required
                 />
               </label>

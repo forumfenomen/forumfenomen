@@ -2694,7 +2694,7 @@ export default function CreateTopicPage() {
                 <div
                   className={styles.previewArticleBody}
                   dangerouslySetInnerHTML={{
-                    __html: content,
+                    __html: sanitizeTopicHtml(content),
                   }}
                 />
               ) : (
