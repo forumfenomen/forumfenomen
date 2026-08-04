@@ -190,6 +190,11 @@ export default function BlogPostActions({
         setReportMessage,
     ] = useState("");
 
+    const [
+        reportCompleted,
+        setReportCompleted,
+    ] = useState(false);
+
     useEffect(() => {
         let active = true;
 
@@ -481,6 +486,7 @@ export default function BlogPostActions({
         }
 
         setReportMessage("");
+        setReportCompleted(false);
         setReportOpen(true);
     }
 
@@ -528,10 +534,8 @@ export default function BlogPostActions({
                 return;
             }
 
-            setReportMessage(
-                "Şikâyetiniz inceleme için gönderildi."
-            );
-
+            setReportMessage("");
+            setReportCompleted(true);
             setReportDetails("");
         } finally {
             setBusy(false);
@@ -677,16 +681,13 @@ export default function BlogPostActions({
                 <div
                     className="blog-report-backdrop"
                     role="presentation"
-                    onMouseDown={(
-                        event
-                    ) => {
+                    onMouseDown={(event) => {
                         if (
                             event.target ===
                             event.currentTarget
                         ) {
-                            setReportOpen(
-                                false
-                            );
+                            setReportOpen(false);
+                            setReportCompleted(false);
                         }
                     }}
                 >
@@ -696,134 +697,153 @@ export default function BlogPostActions({
                         aria-modal="true"
                         aria-labelledby="blog-report-title"
                     >
-                        <div className="blog-report-header">
-                            <div>
-                                <span>
-                                    İÇERİK
-                                    ŞİKÂYETİ
-                                </span>
+                        {reportCompleted ? (
+                            <>
+                                <div className="blog-report-header">
+                                    <div>
+                                        <span>
+                                            TOPLULUK GÜVENLİĞİ
+                                        </span>
 
-                                <h2 id="blog-report-title">
-                                    Bu yazıyı
-                                    bildir
-                                </h2>
-                            </div>
+                                        <h2 id="blog-report-title">
+                                            Şikâyetin iletildi
+                                        </h2>
+                                    </div>
 
-                            <button
-                                type="button"
-                                onClick={() =>
-                                    setReportOpen(
-                                        false
-                                    )
-                                }
-                                aria-label="Pencereyi kapat"
-                            >
-                                ×
-                            </button>
-                        </div>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setReportOpen(false);
+                                            setReportCompleted(false);
+                                        }}
+                                        aria-label="Pencereyi kapat"
+                                    >
+                                        ×
+                                    </button>
+                                </div>
 
-                        <label>
-                            <span>
-                                Şikâyet
-                                nedeni
-                            </span>
+                                <p>
+                                    Yazı hakkındaki bildirimin
+                                    moderasyon sistemine
+                                    kaydedildi. İnceleme
+                                    sonucunda gerekli işlem
+                                    uygulanacaktır.
+                                </p>
 
-                            <select
-                                value={
-                                    reportReason
-                                }
-                                onChange={(
-                                    event
-                                ) =>
-                                    setReportReason(
-                                        event
-                                            .target
-                                            .value as ReportReason
-                                    )
-                                }
-                            >
-                                {reportReasons.map(
-                                    (
-                                        reason
-                                    ) => (
-                                        <option
-                                            key={
-                                                reason.value
-                                            }
-                                            value={
-                                                reason.value
-                                            }
-                                        >
-                                            {
-                                                reason.label
-                                            }
-                                        </option>
-                                    )
-                                )}
-                            </select>
-                        </label>
+                                <div className="blog-report-actions">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setReportOpen(false);
+                                            setReportCompleted(false);
+                                        }}
+                                    >
+                                        Tamam
+                                    </button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <div className="blog-report-header">
+                                    <div>
+                                        <span>
+                                            İÇERİK ŞİKÂYETİ
+                                        </span>
 
-                        <label>
-                            <span>
-                                Açıklama
-                                (isteğe
-                                bağlı)
-                            </span>
+                                        <h2 id="blog-report-title">
+                                            Bu yazıyı bildir
+                                        </h2>
+                                    </div>
 
-                            <textarea
-                                rows={5}
-                                maxLength={
-                                    1000
-                                }
-                                value={
-                                    reportDetails
-                                }
-                                onChange={(
-                                    event
-                                ) =>
-                                    setReportDetails(
-                                        event
-                                            .target
-                                            .value
-                                    )
-                                }
-                                placeholder="İncelenmesi gereken durumu kısaca açıklayın..."
-                            />
-                        </label>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setReportOpen(false);
+                                            setReportCompleted(false);
+                                        }}
+                                        aria-label="Pencereyi kapat"
+                                    >
+                                        ×
+                                    </button>
+                                </div>
 
-                        {reportMessage ? (
-                            <p>
-                                {
-                                    reportMessage
-                                }
-                            </p>
-                        ) : null}
+                                <label>
+                                    <span>
+                                        Şikâyet nedeni
+                                    </span>
 
-                        <div className="blog-report-actions">
-                            <button
-                                type="button"
-                                onClick={() =>
-                                    setReportOpen(
-                                        false
-                                    )
-                                }
-                            >
-                                Vazgeç
-                            </button>
+                                    <select
+                                        value={reportReason}
+                                        onChange={(event) =>
+                                            setReportReason(
+                                                event.target
+                                                    .value as ReportReason
+                                            )
+                                        }
+                                    >
+                                        {reportReasons.map(
+                                            (reason) => (
+                                                <option
+                                                    key={
+                                                        reason.value
+                                                    }
+                                                    value={
+                                                        reason.value
+                                                    }
+                                                >
+                                                    {reason.label}
+                                                </option>
+                                            )
+                                        )}
+                                    </select>
+                                </label>
 
-                            <button
-                                type="button"
-                                disabled={
-                                    busy
-                                }
-                                onClick={
-                                    submitReport
-                                }
-                            >
-                                Şikâyeti
-                                Gönder
-                            </button>
-                        </div>
+                                <label>
+                                    <span>
+                                        Açıklama (isteğe bağlı)
+                                    </span>
+
+                                    <textarea
+                                        rows={5}
+                                        maxLength={1000}
+                                        value={reportDetails}
+                                        onChange={(event) =>
+                                            setReportDetails(
+                                                event.target
+                                                    .value
+                                            )
+                                        }
+                                        placeholder="İncelenmesi gereken durumu kısaca açıklayın..."
+                                    />
+                                </label>
+
+                                {reportMessage ? (
+                                    <p>{reportMessage}</p>
+                                ) : null}
+
+                                <div className="blog-report-actions">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setReportOpen(false);
+                                            setReportCompleted(false);
+                                        }}
+                                    >
+                                        Vazgeç
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        disabled={busy}
+                                        onClick={submitReport}
+                                    >
+                                        {busy
+                                            ? "Gönderiliyor..."
+                                            : "Şikâyeti Gönder"}
+                                    </button>
+                                </div>
+                            </>
+                        )}
                     </section>
                 </div>
             ) : null}
