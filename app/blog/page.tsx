@@ -1,4 +1,4 @@
-﻿import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 
 import BlogPageClient from "./blog-page-client";
 
@@ -246,6 +246,9 @@ export default async function BlogPage() {
         category: mapDatabaseCategory(
           post.category
         ),
+        categoryLabel:
+          post.category?.trim() ||
+          "ForumFenomen",
         title: {
           tr: post.title,
           en: post.title,

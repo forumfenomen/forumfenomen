@@ -295,11 +295,7 @@ function ArticleCard({
                         } as CSSProperties
                     }
                 >
-                    {
-                        t.categoryNames[
-                        post.category
-                        ]
-                    }
+                    {post.categoryLabel}
                 </span>
 
                 <h3>{post.title[language]}</h3>
@@ -619,11 +615,7 @@ export default function BlogPageClient({
                                             } as CSSProperties
                                         }
                                     >
-                                        {
-                                            t.categoryNames[
-                                            featuredMain.category
-                                            ]
-                                        }
+                                        {featuredMain.categoryLabel}
                                     </span>
 
                                     <h2>
@@ -677,11 +669,7 @@ export default function BlogPageClient({
                                                     } as CSSProperties
                                                 }
                                             >
-                                                {
-                                                    t.categoryNames[
-                                                    post.category
-                                                    ]
-                                                }
+                                                {post.categoryLabel}
                                             </span>
 
                                             <h3>
@@ -788,11 +776,7 @@ export default function BlogPageClient({
 
                                     <div>
                                         <span>
-                                            {
-                                                t.categoryNames[
-                                                post.category
-                                                ]
-                                            }
+                                            {post.categoryLabel}
                                         </span>
 
                                         <h3>
@@ -841,11 +825,7 @@ export default function BlogPageClient({
                                 }
                             >
                                 <span>
-                                    {
-                                        t.categoryNames[
-                                        post.category
-                                        ]
-                                    }
+                                    {post.categoryLabel}
                                 </span>
 
                                 <h3>

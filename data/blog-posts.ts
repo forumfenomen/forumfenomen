@@ -1,4 +1,4 @@
-﻿export type BlogLanguage = "tr" | "en";
+export type BlogLanguage = "tr" | "en";
 
 export type BlogCategory =
   | "platforms"
@@ -17,6 +17,7 @@ export type BlogPost = {
   id: string;
   slug: string;
   category: BlogCategory;
+  categoryLabel: string;
   title: BlogText;
   excerpt: BlogText;
   author: string;
@@ -70,6 +71,31 @@ const categoryAliases: Record<
   "yasal mevzuat": "legal",
   hukuk: "legal",
   legal: "legal",
+  /* Gerçek blog alt kategorileri */
+
+  instagram: "platforms",
+  tiktok: "platforms",
+  youtube: "platforms",
+
+  "video edit": "content",
+  "kamera & ekipman": "content",
+  "thumbnail & kapak tasarımı": "content",
+
+  seo: "growth",
+  algoritmalar: "growth",
+  "hashtag & anahtar kelimeler": "growth",
+  "viral analizleri": "growth",
+
+  "marka iş birlikleri": "money",
+  ugc: "money",
+  affiliate: "money",
+  "youtube para kazanma": "money",
+  "tiktok para kazanma": "money",
+
+  "reklam kuralları": "legal",
+  "vergi mevzuatı": "legal",
+  sözleşmeler: "legal",
+  "telif hakları": "legal",
 };
 
 export function mapDatabaseCategory(
