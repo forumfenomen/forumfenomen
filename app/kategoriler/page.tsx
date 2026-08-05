@@ -512,6 +512,64 @@ function TikTokTopicIcon() {
   );
 }
 
+function VideoEditTopicIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <rect
+        x="3"
+        y="5"
+        width="18"
+        height="14"
+        rx="3"
+      />
+      <path d="m10 9 5 3-5 3V9Z" />
+      <path d="M7 3v4M17 3v4" />
+    </svg>
+  );
+}
+
+function CameraTopicIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path d="M5 7h3l1.4-2h5.2L16 7h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z" />
+      <circle
+        cx="12"
+        cy="13"
+        r="3.5"
+      />
+    </svg>
+  );
+}
+
+function ThumbnailTopicIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <rect
+        x="3"
+        y="4"
+        width="18"
+        height="16"
+        rx="3"
+      />
+      <circle
+        cx="8"
+        cy="9"
+        r="1.5"
+      />
+      <path d="m5 17 4.5-4.5 3 3 2.5-2.5 4 4" />
+    </svg>
+  );
+}
+
 const categories: CategoryDefinition[] = [
   {
     id: "platforms",
@@ -2124,6 +2182,15 @@ export default function CategoriesPage() {
                       ) : topic.subcategoryId ===
                         "youtube" ? (
                         <YouTubeTopicIcon />
+                      ) : topic.subcategoryId ===
+                        "video-edit" ? (
+                        <VideoEditTopicIcon />
+                      ) : topic.subcategoryId ===
+                        "camera" ? (
+                        <CameraTopicIcon />
+                      ) : topic.subcategoryId ===
+                        "thumbnail" ? (
+                        <ThumbnailTopicIcon />
                       ) : (
                         topicVisualMap[topic.category]
                           .icon
