@@ -149,6 +149,7 @@ export default function AdminNav({
       const [
         commentReportsResult,
         topicReportsResult,
+        blogReportsResult,
       ] = await Promise.all([
         supabase
           .from("comment_reports")
@@ -165,6 +166,16 @@ export default function AdminNav({
             head: true,
           })
           .eq("status", "open"),
+
+
+        supabase
+          .from("blog_post_reports")
+          .select("id", {
+            count: "exact",
+            head: true,
+          })
+          .eq("status", "pending"),
+
       ]);
 
       if (!isActiveEffect) {
@@ -173,7 +184,8 @@ export default function AdminNav({
 
       if (
         commentReportsResult.error ||
-        topicReportsResult.error
+        topicReportsResult.error ||
+        blogReportsResult.error
       ) {
         if (commentReportsResult.error) {
           console.error(
@@ -189,11 +201,19 @@ export default function AdminNav({
           );
         }
 
+        if (blogReportsResult.error) {
+          console.error(
+            "Bekleyen blog şikâyetleri alınamadı:",
+            blogReportsResult.error.message
+          );
+        }
+
         setPendingReportCount(0);
       } else {
         setPendingReportCount(
           (commentReportsResult.count ?? 0) +
-          (topicReportsResult.count ?? 0)
+          (topicReportsResult.count ?? 0) +
+          (blogReportsResult.count ?? 0)
         );
       }
 
@@ -299,6 +319,17 @@ export default function AdminNav({
           event: "*",
           schema: "public",
           table: "topic_reports",
+        },
+        () => {
+          void loadAdminNotifications();
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "blog_post_reports",
         },
         () => {
           void loadAdminNotifications();
