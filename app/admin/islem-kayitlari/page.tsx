@@ -53,11 +53,32 @@ comment_hidden: "Yorum gizlendi",
     topic_banned: "Konu yasaklandı",
 
     report_reviewing:
-        "Şikâyet incelemeye alındı",
+        "Yorum şikâyeti incelemeye alındı",
     report_resolved:
-        "Şikâyette ihlal doğrulandı",
+        "Yorum şikâyetinde ihlal doğrulandı",
     report_dismissed:
-        "ÅikÃ¢yet reddedildi",
+        "Yorum şikâyeti reddedildi",
+
+    topic_report_reviewing:
+        "Konu şikâyeti incelemeye alındı",
+    topic_report_resolved:
+        "Konu şikâyetinde ihlal doğrulandı",
+    topic_report_dismissed:
+        "Konu şikâyeti reddedildi",
+
+    blog_report_reviewing:
+        "Blog şikâyeti incelemeye alındı",
+    blog_report_resolved:
+        "Blog şikâyetinde ihlal doğrulandı",
+    blog_report_dismissed:
+        "Blog şikâyeti reddedildi",
+
+    profile_report_reviewing:
+        "Profil şikâyeti incelemeye alındı",
+    profile_report_resolved:
+        "Profil şikâyetinde ihlal doğrulandı",
+    profile_report_dismissed:
+        "Profil şikâyeti reddedildi",
 
     user_suspended:
         "Kullanıcı askıya alındı",
@@ -129,8 +150,28 @@ function getMetadataString(
 }
 
 function getLogTypeLabel(
-    targetType: string
+    targetType: string,
+    actionType: string
 ) {
+    if (actionType.startsWith("blog_report_")) {
+        return "BLOG ŞİKÂYETİ";
+    }
+
+    if (actionType.startsWith("topic_report_")) {
+        return "KONU ŞİKÂYETİ";
+    }
+
+    if (actionType.startsWith("profile_report_")) {
+        return "PROFİL ŞİKÂYETİ";
+    }
+
+    if (
+        actionType.startsWith("report_") ||
+        targetType === "report"
+    ) {
+        return "YORUM ŞİKÂYETİ";
+    }
+
     if (targetType === "comment") {
         return "YORUM İŞLEMİ";
     }
@@ -143,7 +184,7 @@ function getLogTypeLabel(
         return "KULLANICI İŞLEMİ";
     }
 
-    return "ŞİKÂYET İŞLEMİ";
+    return "YÖNETİM İŞLEMİ";
 }
 
 function getLogStatusClass(
@@ -707,7 +748,8 @@ export default async function AdminLogsPage({
                                                         }
                                                     >
                                                         {getLogTypeLabel(
-                                                            log.target_type
+                                                            log.target_type,
+                                                            log.action_type
                                                         )}
                                                     </span>
 
