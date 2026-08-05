@@ -1863,3 +1863,31 @@
 }
 
 /* DESKTOP SIDE IMAGE NO CROP V2 END */
+/* DESKTOP SIDE IMAGE BALANCE V3 START */
+
+@media (min-width: 801px) {
+    .sideCard {
+        grid-template-rows:
+            118px minmax(0, 1fr) !important;
+    }
+
+    .sideCard .cover {
+        width: 100% !important;
+        height: 118px !important;
+        min-height: 118px !important;
+
+        background: #080812 !important;
+    }
+
+    .sideCard .cover img {
+        object-fit: cover !important;
+        object-position: center 42% !important;
+    }
+
+    .sideCard > div:last-child {
+        padding:
+            10px 13px 12px !important;
+    }
+}
+
+/* DESKTOP SIDE IMAGE BALANCE V3 END */
