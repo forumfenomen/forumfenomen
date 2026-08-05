@@ -1,4 +1,4 @@
-.page {
+﻿.page {
   min-height: 100svh;
   padding: 10px 0 118px;
   color: #f7f7fb;
@@ -684,19 +684,16 @@
   gap: 8px;
 }
 
-.editorGrid > a {
+.editorGrid>a {
   --accent: #e342df;
   display: block;
   min-width: 0;
   padding: 14px;
   color: inherit;
   text-decoration: none;
-  border: 1px solid
-    color-mix(
-      in srgb,
+  border: 1px solid color-mix(in srgb,
       var(--accent) 18%,
-      rgba(255, 255, 255, 0.05)
-    );
+      rgba(255, 255, 255, 0.05));
   border-radius: 15px;
   background: rgba(255, 255, 255, 0.025);
   transition:
@@ -705,24 +702,20 @@
     background 160ms ease;
 }
 
-.editorGrid > a:hover {
+.editorGrid>a:hover {
   transform: translateY(-1px);
   border-color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 38%,
-      rgba(255, 255, 255, 0.08)
-    );
+      rgba(255, 255, 255, 0.08));
   background: rgba(255, 255, 255, 0.045);
 }
 
-.editorGrid > a > span {
+.editorGrid>a>span {
   color:
-    color-mix(
-      in srgb,
+    color-mix(in srgb,
       var(--accent) 80%,
-      #fff
-    );
+      #fff);
   font-size: 8px;
   font-weight: 760;
 }
@@ -1095,9 +1088,9 @@
     border-radius: 19px;
   }
 
-  .editorGrid > a {
-  padding: 12px;
-}
+  .editorGrid>a {
+    padding: 12px;
+  }
 }
 
 @media (max-width: 390px) {
@@ -1531,9 +1524,9 @@
     font-size: 19px !important;
   }
 
-  .editorGrid > a > span {
-  font-size: 8.9px !important;
-}
+  .editorGrid>a>span {
+    font-size: 8.9px !important;
+  }
 
   .editorGrid h3 {
     font-size: 13px !important;
@@ -1642,7 +1635,7 @@
 }
 
 .quickCard>div>span,
-.editorGrid > a > span {
+.editorGrid>a>span {
   font-size: 9.8px !important;
   font-weight: 700 !important;
 }
@@ -1757,200 +1750,200 @@
 /* BLOG SELECTED SECTION HEADINGS ALIGN V1 START */
 
 .shiftedSectionHeading {
-    padding-left: 10px;
+  padding-left: 10px;
 }
 
 /* BLOG SELECTED SECTION HEADINGS ALIGN V1 END */
 /* FULL CLICKABLE BLOG CARD V1 START */
 
 .articleCard {
-    color: inherit;
-    text-decoration: none;
-    cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .articleCard:focus-visible {
-    outline: 2px solid rgba(220, 61, 239, 0.72);
-    outline-offset: 3px;
+  outline: 2px solid rgba(220, 61, 239, 0.72);
+  outline-offset: 3px;
 }
 
 /* FULL CLICKABLE BLOG CARD V1 END */
 /* DESKTOP FEATURED SIDE CARD LAYOUT V1 START */
 
 @media (min-width: 801px) {
-    /*
+
+  /*
      * Yatay kapakları dar sol sütuna sıkıştırmak yerine
      * görseli kartın üst kısmında tam genişlikte göster.
      */
-    .sideCard {
-        display: grid !important;
+  .sideCard {
+    display: grid !important;
 
-        grid-template-columns:
-            minmax(0, 1fr) !important;
+    grid-template-columns:
+      minmax(0, 1fr) !important;
 
-        grid-template-rows:
-            94px minmax(0, 1fr) !important;
+    grid-template-rows:
+      94px minmax(0, 1fr) !important;
 
-        min-height: 182px !important;
+    min-height: 182px !important;
 
-        overflow: hidden;
-    }
+    overflow: hidden;
+  }
 
-    .sideCard .cover {
-        width: 100% !important;
-        min-width: 0 !important;
-        min-height: 94px !important;
-        height: 94px !important;
-    }
+  .sideCard .cover {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 94px !important;
+    height: 94px !important;
+  }
 
-    .sideCard .cover img {
-        object-fit: cover !important;
-        object-position: center !important;
-    }
+  .sideCard .cover img {
+    object-fit: cover !important;
+    object-position: center !important;
+  }
 
-    .sideCard > div:last-child {
-        min-width: 0;
+  .sideCard>div:last-child {
+    min-width: 0;
 
-        padding:
-            10px 13px 11px !important;
-    }
+    padding:
+      10px 13px 11px !important;
+  }
 
-    .sideCard .categoryBadge {
-        min-height: 23px;
-        padding: 0 9px;
+  .sideCard .categoryBadge {
+    min-height: 23px;
+    padding: 0 9px;
 
-        font-size: 8.5px !important;
-    }
+    font-size: 8.5px !important;
+  }
 
-    .sideCard h3 {
-        margin-top: 7px !important;
+  .sideCard h3 {
+    margin-top: 7px !important;
 
-        font-size: 12.5px !important;
-        line-height: 1.3 !important;
+    font-size: 12.5px !important;
+    line-height: 1.3 !important;
 
-        display: -webkit-box;
-        overflow: hidden;
+    display: -webkit-box;
+    overflow: hidden;
 
-        -webkit-box-orient: vertical;
-        line-clamp: 2;
-        -webkit-line-clamp: 2;
-    }
+    -webkit-box-orient: vertical;
+     line-clamp: 2;
+    -webkit-line-clamp: 2;
+  }
 
-    .sideCard .articleMeta {
-        margin-top: 7px;
+  .sideCard .articleMeta {
+    margin-top: 7px;
 
-        font-size: 9px !important;
-    }
+    font-size: 9px !important;
+  }
 }
 
 /* DESKTOP FEATURED SIDE CARD LAYOUT V1 END */
 /* DESKTOP SIDE IMAGE NO CROP V2 START */
 
 @media (min-width: 801px) {
-    .sideCard .cover {
-        background:
-            radial-gradient(
-                circle at center,
-                rgba(97, 54, 150, 0.14),
-                transparent 70%
-            ),
-            #080812 !important;
-    }
+  .sideCard .cover {
+    background:
+      radial-gradient(circle at center,
+        rgba(97, 54, 150, 0.14),
+        transparent 70%),
+      #080812 !important;
+  }
 
-    .sideCard .cover img {
-        object-fit: contain !important;
-        object-position: center center !important;
-    }
+  .sideCard .cover img {
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
 }
 
 /* DESKTOP SIDE IMAGE NO CROP V2 END */
 /* DESKTOP SIDE IMAGE BALANCE V3 START */
 
 @media (min-width: 801px) {
-    .sideCard {
-        grid-template-rows:
-            118px minmax(0, 1fr) !important;
-    }
+  .sideCard {
+    grid-template-rows:
+      118px minmax(0, 1fr) !important;
+  }
 
-    .sideCard .cover {
-        width: 100% !important;
-        height: 118px !important;
-        min-height: 118px !important;
+  .sideCard .cover {
+    width: 100% !important;
+    height: 118px !important;
+    min-height: 118px !important;
 
-        background: #080812 !important;
-    }
+    background: #080812 !important;
+  }
 
-    .sideCard .cover img {
-        object-fit: cover !important;
-        object-position: center 42% !important;
-    }
+  .sideCard .cover img {
+    object-fit: cover !important;
+    object-position: center 42% !important;
+  }
 
-    .sideCard > div:last-child {
-        padding:
-            10px 13px 12px !important;
-    }
+  .sideCard>div:last-child {
+    padding:
+      10px 13px 12px !important;
+  }
 }
 
 /* DESKTOP SIDE IMAGE BALANCE V3 END */
 /* MOBILE BLOG ARTICLE CARD IMAGE FIX V1 START */
 
 @media (max-width: 680px) {
-    /*
+
+  /*
      * Son Eklenen Yazılar kartlarını mobilde
      * dar sol görsel sütunu yerine dikey düzene çevir.
      */
-    .articleCard {
-        display: block !important;
+  .articleCard {
+    display: block !important;
 
-        grid-template-columns:
-            minmax(0, 1fr) !important;
+    grid-template-columns:
+      minmax(0, 1fr) !important;
 
-        min-height: 0 !important;
+    min-height: 0 !important;
 
-        overflow: hidden;
-    }
+    overflow: hidden;
+  }
 
-    .articleCard .cover {
-        width: 100% !important;
-        min-width: 0 !important;
+  .articleCard .cover {
+    width: 100% !important;
+    min-width: 0 !important;
 
-        height: auto !important;
-        min-height: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
 
-        aspect-ratio: 16 / 9;
-    }
+    aspect-ratio: 16 / 9;
+  }
 
-    .articleCard .cover img {
-        object-fit: cover !important;
-        object-position: center center !important;
-    }
+  .articleCard .cover img {
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
 
-    .articleCardBody {
-        padding:
-            14px 15px 16px !important;
-    }
+  .articleCardBody {
+    padding:
+      14px 15px 16px !important;
+  }
 
-    .articleCardBody h3 {
-        margin-top: 10px !important;
+  .articleCardBody h3 {
+    margin-top: 10px !important;
 
-        font-size: 16px !important;
-        line-height: 1.38 !important;
-    }
+    font-size: 16px !important;
+    line-height: 1.38 !important;
+  }
 
-    .articleCardBody p {
-        margin-top: 8px !important;
+  .articleCardBody p {
+    margin-top: 8px !important;
 
-        display: -webkit-box;
-        overflow: hidden;
+    display: -webkit-box;
+    overflow: hidden;
 
-        -webkit-box-orient: vertical;
-        line-clamp: 3;
-        -webkit-line-clamp: 3;
-    }
+    -webkit-box-orient: vertical;
+     line-clamp: 3;
+    -webkit-line-clamp: 3;
+  }
 
-    .articleCardBody .articleMeta {
-        margin-top: 10px;
-    }
+  .articleCardBody .articleMeta {
+    margin-top: 10px;
+  }
 }
 
 /* MOBILE BLOG ARTICLE CARD IMAGE FIX V1 END */
