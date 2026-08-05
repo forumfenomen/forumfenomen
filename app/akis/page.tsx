@@ -453,6 +453,231 @@ function TikTokIcon() {
     </svg>
   );
 }
+
+function VideoEditIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="3" y="5" width="18" height="14" rx="3" />
+      <path d="m10 9 5 3-5 3V9Z" />
+      <path d="M7 3v4M17 3v4" />
+    </svg>
+  );
+}
+
+function CameraEquipmentIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5 7h3l1.4-2h5.2L16 7h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z" />
+      <circle cx="12" cy="13" r="3.5" />
+    </svg>
+  );
+}
+
+function ThumbnailCoverIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="3" y="4" width="18" height="16" rx="3" />
+      <circle cx="8" cy="9" r="1.5" />
+      <path d="m5 17 4.5-4.5 3 3 2.5-2.5 4 4" />
+    </svg>
+  );
+}
+
+function SeoIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="10.5" cy="10.5" r="6.5" />
+      <path d="m15.5 15.5 5 5" />
+      <path d="M7.5 11.5 10 9l2 2 3-3" />
+    </svg>
+  );
+}
+
+function AlgorithmsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="5" cy="5" r="2" />
+      <circle cx="19" cy="5" r="2" />
+      <circle cx="12" cy="19" r="2" />
+      <path d="M7 5h10M6 7l5 10M18 7l-5 10" />
+    </svg>
+  );
+}
+
+function HashtagKeywordsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9 3 7 21M17 3l-2 18M4 9h16M3 15h16" />
+    </svg>
+  );
+}
+
+function ViralAnalysisIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 19V9M10 19V5M16 19v-7M22 19V3" />
+      <path d="m3 13 6-5 5 3 7-7" />
+    </svg>
+  );
+}
+
+function BrandCollaborationIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m8 12 3 3a3 3 0 0 0 4.2 0l4.3-4.3a3 3 0 0 0-4.2-4.2L13 8.8" />
+      <path d="m16 12-3-3a3 3 0 0 0-4.2 0l-4.3 4.3a3 3 0 0 0 4.2 4.2L11 15.2" />
+    </svg>
+  );
+}
+
+function UgcIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="9" cy="8" r="3" />
+      <path d="M3.5 19c.5-4 2.3-6 5.5-6s5 2 5.5 6" />
+      <rect x="15" y="5" width="6" height="10" rx="2" />
+      <path d="M17.5 12h1" />
+    </svg>
+  );
+}
+
+function AffiliateIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9.5 14.5 14.5 9.5" />
+      <path d="M7 17H5a4 4 0 0 1 0-8h4" />
+      <path d="M17 7h2a4 4 0 0 1 0 8h-4" />
+      <circle cx="12" cy="12" r="2" />
+    </svg>
+  );
+}
+
+function YouTubeMoneyIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="3" y="5" width="18" height="14" rx="4" />
+      <path d="m9.5 9 5 3-5 3V9Z" />
+      <path d="M18 8.5v7" />
+    </svg>
+  );
+}
+
+function TikTokMoneyIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M13 3v10a4 4 0 1 1-3.5-4" />
+      <path d="M13 3c.7 3 2.4 4.6 5 5" />
+      <path d="M18.5 15.5v5M16.5 18h4" />
+    </svg>
+  );
+}
+
+function AdvertisingRulesIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 13V8l12-4v13L4 13Z" />
+      <path d="M8 14v5H5v-6" />
+      <path d="M19 8v5" />
+    </svg>
+  );
+}
+
+function TaxRegulationsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 3h12v18H6V3Z" />
+      <path d="M9 7h6M9 11h2M13 11h2M9 15h2M13 15h2" />
+    </svg>
+  );
+}
+
+function ContractsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 3h9l3 3v15H6V3Z" />
+      <path d="M15 3v4h4M9 11h6M9 15h6" />
+      <path d="m10 19 1.5 1.5L15 17" />
+    </svg>
+  );
+}
+
+function CopyrightIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M15.5 9.5a4 4 0 1 0 0 5" />
+    </svg>
+  );
+}
+
+function FeedSubcategoryIcon({
+  icon,
+}: {
+  icon: string;
+}) {
+  switch (icon) {
+    case "instagram":
+      return <InstagramIcon />;
+
+    case "tiktok":
+      return <TikTokIcon />;
+
+    case "youtube":
+      return <YouTubeIcon />;
+
+    case "video-edit":
+      return <VideoEditIcon />;
+
+    case "kamera-ekipman":
+      return <CameraEquipmentIcon />;
+
+    case "thumbnail-kapak-tasarimi":
+      return <ThumbnailCoverIcon />;
+
+    case "seo":
+      return <SeoIcon />;
+
+    case "algoritmalar":
+      return <AlgorithmsIcon />;
+
+    case "hashtag-anahtar-kelimeler":
+      return <HashtagKeywordsIcon />;
+
+    case "viral-analizleri":
+      return <ViralAnalysisIcon />;
+
+    case "marka-is-birlikleri":
+      return <BrandCollaborationIcon />;
+
+    case "ugc":
+      return <UgcIcon />;
+
+    case "affiliate":
+      return <AffiliateIcon />;
+
+    case "youtube-para-kazanma":
+      return <YouTubeMoneyIcon />;
+
+    case "tiktok-para-kazanma":
+      return <TikTokMoneyIcon />;
+
+    case "reklam-kurallari":
+      return <AdvertisingRulesIcon />;
+
+    case "vergi-mevzuati":
+      return <TaxRegulationsIcon />;
+
+    case "sozlesmeler":
+      return <ContractsIcon />;
+
+    case "telif-haklari":
+      return <CopyrightIcon />;
+
+    default:
+      return <>{icon}</>;
+  }
+}
+
 function ShareIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -1812,15 +2037,7 @@ export default function FeedPage() {
                     className={`ff-topic-icon ${post.iconClass} ${post.toneClass ?? ""
                       }`}
                   >
-                    {post.icon === "instagram" ? (
-                      <InstagramIcon />
-                    ) : post.icon === "tiktok" ? (
-                      <TikTokIcon />
-                    ) : post.icon === "youtube" ? (
-                      <YouTubeIcon />
-                    ) : (
-                      post.icon
-                    )}
+                    <FeedSubcategoryIcon icon={post.icon} />
                   </div>
 
                   <div className="ff-topic-main">
