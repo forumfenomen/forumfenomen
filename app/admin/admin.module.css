@@ -7033,3 +7033,165 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ADMIN MOBILE COMPACT FIX START */
+
+@media (max-width: 620px) {
+    /* Üst yönetim kartı */
+    .sidebar {
+        padding: 14px 12px;
+        border-radius: 20px;
+    }
+
+    /* Logo alanını küçült */
+    .brand {
+        width: 180px !important;
+        max-width: 180px !important;
+        margin: 0 auto 8px !important;
+    }
+
+    .brand img {
+        width: 100% !important;
+        height: auto !important;
+        transform: none !important;
+    }
+
+    .adminLabel {
+        margin-top: 4px !important;
+        font-size: 9px;
+    }
+
+    /* Admin sekmeleri */
+    .nav {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 16px;
+    }
+
+    .navLink,
+    .navDisabled {
+        min-height: 46px;
+        justify-content: center;
+        padding: 0 8px;
+        text-align: center;
+        border:
+            1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 13px;
+        background:
+            rgba(255, 255, 255, 0.018);
+        font-size: 12px;
+    }
+
+    .navActive {
+        border-color:
+            rgba(216, 71, 231, 0.28);
+        background:
+            linear-gradient(
+                135deg,
+                rgba(214, 57, 230, 0.16),
+                rgba(72, 95, 255, 0.11)
+            );
+    }
+
+    .adminUser {
+        margin-top: 12px;
+        padding: 10px;
+    }
+
+    .backLink {
+        min-height: 40px;
+        margin-top: 8px;
+    }
+
+    /* İçerik üst başlığı */
+    .pageHeader {
+        gap: 12px;
+        padding-top: 14px;
+        padding-bottom: 16px;
+    }
+
+    .pageHeader h1 {
+        font-size: 30px;
+    }
+
+    .pageHeader p {
+        margin-top: 7px;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    /* Konu paneli */
+    .panel {
+        padding: 14px;
+        border-radius: 18px;
+    }
+
+    .panelHeader {
+        margin-bottom: 12px;
+    }
+
+    .panelHeader h2 {
+        font-size: 26px;
+    }
+
+    /* Konu kartları */
+    .adminTopicRow {
+        gap: 14px;
+        padding: 14px;
+        border-radius: 17px;
+    }
+
+    .adminTopicContent h3 {
+        font-size: 17px;
+        line-height: 1.35;
+    }
+
+    .adminTopicExcerpt {
+        font-size: 14px;
+        line-height: 1.55;
+    }
+
+    .adminTopicMeta {
+        gap: 8px 12px;
+        font-size: 12px;
+    }
+
+    /* Konuya git, Gizle, Yasakla aynı satır */
+    .adminTopicSide {
+        display: flex;
+        width: 100%;
+        align-items: stretch;
+        gap: 7px;
+    }
+
+    .adminTopicViewLink {
+        width: auto;
+        min-width: 0;
+        min-height: 42px;
+        flex: 1 1 0;
+        padding: 0 5px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .topicModerationActions {
+        display: contents;
+    }
+
+    .topicModerationActions button {
+        width: auto;
+        min-width: 0;
+        min-height: 42px;
+        flex: 1 1 0;
+        padding: 0 5px;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .adminTopicSide time {
+        display: none;
+    }
+}
+
+/* ADMIN MOBILE COMPACT FIX END */
