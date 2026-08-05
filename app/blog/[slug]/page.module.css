@@ -1413,6 +1413,7 @@
 
     display: flex;
     width: min(100%, 820px);
+    box-sizing: border-box;
     min-height: 98px;
     align-items: center;
     justify-content: flex-start;
@@ -1509,6 +1510,7 @@
 
         width: 100%;
         max-width: none;
+        box-sizing: border-box;
         min-height: 81px;
 
         margin: 0 0 10px;
