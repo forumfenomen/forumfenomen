@@ -7195,3 +7195,41 @@
 }
 
 /* ADMIN MOBILE COMPACT FIX END */
+
+/* ADMIN MOBILE SEARCH INLINE FIX START */
+
+@media (max-width: 620px) {
+    .topicAdminSearch {
+        display: grid !important;
+        grid-template-columns:
+            minmax(0, 1fr) 92px !important;
+        align-items: center !important;
+        gap: 8px !important;
+    }
+
+    .topicAdminSearchField {
+        width: auto !important;
+        min-width: 0 !important;
+        flex: none !important;
+    }
+
+    .topicAdminSearchField input {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .topicSearchButton {
+        width: 92px !important;
+        min-width: 92px !important;
+        height: 46px !important;
+        margin: 0 !important;
+    }
+
+    .topicAdminSearchClear {
+        grid-column: 1 / -1;
+        justify-self: end;
+        margin: 0 !important;
+    }
+}
+
+/* ADMIN MOBILE SEARCH INLINE FIX END */
