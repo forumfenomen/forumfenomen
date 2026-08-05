@@ -1,6 +1,7 @@
 import { requireAdminAccess } from "@/lib/admin/require-admin-access";
 import Link from "next/link";
 import styles from "./admin.module.css";
+import { redirect } from "next/navigation";
 
 type RecentReport = {
     id: string;
@@ -56,8 +57,12 @@ function getReporterName(
 }
 
 export default async function AdminPage() {
-    const { supabase } =
+    const { supabase, role } =
         await requireAdminAccess();
+
+    if (role === "moderator") {
+        redirect("/admin/sikayetler");
+    }
 
     const [
         usersResult,

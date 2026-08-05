@@ -32,16 +32,16 @@ export async function requireAdminAccess() {
     redirect("/akis");
   }
 
-  if (profile.role === "moderator") {
-    redirect("/admin/sikayetler");
-  }
-
-  if (profile.role !== "admin") {
+  if (
+    profile.role !== "admin" &&
+    profile.role !== "moderator"
+  ) {
     redirect("/akis");
   }
 
   return {
     supabase,
     userId,
+    role: profile.role as "admin" | "moderator",
   };
 }
