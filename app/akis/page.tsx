@@ -1853,11 +1853,9 @@ export default function FeedPage() {
 
 
             <span>
-
-              {latestSeventyTwoHourCount}{" "}
-
-              {language === "tr" ? "konu" : "topics"}
-
+              {language === "tr"
+                ? `Son 72 saat · ${latestSeventyTwoHourCount} konu`
+                : `Last 72 hours · ${latestSeventyTwoHourCount} topics`}
             </span>
 
           </button>
