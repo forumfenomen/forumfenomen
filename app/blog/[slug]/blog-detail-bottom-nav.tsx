@@ -4,7 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import {
     type MouseEvent,
+    useEffect,
+    useState,
 } from "react";
+import { createPortal } from "react-dom";
 
 function HomeIcon() {
     return (
@@ -71,6 +74,13 @@ function UserIcon() {
 }
 
 export default function BlogDetailBottomNav() {
+    const [mounted, setMounted] =
+        useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     function handleNavigation(
         event: MouseEvent<HTMLAnchorElement>,
         href: string
@@ -88,7 +98,11 @@ export default function BlogDetailBottomNav() {
         }
     }
 
-    return (
+    if (!mounted) {
+        return null;
+    }
+
+    return createPortal(
         <nav
             className="ff-bottom-nav"
             aria-label="ForumFenomen"
@@ -164,6 +178,7 @@ export default function BlogDetailBottomNav() {
                 <UserIcon />
                 <span>Profil</span>
             </Link>
-        </nav>
-    );
+         </nav>,
+    document.body
+);
 }
