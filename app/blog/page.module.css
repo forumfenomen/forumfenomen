@@ -1832,6 +1832,7 @@
         overflow: hidden;
 
         -webkit-box-orient: vertical;
+        line-clamp: 2;
         -webkit-line-clamp: 2;
     }
 
@@ -1943,6 +1944,7 @@
         overflow: hidden;
 
         -webkit-box-orient: vertical;
+        line-clamp: 3;
         -webkit-line-clamp: 3;
     }
 
