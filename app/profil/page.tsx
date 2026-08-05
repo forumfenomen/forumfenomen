@@ -184,6 +184,8 @@ const translations = {
     saved: "Kaydedilenler",
     notifications: "Bildirimler",
     settings: "Ayarlar",
+    adminPanel: "Yönetim Paneli",
+    moderatorPanel: "Moderatör Paneli",
     plusMembership: "PLUS ÜYELİK",
     logout: "Çıkış Yap",
     editProfile: "Profili Düzenle",
@@ -267,6 +269,8 @@ const translations = {
     saved: "Saved Topics",
     notifications: "Notifications",
     settings: "Settings",
+    adminPanel: "Admin Panel",
+    moderatorPanel: "Moderator Panel",
     plusMembership: "PLUS MEMBERSHIP",
     logout: "Log Out",
     editProfile: "Edit Profile",
@@ -432,6 +436,15 @@ function UsersIcon() {
       <circle cx="17" cy="9" r="2.5" />
       <path d="M3 20c.5-4 2.5-6 6-6s5.5 2 6 6" />
       <path d="M15 15c3.5 0 5.3 1.7 6 5" />
+    </svg>
+  );
+}
+
+function ShieldIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 3 20 6v5c0 5.2-3.3 8.5-8 10-4.7-1.5-8-4.8-8-10V6l8-3Z" />
+      <path d="m9 12 2 2 4-5" />
     </svg>
   );
 }
@@ -681,6 +694,15 @@ export default function ProfilePage() {
 
   const [profileRole, setProfileRole] =
     useState<ProfileRole>("user");
+
+  const hasManagementAccess =
+    profileRole === "admin" ||
+    profileRole === "moderator";
+
+  const managementPanelLabel =
+    profileRole === "admin"
+      ? translations[language].adminPanel
+      : translations[language].moderatorPanel;
 
   const [username, setUsername] =
     useState("@fenomen");
@@ -4650,6 +4672,17 @@ export default function ProfilePage() {
             </div>
           </div>
 
+          {hasManagementAccess ? (
+            <Link
+              href="/admin"
+              className={styles.mobileManagementLink}
+            >
+              <ShieldIcon />
+              <span>{managementPanelLabel}</span>
+              <ChevronIcon />
+            </Link>
+          ) : null}
+
           <div className={styles.profileActions}>
             <button
               type="button"
@@ -4933,32 +4966,52 @@ export default function ProfilePage() {
               <div className={styles.profileMenuWrap}>
                 <nav className={styles.profileMenu}>
                   {menuItems.map((item) => (
-                    <button
-                      type="button"
+                    <div
                       key={item.id}
-                      className={
-                        activeSection === item.id
-                          ? styles.activeMenuItem
-                          : ""
-                      }
-                      onClick={() =>
-                        openProfileSection(item.id)
-                      }
+                      className={styles.profileMenuItemGroup}
                     >
-                      <span className={styles.menuIcon}>
-                        {item.icon}
-                      </span>
+                      <button
+                        type="button"
+                        className={
+                          activeSection === item.id
+                            ? styles.activeMenuItem
+                            : ""
+                        }
+                        onClick={() =>
+                          openProfileSection(item.id)
+                        }
+                      >
+                        <span className={styles.menuIcon}>
+                          {item.icon}
+                        </span>
 
-                      <span>
-                        {sectionNames[item.id]}
-                      </span>
+                        <span>
+                          {sectionNames[item.id]}
+                        </span>
 
-                      {item.count !== undefined ? (
-                        <small>{item.count}</small>
-                      ) : (
-                        <ChevronIcon />
-                      )}
-                    </button>
+                        {item.count !== undefined ? (
+                          <small>{item.count}</small>
+                        ) : (
+                          <ChevronIcon />
+                        )}
+                      </button>
+
+                      {item.id === "profile" &&
+                        hasManagementAccess ? (
+                        <Link
+                          href="/admin"
+                          className={styles.desktopManagementLink}
+                        >
+                          <span className={styles.menuIcon}>
+                            <ShieldIcon />
+                          </span>
+
+                          <span>{managementPanelLabel}</span>
+
+                          <ChevronIcon />
+                        </Link>
+                      ) : null}
+                    </div>
                   ))}
                 </nav>
 
