@@ -1295,13 +1295,10 @@ export default function FeedPage() {
               metricMap.get(topic.id)
                 ?.save_count ?? 0,
             icon:
-              categorySlug === "instagram"
-                ? "instagram"
-                : categorySlug === "tiktok"
-                  ? "tiktok"
-                  : categorySlug === "youtube"
-                    ? "youtube"
-                    : visual.icon,
+              categorySlug === "yapay-zeka"
+                ? visual.icon
+                : categorySlug ||
+                visual.icon,
             iconClass: visual.iconClass,
             toneClass: visual.toneClass,
             titleTr: topic.title,
