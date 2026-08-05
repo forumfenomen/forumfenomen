@@ -648,143 +648,470 @@
     font-size: 10px;
 }
 
+/* BLOG REPORT MODAL START */
+
 :global(.blog-report-backdrop) {
     position: fixed;
-    inset: 0;
     z-index: 2000;
+    inset: 0;
+
     display: grid;
     place-items: center;
-    padding: 18px;
-    background: rgba(1, 2, 8, 0.78);
-    backdrop-filter: blur(8px);
+
+    overflow-y: auto;
+
+    padding:
+        max(20px, env(safe-area-inset-top)) 14px calc(28px + env(safe-area-inset-bottom));
+
+    background: rgba(2, 3, 10, 0.82);
+    backdrop-filter: blur(9px);
+
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
 }
 
 :global(.blog-report-modal) {
-    width: min(500px, 100%);
-    padding: 25px;
-    border: 1px solid rgba(217, 70, 239, 0.35);
-    border-radius: 22px;
+    width: min(100%, 540px);
+    max-height: calc(100svh - 42px);
+    overflow-y: auto;
+
+    margin: auto;
+    padding: 26px 20px;
+
+    color: #f4f3f8;
+    text-align: center;
+
+    border:
+        1px solid rgba(217, 70, 239, 0.28);
+    border-radius: 24px;
+
     background:
-        radial-gradient(circle at 90% 0,
-            rgba(59, 130, 246, 0.15),
+        radial-gradient(circle at 50% -20%,
+            rgba(218, 56, 232, 0.14),
             transparent 38%),
-        linear-gradient(145deg,
-            #13091d,
-            #070a16);
-    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+        linear-gradient(180deg,
+            rgba(24, 10, 32, 0.99),
+            rgba(7, 8, 20, 0.99));
+
+    box-shadow:
+        0 32px 90px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-:global(.blog-report-header) {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 20px;
-    margin-bottom: 22px;
+:global(.blog-report-icon) {
+    display: grid;
+    width: 58px;
+    height: 58px;
+
+    place-items: center;
+
+    margin: 0 auto 17px;
+
+    color: #f2b45e;
+
+    border:
+        1px solid rgba(242, 180, 94, 0.26);
+    border-radius: 18px;
+
+    background:
+        rgba(242, 180, 94, 0.075);
 }
 
-:global(.blog-report-header span) {
-    color: #f05cff;
+:global(.blog-report-icon svg) {
+    width: 25px;
+    height: 25px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+:global(.blog-report-success-icon) {
+    color: #62e1b2;
+
+    border-color:
+        rgba(83, 222, 170, 0.27);
+
+    background:
+        rgba(61, 215, 157, 0.08);
+
+    box-shadow:
+        0 0 28px rgba(61, 215, 157, 0.08);
+}
+
+:global(.blog-report-label) {
+    display: block;
+
+    color: #e85cf0;
+
     font-size: 10px;
     font-weight: 850;
-    letter-spacing: 0.13em;
+    letter-spacing: 0.18em;
 }
 
-:global(.blog-report-header h2) {
-    margin: 6px 0 0;
-    color: #ffffff;
-    font-size: 25px;
-}
+:global(.blog-report-modal h2) {
+    margin: 13px 0 0;
 
-:global(.blog-report-header > button) {
-    display: grid;
-    width: 36px;
-    height: 36px;
-    flex: 0 0 auto;
-    place-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.04);
     color: #ffffff;
+
     font-size: 22px;
-    cursor: pointer;
+    line-height: 1.25;
+    letter-spacing: -0.4px;
 }
 
-:global(.blog-report-modal > label) {
-    display: grid;
-    gap: 8px;
-    margin-top: 16px;
-}
+:global(.blog-report-description) {
+    max-width: 430px;
 
-:global(.blog-report-modal > label > span) {
-    color: #cbc5d7;
+    margin: 11px auto 0;
+
+    color: #9698a5;
+
     font-size: 12px;
-    font-weight: 750;
+    line-height: 1.65;
 }
 
-:global(.blog-report-modal select),
-:global(.blog-report-modal textarea) {
+:global(.blog-report-reason-grid) {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 9px;
+
+    margin-top: 22px;
+}
+
+:global(.blog-report-reason-grid button) {
+    min-height: 44px;
+
+    padding: 9px 12px;
+
+    color: #a3a5b1;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.075);
+    border-radius: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        color 160ms ease,
+        border-color 160ms ease,
+        background 160ms ease,
+        transform 160ms ease;
+}
+
+:global(.blog-report-reason-grid button:hover:not(:disabled)) {
+    color: #ffffff;
+
+    border-color:
+        rgba(219, 78, 232, 0.25);
+
+    transform: translateY(-1px);
+}
+
+:global(.blog-report-reason-active) {
+    color: #ffffff !important;
+
+    border-color:
+        rgba(218, 77, 232, 0.47) !important;
+
+    background:
+        linear-gradient(135deg,
+            rgba(215, 58, 230, 0.16),
+            rgba(78, 101, 255, 0.12)) !important;
+
+    box-shadow:
+        0 0 19px rgba(211, 57, 227, 0.08);
+}
+
+:global(.blog-report-field) {
+    position: relative;
+
+    display: block;
+
+    margin-top: 17px;
+
+    text-align: left;
+}
+
+:global(.blog-report-field > span) {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #a5a7b2;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+:global(.blog-report-field textarea) {
+    display: block;
     box-sizing: border-box;
+
     width: 100%;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 100px;
+
+    resize: vertical;
+
+    padding: 12px 13px 27px;
+
+    color: #eeeef4;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     outline: none;
-    background: rgba(3, 5, 14, 0.85);
-    color: #ffffff;
+
+    background:
+        rgba(255, 255, 255, 0.022);
+
     font: inherit;
+    font-size: 13px;
+    line-height: 1.6;
 }
 
-:global(.blog-report-modal select) {
-    min-height: 46px;
-    padding: 0 13px;
+:global(.blog-report-field textarea:focus) {
+    border-color:
+        rgba(218, 72, 232, 0.38);
+
+    box-shadow:
+        0 0 0 3px rgba(213, 58, 229, 0.055);
 }
 
-:global(.blog-report-modal textarea) {
-    min-height: 120px;
-    resize: vertical;
-    padding: 13px;
-    line-height: 1.55;
+:global(.blog-report-field textarea::placeholder) {
+    color: #686b77;
 }
 
-:global(.blog-report-modal select:focus),
-:global(.blog-report-modal textarea:focus) {
-    border-color: rgba(232, 121, 249, 0.65);
-    box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.1);
+:global(.blog-report-field > small) {
+    position: absolute;
+    right: 10px;
+    bottom: 8px;
+
+    color: #70737f;
+
+    font-size: 9px;
 }
 
-:global(.blog-report-modal > p) {
-    margin: 15px 0 0;
-    color: #d8b4fe;
-    font-size: 12px;
+:global(.blog-report-feedback) {
+    margin: 10px 0 0;
+
+    color: #ff899e;
+    text-align: left;
+
+    font-size: 11px;
     line-height: 1.5;
 }
 
 :global(.blog-report-actions) {
-    display: flex;
-    justify-content: flex-end;
+    display: grid;
+
     gap: 10px;
-    margin-top: 22px;
+
+    margin-top: 20px;
 }
 
 :global(.blog-report-actions button) {
-    min-height: 42px;
-    padding: 0 15px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 11px;
-    background: rgba(255, 255, 255, 0.04);
-    color: #ffffff;
+    display: inline-flex;
+
+    width: 100%;
+    min-height: 46px;
+
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 0 16px;
+
+    border-radius: 12px;
+
     font: inherit;
     font-size: 12px;
-    font-weight: 750;
+    font-weight: 800;
+
     cursor: pointer;
 }
 
-:global(.blog-report-actions button:last-child) {
-    border-color: rgba(232, 121, 249, 0.58);
+:global(.blog-report-actions button svg) {
+    width: 17px;
+    height: 17px;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+:global(.blog-report-submit-button) {
+    color: #ffffff;
+
+    border:
+        1px solid rgba(217, 74, 231, 0.3);
+
     background:
         linear-gradient(135deg,
-            rgba(217, 70, 239, 0.28),
-            rgba(59, 130, 246, 0.2));
+            rgba(211, 57, 229, 0.9),
+            rgba(76, 98, 247, 0.9));
+
+    box-shadow:
+        0 12px 28px rgba(153, 53, 211, 0.14);
 }
+
+:global(.blog-report-submit-button:hover:not(:disabled)) {
+    border-color:
+        rgba(229, 102, 239, 0.46);
+
+    background:
+        linear-gradient(135deg,
+            rgba(221, 65, 237, 1),
+            rgba(84, 106, 255, 1));
+}
+
+:global(.blog-report-cancel-button) {
+    color: #aeb0bb;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    background:
+        rgba(255, 255, 255, 0.035);
+}
+
+:global(.blog-report-cancel-button:hover:not(:disabled)) {
+    color: #ffffff;
+
+    border-color:
+        rgba(255, 255, 255, 0.14);
+
+    background:
+        rgba(255, 255, 255, 0.06);
+}
+
+:global(.blog-report-actions button:disabled),
+:global(.blog-report-reason-grid button:disabled) {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+:global(.blog-report-success-actions) {
+    display: flex;
+    justify-content: center;
+}
+
+:global(.blog-report-success-actions .blog-report-submit-button) {
+    width: min(100%, 235px);
+}
+
+:global(html[data-theme="light"]):global(.blog-report-modal) {
+    color: #292832;
+
+    border-color:
+        rgba(112, 43, 135, 0.18);
+
+    background:
+        radial-gradient(circle at 50% -20%,
+            rgba(218, 56, 232, 0.08),
+            transparent 38%),
+        #ffffff;
+}
+
+:global(html[data-theme="light"]):global(.blog-report-modal h2) {
+    color: #292832;
+}
+
+:global(html[data-theme="light"]):global(.blog-report-description) {
+    color: #747481;
+}
+
+:global(html[data-theme="light"]):global(.blog-report-reason-grid button) {
+    color: #696a76;
+
+    border-color:
+        rgba(42, 37, 65, 0.1);
+
+    background:
+        rgba(42, 37, 65, 0.025);
+}
+
+:global(html[data-theme="light"]):global(.blog-report-field textarea) {
+    color: #292832;
+
+    border-color:
+        rgba(42, 37, 65, 0.11);
+
+    background:
+        rgba(42, 37, 65, 0.025);
+}
+
+:global(html[data-theme="light"]):global(.blog-report-cancel-button) {
+    color: #656572;
+
+    border-color:
+        rgba(42, 37, 65, 0.1);
+
+    background:
+        rgba(42, 37, 65, 0.025);
+}
+
+@media (max-width: 640px) {
+    :global(.blog-post-actions) {
+        display: grid;
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 8px;
+
+        margin-top: 32px;
+    }
+
+    :global(.blog-post-actions button) {
+        width: 100%;
+
+        padding-inline: 10px;
+    }
+
+    :global(.blog-post-actions button.report) {
+        grid-column: 1 / -1;
+
+        margin-left: 0;
+    }
+
+    :global(.blog-report-backdrop) {
+        place-items: start center;
+    }
+
+    :global(.blog-report-modal) {
+        max-height: none;
+        overflow: visible;
+
+        margin:
+            max(12px, env(safe-area-inset-top)) auto 24px;
+
+        padding: 24px 18px;
+
+        border-radius: 20px;
+    }
+
+    :global(.blog-report-reason-grid) {
+        grid-template-columns: 1fr;
+    }
+
+    :global(.blog-report-field textarea) {
+        font-size: 16px;
+    }
+}
+
+/* BLOG REPORT MODAL END */
 
 @media (max-width: 640px) {
     :global(.blog-post-actions) {
@@ -1037,42 +1364,35 @@
 
 /* Açık temada seçili blog etkileşimleri */
 
-:global(html[data-theme="light"])
-    :global(.blog-post-actions button.active) {
+:global(html[data-theme="light"]) :global(.blog-post-actions button.active) {
     border-color: #b519c5 !important;
     background:
-        linear-gradient(
-            135deg,
+        linear-gradient(135deg,
             rgba(192, 38, 211, 0.18),
-            rgba(59, 130, 246, 0.12)
-        ) !important;
+            rgba(59, 130, 246, 0.12)) !important;
     color: #8e159c !important;
     box-shadow:
         0 0 0 3px rgba(192, 38, 211, 0.08),
         0 8px 20px rgba(126, 34, 206, 0.10);
 }
 
-:global(html[data-theme="light"])
-    :global(.blog-post-actions button.active svg) {
+:global(html[data-theme="light"]) :global(.blog-post-actions button.active svg) {
     fill: currentColor;
     stroke: currentColor;
 }
 
-:global(html[data-theme="light"])
-    :global(.blog-post-actions button.active strong) {
+:global(html[data-theme="light"]) :global(.blog-post-actions button.active strong) {
     background: rgba(192, 38, 211, 0.14);
     color: #7d168a;
 }
 
-:global(html[data-theme="light"])
-    :global(.blog-post-actions button.active.negative) {
+:global(html[data-theme="light"]) :global(.blog-post-actions button.active.negative) {
     border-color: #dc2626 !important;
     background: rgba(220, 38, 38, 0.10) !important;
     color: #b91c1c !important;
 }
 
-:global(html[data-theme="light"])
-    :global(.blog-post-actions button.active.negative strong) {
+:global(html[data-theme="light"]) :global(.blog-post-actions button.active.negative strong) {
     background: rgba(220, 38, 38, 0.12);
     color: #991b1b;
 }
@@ -1106,16 +1426,12 @@
     border-radius: 23px;
 
     background:
-        radial-gradient(
-            circle at 8% 50%,
+        radial-gradient(circle at 8% 50%,
             rgba(196, 41, 255, 0.11),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 92% 50%,
+            transparent 28%),
+        radial-gradient(circle at 92% 50%,
             rgba(0, 178, 255, 0.08),
-            transparent 28%
-        ),
+            transparent 28%),
         rgba(4, 5, 12, 0.97);
 
     box-shadow:
@@ -1156,16 +1472,12 @@
     border-color: rgba(155, 75, 255, 0.28);
 
     background:
-        radial-gradient(
-            circle at 8% 50%,
+        radial-gradient(circle at 8% 50%,
             rgba(196, 41, 255, 0.12),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 92% 50%,
+            transparent 28%),
+        radial-gradient(circle at 92% 50%,
             rgba(0, 178, 255, 0.09),
-            transparent 28%
-        ),
+            transparent 28%),
         rgba(4, 5, 12, 0.98);
 }
 
@@ -1262,8 +1574,142 @@
    Arama açıkken yalnızca hero kartının üstünde,
    kategoriler sayfasındaki gibi boşluk oluşturur.
 */
-.page
-  > :global(.ff-feed-header:has(.ff-site-search-popover))
-  + .article {
+.page> :global(.ff-feed-header:has(.ff-site-search-popover))+.article {
     margin-top: 14px;
 }
+
+/* BLOG DETAIL MOBILE OVERFLOW FIX START */
+
+.page {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+}
+
+.article,
+.detailShell,
+.hero,
+.cover,
+.layout,
+.content,
+.relatedSection,
+.relatedGrid {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.heroContent,
+.content,
+.relatedBody {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+.hero h1,
+.excerpt,
+.content h2,
+.content h3,
+.content p,
+.content li,
+.content a,
+.relatedBody h3,
+.relatedBody p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+.content img,
+.content video,
+.content iframe,
+.content table {
+    max-width: 100%;
+}
+
+.content img,
+.content video {
+    height: auto;
+}
+
+:global(.blog-report-backdrop) {
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+:global(.blog-report-modal) {
+    width: min(540px, calc(100vw - 28px));
+    max-width: calc(100vw - 28px);
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+:global(.blog-report-modal *) {
+    box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+    .page {
+        width: 100%;
+        max-width: 100vw;
+
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .article,
+    .detailShell {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .heroContent {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .content {
+        width: 100%;
+        max-width: 100%;
+
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    :global(.blog-report-backdrop) {
+        place-items: start center;
+
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    :global(.blog-report-modal) {
+        width: 100%;
+        max-width: 100%;
+
+        margin:
+            max(12px, env(safe-area-inset-top))
+            auto
+            24px;
+    }
+
+    :global(.blog-report-actions) {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+
+        width: 100%;
+    }
+
+    :global(.blog-report-actions button) {
+        width: 100%;
+        min-width: 0;
+    }
+
+    :global(.blog-report-success-actions) {
+        display: flex !important;
+    }
+}
+
+/* BLOG DETAIL MOBILE OVERFLOW FIX END */
