@@ -74,6 +74,7 @@ const categoryAliases: Record<
   /* Gerçek blog alt kategorileri */
 
   instagram: "platforms",
+  ınstagram: "platforms",
   tiktok: "platforms",
   youtube: "platforms",
 
