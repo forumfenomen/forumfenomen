@@ -726,7 +726,11 @@ export default function BlogPageClient({
                     <div
                         className={`${styles.sectionHeading} ${styles.shiftedSectionHeading}`}
                     >
-                        <h2>{t.latest}</h2>
+                        <h2>
+                            {category === "all"
+                                ? t.latest
+                                : t.categoryNames[category]}
+                        </h2>
                     </div>
 
                     {latestPosts.length > 0 ? (

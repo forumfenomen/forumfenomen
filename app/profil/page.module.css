@@ -5253,6 +5253,8 @@
   background: rgba(239, 68, 68, 0.13);
 }
 
+/* PROFILE REPORT MODAL START */
+
 .profileReportBackdrop {
   position: fixed;
   z-index: 1000;
@@ -5261,185 +5263,473 @@
   display: grid;
   place-items: center;
 
-  padding: 18px;
+  overflow-y: auto;
 
-  background: rgba(2, 4, 12, 0.78);
-  backdrop-filter: blur(8px);
+  padding:
+    max(20px, env(safe-area-inset-top))
+    14px
+    calc(28px + env(safe-area-inset-bottom));
+
+  background: rgba(2, 3, 10, 0.82);
+  backdrop-filter: blur(9px);
+
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 .profileReportModal {
-  width: min(100%, 520px);
-  max-height: calc(100vh - 36px);
+  width: min(100%, 540px);
+  max-height: calc(100svh - 42px);
   overflow-y: auto;
 
-  padding: 22px;
+  margin: auto;
+  padding: 26px 20px;
 
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
+  color: #f4f3f8;
+  text-align: center;
 
-  background: #0e1020;
+  border:
+    1px solid rgba(217, 70, 239, 0.28);
+  border-radius: 24px;
+
+  background:
+    radial-gradient(
+      circle at 50% -20%,
+      rgba(218, 56, 232, 0.14),
+      transparent 38%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(24, 10, 32, 0.99),
+      rgba(7, 8, 20, 0.99)
+    );
 
   box-shadow:
-    0 24px 80px rgba(0, 0, 0, 0.45);
+    0 32px 90px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-.profileReportHeader {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 18px;
-}
-
-.profileReportHeader span {
-  color: #ef78ff;
-  font-size: 10px;
-  font-weight: 850;
-  letter-spacing: 0.12em;
-}
-
-.profileReportHeader h2 {
-  margin: 5px 0 7px;
-  color: #ffffff;
-  font-size: 24px;
-}
-
-.profileReportHeader p {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.58);
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.profileReportHeader>button {
+.profileReportIcon {
   display: grid;
+  width: 58px;
+  height: 58px;
+
   place-items: center;
 
-  width: 34px;
-  height: 34px;
-  flex: 0 0 34px;
+  margin: 0 auto 17px;
 
-  color: rgba(255, 255, 255, 0.72);
+  color: #f2b45e;
 
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 10px;
+  border:
+    1px solid rgba(242, 180, 94, 0.26);
+  border-radius: 18px;
 
-  background: rgba(255, 255, 255, 0.04);
+  background:
+    rgba(242, 180, 94, 0.075);
+}
+
+.profileReportIcon svg {
+  width: 25px;
+  height: 25px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.profileReportSuccessIcon {
+  color: #62e1b2;
+
+  border-color:
+    rgba(83, 222, 170, 0.27);
+
+  background:
+    rgba(61, 215, 157, 0.08);
+
+  box-shadow:
+    0 0 28px rgba(61, 215, 157, 0.08);
+}
+
+.profileReportLabel {
+  display: block;
+
+  color: #e85cf0;
+
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.18em;
+}
+
+.profileReportModal h2 {
+  margin: 13px 0 0;
+
+  color: #ffffff;
 
   font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: -0.4px;
+}
+
+.profileReportDescription {
+  max-width: 430px;
+
+  margin: 11px auto 0;
+
+  color: #9698a5;
+
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.profileReportReasonGrid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 9px;
+
+  margin-top: 22px;
+}
+
+.profileReportReasonGrid button {
+  min-height: 44px;
+
+  padding: 9px 12px;
+
+  color: #a3a5b1;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 12px;
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+
   cursor: pointer;
+
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.profileReportReasonGrid button:hover:not(:disabled) {
+  color: #ffffff;
+
+  border-color:
+    rgba(219, 78, 232, 0.25);
+
+  transform: translateY(-1px);
+}
+
+.profileReportReasonActive {
+  color: #ffffff !important;
+
+  border-color:
+    rgba(218, 77, 232, 0.47) !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(215, 58, 230, 0.16),
+      rgba(78, 101, 255, 0.12)
+    ) !important;
+
+  box-shadow:
+    0 0 19px rgba(211, 57, 227, 0.08);
 }
 
 .profileReportField {
   position: relative;
 
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  display: block;
 
-  margin-top: 14px;
+  margin-top: 17px;
+
+  text-align: left;
 }
 
-.profileReportField>span {
-  color: rgba(255, 255, 255, 0.58);
-  font-size: 11px;
-  font-weight: 800;
+.profileReportField > span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #a5a7b2;
+
+  font-size: 10px;
+  font-weight: 700;
 }
 
-.profileReportField select,
 .profileReportField textarea {
+  display: block;
   width: 100%;
+  min-height: 100px;
 
-  color: #ffffff;
+  resize: vertical;
 
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 13px 27px;
+
+  color: #eeeef4;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   outline: none;
 
-  background: rgba(0, 0, 0, 0.22);
+  background:
+    rgba(255, 255, 255, 0.022);
 
   font: inherit;
+  font-size: 13px;
+  line-height: 1.6;
 }
 
-.profileReportField select {
-  min-height: 44px;
-  padding: 0 12px;
+.profileReportField textarea:focus {
+  border-color:
+    rgba(218, 72, 232, 0.38);
+
+  box-shadow:
+    0 0 0 3px rgba(213, 58, 229, 0.055);
 }
 
-.profileReportField textarea {
-  min-height: 120px;
-  padding: 12px 13px 26px;
-  resize: vertical;
+.profileReportField textarea::placeholder {
+  color: #686b77;
 }
 
-.profileReportField small {
+.profileReportField > small {
   position: absolute;
   right: 10px;
   bottom: 8px;
 
-  color: rgba(255, 255, 255, 0.35);
+  color: #70737f;
+
   font-size: 9px;
 }
 
-.profileReportError,
-.profileReportSuccess {
-  margin-top: 14px;
-  padding: 11px 13px;
-  border-radius: 11px;
-  font-size: 12px;
-  font-weight: 700;
-}
-
 .profileReportError {
-  color: #ffb4bb;
-  border: 1px solid rgba(239, 68, 68, 0.23);
-  background: rgba(239, 68, 68, 0.08);
-}
+  margin-top: 10px;
+  padding: 10px 12px;
 
-.profileReportSuccess {
-  color: #9ff0bc;
-  border: 1px solid rgba(34, 197, 94, 0.23);
-  background: rgba(34, 197, 94, 0.08);
+  color: #ff899e;
+  text-align: left;
+
+  border:
+    1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 11px;
+
+  background:
+    rgba(239, 68, 68, 0.07);
+
+  font-size: 11px;
+  line-height: 1.5;
 }
 
 .profileReportActions {
-  display: flex;
-  justify-content: flex-end;
+  display: grid;
+
   gap: 10px;
-  margin-top: 18px;
+
+  margin-top: 20px;
 }
 
 .profileReportActions button {
-  min-height: 42px;
-  padding: 0 15px;
+  display: inline-flex;
+  width: 100%;
+  min-height: 46px;
 
-  border-radius: 11px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 
+  padding: 0 16px;
+
+  border-radius: 12px;
+
+  font-family: inherit;
   font-size: 12px;
   font-weight: 800;
 
   cursor: pointer;
 }
 
-.profileReportActions button:first-child {
-  color: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.04);
+.profileReportActions button svg {
+  width: 17px;
+  height: 17px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
-.profileReportActions button:last-child {
+.profileReportSubmitButton {
   color: #ffffff;
-  border: 0;
+
+  border:
+    1px solid rgba(217, 74, 231, 0.3);
+
   background:
-    linear-gradient(135deg,
-      #d837e5,
-      #6e65ff);
+    linear-gradient(
+      135deg,
+      rgba(211, 57, 229, 0.9),
+      rgba(76, 98, 247, 0.9)
+    );
+
+  box-shadow:
+    0 12px 28px rgba(153, 53, 211, 0.14);
 }
 
-.profileReportActions button:disabled {
+.profileReportSubmitButton:hover:not(:disabled) {
+  border-color:
+    rgba(229, 102, 239, 0.46);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(221, 65, 237, 1),
+      rgba(84, 106, 255, 1)
+    );
+}
+
+.profileReportCancelButton {
+  color: #aeb0bb;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.08);
+
+  background:
+    rgba(255, 255, 255, 0.035);
+}
+
+.profileReportCancelButton:hover:not(:disabled) {
+  color: #ffffff;
+
+  border-color:
+    rgba(255, 255, 255, 0.14);
+
+  background:
+    rgba(255, 255, 255, 0.06);
+}
+
+.profileReportActions button:disabled,
+.profileReportReasonGrid button:disabled {
   cursor: not-allowed;
   opacity: 0.55;
 }
+
+.profileReportSuccessActions {
+  display: flex;
+  justify-content: center;
+}
+
+.profileReportSuccessActions
+.profileReportSubmitButton {
+  width: min(100%, 235px);
+}
+
+:global(html[data-theme="light"])
+.profileReportModal {
+  color: #292832;
+
+  border-color:
+    rgba(112, 43, 135, 0.18);
+
+  background:
+    radial-gradient(
+      circle at 50% -20%,
+      rgba(218, 56, 232, 0.08),
+      transparent 38%
+    ),
+    #ffffff;
+}
+
+:global(html[data-theme="light"])
+.profileReportModal h2 {
+  color: #292832;
+}
+
+:global(html[data-theme="light"])
+.profileReportDescription {
+  color: #747481;
+}
+
+:global(html[data-theme="light"])
+.profileReportReasonGrid button {
+  color: #696a76;
+
+  border-color:
+    rgba(42, 37, 65, 0.1);
+
+  background:
+    rgba(42, 37, 65, 0.025);
+}
+
+:global(html[data-theme="light"])
+.profileReportField textarea {
+  color: #292832;
+
+  border-color:
+    rgba(42, 37, 65, 0.11);
+
+  background:
+    rgba(42, 37, 65, 0.025);
+}
+
+:global(html[data-theme="light"])
+.profileReportCancelButton {
+  color: #656572;
+
+  border-color:
+    rgba(42, 37, 65, 0.1);
+
+  background:
+    rgba(42, 37, 65, 0.025);
+}
+
+@media (max-width: 600px) {
+  .profileActions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .publicProfileReportButton {
+    width: 100%;
+  }
+
+  .profileReportBackdrop {
+    place-items: start center;
+  }
+
+  .profileReportModal {
+    max-height: none;
+    overflow: visible;
+
+    margin:
+      max(12px, env(safe-area-inset-top))
+      auto
+      24px;
+
+    padding: 24px 18px;
+  }
+
+  .profileReportReasonGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .profileReportField textarea {
+    font-size: 16px;
+  }
+}
+
+/* PROFILE REPORT MODAL END */
 
 @media (max-width: 600px) {
   .profileActions {

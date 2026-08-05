@@ -233,6 +233,18 @@ function UserIcon() {
     );
 }
 
+function ReportIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+        >
+            <path d="M5 21V4" />
+            <path d="M5 5h11l-1.5 3L16 11H5" />
+        </svg>
+    );
+}
+
 export default function PublicProfilePage() {
     const router = useRouter();
 
@@ -1031,11 +1043,6 @@ export default function PublicProfilePage() {
             setReportSuccess(true);
             setReportReason("");
             setReportDetails("");
-
-            window.setTimeout(() => {
-                setReportOpen(false);
-                setReportSuccess(false);
-            }, 1800);
         } catch (error) {
             console.error(
                 "Profil şikâyeti gönderilemedi:",
@@ -2089,6 +2096,8 @@ export default function PublicProfilePage() {
                     onClick={() => {
                         if (!reportLoading) {
                             setReportOpen(false);
+                            setReportSuccess(false);
+                            setReportError(null);
                         }
                     }}
                 >
@@ -2101,186 +2110,195 @@ export default function PublicProfilePage() {
                             event.stopPropagation();
                         }}
                     >
-                        <div className={styles.profileReportHeader}>
-                            <div>
-                                <span>
-                                    {language === "tr"
-                                        ? "GÜVENLİK"
-                                        : "SAFETY"}
-                                </span>
-
-                                <h2 id="profile-report-title">
-                                    {language === "tr"
-                                        ? "Şikâyet Et"
-                                        : "Report"}
-                                </h2>
-
-                                <p>
-                                    {language === "tr"
-                                        ? `${profileName} adlı kullanıcıyı neden şikâyet ettiğini belirt.`
-                                        : `Tell us why you are reporting ${profileName}.`}
-                                </p>
-                            </div>
-
-                            <button
-                                type="button"
-                                aria-label={
-                                    language === "tr"
-                                        ? "Kapat"
-                                        : "Close"
-                                }
-                                disabled={reportLoading}
-                                onClick={() => {
-                                    setReportOpen(false);
-                                }}
-                            >
-                                ×
-                            </button>
+                        <div
+                            className={`${styles.profileReportIcon} ${reportSuccess
+                                    ? styles.profileReportSuccessIcon
+                                    : ""
+                                }`}
+                        >
+                            <ReportIcon />
                         </div>
 
-                        <label className={styles.profileReportField}>
-                            <span>
-                                {language === "tr"
-                                    ? "Şikâyet nedeni"
-                                    : "Report reason"}
-                            </span>
-
-                            <select
-                                value={reportReason}
-                                disabled={reportLoading}
-                                onChange={(event) => {
-                                    setReportReason(event.target.value);
-                                    setReportError(null);
-                                }}
-                            >
-                                <option value="">
-                                    {language === "tr"
-                                        ? "Bir neden seç"
-                                        : "Select a reason"}
-                                </option>
-
-                                <option value="spam">
-                                    {language === "tr"
-                                        ? "Spam veya yanıltıcı profil"
-                                        : "Spam or misleading profile"}
-                                </option>
-
-                                <option value="harassment">
-                                    {language === "tr"
-                                        ? "Taciz veya zorbalık"
-                                        : "Harassment or bullying"}
-                                </option>
-
-                                <option value="impersonation">
-                                    {language === "tr"
-                                        ? "Başkasını taklit etme"
-                                        : "Impersonation"}
-                                </option>
-
-                                <option value="illegal_content">
-                                    {language === "tr"
-                                        ? "Yasa dışı veya zararlı içerik"
-                                        : "Illegal or harmful content"}
-                                </option>
-
-                                <option value="other">
-                                    {language === "tr"
-                                        ? "Diğer"
-                                        : "Other"}
-                                </option>
-                            </select>
-                        </label>
-
-                        <label className={styles.profileReportField}>
-                            <span>
-                                {language === "tr"
-                                    ? "Açıklama"
-                                    : "Details"}
-                            </span>
-
-                            <textarea
-                                value={reportDetails}
-                                maxLength={2000}
-                                disabled={reportLoading}
-                                placeholder={
-                                    language === "tr"
-                                        ? "Durumu kısaca açıkla..."
-                                        : "Briefly describe the issue..."
-                                }
-                                onChange={(event) => {
-                                    setReportDetails(
-                                        event.target.value
-                                    );
-
-                                    setReportError(null);
-                                }}
-                            />
-
-                            <small>
-                                {reportDetails.length}/2000
-                            </small>
-                        </label>
-
-                        {reportError ? (
-                            <div
-                                className={
-                                    styles.profileReportError
-                                }
-                                role="alert"
-                            >
-                                {reportError}
-                            </div>
-                        ) : null}
+                        <span className={styles.profileReportLabel}>
+                            {language === "tr"
+                                ? "TOPLULUK GÜVENLİĞİ"
+                                : "COMMUNITY SAFETY"}
+                        </span>
 
                         {reportSuccess ? (
-                            <div
-                                className={
-                                    styles.profileReportSuccess
-                                }
-                                role="status"
-                            >
-                                {language === "tr"
-                                    ? "Şikâyetin başarıyla gönderildi."
-                                    : "Your report was submitted successfully."}
-                            </div>
-                        ) : null}
+                            <>
+                                <h2 id="profile-report-title">
+                                    {language === "tr"
+                                        ? "Şikâyetin iletildi"
+                                        : "Report submitted"}
+                                </h2>
 
-                        <div
-                            className={
-                                styles.profileReportActions
-                            }
-                        >
-                            <button
-                                type="button"
-                                disabled={reportLoading}
-                                onClick={() => {
-                                    setReportOpen(false);
-                                }}
-                            >
-                                {language === "tr"
-                                    ? "Vazgeç"
-                                    : "Cancel"}
-                            </button>
+                                <p className={styles.profileReportDescription}>
+                                    {language === "tr"
+                                        ? "Profil hakkındaki bildirimin moderasyon sistemine kaydedildi. İnceleme sonucunda gerekli işlem uygulanacaktır."
+                                        : "Your profile report has been recorded for moderation review."}
+                                </p>
 
-                            <button
-                                type="button"
-                                disabled={
-                                    reportLoading ||
-                                    !reportReason
-                                }
-                                onClick={() => {
-                                    void handleProfileReport();
-                                }}
-                            >
-                                {reportLoading
-                                    ? language === "tr"
-                                        ? "Gönderiliyor..."
-                                        : "Submitting..."
-                                    : language === "tr"
-                                        ? "Şikâyeti Gönder"
-                                        : "Submit Report"}
-                            </button>
-                        </div>
+                                <div
+                                    className={`${styles.profileReportActions} ${styles.profileReportSuccessActions}`}
+                                >
+                                    <button
+                                        type="button"
+                                        className={styles.profileReportSubmitButton}
+                                        onClick={() => {
+                                            setReportOpen(false);
+                                            setReportSuccess(false);
+                                            setReportError(null);
+                                        }}
+                                    >
+                                        {language === "tr"
+                                            ? "Tamam"
+                                            : "Done"}
+                                    </button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <h2 id="profile-report-title">
+                                    {language === "tr"
+                                        ? "Bu profili neden şikâyet ediyorsun?"
+                                        : "Why are you reporting this profile?"}
+                                </h2>
+
+                                <p className={styles.profileReportDescription}>
+                                    {language === "tr"
+                                        ? "En uygun nedeni seç. Bildirimin profil sahibine gösterilmez."
+                                        : "Select the most appropriate reason. Your report will not be shown to the profile owner."}
+                                </p>
+
+                                <div className={styles.profileReportReasonGrid}>
+                                    {[
+                                        {
+                                            value: "spam",
+                                            tr: "Spam veya yanıltıcı profil",
+                                            en: "Spam or misleading profile",
+                                        },
+                                        {
+                                            value: "harassment",
+                                            tr: "Taciz veya zorbalık",
+                                            en: "Harassment or bullying",
+                                        },
+                                        {
+                                            value: "impersonation",
+                                            tr: "Başkasını taklit etme",
+                                            en: "Impersonation",
+                                        },
+                                        {
+                                            value: "illegal_content",
+                                            tr: "Yasa dışı veya zararlı içerik",
+                                            en: "Illegal or harmful content",
+                                        },
+                                        {
+                                            value: "other",
+                                            tr: "Diğer",
+                                            en: "Other",
+                                        },
+                                    ].map((reason) => (
+                                        <button
+                                            key={reason.value}
+                                            type="button"
+                                            className={
+                                                reportReason === reason.value
+                                                    ? styles.profileReportReasonActive
+                                                    : ""
+                                            }
+                                            disabled={reportLoading}
+                                            onClick={() => {
+                                                setReportReason(reason.value);
+                                                setReportError(null);
+                                            }}
+                                        >
+                                            {language === "tr"
+                                                ? reason.tr
+                                                : reason.en}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <label className={styles.profileReportField}>
+                                    <span>
+                                        {language === "tr"
+                                            ? "Ek açıklama (isteğe bağlı)"
+                                            : "Additional details (optional)"}
+                                    </span>
+
+                                    <textarea
+                                        value={reportDetails}
+                                        maxLength={2000}
+                                        disabled={reportLoading}
+                                        placeholder={
+                                            language === "tr"
+                                                ? "Durumu kısaca açıkla..."
+                                                : "Briefly describe the issue..."
+                                        }
+                                        onChange={(event) => {
+                                            setReportDetails(
+                                                event.target.value
+                                            );
+
+                                            setReportError(null);
+                                        }}
+                                    />
+
+                                    <small>
+                                        {reportDetails.length}/2000
+                                    </small>
+                                </label>
+
+                                {reportError ? (
+                                    <div
+                                        className={styles.profileReportError}
+                                        role="alert"
+                                    >
+                                        {reportError}
+                                    </div>
+                                ) : null}
+
+                                <div className={styles.profileReportActions}>
+                                    <button
+                                        type="button"
+                                        className={styles.profileReportSubmitButton}
+                                        disabled={
+                                            reportLoading ||
+                                            !reportReason
+                                        }
+                                        onClick={() => {
+                                            void handleProfileReport();
+                                        }}
+                                    >
+                                        <ReportIcon />
+
+                                        {reportLoading
+                                            ? language === "tr"
+                                                ? "Gönderiliyor..."
+                                                : "Submitting..."
+                                            : language === "tr"
+                                                ? "Şikâyeti Gönder"
+                                                : "Submit Report"}
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        className={styles.profileReportCancelButton}
+                                        disabled={reportLoading}
+                                        onClick={() => {
+                                            setReportOpen(false);
+                                            setReportSuccess(false);
+                                            setReportError(null);
+                                        }}
+                                    >
+                                        {language === "tr"
+                                            ? "Vazgeç"
+                                            : "Cancel"}
+                                    </button>
+                                </div>
+                            </>
+                        )}
                     </section>
                 </div>
             ) : null}
