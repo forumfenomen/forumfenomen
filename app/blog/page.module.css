@@ -1843,3 +1843,23 @@
 }
 
 /* DESKTOP FEATURED SIDE CARD LAYOUT V1 END */
+/* DESKTOP SIDE IMAGE NO CROP V2 START */
+
+@media (min-width: 801px) {
+    .sideCard .cover {
+        background:
+            radial-gradient(
+                circle at center,
+                rgba(97, 54, 150, 0.14),
+                transparent 70%
+            ),
+            #080812 !important;
+    }
+
+    .sideCard .cover img {
+        object-fit: contain !important;
+        object-position: center center !important;
+    }
+}
+
+/* DESKTOP SIDE IMAGE NO CROP V2 END */
