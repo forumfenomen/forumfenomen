@@ -18,6 +18,14 @@ type TopicSummary = {
   author_id: string;
 };
 
+type BlogPostSummary = {
+  id: string;
+  title: string;
+  slug: string;
+  status: string;
+  author_id: string;
+};
+
 type ReportComment = {
   id: string;
   content: string;
@@ -53,6 +61,19 @@ type TopicReportRow = {
   created_at: string;
 };
 
+type BlogReportRow = {
+  id: string;
+  user_id: string;
+  blog_post_id: string;
+  reason: string;
+  details: string | null;
+  status: string;
+  reviewed_by: string | null;
+  reviewed_at: string | null;
+  resolution_note: string | null;
+  created_at: string;
+};
+
 type AdminReport = {
   id: string;
   reporter_id: string;
@@ -63,8 +84,9 @@ type AdminReport = {
   reviewed_at: string | null;
   resolution_note: string | null;
   created_at: string;
-  reportType: "comment" | "topic";
+  reportType: "comment" | "topic" | "blog";
   topic_id: string | null;
+  blog_post_id: string | null;
   reported_comment: ReportComment | null;
 };
 
@@ -82,6 +104,12 @@ const reasonNames: Record<string, string> = {
   illegal: "Yasadışı içerik",
   personal_information:
     "Kişisel bilgi paylaşımı",
+  yanlis_bilgi: "Yanlış veya yanıltıcı bilgi",
+  telif: "Telif hakkı ihlali",
+  uygunsuz_icerik: "Uygunsuz içerik",
+  reklam_spam: "Reklam veya spam",
+  nefret_taciz: "Nefret söylemi veya taciz",
+  diger: "Diğer",
   other: "Diğer",
 };
 
@@ -172,6 +200,7 @@ export default async function AdminReportsPage({
   const [
     commentReportsResult,
     topicReportsResult,
+    blogReportsResult,
   ] = await Promise.all([
     supabase
       .from("comment_reports")
@@ -215,6 +244,24 @@ export default async function AdminReportsPage({
       .order("created_at", {
         ascending: false,
       }),
+
+    supabase
+      .from("blog_post_reports")
+      .select(`
+        id,
+        user_id,
+        blog_post_id,
+        reason,
+        details,
+        status,
+        reviewed_by,
+        reviewed_at,
+        resolution_note,
+        created_at
+      `)
+      .order("created_at", {
+        ascending: false,
+      }),
   ]);
 
   if (commentReportsResult.error) {
@@ -231,6 +278,13 @@ export default async function AdminReportsPage({
     );
   }
 
+  if (blogReportsResult.error) {
+    console.error(
+      "Blog şikâyetleri alınamadı:",
+      blogReportsResult.error.message
+    );
+  }
+
   const commentReports =
     (commentReportsResult.data ??
       []) as unknown as CommentReportRow[];
@@ -238,6 +292,10 @@ export default async function AdminReportsPage({
   const topicReports =
     (topicReportsResult.data ??
       []) as unknown as TopicReportRow[];
+
+  const blogReports =
+    (blogReportsResult.data ??
+      []) as unknown as BlogReportRow[];
 
   const reports: AdminReport[] = [
     ...commentReports.map(
@@ -256,6 +314,7 @@ export default async function AdminReportsPage({
         topic_id:
           report.reported_comment
             ?.topic_id ?? null,
+        blog_post_id: null,
         reported_comment:
           report.reported_comment,
       })
@@ -275,6 +334,27 @@ export default async function AdminReportsPage({
         created_at: report.created_at,
         reportType: "topic",
         topic_id: report.topic_id,
+        blog_post_id: null,
+        reported_comment: null,
+      })
+    ),
+
+    ...blogReports.map(
+      (report): AdminReport => ({
+        id: report.id,
+        reporter_id: report.user_id,
+        reason: report.reason,
+        details: report.details,
+        status: report.status,
+        reviewed_by: report.reviewed_by,
+        reviewed_at: report.reviewed_at,
+        resolution_note:
+          report.resolution_note,
+        created_at: report.created_at,
+        reportType: "blog",
+        topic_id: null,
+        blog_post_id:
+          report.blog_post_id,
         reported_comment: null,
       })
     ),
@@ -331,6 +411,53 @@ export default async function AdminReportsPage({
     ])
   );
 
+  const blogPostIds = Array.from(
+    new Set(
+      reports
+        .map(
+          (report) =>
+            report.blog_post_id
+        )
+        .filter(
+          (id): id is string =>
+            typeof id === "string"
+        )
+    )
+  );
+
+  let blogPosts: BlogPostSummary[] = [];
+
+  if (blogPostIds.length > 0) {
+    const blogPostsResult = await supabase
+      .from("blog_posts")
+      .select(`
+        id,
+        title,
+        slug,
+        status,
+        author_id
+      `)
+      .in("id", blogPostIds);
+
+    if (blogPostsResult.error) {
+      console.error(
+        "Şikâyet edilen blog yazıları alınamadı:",
+        blogPostsResult.error.message
+      );
+    }
+
+    blogPosts =
+      (blogPostsResult.data ??
+        []) as BlogPostSummary[];
+  }
+
+  const blogPostMap = new Map(
+    blogPosts.map((post) => [
+      post.id,
+      post,
+    ])
+  );
+
   const profileIds = Array.from(
     new Set(
       reports.flatMap((report) => {
@@ -338,12 +465,20 @@ export default async function AdminReportsPage({
           ? topicMap.get(report.topic_id)
           : undefined;
 
+        const blogPost =
+          report.blog_post_id
+            ? blogPostMap.get(
+                report.blog_post_id
+              )
+            : undefined;
+
         const ids = [
           report.reporter_id,
           report.reviewed_by,
           report.reported_comment
             ?.author_id,
           topic?.author_id,
+          blogPost?.author_id,
         ];
 
         return ids.filter(
@@ -427,6 +562,13 @@ export default async function AdminReportsPage({
         ? topicMap.get(report.topic_id)
         : undefined;
 
+      const blogPost =
+        report.blog_post_id
+          ? blogPostMap.get(
+              report.blog_post_id
+            )
+          : undefined;
+
       const reporter = profileMap.get(
         report.reporter_id
       );
@@ -435,7 +577,9 @@ export default async function AdminReportsPage({
         report.reportType === "comment"
           ? report.reported_comment
               ?.author_id
-          : topic?.author_id;
+          : report.reportType === "blog"
+            ? blogPost?.author_id
+            : topic?.author_id;
 
       const contentAuthor = contentAuthorId
         ? profileMap.get(contentAuthorId)
@@ -451,6 +595,8 @@ export default async function AdminReportsPage({
         report.details ?? "",
         report.resolution_note ?? "",
         topic?.title ?? "",
+        blogPost?.title ?? "",
+        blogPost?.slug ?? "",
         report.reported_comment
           ?.content ?? "",
       ]
@@ -495,7 +641,7 @@ export default async function AdminReportsPage({
           <h1>Şikâyetler</h1>
 
           <p>
-            Yorum ve konu şikâyetlerini
+            Yorum, konu ve blog şikâyetlerini
             incele, sonuçlandır veya reddet.
           </p>
         </div>
@@ -671,6 +817,13 @@ export default async function AdminReportsPage({
                       )
                     : undefined;
 
+                const blogPost =
+                  report.blog_post_id
+                    ? blogPostMap.get(
+                        report.blog_post_id
+                      )
+                    : undefined;
+
                 const reporter =
                   profileMap.get(
                     report.reporter_id
@@ -680,7 +833,10 @@ export default async function AdminReportsPage({
                   report.reportType ===
                   "comment"
                     ? comment?.author_id
-                    : topic?.author_id;
+                    : report.reportType ===
+                        "blog"
+                      ? blogPost?.author_id
+                      : topic?.author_id;
 
                 const contentAuthor =
                   contentAuthorId
@@ -717,7 +873,10 @@ export default async function AdminReportsPage({
                           {report.reportType ===
                           "topic"
                             ? "KONU ŞİKÂYETİ"
-                            : "YORUM ŞİKÂYETİ"}
+                            : report.reportType ===
+                                "blog"
+                              ? "BLOG ŞİKÂYETİ"
+                              : "YORUM ŞİKÂYETİ"}
                           {" · "}
                           {reasonNames[
                             report.reason
@@ -775,7 +934,10 @@ export default async function AdminReportsPage({
                           {report.reportType ===
                           "topic"
                             ? "Şikâyet edilen konu"
-                            : "Şikâyet edilen yorum"}
+                            : report.reportType ===
+                                "blog"
+                              ? "Şikâyet edilen blog yazısı"
+                              : "Şikâyet edilen yorum"}
                         </span>
 
                         <strong>
@@ -790,11 +952,25 @@ export default async function AdminReportsPage({
                         "topic"
                           ? topic?.title ??
                             "Konu bulunamadı."
-                          : comment?.content ??
-                            "Yorum içeriği bulunamadı."}
+                          : report.reportType ===
+                              "blog"
+                            ? blogPost?.title ??
+                              "Blog yazısı bulunamadı."
+                            : comment?.content ??
+                              "Yorum içeriği bulunamadı."}
                       </p>
 
-                      {topic ? (
+                      {report.reportType ===
+                      "blog" && blogPost ? (
+                        <Link
+                          href={`/blog/${blogPost.slug}`}
+                          className={
+                            styles.reportTopicLink
+                          }
+                        >
+                          Blog yazısını aç
+                        </Link>
+                      ) : topic ? (
                         <Link
                           href={`/konu/${topic.id}`}
                           className={
@@ -866,14 +1042,21 @@ export default async function AdminReportsPage({
                         {report.reportType ===
                         "topic"
                           ? "Konu durumu"
-                          : "Yorum durumu"}
+                          : report.reportType ===
+                              "blog"
+                            ? "Blog durumu"
+                            : "Yorum durumu"}
                         :{" "}
                         {report.reportType ===
                         "topic"
                           ? topic?.status ??
                             "bulunamadı"
-                          : comment?.status ??
-                            "bulunamadı"}
+                          : report.reportType ===
+                              "blog"
+                            ? blogPost?.status ??
+                              "bulunamadı"
+                            : comment?.status ??
+                              "bulunamadı"}
                       </span>
 
                       <ReportModerationActions

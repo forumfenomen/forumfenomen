@@ -10,7 +10,7 @@ import styles from "@/app/admin/admin.module.css";
 type ReportModerationActionsProps = {
   reportId: string;
   status: string;
-  reportType?: "comment" | "topic";
+  reportType?: "comment" | "topic" | "blog";
 };
 
 type ClosingStatus =
@@ -60,9 +60,11 @@ export default function ReportModerationActions({
     setErrorMessage(null);
 
     const moderationFunction =
-      reportType === "topic"
-        ? "moderate_topic_report"
-        : "moderate_comment_report";
+  reportType === "topic"
+    ? "moderate_topic_report"
+    : reportType === "blog"
+      ? "moderate_blog_post_report"
+      : "moderate_comment_report";
 
     const { error } = await supabase.rpc(
       moderationFunction,
