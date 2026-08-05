@@ -4672,18 +4672,19 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {hasManagementAccess ? (
-            <Link
-              href="/admin"
-              className={styles.mobileManagementLink}
-            >
-              <ShieldIcon />
-              <span>{managementPanelLabel}</span>
-              <ChevronIcon />
-            </Link>
-          ) : null}
 
           <div className={styles.profileActions}>
+
+            {hasManagementAccess ? (
+              <Link
+                href="/admin"
+                className={styles.mobileManagementLink}
+              >
+                <ShieldIcon />
+                <span>{managementPanelLabel}</span>
+              </Link>
+            ) : null}
+
             <button
               type="button"
               className={styles.editButton}
