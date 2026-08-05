@@ -1,4 +1,4 @@
-﻿.page {
+.page {
   min-height: 100svh;
   padding: 10px 0 118px;
   color: #f7f7fb;
@@ -1761,3 +1761,17 @@
 }
 
 /* BLOG SELECTED SECTION HEADINGS ALIGN V1 END */
+/* FULL CLICKABLE BLOG CARD V1 START */
+
+.articleCard {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.articleCard:focus-visible {
+    outline: 2px solid rgba(220, 61, 239, 0.72);
+    outline-offset: 3px;
+}
+
+/* FULL CLICKABLE BLOG CARD V1 END */

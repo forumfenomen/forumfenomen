@@ -279,7 +279,8 @@ function ArticleCard({
     const t = text[language];
 
     return (
-        <article
+        <Link
+            href={`/blog/${post.slug}`}
             data-blog-id={post.id}
             className={styles.articleCard}
         >
@@ -310,15 +311,12 @@ function ArticleCard({
                     language={language}
                 />
 
-                <Link
-                    href={`/blog/${post.slug}`}
-                    className={styles.readButton}
-                >
+                <span className={styles.readButton}>
                     {t.read}
                     <ArrowIcon />
-                </Link>
+                </span>
             </div>
-        </article>
+        </Link>
     );
 }
 
