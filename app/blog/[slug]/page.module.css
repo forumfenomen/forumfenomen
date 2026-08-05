@@ -1498,10 +1498,10 @@
 @media (max-width: 680px) {
     .page {
         padding-top: 10px;
-        padding-right: 12px;
+        padding-right: 4px;
         padding-bottom:
             calc(118px + env(safe-area-inset-bottom));
-        padding-left: 12px;
+        padding-left: 4px;
     }
 
     .detailHeader {
