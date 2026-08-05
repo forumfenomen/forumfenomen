@@ -570,6 +570,190 @@ function ThumbnailTopicIcon() {
   );
 }
 
+function SeoTopicIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="10.5" cy="10.5" r="6.5" />
+      <path d="m15.5 15.5 5 5" />
+      <path d="M7.5 11.5 10 9l2 2 3-3" />
+    </svg>
+  );
+}
+
+function AlgorithmsTopicIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="5" cy="5" r="2" />
+      <circle cx="19" cy="5" r="2" />
+      <circle cx="12" cy="19" r="2" />
+      <path d="M7 5h10M6 7l5 10M18 7l-5 10" />
+    </svg>
+  );
+}
+
+function HashtagsTopicIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9 3 7 21M17 3l-2 18M4 9h16M3 15h16" />
+    </svg>
+  );
+}
+
+function ViralTopicIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 19V9M10 19V5M16 19v-7M22 19V3" />
+      <path d="m3 13 6-5 5 3 7-7" />
+    </svg>
+  );
+}
+
+function BrandDealsTopicIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m8 12 3 3a3 3 0 0 0 4.2 0l4.3-4.3a3 3 0 0 0-4.2-4.2L13 8.8" />
+      <path d="m16 12-3-3a3 3 0 0 0-4.2 0l-4.3 4.3a3 3 0 0 0 4.2 4.2L11 15.2" />
+    </svg>
+  );
+}
+
+function UgcTopicIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="9" cy="8" r="3" />
+      <path d="M3.5 19c.5-4 2.3-6 5.5-6s5 2 5.5 6" />
+      <rect x="15" y="5" width="6" height="10" rx="2" />
+      <path d="M17.5 12h1" />
+    </svg>
+  );
+}
+
+function AffiliateTopicIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9.5 14.5 14.5 9.5" />
+      <path d="M7 17H5a4 4 0 0 1 0-8h4" />
+      <path d="M17 7h2a4 4 0 0 1 0 8h-4" />
+      <circle cx="12" cy="12" r="2" />
+    </svg>
+  );
+}
+
+function YouTubeMoneyTopicIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="3" y="5" width="18" height="14" rx="4" />
+      <path d="m9.5 9 5 3-5 3V9Z" />
+      <path d="M18 8.5v7" />
+    </svg>
+  );
+}
+
+function AdRulesTopicIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 13V8l12-4v13L4 13Z" />
+      <path d="M8 14v5H5v-6" />
+      <path d="M19 8v5" />
+    </svg>
+  );
+}
+
+function TaxTopicIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 3h12v18H6V3Z" />
+      <path d="M9 7h6M9 11h2M13 11h2M9 15h2M13 15h2" />
+    </svg>
+  );
+}
+
+function ContractsTopicIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 3h9l3 3v15H6V3Z" />
+      <path d="M15 3v4h4M9 11h6M9 15h6" />
+      <path d="m10 19 1.5 1.5L15 17" />
+    </svg>
+  );
+}
+
+function CopyrightTopicIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M15.5 9.5a4 4 0 1 0 0 5" />
+    </svg>
+  );
+}
+
+function CategorySubcategoryIcon({
+  subcategoryId,
+  fallback,
+}: {
+  subcategoryId: string;
+  fallback: ReactNode;
+}) {
+  switch (subcategoryId) {
+    case "instagram":
+      return <InstagramTopicIcon />;
+
+    case "tiktok":
+      return <TikTokTopicIcon />;
+
+    case "youtube":
+      return <YouTubeTopicIcon />;
+
+    case "video-edit":
+      return <VideoEditTopicIcon />;
+
+    case "camera":
+      return <CameraTopicIcon />;
+
+    case "thumbnail":
+      return <ThumbnailTopicIcon />;
+
+    case "seo":
+      return <SeoTopicIcon />;
+
+    case "algorithms":
+      return <AlgorithmsTopicIcon />;
+
+    case "hashtags":
+      return <HashtagsTopicIcon />;
+
+    case "viral":
+      return <ViralTopicIcon />;
+
+    case "brand-deals":
+      return <BrandDealsTopicIcon />;
+
+    case "ugc":
+      return <UgcTopicIcon />;
+
+    case "affiliate":
+      return <AffiliateTopicIcon />;
+
+    case "youtube-money":
+      return <YouTubeMoneyTopicIcon />;
+
+    case "ad-rules":
+      return <AdRulesTopicIcon />;
+
+    case "tax":
+      return <TaxTopicIcon />;
+
+    case "contracts":
+      return <ContractsTopicIcon />;
+
+    case "copyright":
+      return <CopyrightTopicIcon />;
+
+    default:
+      return <>{fallback}</>;
+  }
+}
+
 const categories: CategoryDefinition[] = [
   {
     id: "platforms",
@@ -2173,28 +2357,12 @@ export default function CategoriesPage() {
                         .iconClass
                         } ff-category-feed-icon`}
                     >
-                      {topic.subcategoryId ===
-                        "instagram" ? (
-                        <InstagramTopicIcon />
-                      ) : topic.subcategoryId ===
-                        "tiktok" ? (
-                        <TikTokTopicIcon />
-                      ) : topic.subcategoryId ===
-                        "youtube" ? (
-                        <YouTubeTopicIcon />
-                      ) : topic.subcategoryId ===
-                        "video-edit" ? (
-                        <VideoEditTopicIcon />
-                      ) : topic.subcategoryId ===
-                        "camera" ? (
-                        <CameraTopicIcon />
-                      ) : topic.subcategoryId ===
-                        "thumbnail" ? (
-                        <ThumbnailTopicIcon />
-                      ) : (
-                        topicVisualMap[topic.category]
-                          .icon
-                      )}
+                      <CategorySubcategoryIcon
+                        subcategoryId={topic.subcategoryId}
+                        fallback={
+                          topicVisualMap[topic.category].icon
+                        }
+                      />
                     </div>
 
                     <div className="ff-topic-main">
