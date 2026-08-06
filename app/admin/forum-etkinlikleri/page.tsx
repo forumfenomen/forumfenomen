@@ -281,20 +281,15 @@ export default async function AdminForumActivitiesPage({
           </p>
         </div>
 
-        <div className={styles.panelBadge}>
-          {activities.length} etkinlik
+        <div className={styles.securityBadge}>
+          ● {activities.length} etkinlik
         </div>
       </header>
 
-      <section
-        className={
-          styles.forumActivitySummaryGrid
-        }
-      >
+      <section className={styles.topicSummaryGrid}>
+
         <article
-          className={
-            styles.forumActivitySummaryCard
-          }
+          className={styles.topicSummaryCard}
         >
           <span>Konular</span>
 
@@ -307,9 +302,7 @@ export default async function AdminForumActivitiesPage({
         </article>
 
         <article
-          className={
-            styles.forumActivitySummaryCard
-          }
+          className={styles.topicSummaryCard}
         >
           <span>Yorumlar</span>
 
@@ -322,9 +315,7 @@ export default async function AdminForumActivitiesPage({
         </article>
 
         <article
-          className={
-            styles.forumActivitySummaryCard
-          }
+          className={styles.topicSummaryCard}
         >
           <span>Takipler</span>
 
@@ -337,9 +328,7 @@ export default async function AdminForumActivitiesPage({
         </article>
 
         <article
-          className={
-            styles.forumActivitySummaryCard
-          }
+          className={styles.topicSummaryCard}
         >
           <span>Takip istekleri</span>
 
@@ -352,18 +341,16 @@ export default async function AdminForumActivitiesPage({
         </article>
       </section>
 
-      <section
-        className={`${styles.panel} ${styles.forumActivityControlPanel}`}
-      >
+      <section className={styles.panel}>
         <div className={styles.panelHeader}>
           <div>
-            <span>SON HAREKETLER</span>
+            <span>ARAMA VE FİLTRE</span>
 
-            <h2>Etkinlik Akışı</h2>
+            <h2>Etkinlikleri Filtrele</h2>
           </div>
 
           <div className={styles.panelBadge}>
-            {filteredActivities.length} kayıt
+            Son {activities.length} etkinlik
           </div>
         </div>
 
@@ -402,161 +389,153 @@ export default async function AdminForumActivitiesPage({
             );
           })}
         </nav>
+      </section>
+
+      <section className={styles.panel}>
+        <div className={styles.panelHeader}>
+          <div>
+            <span>DENETİM GÜNLÜĞÜ</span>
+
+            <h2>Etkinlik Akışı</h2>
+          </div>
+
+          <div className={styles.panelBadge}>
+            {filteredActivities.length} kayıt
+          </div>
+        </div>
 
         {filteredActivities.length === 0 ? (
           <div className={styles.emptyState}>
-            Bu filtreye uygun etkinlik
-            bulunmuyor.
+            Bu filtreye uygun etkinlik bulunmuyor.
           </div>
         ) : (
-          <div
-            className={
-              styles.forumActivityList
-            }
-          >
-            {filteredActivities.map(
-              (activity) => {
-                const actor =
-                  activity.actor_id
-                    ? profileMap.get(
-                      activity.actor_id
-                    )
-                    : undefined;
+          <div className={styles.forumActivityList}>
+            {filteredActivities.map((activity) => {
+              const actor =
+                activity.actor_id
+                  ? profileMap.get(activity.actor_id)
+                  : undefined;
 
-                const target =
-                  activity.target_user_id
-                    ? profileMap.get(
-                      activity.target_user_id
-                    )
-                    : undefined;
+              const target =
+                activity.target_user_id
+                  ? profileMap.get(
+                    activity.target_user_id
+                  )
+                  : undefined;
 
-                return (
-                  <article
-                    key={
-                      activity.activity_id
-                    }
+              return (
+                <article
+                  key={activity.activity_id}
+                  className={styles.forumActivityRow}
+                >
+                  <div
                     className={
-                      styles.forumActivityRow
+                      styles.forumActivityMain
                     }
                   >
                     <div
                       className={
-                        styles.forumActivityMain
+                        styles.forumActivityTopLine
                       }
                     >
+                      <strong>
+                        {activityNames[
+                          activity.activity_type
+                        ] ?? activity.activity_type}
+                      </strong>
+
                       <div
                         className={
-                          styles.forumActivityTopLine
+                          styles.forumActivityTopMeta
                         }
                       >
-                        <strong>
-                          {activityNames[
-                            activity.activity_type
-                          ] ?? activity.activity_type}
-                        </strong>
-
-                        <div
-                          className={
-                            styles.forumActivityTopMeta
-                          }
-                        >
-                          <span
-                            className={
-                              styles.forumActivityDate
-                            }
-                          >
-                            {formatDate(
-                              activity.created_at
-                            )}
-                          </span>
-
-                          <span
-                            className={
-                              styles.forumActivityType
-                            }
-                          >
-                            {getActivityTypeLabel(
-                              activity.activity_type
-                            )}
-                          </span>
-                        </div>
-                      </div>
-
-                      <p>
-                        <b>
-                          {getDisplayName(
-                            actor
-                          )}
-                        </b>
-
-                        {activity.detail
-                          ? ` — ${activity.detail}`
-                          : null}
-
-                        {target ? (
-                          <>
-                            {" "}
-                            <b>
-                              {getDisplayName(
-                                target
-                              )}
-                            </b>
-                          </>
-                        ) : null}
-                      </p>
-
-                      {activity.title ? (
-                        <small>
-                          {activity.title}
-                        </small>
-                      ) : null}
-                    </div>
-
-                    <div
-                      className={
-                        styles.forumActivityActions
-                      }
-                    >
-                      {activity.status ? (
                         <span
                           className={
-                            styles.forumActivityStatus
+                            styles.forumActivityDate
                           }
                         >
-                          {statusNames[
-                            activity.status
-                          ] ??
-                            activity.status}
-                        </span>
-                      ) : null}
-
-                      {activity.topic_id ? (
-                        <Link
-                          href={`/konu/${activity.topic_id}`}
-                          className={
-                            styles.forumActivityLink
-                          }
-                        >
-                          Konuya git
-                        </Link>
-                      ) : activity.actor_id ? (
-                        <Link
-                          href={getProfileHref(
-                            actor,
-                            activity.actor_id
+                          {formatDate(
+                            activity.created_at
                           )}
+                        </span>
+
+                        <span
                           className={
-                            styles.forumActivityLink
+                            styles.forumActivityType
                           }
                         >
-                          Profile git
-                        </Link>
-                      ) : null}
+                          {getActivityTypeLabel(
+                            activity.activity_type
+                          )}
+                        </span>
+                      </div>
                     </div>
-                  </article>
-                );
-              }
-            )}
+
+                    <p>
+                      <b>{getDisplayName(actor)}</b>
+
+                      {activity.detail
+                        ? ` — ${activity.detail}`
+                        : null}
+
+                      {target ? (
+                        <>
+                          {" "}
+                          <b>
+                            {getDisplayName(target)}
+                          </b>
+                        </>
+                      ) : null}
+                    </p>
+
+                    {activity.title ? (
+                      <small>{activity.title}</small>
+                    ) : null}
+                  </div>
+
+                  <div
+                    className={
+                      styles.forumActivityActions
+                    }
+                  >
+                    {activity.status ? (
+                      <span
+                        className={
+                          styles.forumActivityStatus
+                        }
+                      >
+                        {statusNames[
+                          activity.status
+                        ] ?? activity.status}
+                      </span>
+                    ) : null}
+
+                    {activity.topic_id ? (
+                      <Link
+                        href={`/konu/${activity.topic_id}`}
+                        className={
+                          styles.forumActivityLink
+                        }
+                      >
+                        Konuya git
+                      </Link>
+                    ) : activity.actor_id ? (
+                      <Link
+                        href={getProfileHref(
+                          actor,
+                          activity.actor_id
+                        )}
+                        className={
+                          styles.forumActivityLink
+                        }
+                      >
+                        Profile git
+                      </Link>
+                    ) : null}
+                  </div>
+                </article>
+              );
+            })}
           </div>
         )}
       </section>
