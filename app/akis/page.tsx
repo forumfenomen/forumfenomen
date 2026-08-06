@@ -2051,7 +2051,7 @@ export default function FeedPage() {
                 Henüz yayınlanmış konu bulunmuyor.
               </div>
             ) : (
-              displayPosts.map((post) => (
+              displayPosts.map((post, index) => (
                 <article
 
                   id={`topic-${post.id ??
@@ -2072,6 +2072,7 @@ export default function FeedPage() {
                       {post.id ? (
                         <Link
                           href={`/konu/${post.id}`}
+                          prefetch={index < 2}
                           scroll={true}
                           onClick={() => {
                             window.scrollTo(0, 0);
