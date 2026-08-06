@@ -5916,1127 +5916,1072 @@
 /* ADMIN PLUS ACCESS V1 */
 
 .userPlusAccess {
-  display: flex;
-  position: relative;
-  align-items: center;
-  gap: 8px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    gap: 8px;
 }
 
 .userPlusStatusActive,
 .userPlusStatusInactive {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-  min-height: 32px;
-  padding: 0 10px;
+    min-height: 32px;
+    padding: 0 10px;
 
-  border-radius: 999px;
+    border-radius: 999px;
 
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
 }
 
 .userPlusStatusActive {
-  border: 1px solid rgba(53, 211, 153, 0.28);
-  color: #72e6b8;
-  background: rgba(31, 180, 125, 0.1);
+    border: 1px solid rgba(53, 211, 153, 0.28);
+    color: #72e6b8;
+    background: rgba(31, 180, 125, 0.1);
 }
 
 .userPlusStatusInactive {
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  color: #95a1b4;
-  background: rgba(148, 163, 184, 0.06);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    color: #95a1b4;
+    background: rgba(148, 163, 184, 0.06);
 }
 
 .userPlusEnableButton,
 .userPlusDisableButton {
-  min-height: 34px;
-  padding: 0 13px;
+    min-height: 34px;
+    padding: 0 13px;
 
-  border-radius: 9px;
+    border-radius: 9px;
 
-  font-size: 12px;
-  font-weight: 750;
+    font-size: 12px;
+    font-weight: 750;
 
-  cursor: pointer;
+    cursor: pointer;
 
-  transition:
-    border-color 160ms ease,
-    background 160ms ease,
-    opacity 160ms ease;
+    transition:
+        border-color 160ms ease,
+        background 160ms ease,
+        opacity 160ms ease;
 }
 
 .userPlusEnableButton {
-  border: 1px solid rgba(53, 211, 153, 0.32);
-  color: #78e7bb;
-  background: rgba(31, 180, 125, 0.1);
+    border: 1px solid rgba(53, 211, 153, 0.32);
+    color: #78e7bb;
+    background: rgba(31, 180, 125, 0.1);
 }
 
 .userPlusEnableButton:hover {
-  background: rgba(31, 180, 125, 0.17);
+    background: rgba(31, 180, 125, 0.17);
 }
 
 .userPlusDisableButton {
-  border: 1px solid rgba(248, 113, 113, 0.26);
-  color: #f3a0a0;
-  background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(248, 113, 113, 0.26);
+    color: #f3a0a0;
+    background: rgba(239, 68, 68, 0.08);
 }
 
 .userPlusDisableButton:hover {
-  background: rgba(239, 68, 68, 0.14);
+    background: rgba(239, 68, 68, 0.14);
 }
 
 .userPlusEnableButton:disabled,
 .userPlusDisableButton:disabled {
-  opacity: 0.55;
-  cursor: wait;
+    opacity: 0.55;
+    cursor: wait;
 }
 
 .userPlusError {
-  position: absolute;
-  top: calc(100% + 5px);
-  left: 0;
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
 
-  width: max-content;
-  max-width: 280px;
+    width: max-content;
+    max-width: 280px;
 
-  color: #f4a0a0;
+    color: #f4a0a0;
 
-  font-size: 11px;
-  line-height: 1.4;
+    font-size: 11px;
+    line-height: 1.4;
 }
 
-:global(html[data-theme="light"])
-.userPlusStatusActive {
-  color: #137a55;
-  background: rgba(24, 150, 101, 0.09);
+:global(html[data-theme="light"]) .userPlusStatusActive {
+    color: #137a55;
+    background: rgba(24, 150, 101, 0.09);
 }
 
-:global(html[data-theme="light"])
-.userPlusStatusInactive {
-  color: #687386;
-  background: rgba(88, 105, 132, 0.06);
+:global(html[data-theme="light"]) .userPlusStatusInactive {
+    color: #687386;
+    background: rgba(88, 105, 132, 0.06);
 }
 
-:global(html[data-theme="light"])
-.userPlusEnableButton {
-  color: #137a55;
-  background: rgba(24, 150, 101, 0.08);
+:global(html[data-theme="light"]) .userPlusEnableButton {
+    color: #137a55;
+    background: rgba(24, 150, 101, 0.08);
 }
 
-:global(html[data-theme="light"])
-.userPlusDisableButton {
-  color: #b64545;
-  background: rgba(205, 67, 67, 0.07);
+:global(html[data-theme="light"]) .userPlusDisableButton {
+    color: #b64545;
+    background: rgba(205, 67, 67, 0.07);
 }
 
 @media (max-width: 760px) {
-  .userPlusAccess {
-    flex-wrap: wrap;
-  }
+    .userPlusAccess {
+        flex-wrap: wrap;
+    }
 }
 
 /* ADMIN PLUS CUSTOM MODAL V1 */
 
 .userPlusModalBackdrop {
-  position: fixed;
-  z-index: 9999;
-  inset: 0;
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
 
-  display: grid;
-  place-items: center;
+    display: grid;
+    place-items: center;
 
-  padding: 20px;
+    padding: 20px;
 
-  background: rgba(2, 4, 12, 0.78);
-  backdrop-filter: blur(9px);
+    background: rgba(2, 4, 12, 0.78);
+    backdrop-filter: blur(9px);
 }
 
 .userPlusModal {
-  width: min(460px, 100%);
+    width: min(460px, 100%);
 
-  overflow: hidden;
+    overflow: hidden;
 
-  border:
-    1px solid rgba(146, 60, 255, 0.28);
-  border-radius: 20px;
+    border:
+        1px solid rgba(146, 60, 255, 0.28);
+    border-radius: 20px;
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(20, 18, 35, 0.99),
-      rgba(10, 11, 23, 0.99)
-    );
+    background:
+        linear-gradient(145deg,
+            rgba(20, 18, 35, 0.99),
+            rgba(10, 11, 23, 0.99));
 
-  box-shadow:
-    0 24px 80px rgba(0, 0, 0, 0.5),
-    0 0 45px rgba(139, 52, 255, 0.1);
+    box-shadow:
+        0 24px 80px rgba(0, 0, 0, 0.5),
+        0 0 45px rgba(139, 52, 255, 0.1);
 }
 
 .userPlusModalHeader {
-  display: grid;
-  grid-template-columns: 48px 1fr 34px;
+    display: grid;
+    grid-template-columns: 48px 1fr 34px;
 
-  align-items: center;
-  gap: 13px;
+    align-items: center;
+    gap: 13px;
 
-  padding: 20px 20px 16px;
+    padding: 20px 20px 16px;
 
-  border-bottom:
-    1px solid rgba(255, 255, 255, 0.07);
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.07);
 }
 
-.userPlusModalHeader > div:nth-child(2) {
-  min-width: 0;
+.userPlusModalHeader>div:nth-child(2) {
+    min-width: 0;
 }
 
 .userPlusModalHeader span {
-  display: block;
+    display: block;
 
-  margin-bottom: 4px;
+    margin-bottom: 4px;
 
-  color: #c66cff;
+    color: #c66cff;
 
-  font-size: 10px;
-  font-weight: 850;
-  letter-spacing: 0.13em;
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 0.13em;
 }
 
 .userPlusModalHeader h3 {
-  margin: 0;
+    margin: 0;
 
-  color: #f5f2ff;
+    color: #f5f2ff;
 
-  font-size: 20px;
-  font-weight: 800;
-  line-height: 1.2;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.2;
 }
 
 .userPlusModalIconEnable,
 .userPlusModalIconDisable {
-  display: grid;
-  place-items: center;
+    display: grid;
+    place-items: center;
 
-  width: 48px;
-  height: 48px;
+    width: 48px;
+    height: 48px;
 
-  border-radius: 14px;
+    border-radius: 14px;
 
-  font-size: 25px;
-  font-weight: 500;
+    font-size: 25px;
+    font-weight: 500;
 }
 
 .userPlusModalIconEnable {
-  border: 1px solid rgba(63, 226, 164, 0.3);
+    border: 1px solid rgba(63, 226, 164, 0.3);
 
-  color: #74ebba;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(31, 190, 126, 0.22),
-      rgba(27, 120, 96, 0.1)
-    );
+    color: #74ebba;
+    background:
+        linear-gradient(145deg,
+            rgba(31, 190, 126, 0.22),
+            rgba(27, 120, 96, 0.1));
 }
 
 .userPlusModalIconDisable {
-  border: 1px solid rgba(248, 113, 113, 0.28);
+    border: 1px solid rgba(248, 113, 113, 0.28);
 
-  color: #ffaaa9;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(239, 68, 68, 0.18),
-      rgba(120, 30, 50, 0.08)
-    );
+    color: #ffaaa9;
+    background:
+        linear-gradient(145deg,
+            rgba(239, 68, 68, 0.18),
+            rgba(120, 30, 50, 0.08));
 }
 
 .userPlusModalClose {
-  display: grid;
-  place-items: center;
+    display: grid;
+    place-items: center;
 
-  width: 34px;
-  height: 34px;
+    width: 34px;
+    height: 34px;
 
-  padding: 0;
+    padding: 0;
 
-  border:
-    1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 10px;
+    border:
+        1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 10px;
 
-  color: #aeb4c3;
-  background: rgba(255, 255, 255, 0.035);
+    color: #aeb4c3;
+    background: rgba(255, 255, 255, 0.035);
 
-  font-size: 21px;
-  line-height: 1;
+    font-size: 21px;
+    line-height: 1;
 
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .userPlusModalClose:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .userPlusModalBody {
-  display: grid;
-  gap: 15px;
+    display: grid;
+    gap: 15px;
 
-  padding: 22px 20px;
+    padding: 22px 20px;
 }
 
 .userPlusModalBody p {
-  margin: 0;
+    margin: 0;
 
-  color: #aeb6c8;
+    color: #aeb6c8;
 
-  font-size: 14px;
-  line-height: 1.7;
+    font-size: 14px;
+    line-height: 1.7;
 }
 
 .userPlusModalBody strong {
-  color: #ffffff;
-  font-weight: 800;
+    color: #ffffff;
+    font-weight: 800;
 }
 
 .userPlusModalNoticeEnable,
 .userPlusModalNoticeDisable {
-  padding: 13px 14px;
+    padding: 13px 14px;
 
-  border-radius: 12px;
+    border-radius: 12px;
 
-  font-size: 12px;
-  line-height: 1.55;
+    font-size: 12px;
+    line-height: 1.55;
 }
 
 .userPlusModalNoticeEnable {
-  border: 1px solid rgba(60, 220, 158, 0.19);
+    border: 1px solid rgba(60, 220, 158, 0.19);
 
-  color: #a7eace;
-  background: rgba(31, 175, 118, 0.08);
+    color: #a7eace;
+    background: rgba(31, 175, 118, 0.08);
 }
 
 .userPlusModalNoticeDisable {
-  border: 1px solid rgba(248, 113, 113, 0.18);
+    border: 1px solid rgba(248, 113, 113, 0.18);
 
-  color: #efb2b2;
-  background: rgba(220, 60, 70, 0.07);
+    color: #efb2b2;
+    background: rgba(220, 60, 70, 0.07);
 }
 
 .userPlusModalError {
-  padding: 11px 13px;
+    padding: 11px 13px;
 
-  border:
-    1px solid rgba(248, 113, 113, 0.24);
-  border-radius: 11px;
+    border:
+        1px solid rgba(248, 113, 113, 0.24);
+    border-radius: 11px;
 
-  color: #ffaaaa;
-  background: rgba(239, 68, 68, 0.09);
+    color: #ffaaaa;
+    background: rgba(239, 68, 68, 0.09);
 
-  font-size: 12px;
-  line-height: 1.5;
+    font-size: 12px;
+    line-height: 1.5;
 }
 
 .userPlusModalButtons {
-  display: flex;
+    display: flex;
 
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
 
-  padding: 16px 20px 20px;
+    padding: 16px 20px 20px;
 
-  border-top:
-    1px solid rgba(255, 255, 255, 0.06);
+    border-top:
+        1px solid rgba(255, 255, 255, 0.06);
 }
 
 .userPlusModalCancel,
 .userPlusModalConfirm,
 .userPlusModalDanger {
-  min-height: 42px;
-  padding: 0 18px;
+    min-height: 42px;
+    padding: 0 18px;
 
-  border-radius: 11px;
+    border-radius: 11px;
 
-  font-size: 13px;
-  font-weight: 800;
+    font-size: 13px;
+    font-weight: 800;
 
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .userPlusModalCancel {
-  border:
-    1px solid rgba(255, 255, 255, 0.1);
+    border:
+        1px solid rgba(255, 255, 255, 0.1);
 
-  color: #b6bdca;
-  background: rgba(255, 255, 255, 0.04);
+    color: #b6bdca;
+    background: rgba(255, 255, 255, 0.04);
 }
 
 .userPlusModalCancel:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .userPlusModalConfirm {
-  border:
-    1px solid rgba(78, 227, 169, 0.28);
+    border:
+        1px solid rgba(78, 227, 169, 0.28);
 
-  color: #071a13;
+    color: #071a13;
 
-  background:
-    linear-gradient(
-      135deg,
-      #58e3ad,
-      #32bf91
-    );
+    background:
+        linear-gradient(135deg,
+            #58e3ad,
+            #32bf91);
 }
 
 .userPlusModalDanger {
-  border:
-    1px solid rgba(255, 120, 120, 0.32);
+    border:
+        1px solid rgba(255, 120, 120, 0.32);
 
-  color: #ffffff;
+    color: #ffffff;
 
-  background:
-    linear-gradient(
-      135deg,
-      #e84d64,
-      #b92f4b
-    );
+    background:
+        linear-gradient(135deg,
+            #e84d64,
+            #b92f4b);
 }
 
 .userPlusModalCancel:disabled,
 .userPlusModalConfirm:disabled,
 .userPlusModalDanger:disabled,
 .userPlusModalClose:disabled {
-  opacity: 0.55;
-  cursor: wait;
+    opacity: 0.55;
+    cursor: wait;
 }
 
-:global(html[data-theme="light"])
-.userPlusModalBackdrop {
-  background: rgba(24, 27, 39, 0.48);
+:global(html[data-theme="light"]) .userPlusModalBackdrop {
+    background: rgba(24, 27, 39, 0.48);
 }
 
-:global(html[data-theme="light"])
-.userPlusModal {
-  border-color: rgba(123, 56, 190, 0.2);
+:global(html[data-theme="light"]) .userPlusModal {
+    border-color: rgba(123, 56, 190, 0.2);
 
-  background:
-    linear-gradient(
-      145deg,
-      #ffffff,
-      #f6f4fb
-    );
+    background:
+        linear-gradient(145deg,
+            #ffffff,
+            #f6f4fb);
 
-  box-shadow:
-    0 25px 75px rgba(33, 30, 48, 0.22);
+    box-shadow:
+        0 25px 75px rgba(33, 30, 48, 0.22);
 }
 
-:global(html[data-theme="light"])
-.userPlusModalHeader {
-  border-bottom-color:
-    rgba(39, 43, 60, 0.08);
+:global(html[data-theme="light"]) .userPlusModalHeader {
+    border-bottom-color:
+        rgba(39, 43, 60, 0.08);
 }
 
-:global(html[data-theme="light"])
-.userPlusModalHeader h3,
-:global(html[data-theme="light"])
-.userPlusModalBody strong {
-  color: #292635;
+:global(html[data-theme="light"]) .userPlusModalHeader h3,
+:global(html[data-theme="light"]) .userPlusModalBody strong {
+    color: #292635;
 }
 
-:global(html[data-theme="light"])
-.userPlusModalBody p {
-  color: #626879;
+:global(html[data-theme="light"]) .userPlusModalBody p {
+    color: #626879;
 }
 
-:global(html[data-theme="light"])
-.userPlusModalClose {
-  border-color: rgba(40, 45, 65, 0.11);
-  color: #61697a;
-  background: rgba(50, 55, 75, 0.04);
+:global(html[data-theme="light"]) .userPlusModalClose {
+    border-color: rgba(40, 45, 65, 0.11);
+    color: #61697a;
+    background: rgba(50, 55, 75, 0.04);
 }
 
-:global(html[data-theme="light"])
-.userPlusModalCancel {
-  border-color: rgba(50, 55, 75, 0.12);
-  color: #52596a;
-  background: rgba(50, 55, 75, 0.04);
+:global(html[data-theme="light"]) .userPlusModalCancel {
+    border-color: rgba(50, 55, 75, 0.12);
+    color: #52596a;
+    background: rgba(50, 55, 75, 0.04);
 }
 
 @media (max-width: 600px) {
-  .userPlusModalBackdrop {
-    align-items: end;
-    padding: 12px;
-  }
+    .userPlusModalBackdrop {
+        align-items: end;
+        padding: 12px;
+    }
 
-  .userPlusModal {
-    border-radius: 19px;
-  }
+    .userPlusModal {
+        border-radius: 19px;
+    }
 
-  .userPlusModalHeader {
-    grid-template-columns: 42px 1fr 32px;
-    padding: 17px;
-  }
+    .userPlusModalHeader {
+        grid-template-columns: 42px 1fr 32px;
+        padding: 17px;
+    }
 
-  .userPlusModalIconEnable,
-  .userPlusModalIconDisable {
-    width: 42px;
-    height: 42px;
-  }
+    .userPlusModalIconEnable,
+    .userPlusModalIconDisable {
+        width: 42px;
+        height: 42px;
+    }
 
-  .userPlusModalHeader h3 {
-    font-size: 17px;
-  }
+    .userPlusModalHeader h3 {
+        font-size: 17px;
+    }
 
-  .userPlusModalBody {
-    padding: 18px 17px;
-  }
+    .userPlusModalBody {
+        padding: 18px 17px;
+    }
 
-  .userPlusModalButtons {
-    padding: 14px 17px 17px;
-  }
+    .userPlusModalButtons {
+        padding: 14px 17px 17px;
+    }
 
-  .userPlusModalCancel,
-  .userPlusModalConfirm,
-  .userPlusModalDanger {
-    flex: 1;
-    padding: 0 10px;
-  }
+    .userPlusModalCancel,
+    .userPlusModalConfirm,
+    .userPlusModalDanger {
+        flex: 1;
+        padding: 0 10px;
+    }
 }
 
 
 /* ADMIN USER NOTIFICATION MODAL V1 */
 
 .userNotificationButton {
-  display: inline-flex;
+    display: inline-flex;
 
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 
-  min-height: 34px;
-  padding: 0 13px;
+    min-height: 34px;
+    padding: 0 13px;
 
-  color: #a9d7ff;
+    color: #a9d7ff;
 
-  border:
-    1px solid rgba(79, 164, 255, 0.26);
-  border-radius: 9px;
+    border:
+        1px solid rgba(79, 164, 255, 0.26);
+    border-radius: 9px;
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(39, 130, 225, 0.12),
-      rgba(75, 74, 202, 0.1)
-    );
+    background:
+        linear-gradient(135deg,
+            rgba(39, 130, 225, 0.12),
+            rgba(75, 74, 202, 0.1));
 
-  font-size: 12px;
-  font-weight: 750;
+    font-size: 12px;
+    font-weight: 750;
 
-  cursor: pointer;
+    cursor: pointer;
 
-  transition:
-    transform 160ms ease,
-    border-color 160ms ease,
-    background 160ms ease,
-    color 160ms ease;
+    transition:
+        transform 160ms ease,
+        border-color 160ms ease,
+        background 160ms ease,
+        color 160ms ease;
 }
 
 .userNotificationButton:hover {
-  transform: translateY(-1px);
+    transform: translateY(-1px);
 
-  color: #ffffff;
+    color: #ffffff;
 
-  border-color:
-    rgba(90, 180, 255, 0.42);
+    border-color:
+        rgba(90, 180, 255, 0.42);
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(44, 145, 238, 0.2),
-      rgba(88, 78, 220, 0.16)
-    );
+    background:
+        linear-gradient(135deg,
+            rgba(44, 145, 238, 0.2),
+            rgba(88, 78, 220, 0.16));
 }
 
 .userNotificationButtonIcon {
-  display: grid;
+    display: grid;
 
-  width: 16px;
-  height: 16px;
+    width: 16px;
+    height: 16px;
 
-  place-items: center;
+    place-items: center;
 }
 
 .userNotificationButtonIcon svg {
-  width: 16px;
-  height: 16px;
+    width: 16px;
+    height: 16px;
 
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .userNotificationModalBackdrop {
-  position: fixed;
-  z-index: 10000;
-  inset: 0;
+    position: fixed;
+    z-index: 10000;
+    inset: 0;
 
-  display: grid;
-  place-items: center;
+    display: grid;
+    place-items: center;
 
-  padding: 20px;
+    padding: 20px;
 
-  background:
-    rgba(2, 5, 14, 0.8);
+    background:
+        rgba(2, 5, 14, 0.8);
 
-  backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
 }
 
 .userNotificationModal {
-  width: min(520px, 100%);
+    width: min(520px, 100%);
 
-  overflow: hidden;
+    overflow: hidden;
 
-  border:
-    1px solid rgba(76, 164, 255, 0.25);
-  border-radius: 20px;
+    border:
+        1px solid rgba(76, 164, 255, 0.25);
+    border-radius: 20px;
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(18, 23, 39, 0.995),
-      rgba(9, 12, 24, 0.995)
-    );
+    background:
+        linear-gradient(145deg,
+            rgba(18, 23, 39, 0.995),
+            rgba(9, 12, 24, 0.995));
 
-  box-shadow:
-    0 28px 90px rgba(0, 0, 0, 0.55),
-    0 0 42px rgba(49, 126, 255, 0.1);
+    box-shadow:
+        0 28px 90px rgba(0, 0, 0, 0.55),
+        0 0 42px rgba(49, 126, 255, 0.1);
 }
 
 .userNotificationModalHeader {
-  display: grid;
+    display: grid;
 
-  grid-template-columns:
-    48px 1fr 34px;
+    grid-template-columns:
+        48px 1fr 34px;
 
-  align-items: center;
-  gap: 13px;
+    align-items: center;
+    gap: 13px;
 
-  padding: 20px;
+    padding: 20px;
 
-  border-bottom:
-    1px solid rgba(255, 255, 255, 0.07);
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.07);
 }
 
 .userNotificationModalIcon {
-  display: grid;
+    display: grid;
 
-  width: 48px;
-  height: 48px;
+    width: 48px;
+    height: 48px;
 
-  place-items: center;
+    place-items: center;
 
-  color: #91ceff;
+    color: #91ceff;
 
-  border:
-    1px solid rgba(75, 169, 255, 0.25);
-  border-radius: 14px;
+    border:
+        1px solid rgba(75, 169, 255, 0.25);
+    border-radius: 14px;
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(35, 135, 235, 0.2),
-      rgba(82, 66, 210, 0.11)
-    );
+    background:
+        linear-gradient(145deg,
+            rgba(35, 135, 235, 0.2),
+            rgba(82, 66, 210, 0.11));
 }
 
 .userNotificationModalIcon svg {
-  width: 23px;
-  height: 23px;
+    width: 23px;
+    height: 23px;
 
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .userNotificationModalHeader span {
-  display: block;
+    display: block;
 
-  margin-bottom: 4px;
+    margin-bottom: 4px;
 
-  color: #70bfff;
+    color: #70bfff;
 
-  font-size: 10px;
-  font-weight: 850;
-  letter-spacing: 0.12em;
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 0.12em;
 }
 
 .userNotificationModalHeader h3 {
-  margin: 0;
+    margin: 0;
 
-  color: #f4f8ff;
+    color: #f4f8ff;
 
-  font-size: 20px;
-  font-weight: 820;
+    font-size: 20px;
+    font-weight: 820;
 }
 
 .userNotificationModalClose {
-  display: grid;
+    display: grid;
 
-  width: 34px;
-  height: 34px;
+    width: 34px;
+    height: 34px;
 
-  padding: 0;
+    padding: 0;
 
-  place-items: center;
+    place-items: center;
 
-  color: #aeb8c9;
+    color: #aeb8c9;
 
-  border:
-    1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 10px;
+    border:
+        1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 10px;
 
-  background:
-    rgba(255, 255, 255, 0.035);
+    background:
+        rgba(255, 255, 255, 0.035);
 
-  font-size: 21px;
-  line-height: 1;
+    font-size: 21px;
+    line-height: 1;
 
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .userNotificationForm {
-  display: grid;
-  gap: 16px;
+    display: grid;
+    gap: 16px;
 
-  padding: 21px 20px 20px;
+    padding: 21px 20px 20px;
 }
 
 .userNotificationIntro {
-  margin: 0;
+    margin: 0;
 
-  color: #aeb8ca;
+    color: #aeb8ca;
 
-  font-size: 13px;
-  line-height: 1.65;
+    font-size: 13px;
+    line-height: 1.65;
 }
 
 .userNotificationIntro strong {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 .userNotificationForm label {
-  display: grid;
-  gap: 7px;
+    display: grid;
+    gap: 7px;
 }
 
-.userNotificationForm label > span {
-  color: #dbe5f4;
+.userNotificationForm label>span {
+    color: #dbe5f4;
 
-  font-size: 12px;
-  font-weight: 750;
+    font-size: 12px;
+    font-weight: 750;
 }
 
 .userNotificationForm input,
 .userNotificationForm textarea {
-  width: 100%;
+    width: 100%;
 
-  color: #f6f8fc;
+    color: #f6f8fc;
 
-  border:
-    1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 11px;
+    border:
+        1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 11px;
 
-  outline: none;
+    outline: none;
 
-  background:
-    rgba(255, 255, 255, 0.035);
+    background:
+        rgba(255, 255, 255, 0.035);
 
-  font: inherit;
+    font: inherit;
 
-  transition:
-    border-color 160ms ease,
-    background 160ms ease,
-    box-shadow 160ms ease;
+    transition:
+        border-color 160ms ease,
+        background 160ms ease,
+        box-shadow 160ms ease;
 }
 
 .userNotificationForm input {
-  min-height: 43px;
+    min-height: 43px;
 
-  padding: 0 13px;
+    padding: 0 13px;
 }
 
 .userNotificationForm textarea {
-  min-height: 145px;
+    min-height: 145px;
 
-  padding: 12px 13px;
+    padding: 12px 13px;
 
-  resize: vertical;
+    resize: vertical;
 }
 
 .userNotificationForm input:focus,
 .userNotificationForm textarea:focus {
-  border-color:
-    rgba(76, 170, 255, 0.42);
+    border-color:
+        rgba(76, 170, 255, 0.42);
 
-  background:
-    rgba(44, 125, 220, 0.055);
+    background:
+        rgba(44, 125, 220, 0.055);
 
-  box-shadow:
-    0 0 0 3px
-    rgba(70, 156, 255, 0.09);
+    box-shadow:
+        0 0 0 3px rgba(70, 156, 255, 0.09);
 }
 
 .userNotificationForm label small {
-  justify-self: end;
+    justify-self: end;
 
-  color: #727f92;
+    color: #727f92;
 
-  font-size: 10px;
+    font-size: 10px;
 }
 
 .userNotificationError,
 .userNotificationSuccess {
-  padding: 11px 13px;
+    padding: 11px 13px;
 
-  border-radius: 11px;
+    border-radius: 11px;
 
-  font-size: 12px;
-  line-height: 1.5;
+    font-size: 12px;
+    line-height: 1.5;
 }
 
 .userNotificationError {
-  color: #ffb0b0;
+    color: #ffb0b0;
 
-  border:
-    1px solid rgba(248, 113, 113, 0.22);
+    border:
+        1px solid rgba(248, 113, 113, 0.22);
 
-  background:
-    rgba(239, 68, 68, 0.08);
+    background:
+        rgba(239, 68, 68, 0.08);
 }
 
 .userNotificationSuccess {
-  color: #a8e8cd;
+    color: #a8e8cd;
 
-  border:
-    1px solid rgba(69, 213, 157, 0.2);
+    border:
+        1px solid rgba(69, 213, 157, 0.2);
 
-  background:
-    rgba(34, 175, 121, 0.08);
+    background:
+        rgba(34, 175, 121, 0.08);
 }
 
 .userNotificationModalButtons {
-  display: flex;
+    display: flex;
 
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
 
-  padding-top: 3px;
+    padding-top: 3px;
 }
 
 .userNotificationCancelButton,
 .userNotificationSendButton {
-  min-height: 42px;
-  padding: 0 18px;
+    min-height: 42px;
+    padding: 0 18px;
 
-  border-radius: 11px;
+    border-radius: 11px;
 
-  font-size: 13px;
-  font-weight: 800;
+    font-size: 13px;
+    font-weight: 800;
 
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .userNotificationCancelButton {
-  color: #b6c0cf;
+    color: #b6c0cf;
 
-  border:
-    1px solid rgba(255, 255, 255, 0.1);
+    border:
+        1px solid rgba(255, 255, 255, 0.1);
 
-  background:
-    rgba(255, 255, 255, 0.04);
+    background:
+        rgba(255, 255, 255, 0.04);
 }
 
 .userNotificationSendButton {
-  color: #061729;
+    color: #061729;
 
-  border:
-    1px solid rgba(111, 199, 255, 0.35);
+    border:
+        1px solid rgba(111, 199, 255, 0.35);
 
-  background:
-    linear-gradient(
-      135deg,
-      #79caff,
-      #4f9cf5
-    );
+    background:
+        linear-gradient(135deg,
+            #79caff,
+            #4f9cf5);
 }
 
 .userNotificationSendButton:disabled,
 .userNotificationCancelButton:disabled,
 .userNotificationModalClose:disabled {
-  opacity: 0.5;
-  cursor: wait;
+    opacity: 0.5;
+    cursor: wait;
 }
 
-:global(html[data-theme="light"])
-.userNotificationModalBackdrop {
-  background:
-    rgba(24, 30, 43, 0.5);
+:global(html[data-theme="light"]) .userNotificationModalBackdrop {
+    background:
+        rgba(24, 30, 43, 0.5);
 }
 
-:global(html[data-theme="light"])
-.userNotificationModal {
-  border-color:
-    rgba(48, 128, 215, 0.18);
+:global(html[data-theme="light"]) .userNotificationModal {
+    border-color:
+        rgba(48, 128, 215, 0.18);
 
-  background:
-    linear-gradient(
-      145deg,
-      #ffffff,
-      #f5f8fc
-    );
+    background:
+        linear-gradient(145deg,
+            #ffffff,
+            #f5f8fc);
 
-  box-shadow:
-    0 28px 75px
-    rgba(31, 51, 82, 0.22);
+    box-shadow:
+        0 28px 75px rgba(31, 51, 82, 0.22);
 }
 
-:global(html[data-theme="light"])
-.userNotificationModalHeader {
-  border-bottom-color:
-    rgba(38, 50, 72, 0.08);
+:global(html[data-theme="light"]) .userNotificationModalHeader {
+    border-bottom-color:
+        rgba(38, 50, 72, 0.08);
 }
 
-:global(html[data-theme="light"])
-.userNotificationModalHeader h3,
-:global(html[data-theme="light"])
-.userNotificationIntro strong,
-:global(html[data-theme="light"])
-.userNotificationForm label > span {
-  color: #253147;
+:global(html[data-theme="light"]) .userNotificationModalHeader h3,
+:global(html[data-theme="light"]) .userNotificationIntro strong,
+:global(html[data-theme="light"]) .userNotificationForm label>span {
+    color: #253147;
 }
 
-:global(html[data-theme="light"])
-.userNotificationIntro {
-  color: #657084;
+:global(html[data-theme="light"]) .userNotificationIntro {
+    color: #657084;
 }
 
-:global(html[data-theme="light"])
-.userNotificationForm input,
-:global(html[data-theme="light"])
-.userNotificationForm textarea {
-  color: #263044;
+:global(html[data-theme="light"]) .userNotificationForm input,
+:global(html[data-theme="light"]) .userNotificationForm textarea {
+    color: #263044;
 
-  border-color:
-    rgba(48, 65, 94, 0.12);
+    border-color:
+        rgba(48, 65, 94, 0.12);
 
-  background:
-    rgba(52, 78, 119, 0.035);
+    background:
+        rgba(52, 78, 119, 0.035);
 }
 
 @media (max-width: 640px) {
-  .userNotificationModalBackdrop {
-    align-items: end;
+    .userNotificationModalBackdrop {
+        align-items: end;
 
-    padding: 12px;
-  }
+        padding: 12px;
+    }
 
-  .userNotificationModal {
-    border-radius: 19px;
-  }
+    .userNotificationModal {
+        border-radius: 19px;
+    }
 
-  .userNotificationModalHeader {
-    grid-template-columns:
-      42px 1fr 32px;
+    .userNotificationModalHeader {
+        grid-template-columns:
+            42px 1fr 32px;
 
-    padding: 17px;
-  }
+        padding: 17px;
+    }
 
-  .userNotificationModalIcon {
-    width: 42px;
-    height: 42px;
-  }
+    .userNotificationModalIcon {
+        width: 42px;
+        height: 42px;
+    }
 
-  .userNotificationModalHeader h3 {
-    font-size: 17px;
-  }
+    .userNotificationModalHeader h3 {
+        font-size: 17px;
+    }
 
-  .userNotificationForm {
-    padding: 18px 17px 17px;
-  }
+    .userNotificationForm {
+        padding: 18px 17px 17px;
+    }
 
-  .userNotificationModalButtons {
-    display: grid;
+    .userNotificationModalButtons {
+        display: grid;
 
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
-  }
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
 
-  .userNotificationCancelButton,
-  .userNotificationSendButton {
-    padding: 0 10px;
-  }
+    .userNotificationCancelButton,
+    .userNotificationSendButton {
+        padding: 0 10px;
+    }
 }
 
 
 /* ADMIN NOTIFICATION LOG CARD FINAL V3 */
 
 .adminNotificationLogBox {
-  display: grid;
-  gap: 14px;
+    display: grid;
+    gap: 14px;
 
-  margin-top: 14px;
-  padding: 16px;
+    margin-top: 14px;
+    padding: 16px;
 
-  border:
-    1px solid rgba(71, 164, 255, 0.2);
-  border-radius: 14px;
+    border:
+        1px solid rgba(71, 164, 255, 0.2);
+    border-radius: 14px;
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(36, 127, 226, 0.09),
-      rgba(89, 64, 198, 0.06)
-    );
+    background:
+        linear-gradient(135deg,
+            rgba(36, 127, 226, 0.09),
+            rgba(89, 64, 198, 0.06));
 
-  box-shadow:
-    inset 0 1px 0
-    rgba(255, 255, 255, 0.035);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.035);
 }
 
 .adminNotificationLogHeader {
-  display: grid;
-  gap: 5px;
+    display: grid;
+    gap: 5px;
 }
 
-.adminNotificationLogHeader > span,
+.adminNotificationLogHeader>span,
 .adminNotificationLogMeta span,
-.adminNotificationLogMessage > span {
-  color: #7f91aa;
+.adminNotificationLogMessage>span {
+    color: #7f91aa;
 
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.075em;
-  text-transform: uppercase;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.075em;
+    text-transform: uppercase;
 }
 
 .adminNotificationLogHeader strong {
-  color: #eaf4ff;
+    color: #eaf4ff;
 
-  font-size: 15px;
-  font-weight: 800;
-  line-height: 1.45;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.45;
 }
 
 .adminNotificationLogMeta {
-  display: grid;
+    display: grid;
 
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
 
-  gap: 10px;
+    gap: 10px;
 }
 
-.adminNotificationLogMeta > div {
-  display: grid;
-  gap: 5px;
+.adminNotificationLogMeta>div {
+    display: grid;
+    gap: 5px;
 
-  min-width: 0;
-  padding: 10px 11px;
+    min-width: 0;
+    padding: 10px 11px;
 
-  border:
-    1px solid rgba(255, 255, 255, 0.055);
-  border-radius: 10px;
+    border:
+        1px solid rgba(255, 255, 255, 0.055);
+    border-radius: 10px;
 
-  background:
-    rgba(255, 255, 255, 0.025);
+    background:
+        rgba(255, 255, 255, 0.025);
 }
 
 .adminNotificationLogMeta strong {
-  overflow: hidden;
+    overflow: hidden;
 
-  color: #dbe8f7;
+    color: #dbe8f7;
 
-  font-size: 12px;
-  font-weight: 750;
+    font-size: 12px;
+    font-weight: 750;
 
-  text-overflow: ellipsis;
-  white-space: nowrap;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .adminNotificationLogMessage {
-  display: grid;
-  gap: 7px;
+    display: grid;
+    gap: 7px;
 }
 
 .adminNotificationLogMessage p {
-  margin: 0;
-  padding: 11px 12px;
+    margin: 0;
+    padding: 11px 12px;
 
-  color: #b8c5d8;
+    color: #b8c5d8;
 
-  border-left:
-    2px solid rgba(79, 171, 255, 0.44);
-  border-radius: 0 9px 9px 0;
+    border-left:
+        2px solid rgba(79, 171, 255, 0.44);
+    border-radius: 0 9px 9px 0;
 
-  background:
-    rgba(5, 11, 24, 0.28);
+    background:
+        rgba(5, 11, 24, 0.28);
 
-  font-size: 12px;
-  line-height: 1.65;
-  overflow-wrap: anywhere;
+    font-size: 12px;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
 }
 
-:global(html[data-theme="light"])
-.adminNotificationLogBox {
-  border-color:
-    rgba(43, 120, 205, 0.17);
+:global(html[data-theme="light"]) .adminNotificationLogBox {
+    border-color:
+        rgba(43, 120, 205, 0.17);
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(54, 135, 220, 0.065),
-      rgba(110, 73, 200, 0.045)
-    );
+    background:
+        linear-gradient(135deg,
+            rgba(54, 135, 220, 0.065),
+            rgba(110, 73, 200, 0.045));
 }
 
-:global(html[data-theme="light"])
-.adminNotificationLogHeader strong,
-:global(html[data-theme="light"])
-.adminNotificationLogMeta strong {
-  color: #263b55;
+:global(html[data-theme="light"]) .adminNotificationLogHeader strong,
+:global(html[data-theme="light"]) .adminNotificationLogMeta strong {
+    color: #263b55;
 }
 
-:global(html[data-theme="light"])
-.adminNotificationLogMessage p {
-  color: #58677b;
+:global(html[data-theme="light"]) .adminNotificationLogMessage p {
+    color: #58677b;
 
-  background:
-    rgba(54, 85, 125, 0.045);
+    background:
+        rgba(54, 85, 125, 0.045);
 }
 
 @media (max-width: 640px) {
-  .adminNotificationLogBox {
-    padding: 13px;
-  }
+    .adminNotificationLogBox {
+        padding: 13px;
+    }
 
-  .adminNotificationLogMeta {
-    grid-template-columns: 1fr;
-  }
+    .adminNotificationLogMeta {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ADMIN MOBILE COMPACT FIX START */
 
 @media (max-width: 620px) {
+
     /* Üst yönetim kartı */
     .sidebar {
         padding: 14px 12px;
@@ -7087,11 +7032,9 @@
         border-color:
             rgba(216, 71, 231, 0.28);
         background:
-            linear-gradient(
-                135deg,
+            linear-gradient(135deg,
                 rgba(214, 57, 230, 0.16),
-                rgba(72, 95, 255, 0.11)
-            );
+                rgba(72, 95, 255, 0.11));
     }
 
     .adminUser {
@@ -7199,82 +7142,82 @@
 /* ADMIN MOBILE SEARCH INLINE FIX START */
 
 @media (max-width: 620px) {
-  .panelHeader {
-    position: relative;
-    display: block;
-    padding-right: 78px;
-  }
+    .panelHeader {
+        position: relative;
+        display: block;
+        padding-right: 78px;
+    }
 
-  .panelHeader .topicCountBadge {
-    position: absolute;
-    top: 0;
-    right: 0;
+    .panelHeader .topicCountBadge {
+        position: absolute;
+        top: 0;
+        right: 0;
 
-    min-height: 28px;
-    margin: 0 !important;
-    padding: 0 8px;
+        min-height: 28px;
+        margin: 0 !important;
+        padding: 0 8px;
 
-    font-size: 8.5px;
-  }
+        font-size: 8.5px;
+    }
 
-  .topicAdminSearch {
-    display: grid !important;
-    grid-template-columns:
-      minmax(0, 1fr) 42px 72px !important;
+    .topicAdminSearch {
+        display: grid !important;
+        grid-template-columns:
+            minmax(0, 1fr) 42px 72px !important;
 
-    align-items: center !important;
-    gap: 7px !important;
+        align-items: center !important;
+        gap: 7px !important;
 
-    padding-right: 0 !important;
-  }
+        padding-right: 0 !important;
+    }
 
-  .topicAdminSearchField {
-    grid-column: 1;
+    .topicAdminSearchField {
+        grid-column: 1;
 
-    width: auto !important;
-    min-width: 0 !important;
-    flex: none !important;
-  }
+        width: auto !important;
+        min-width: 0 !important;
+        flex: none !important;
+    }
 
-  .topicAdminSearchField input {
-    width: 100% !important;
-    min-width: 0 !important;
-    height: 42px !important;
-  }
+    .topicAdminSearchField input {
+        width: 100% !important;
+        min-width: 0 !important;
+        height: 42px !important;
+    }
 
-  .topicAdminSearchClear {
-    grid-column: 2;
+    .topicAdminSearchClear {
+        grid-column: 2;
 
-    width: 42px;
-    min-width: 42px;
-    min-height: 42px;
+        width: 42px;
+        min-width: 42px;
+        min-height: 42px;
 
-    justify-self: stretch;
+        justify-self: stretch;
 
-    overflow: hidden;
-    margin: 0 !important;
-    padding: 0;
+        overflow: hidden;
+        margin: 0 !important;
+        padding: 0;
 
-    font-size: 0;
-  }
+        font-size: 0;
+    }
 
-  .topicAdminSearchClear::before {
-    content: "×";
+    .topicAdminSearchClear::before {
+        content: "×";
 
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 1;
-  }
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 1;
+    }
 
-  .topicSearchButton {
-    grid-column: 3;
+    .topicSearchButton {
+        grid-column: 3;
 
-    width: 72px !important;
-    min-width: 72px !important;
-    height: 42px !important;
+        width: 72px !important;
+        min-width: 72px !important;
+        height: 42px !important;
 
-    margin: 0 !important;
-  }
+        margin: 0 !important;
+    }
 }
 
 /* ADMIN MOBILE SEARCH INLINE FIX END */
@@ -7282,152 +7225,152 @@
 /* ADMIN REPORTS MOBILE COMPACT V3 START */
 
 @media (max-width: 620px) {
-  .adminReportList {
-    gap: 8px;
-  }
+    .adminReportList {
+        gap: 8px;
+    }
 
-  .adminReportCard {
-    padding: 12px;
+    .adminReportCard {
+        padding: 12px;
 
-    border-radius: 15px;
-  }
+        border-radius: 15px;
+    }
 
-  .adminReportTop {
-    display: grid;
-    grid-template-columns:
-      minmax(0, 1fr) auto;
+    .adminReportTop {
+        display: grid;
+        grid-template-columns:
+            minmax(0, 1fr) auto;
 
-    align-items: start;
-    gap: 7px 10px;
-  }
+        align-items: start;
+        gap: 7px 10px;
+    }
 
-  .adminReportTop > div:first-child {
-    min-width: 0;
-  }
+    .adminReportTop>div:first-child {
+        min-width: 0;
+    }
 
-  .adminReportReason {
-    margin-bottom: 0;
-    padding: 5px 8px;
+    .adminReportReason {
+        margin-bottom: 0;
+        padding: 5px 8px;
 
-    font-size: 8.5px;
-    line-height: 1.2;
-  }
+        font-size: 8.5px;
+        line-height: 1.2;
+    }
 
-  .adminReportTop strong {
-    margin-top: 7px !important;
-    padding-left: 0 !important;
+    .adminReportTop strong {
+        margin-top: 7px !important;
+        padding-left: 0 !important;
 
-    font-size: 11px;
-    line-height: 1.35;
-  }
+        font-size: 11px;
+        line-height: 1.35;
+    }
 
-  .adminReportTopMeta {
-    display: flex;
-    min-width: max-content;
+    .adminReportTopMeta {
+        display: flex;
+        min-width: max-content;
 
-    flex-direction: column;
-    align-items: flex-end;
+        flex-direction: column;
+        align-items: flex-end;
 
-    text-align: right;
-  }
+        text-align: right;
+    }
 
-  .adminReportStatus {
-    padding: 5px 8px;
+    .adminReportStatus {
+        padding: 5px 8px;
 
-    font-size: 8.5px;
-  }
+        font-size: 8.5px;
+    }
 
-  .adminReportTopMeta small {
-    margin-top: 5px;
+    .adminReportTopMeta small {
+        margin-top: 5px;
 
-    font-size: 8px;
-    white-space: nowrap;
-  }
+        font-size: 8px;
+        white-space: nowrap;
+    }
 
-  .reportedCommentBox,
-  .reportDetailsBox,
-  .reportResolutionBox {
-    margin-top: 9px;
-    padding: 10px 11px;
+    .reportedCommentBox,
+    .reportDetailsBox,
+    .reportResolutionBox {
+        margin-top: 9px;
+        padding: 10px 11px;
 
-    border-radius: 11px;
-  }
+        border-radius: 11px;
+    }
 
-  .reportedCommentHeader {
-    align-items: flex-start;
-    gap: 8px;
-  }
+    .reportedCommentHeader {
+        align-items: flex-start;
+        gap: 8px;
+    }
 
-  .reportedCommentHeader span {
-    font-size: 8.5px;
-  }
+    .reportedCommentHeader span {
+        font-size: 8.5px;
+    }
 
-  .reportedCommentHeader strong {
-    max-width: 46%;
+    .reportedCommentHeader strong {
+        max-width: 46%;
 
-    overflow: hidden;
+        overflow: hidden;
 
-    font-size: 9px;
-    text-align: right;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+        font-size: 9px;
+        text-align: right;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 
-  .reportedCommentBox p,
-  .reportDetailsBox p,
-  .reportResolutionBox p {
-    margin-top: 7px;
+    .reportedCommentBox p,
+    .reportDetailsBox p,
+    .reportResolutionBox p {
+        margin-top: 7px;
 
-    font-size: 11px;
-    line-height: 1.48;
-  }
+        font-size: 11px;
+        line-height: 1.48;
+    }
 
-  .reportTopicLink {
-    margin-top: 7px;
+    .reportTopicLink {
+        margin-top: 7px;
 
-    font-size: 9.5px;
-    line-height: 1.4;
-  }
+        font-size: 9.5px;
+        line-height: 1.4;
+    }
 
-  .reportDetailsBox span,
-  .reportResolutionBox span {
-    font-size: 8.5px;
-  }
+    .reportDetailsBox span,
+    .reportResolutionBox span {
+        font-size: 8.5px;
+    }
 
-  .reportResolutionBox small {
-    margin-top: 7px;
+    .reportResolutionBox small {
+        margin-top: 7px;
 
-    font-size: 8px;
-    line-height: 1.4;
-  }
+        font-size: 8px;
+        line-height: 1.4;
+    }
 
-  .adminReportFooter {
-    display: flex;
+    .adminReportFooter {
+        display: flex;
 
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
 
-    gap: 8px;
+        gap: 8px;
 
-    margin-top: 10px;
-    padding-top: 10px;
-  }
+        margin-top: 10px;
+        padding-top: 10px;
+    }
 
-  .adminReportFooter > span {
-    font-size: 8.5px;
-    line-height: 1.35;
-  }
+    .adminReportFooter>span {
+        font-size: 8.5px;
+        line-height: 1.35;
+    }
 
-  .reportActions {
-    justify-content: flex-end;
-    gap: 5px;
-  }
+    .reportActions {
+        justify-content: flex-end;
+        gap: 5px;
+    }
 
-  .reportClosedText {
-    font-size: 9px;
-    white-space: nowrap;
-  }
+    .reportClosedText {
+        font-size: 9px;
+        white-space: nowrap;
+    }
 }
 
 /* ADMIN REPORTS MOBILE COMPACT V3 END */
@@ -7435,25 +7378,25 @@
 /* ADMIN MOBILE SECURITY BADGE POSITION START */
 
 @media (max-width: 620px) {
-  .pageHeader {
-    position: relative;
+    .pageHeader {
+        position: relative;
 
-    display: block;
+        display: block;
 
-    padding-right: 118px;
-  }
+        padding-right: 118px;
+    }
 
-  .securityBadge {
-    position: absolute;
-    top: 13px;
-    right: 0;
+    .securityBadge {
+        position: absolute;
+        top: 13px;
+        right: 0;
 
-    min-height: 32px;
+        min-height: 32px;
 
-    padding: 0 10px;
+        padding: 0 10px;
 
-    font-size: 8px;
-  }
+        font-size: 8px;
+    }
 }
 
 /* ADMIN MOBILE SECURITY BADGE POSITION END */
@@ -7461,26 +7404,26 @@
 /* ADMIN MOBILE NEW TOPIC POSITION START */
 
 @media (max-width: 620px) {
-  .pageHeader {
-    position: relative;
-    display: block;
-    padding-right: 122px;
-  }
+    .pageHeader {
+        position: relative;
+        display: block;
+        padding-right: 122px;
+    }
 
-  .pageHeader .newTopicButton {
-    position: absolute;
-    top: 13px;
-    right: 0;
+    .pageHeader .newTopicButton {
+        position: absolute;
+        top: 13px;
+        right: 0;
 
-    width: auto;
-    min-width: 108px;
-    min-height: 34px;
+        width: auto;
+        min-width: 108px;
+        min-height: 34px;
 
-    margin: 0 !important;
-    padding: 0 12px;
+        margin: 0 !important;
+        padding: 0 12px;
 
-    font-size: 9px;
-  }
+        font-size: 9px;
+    }
 }
 
 /* ADMIN MOBILE NEW TOPIC POSITION END */
@@ -7488,6 +7431,7 @@
 /* ADMIN NEW TOPIC MOBILE HEADER ALIGN START */
 
 @media (max-width: 620px) {
+
     .pageHeader,
     .panelHeader {
         position: relative;
@@ -7508,178 +7452,178 @@
 /* FORUM ACTIVITY MOBILE COMPACT START */
 
 .forumActivityTopMeta {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .forumActivityDate,
 .forumActivityType {
-  display: inline-flex;
-  min-height: 28px;
-
-  align-items: center;
-  justify-content: center;
-
-  padding: 0 9px;
-
-  border:
-    1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 9px;
-
-  background:
-    rgba(255, 255, 255, 0.025);
-
-  font-size: 8px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.forumActivityType {
-  color: #dda2ef;
-
-  border-color:
-    rgba(205, 82, 232, 0.18);
-
-  background:
-    rgba(205, 82, 232, 0.06);
-}
-
-@media (max-width: 620px) {
-  .forumActivityPanelHeader {
-    position: relative;
-
-    display: block;
-
-    padding-right: 76px;
-  }
-
-  .forumActivityPanelHeader .panelBadge {
-    position: absolute;
-    top: 0;
-    right: 0;
-
+    display: inline-flex;
     min-height: 28px;
 
-    margin: 0;
-    padding: 0 8px;
-
-    font-size: 8px;
-  }
-
-  .forumActivitySummaryGrid {
-    gap: 7px;
-
-    margin-bottom: 10px;
-  }
-
-  .forumActivitySummaryCard {
-    min-height: 54px;
-    padding: 9px 11px;
-
-    gap: 4px;
-  }
-
-  .forumActivitySummaryCard span {
-    font-size: 8.5px;
-  }
-
-  .forumActivitySummaryCard strong {
-    font-size: 17px;
-  }
-
-  .forumActivityFilters {
-    grid-template-columns:
-      repeat(3, minmax(0, 1fr));
-
-    gap: 6px;
-
-    margin-bottom: 10px;
-    padding: 8px 0 10px;
-  }
-
-  .forumActivityFilterButton {
-    min-height: 32px;
-    padding: 0 6px;
-
-    gap: 5px;
-
-    font-size: 8px;
-  }
-
-  .forumActivityFilterButton:nth-child(4),
-  .forumActivityFilterButton:nth-child(5) {
-    grid-column: auto;
-  }
-
-  .forumActivityRow {
-    grid-template-columns: 1fr;
-
-    gap: 9px;
-
-    padding: 11px 12px;
-
-    border-radius: 13px;
-  }
-
-  .forumActivityTopLine {
-    display: grid;
-    grid-template-columns:
-      minmax(0, 1fr) auto;
-
-    align-items: start;
-    gap: 8px;
-
-    flex-direction: initial;
-  }
-
-  .forumActivityTopLine strong {
-    padding-top: 5px;
-
-    font-size: 11.5px;
-    line-height: 1.3;
-  }
-
-  .forumActivityTopMeta {
-    gap: 5px;
-  }
-
-  .forumActivityDate,
-  .forumActivityType {
-    min-height: 27px;
-
-    padding: 0 7px;
-
-    font-size: 7.5px;
-  }
-
-  .forumActivityMain p {
-    margin-top: 6px;
-
-    font-size: 10px;
-    line-height: 1.4;
-  }
-
-  .forumActivityMain small {
-    margin-top: 5px;
-
-    font-size: 9px;
-  }
-
-  .forumActivityActions {
-    justify-content: space-between;
-
-    gap: 7px;
-  }
-
-  .forumActivityStatus,
-  .forumActivityLink {
-    min-height: 30px;
+    align-items: center;
+    justify-content: center;
 
     padding: 0 9px;
 
+    border:
+        1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 9px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
     font-size: 8px;
-  }
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.forumActivityType {
+    color: #dda2ef;
+
+    border-color:
+        rgba(205, 82, 232, 0.18);
+
+    background:
+        rgba(205, 82, 232, 0.06);
+}
+
+@media (max-width: 620px) {
+    .forumActivityPanelHeader {
+        position: relative;
+
+        display: block;
+
+        padding-right: 76px;
+    }
+
+    .forumActivityPanelHeader .panelBadge {
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        min-height: 28px;
+
+        margin: 0;
+        padding: 0 8px;
+
+        font-size: 8px;
+    }
+
+    .forumActivitySummaryGrid {
+        gap: 7px;
+
+        margin-bottom: 10px;
+    }
+
+    .forumActivitySummaryCard {
+        min-height: 54px;
+        padding: 9px 11px;
+
+        gap: 4px;
+    }
+
+    .forumActivitySummaryCard span {
+        font-size: 8.5px;
+    }
+
+    .forumActivitySummaryCard strong {
+        font-size: 17px;
+    }
+
+    .forumActivityFilters {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap: 6px;
+
+        margin-bottom: 10px;
+        padding: 8px 0 10px;
+    }
+
+    .forumActivityFilterButton {
+        min-height: 32px;
+        padding: 0 6px;
+
+        gap: 5px;
+
+        font-size: 8px;
+    }
+
+    .forumActivityFilterButton:nth-child(4),
+    .forumActivityFilterButton:nth-child(5) {
+        grid-column: auto;
+    }
+
+    .forumActivityRow {
+        grid-template-columns: 1fr;
+
+        gap: 9px;
+
+        padding: 11px 12px;
+
+        border-radius: 13px;
+    }
+
+    .forumActivityTopLine {
+        display: grid;
+        grid-template-columns:
+            minmax(0, 1fr) auto;
+
+        align-items: start;
+        gap: 8px;
+
+        flex-direction: initial;
+    }
+
+    .forumActivityTopLine strong {
+        padding-top: 5px;
+
+        font-size: 11.5px;
+        line-height: 1.3;
+    }
+
+    .forumActivityTopMeta {
+        gap: 5px;
+    }
+
+    .forumActivityDate,
+    .forumActivityType {
+        min-height: 27px;
+
+        padding: 0 7px;
+
+        font-size: 7.5px;
+    }
+
+    .forumActivityMain p {
+        margin-top: 6px;
+
+        font-size: 10px;
+        line-height: 1.4;
+    }
+
+    .forumActivityMain small {
+        margin-top: 5px;
+
+        font-size: 9px;
+    }
+
+    .forumActivityActions {
+        justify-content: space-between;
+
+        gap: 7px;
+    }
+
+    .forumActivityStatus,
+    .forumActivityLink {
+        min-height: 30px;
+
+        padding: 0 9px;
+
+        font-size: 8px;
+    }
 }
 
 /* FORUM ACTIVITY MOBILE COMPACT END */
@@ -7687,186 +7631,186 @@
 /* FORUM ACTIVITY SEARCH AND ALIGN START */
 
 .forumActivitySearch {
-  display: grid;
-  grid-template-columns:
-    minmax(0, 1fr) auto auto;
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1fr) 42px 76px;
 
-  align-items: end;
-  gap: 8px;
+    align-items: center;
+    gap: 8px;
 
-  margin-bottom: 12px;
+    margin-top: 4px;
 }
 
 .forumActivitySearchField {
-  display: grid;
-  min-width: 0;
-
-  gap: 7px;
-}
-
-.forumActivitySearchField > span {
-  color: rgba(232, 235, 244, 0.7);
-
-  font-size: 9px;
-  font-weight: 750;
+    display: block;
+    min-width: 0;
 }
 
 .forumActivitySearchField input {
-  width: 100%;
-  min-width: 0;
-  min-height: 42px;
+    display: block;
 
-  box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    height: 42px;
 
-  padding: 0 13px;
+    box-sizing: border-box;
 
-  color: #ffffff;
+    padding: 0 13px;
 
-  border:
-    1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 11px;
-  outline: none;
+    color: #ffffff;
 
-  background:
-    rgba(255, 255, 255, 0.025);
+    border:
+        1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 11px;
+    outline: none;
 
-  font: inherit;
-  font-size: 11px;
+    background:
+        rgba(0, 0, 0, 0.22);
+
+    font: inherit;
+    font-size: 11px;
+}
+
+.forumActivitySearchField input::placeholder {
+    color: rgba(210, 213, 224, 0.5);
 }
 
 .forumActivitySearchField input:focus {
-  border-color:
-    rgba(215, 78, 229, 0.35);
+    border-color:
+        rgba(215, 78, 229, 0.35);
 }
 
 .forumActivitySearchClear,
 .forumActivitySearchButton {
-  display: inline-flex;
-  min-height: 42px;
-
-  box-sizing: border-box;
-
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 11px;
-
-  font-weight: 800;
-  line-height: 1;
-  text-decoration: none;
-}
-
-.forumActivitySearchClear {
-  width: 42px;
-
-  color: #b4b6c0;
-
-  border:
-    1px solid rgba(255, 255, 255, 0.08);
-
-  background:
-    rgba(255, 255, 255, 0.025);
-
-  font-size: 18px;
-}
-
-.forumActivitySearchButton {
-  min-width: 76px;
-
-  padding: 0 14px;
-
-  color: #ffffff;
-
-  border:
-    1px solid rgba(210, 71, 230, 0.24);
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(202, 60, 217, 0.9),
-      rgba(89, 108, 255, 0.9)
-    );
-
-  font-size: 10px;
-  cursor: pointer;
-}
-
-.forumActivityStatus,
-.forumActivityLink {
-  display: inline-flex;
-
-  box-sizing: border-box;
-
-  align-items: center;
-  justify-content: center;
-
-  line-height: 1;
-}
-
-@media (max-width: 620px) {
-  .forumActivitySearch {
-    grid-template-columns:
-      minmax(0, 1fr) 38px 66px;
-
-    gap: 6px;
-  }
-
-  .forumActivitySearchField input {
-    min-height: 40px;
-
-    padding: 0 10px;
-
-    font-size: 9px;
-  }
-
-  .forumActivitySearchClear {
-    width: 38px;
-    min-height: 40px;
-  }
-
-  .forumActivitySearchButton {
-    min-width: 66px;
-    min-height: 40px;
-
-    padding: 0 9px;
-
-    font-size: 8.5px;
-  }
-
-  .forumActivityListHeader {
-    position: relative;
-
-    display: block;
-
-    padding-right: 70px;
-  }
-
-  .forumActivityListHeader .panelBadge {
-    position: absolute;
-    top: 0;
-    right: 0;
-
     display: inline-flex;
-    min-height: 28px;
+
+    height: 42px;
+    min-height: 42px;
+
+    box-sizing: border-box;
 
     align-items: center;
     justify-content: center;
 
     margin: 0;
-    padding: 0 8px;
+    padding: 0;
 
-    font-size: 8px;
+    border-radius: 11px;
+
+    font-weight: 800;
     line-height: 1;
-  }
+    text-decoration: none;
+}
 
-  .forumActivityStatus,
-  .forumActivityLink {
-    min-height: 30px;
+.forumActivitySearchClear {
+    width: 42px;
 
-    padding: 0 9px;
+    color: #b4b6c0;
 
-    font-size: 8px;
-  }
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    font-size: 19px;
+}
+
+.forumActivitySearchButton {
+    width: 76px;
+
+    color: #ffffff;
+
+    border:
+        1px solid rgba(210, 71, 230, 0.24);
+
+    background:
+        linear-gradient(135deg,
+            #ca3cd9,
+            #596cff);
+
+    font-size: 9px;
+    cursor: pointer;
+}
+
+.forumActivityStatus,
+.forumActivityLink {
+    display: inline-flex;
+
+    box-sizing: border-box;
+
+    align-items: center;
+    justify-content: center;
+
+    line-height: 1;
+}
+
+@media (max-width: 620px) {
+    .forumActivitySearch {
+        grid-template-columns:
+            minmax(0, 1fr) 38px 68px;
+
+        gap: 7px;
+
+        margin-top: 2px;
+    }
+
+    .forumActivitySearchField input {
+        height: 40px;
+
+        padding: 0 11px;
+
+        font-size: 10px;
+    }
+
+    .forumActivitySearchClear {
+        width: 38px;
+        height: 40px;
+        min-height: 40px;
+    }
+
+    .forumActivitySearchButton {
+        width: 68px;
+        height: 40px;
+        min-height: 40px;
+
+        font-size: 8.5px;
+    }
+
+    .forumActivityListHeader {
+        position: relative;
+
+        display: block;
+
+        padding-right: 70px;
+    }
+
+    .forumActivityListHeader .panelBadge {
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        display: inline-flex;
+        min-height: 28px;
+
+        align-items: center;
+        justify-content: center;
+
+        margin: 0;
+        padding: 0 8px;
+
+        font-size: 8px;
+        line-height: 1;
+    }
+
+    .forumActivityStatus,
+    .forumActivityLink {
+        min-height: 30px;
+
+        padding: 0 9px;
+
+        font-size: 8px;
+    }
 }
 
 /* FORUM ACTIVITY SEARCH AND ALIGN END */

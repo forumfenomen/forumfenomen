@@ -447,13 +447,11 @@ export default async function AdminForumActivitiesPage({
               styles.forumActivitySearchField
             }
           >
-            <span>Etkinliklerde ara</span>
-
             <input
               type="search"
               name="search"
               defaultValue={searchText}
-              placeholder="Kullanıcı, konu veya hareket ara..."
+              placeholder="Kullanıcı, konu veya içerik ara..."
             />
           </label>
 
@@ -483,58 +481,7 @@ export default async function AdminForumActivitiesPage({
           </button>
         </form>
 
-        <nav
-          className={styles.forumActivityFilters}
-          aria-label="Forum etkinliği filtreleri"
-        >
-          {filterOptions.map((option) => {
-            const isActive =
-              activeFilter === option.value;
 
-            const filterQuery =
-              option.value === "all"
-                ? ""
-                : `filter=${option.value}`;
-
-            const searchQuery = searchText
-              ? `search=${encodeURIComponent(
-                searchText
-              )}`
-              : "";
-
-            const query = [
-              filterQuery,
-              searchQuery,
-            ]
-              .filter(Boolean)
-              .join("&");
-
-            const href = query
-              ? `/admin/forum-etkinlikleri?${query}`
-              : "/admin/forum-etkinlikleri";
-
-            return (
-              <Link
-                key={option.value}
-                href={href}
-                className={
-                  isActive
-                    ? `${styles.forumActivityFilterButton} ${styles.forumActivityFilterActive}`
-                    : styles.forumActivityFilterButton
-                }
-              >
-                <span>{option.label}</span>
-
-                <strong>
-                  {getActivityCount(
-                    activities,
-                    option.value
-                  )}
-                </strong>
-              </Link>
-            );
-          })}
-        </nav>
       </section>
 
       <section className={styles.panel}>
