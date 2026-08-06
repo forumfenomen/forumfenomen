@@ -546,6 +546,13 @@ export default async function AdminTopicsPage({
                     Konuya git
                   </Link>
 
+                  <Link
+                    href={`/admin/konular/${topic.id}`}
+                    className={styles.adminTopicViewLink}
+                  >
+                    Düzenle
+                  </Link>
+
                   <TopicModerationActions
                     topicId={topic.id}
                     topicTitle={topic.title}

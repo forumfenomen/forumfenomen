@@ -1,0 +1,305 @@
+.backButton,
+.adminPublishBadge {
+    display: inline-flex;
+    width: 138px;
+    min-width: 138px;
+    min-height: 42px;
+
+    box-sizing: border-box;
+
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+
+    padding: 0 14px;
+
+    border-radius: 11px;
+
+    font-size: 11px;
+    font-weight: 850;
+    line-height: 1;
+    letter-spacing: 0.4px;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.backButton {
+    color: #aeb9ff;
+
+    border:
+        1px solid rgba(113, 126, 255, 0.3);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(80, 95, 230, 0.14),
+            rgba(117, 71, 210, 0.09)
+        );
+}
+
+.backButton:hover {
+    color: #ffffff;
+
+    border-color:
+        rgba(132, 145, 255, 0.48);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(91, 108, 244, 0.23),
+            rgba(135, 79, 225, 0.14)
+        );
+}
+
+.adminPublishBadge {
+    margin-left: auto;
+
+    color: #ffffff;
+
+    border:
+        1px solid rgba(72, 222, 164, 0.34);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(29, 171, 119, 0.96),
+            rgba(20, 126, 92, 0.96)
+        );
+
+    box-shadow:
+        0 10px 28px rgba(18, 128, 94, 0.14);
+
+    text-transform: uppercase;
+}
+
+.form {
+    display: grid;
+    gap: 18px;
+
+    padding-top: 4px;
+}
+
+.field {
+    display: grid;
+    gap: 8px;
+}
+
+.field > span {
+    color: #e2e1e7;
+
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.field small {
+    color: #989aa6;
+
+    font-size: 10.5px;
+    font-weight: 600;
+    line-height: 1.55;
+}
+
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    color: #f5f4f8;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    outline: none;
+
+    background-color:
+        rgba(255, 255, 255, 0.03);
+
+    font: inherit;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+    color: #858894;
+    opacity: 1;
+}
+
+.field input,
+.field select {
+    min-height: 48px;
+
+    padding: 0 15px;
+}
+
+.field select {
+    appearance: none;
+    -webkit-appearance: none;
+
+    padding-right: 58px;
+
+    background-image:
+        linear-gradient(
+            45deg,
+            transparent 50%,
+            #e5e6ed 50%
+        ),
+        linear-gradient(
+            135deg,
+            #e5e6ed 50%,
+            transparent 50%
+        );
+
+    background-position:
+        calc(100% - 28px) 20px,
+        calc(100% - 21px) 20px;
+
+    background-size:
+        7px 7px,
+        7px 7px;
+
+    background-repeat: no-repeat;
+
+    cursor: pointer;
+}
+
+.field textarea {
+    min-height: 240px;
+
+    resize: vertical;
+
+    padding: 15px;
+
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    border-color:
+        rgba(215, 78, 229, 0.42);
+
+    box-shadow:
+        0 0 0 3px rgba(215, 78, 229, 0.06);
+}
+
+.field select option,
+.field select optgroup {
+    color: #ededf3;
+    background: #14141f;
+}
+
+.errorMessage {
+    margin-bottom: 16px;
+    padding: 12px 13px;
+
+    color: #ff9ba8;
+
+    border:
+        1px solid rgba(240, 93, 111, 0.2);
+    border-radius: 12px;
+
+    background:
+        rgba(232, 78, 98, 0.055);
+
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+.formFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 18px;
+
+    padding-top: 17px;
+
+    border-top:
+        1px solid rgba(255, 255, 255, 0.06);
+}
+
+.formFooter p {
+    margin: 0;
+
+    color: #7e818d;
+
+    font-size: 10px;
+}
+
+.formFooter button {
+    min-width: 150px;
+    min-height: 42px;
+
+    padding: 0 17px;
+
+    color: #ffffff;
+
+    border:
+        1px solid rgba(220, 91, 235, 0.25);
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ca3cd9,
+            #596cff
+        );
+
+    font-size: 11px;
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.formFooter button:hover {
+    filter: brightness(1.08);
+}
+
+@media (max-width: 620px) {
+    .backButton {
+        position: absolute;
+        top: 13px;
+        right: 0;
+
+        width: auto;
+        min-width: 108px;
+        min-height: 34px;
+
+        margin: 0;
+        padding: 0 11px;
+
+        font-size: 9px;
+    }
+
+    .adminPublishBadge {
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        width: auto;
+        min-width: 108px;
+        min-height: 32px;
+
+        margin: 0;
+        padding: 0 10px;
+
+        font-size: 8.5px;
+    }
+
+    .formFooter {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .formFooter button {
+        width: 100%;
+    }
+}
+
+
