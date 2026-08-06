@@ -1375,8 +1375,19 @@ export default function CategoriesPage() {
   const [activeTab, setActiveTab] =
     useState<TabId>("new");
 
+  const [showAllTopics, setShowAllTopics] =
+    useState(false);
+
   const categoryDetailRef =
     useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setShowAllTopics(false);
+  }, [
+    activeTab,
+    selectedCategory,
+    selectedSubcategory,
+  ]);
 
 
   useEffect(() => {
@@ -2035,6 +2046,33 @@ export default function CategoriesPage() {
     topicData,
   ]);
 
+  const displayedTopics = showAllTopics
+    ? visibleTopics
+    : visibleTopics.slice(0, 7);
+
+  function handleTopicExpansionToggle() {
+    const shouldScrollUp = showAllTopics;
+
+    setShowAllTopics((current) => !current);
+
+    if (!shouldScrollUp) {
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        document
+          .getElementById(
+            "category-topic-section"
+          )
+          ?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+      });
+    });
+  }
+
   function selectCategory(
     categoryId: CategoryId
   ) {
@@ -2279,6 +2317,7 @@ export default function CategoriesPage() {
 
         {selectedCategory !== "education" && (
           <section
+            id="category-topic-section"
             className="ff-category-topic-section"
             style={
               {
@@ -2347,7 +2386,7 @@ export default function CategoriesPage() {
               aria-busy={topicsLoading}
             >
               {visibleTopics.length > 0 ? (
-                visibleTopics.map((topic) => (
+                displayedTopics.map((topic) => (
                   <article
                     key={topic.id}
                     className="ff-topic-card ff-category-feed-topic"
@@ -2434,6 +2473,40 @@ export default function CategoriesPage() {
                 </div>
               )}
             </div>
+
+            {visibleTopics.length > 7 && (
+              <div className="ff-feed-more-wrap">
+                <button
+                  type="button"
+                  className="ff-feed-more-button"
+                  onClick={handleTopicExpansionToggle}
+                  aria-expanded={showAllTopics}
+                >
+                  <span
+                    className={`ff-feed-more-arrow ${showAllTopics ? "up" : "down"
+                      }`}
+                    aria-hidden="true"
+                  />
+
+                  <span className="ff-feed-more-text">
+                    {showAllTopics
+                      ? language === "tr"
+                        ? "Daha Az Konu"
+                        : "Show Fewer Topics"
+                      : language === "tr"
+                        ? "Daha Fazla Konu"
+                        : "Show More Topics"}
+                  </span>
+
+                  <span
+                    className={`ff-feed-more-arrow ${showAllTopics ? "up" : "down"
+                      }`}
+                    aria-hidden="true"
+                  />
+                </button>
+              </div>
+            )}
+
           </section>
         )}
       </div>
