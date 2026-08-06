@@ -33,6 +33,7 @@ type ActivityFilter =
 type PageProps = {
   searchParams: Promise<{
     filter?: string;
+    search?: string;
   }>;
 };
 
@@ -207,6 +208,9 @@ export default async function AdminForumActivitiesPage({
       ? params.filter
       : "all";
 
+  const searchText =
+    params.search?.trim() ?? "";
+
   const supabase = await createClient();
 
   const { data, error } = await supabase.rpc(
@@ -226,10 +230,7 @@ export default async function AdminForumActivitiesPage({
   const activities =
     (data ?? []) as unknown as ForumActivity[];
 
-  const filteredActivities =
-    activities.filter((activity) =>
-      matchesFilter(activity, activeFilter)
-    );
+
 
   const profileIds = Array.from(
     new Set(
@@ -267,6 +268,62 @@ export default async function AdminForumActivitiesPage({
     ])
   );
 
+  const normalizedSearchText =
+    searchText.toLocaleLowerCase("tr-TR");
+
+  const filteredActivities =
+    activities.filter((activity) => {
+      if (
+        !matchesFilter(
+          activity,
+          activeFilter
+        )
+      ) {
+        return false;
+      }
+
+      if (!normalizedSearchText) {
+        return true;
+      }
+
+      const actor = activity.actor_id
+        ? profileMap.get(activity.actor_id)
+        : undefined;
+
+      const target =
+        activity.target_user_id
+          ? profileMap.get(
+            activity.target_user_id
+          )
+          : undefined;
+
+      const searchableText = [
+        activityNames[
+        activity.activity_type
+        ] ?? activity.activity_type,
+        getActivityTypeLabel(
+          activity.activity_type
+        ),
+        getDisplayName(actor),
+        target
+          ? getDisplayName(target)
+          : "",
+        activity.detail ?? "",
+        activity.title ?? "",
+        activity.status
+          ? statusNames[
+          activity.status
+          ] ?? activity.status
+          : "",
+      ]
+        .join(" ")
+        .toLocaleLowerCase("tr-TR");
+
+      return searchableText.includes(
+        normalizedSearchText
+      );
+    });
+
   return (
     <>
       <header className={styles.pageHeader}>
@@ -288,8 +345,12 @@ export default async function AdminForumActivitiesPage({
 
       <section className={styles.topicSummaryGrid}>
 
-        <article
-          className={styles.topicSummaryCard}
+        <Link
+          href="/admin/forum-etkinlikleri?filter=topics"
+          className={`${styles.topicSummaryCard} ${activeFilter === "topics"
+            ? styles.topicSummaryActive
+            : ""
+            }`}
         >
           <span>Konular</span>
 
@@ -299,10 +360,14 @@ export default async function AdminForumActivitiesPage({
               "topics"
             )}
           </strong>
-        </article>
+        </Link>
 
-        <article
-          className={styles.topicSummaryCard}
+        <Link
+          href="/admin/forum-etkinlikleri?filter=comments"
+          className={`${styles.topicSummaryCard} ${activeFilter === "comments"
+            ? styles.topicSummaryActive
+            : ""
+            }`}
         >
           <span>Yorumlar</span>
 
@@ -312,10 +377,14 @@ export default async function AdminForumActivitiesPage({
               "comments"
             )}
           </strong>
-        </article>
+        </Link>
 
-        <article
-          className={styles.topicSummaryCard}
+        <Link
+          href="/admin/forum-etkinlikleri?filter=follows"
+          className={`${styles.topicSummaryCard} ${activeFilter === "follows"
+            ? styles.topicSummaryActive
+            : ""
+            }`}
         >
           <span>Takipler</span>
 
@@ -325,10 +394,15 @@ export default async function AdminForumActivitiesPage({
               "follows"
             )}
           </strong>
-        </article>
+        </Link>
 
-        <article
-          className={styles.topicSummaryCard}
+        <Link
+          href="/admin/forum-etkinlikleri?filter=follow_requests"
+          className={`${styles.topicSummaryCard} ${activeFilter ===
+            "follow_requests"
+            ? styles.topicSummaryActive
+            : ""
+            }`}
         >
           <span>Takip istekleri</span>
 
@@ -338,7 +412,7 @@ export default async function AdminForumActivitiesPage({
               "follow_requests"
             )}
           </strong>
-        </article>
+        </Link>
       </section>
 
       <section className={styles.panel}>
@@ -354,6 +428,61 @@ export default async function AdminForumActivitiesPage({
           </div>
         </div>
 
+        <form
+          method="get"
+          className={
+            styles.forumActivitySearch
+          }
+        >
+          {activeFilter !== "all" ? (
+            <input
+              type="hidden"
+              name="filter"
+              value={activeFilter}
+            />
+          ) : null}
+
+          <label
+            className={
+              styles.forumActivitySearchField
+            }
+          >
+            <span>Etkinliklerde ara</span>
+
+            <input
+              type="search"
+              name="search"
+              defaultValue={searchText}
+              placeholder="Kullanıcı, konu veya hareket ara..."
+            />
+          </label>
+
+          {searchText ? (
+            <Link
+              href={
+                activeFilter === "all"
+                  ? "/admin/forum-etkinlikleri"
+                  : `/admin/forum-etkinlikleri?filter=${activeFilter}`
+              }
+              className={
+                styles.forumActivitySearchClear
+              }
+              aria-label="Aramayı temizle"
+            >
+              ×
+            </Link>
+          ) : null}
+
+          <button
+            type="submit"
+            className={
+              styles.forumActivitySearchButton
+            }
+          >
+            Ara
+          </button>
+        </form>
+
         <nav
           className={styles.forumActivityFilters}
           aria-label="Forum etkinliği filtreleri"
@@ -362,10 +491,27 @@ export default async function AdminForumActivitiesPage({
             const isActive =
               activeFilter === option.value;
 
-            const href =
+            const filterQuery =
               option.value === "all"
-                ? "/admin/forum-etkinlikleri"
-                : `/admin/forum-etkinlikleri?filter=${option.value}`;
+                ? ""
+                : `filter=${option.value}`;
+
+            const searchQuery = searchText
+              ? `search=${encodeURIComponent(
+                searchText
+              )}`
+              : "";
+
+            const query = [
+              filterQuery,
+              searchQuery,
+            ]
+              .filter(Boolean)
+              .join("&");
+
+            const href = query
+              ? `/admin/forum-etkinlikleri?${query}`
+              : "/admin/forum-etkinlikleri";
 
             return (
               <Link
@@ -392,7 +538,9 @@ export default async function AdminForumActivitiesPage({
       </section>
 
       <section className={styles.panel}>
-        <div className={styles.panelHeader}>
+        <div
+          className={`${styles.panelHeader} ${styles.forumActivityListHeader}`}
+        >
           <div>
             <span>DENETİM GÜNLÜĞÜ</span>
 
