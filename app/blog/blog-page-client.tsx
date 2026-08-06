@@ -524,7 +524,7 @@ export default function BlogPageClient({
     }
 
     return (
-        <main className={styles.page}>
+        <main className={`${styles.page} ff-blog-page`}>
             <div className={styles.shell}>
                 <header className="ff-feed-header">
                     <Link

@@ -14315,3 +14315,34 @@ html[data-theme="light"] .ff-feed-page .ff-insight-grid button span {
 }
 
 /* AKIS FILTER CARDS FINAL END */
+
+/* BLOG DESKTOP PAGE SPACING FIX START */
+
+@media (min-width: 681px) {
+  .ff-blog-page {
+    min-height: 100svh;
+    padding-top: 10px !important;
+    padding-bottom: 118px !important;
+  }
+}
+
+/* BLOG DESKTOP PAGE SPACING FIX END */
+
+/* FEED DESKTOP FOOTER GAP ALIGNMENT START */
+
+@media (min-width: 681px) {
+  .ff-feed-page {
+    padding-bottom: 12px !important;
+  }
+
+  .ff-feed-app {
+    padding-bottom: 0 !important;
+  }
+
+  .ff-ad-banner,
+  html[data-theme="light"] .ff-ad-banner {
+    margin-bottom: 14px !important;
+  }
+}
+
+/* FEED DESKTOP FOOTER GAP ALIGNMENT END */
