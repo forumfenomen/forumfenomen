@@ -333,12 +333,43 @@ export default function NotificationBell() {
       data: authListener,
     } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        if (event === "INITIAL_SESSION") {
+        if (
+          !isActive ||
+          event === "INITIAL_SESSION"
+        ) {
           return;
         }
 
-        userIdRef.current =
+        const nextUserId =
           session?.user.id ?? null;
+
+        if (event === "SIGNED_OUT") {
+          userIdRef.current = null;
+
+          setIsAuthenticated(false);
+          setNotifications([]);
+          setIsLoading(false);
+
+          if (notificationChannel) {
+            void supabase.removeChannel(
+              notificationChannel
+            );
+
+            notificationChannel = null;
+          }
+
+          return;
+        }
+
+        if (
+          event !== "SIGNED_IN" ||
+          !nextUserId ||
+          userIdRef.current === nextUserId
+        ) {
+          return;
+        }
+
+        userIdRef.current = nextUserId;
 
         window.setTimeout(() => {
           void setupRealtimeNotifications();

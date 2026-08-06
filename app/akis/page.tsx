@@ -868,6 +868,12 @@ export default function FeedPage() {
   const [currentUserId, setCurrentUserId] =
     useState<string | null>(null);
 
+  const currentUserIdRef =
+    useRef<string | null>(null);
+
+  const [authResolved, setAuthResolved] =
+    useState(false);
+
   const [savedTopicIds, setSavedTopicIds] =
     useState<Record<string, boolean>>({});
 
@@ -898,112 +904,29 @@ export default function FeedPage() {
       document.documentElement.dataset.theme = "dark";
     }
   }, []);
- 
+
   useEffect(() => {
-  const supabase = createClient();
+    const supabase = createClient();
 
-  let isActive = true;
+    let isActive = true;
 
-  async function loadUserFeedData() {
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
+    async function loadUserFeedData() {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
-    if (!isActive) {
-      return;
-    }
-
-    const user =
-      session?.user ?? null;
-
-    if (!user) {
-      setCurrentUserId(null);
-      setSavedTopicIds({});
-      setFollowingUserIds([]);
-
-      return;
-    }
-
-    setCurrentUserId(user.id);
-
-    const [
-      savedTopicsResult,
-      followingUsersResult,
-    ] = await Promise.all([
-      supabase
-        .from("saved_topics")
-        .select("topic_id")
-        .eq("user_id", user.id),
-
-      supabase
-        .from("user_follows")
-        .select("following_id")
-        .eq("follower_id", user.id),
-    ]);
-
-    if (!isActive) {
-      return;
-    }
-
-    if (savedTopicsResult.error) {
-      console.error(
-        "Kaydedilen konular alınamadı:",
-        savedTopicsResult.error.message
-      );
-
-      setSavedTopicIds({});
-    } else {
-      const nextSavedTopicIds: Record<
-        string,
-        boolean
-      > = {};
-
-      for (
-        const item of
-          savedTopicsResult.data ?? []
-      ) {
-        nextSavedTopicIds[
-          item.topic_id
-        ] = true;
-      }
-
-      setSavedTopicIds(
-        nextSavedTopicIds
-      );
-    }
-
-    if (followingUsersResult.error) {
-      console.error(
-        "Takip edilen kullanıcılar alınamadı:",
-        followingUsersResult.error.message
-      );
-
-      setFollowingUserIds([]);
-    } else {
-      setFollowingUserIds(
-        (
-          followingUsersResult.data ?? []
-        ).map(
-          (item) =>
-            item.following_id
-        )
-      );
-    }
-  }
-
-  void loadUserFeedData();
-
-  const { data: authListener } =
-  supabase.auth.onAuthStateChange(
-    (event, session) => {
-      if (
-        !isActive ||
-        event === "INITIAL_SESSION"
-      ) {
+      if (!isActive) {
         return;
       }
 
-      if (!session?.user) {
+      setAuthResolved(true);
+
+      const user =
+        session?.user ?? null;
+
+      if (!user) {
+        currentUserIdRef.current = null;
+
         setCurrentUserId(null);
         setSavedTopicIds({});
         setFollowingUserIds([]);
@@ -1011,20 +934,125 @@ export default function FeedPage() {
         return;
       }
 
-      window.setTimeout(() => {
-        void loadUserFeedData();
-      }, 0);
+      currentUserIdRef.current = user.id;
+      setCurrentUserId(user.id);
+
+      const [
+        savedTopicsResult,
+        followingUsersResult,
+      ] = await Promise.all([
+        supabase
+          .from("saved_topics")
+          .select("topic_id")
+          .eq("user_id", user.id),
+
+        supabase
+          .from("user_follows")
+          .select("following_id")
+          .eq("follower_id", user.id),
+      ]);
+
+      if (!isActive) {
+        return;
+      }
+
+      if (savedTopicsResult.error) {
+        console.error(
+          "Kaydedilen konular alınamadı:",
+          savedTopicsResult.error.message
+        );
+
+        setSavedTopicIds({});
+      } else {
+        const nextSavedTopicIds: Record<
+          string,
+          boolean
+        > = {};
+
+        for (
+          const item of
+          savedTopicsResult.data ?? []
+        ) {
+          nextSavedTopicIds[
+            item.topic_id
+          ] = true;
+        }
+
+        setSavedTopicIds(
+          nextSavedTopicIds
+        );
+      }
+
+      if (followingUsersResult.error) {
+        console.error(
+          "Takip edilen kullanıcılar alınamadı:",
+          followingUsersResult.error.message
+        );
+
+        setFollowingUserIds([]);
+      } else {
+        setFollowingUserIds(
+          (
+            followingUsersResult.data ?? []
+          ).map(
+            (item) =>
+              item.following_id
+          )
+        );
+      }
     }
-  );
 
-  return () => {
-    isActive = false;
+    void loadUserFeedData();
 
-    authListener.subscription.unsubscribe();
-  };
-}, []);
+    const { data: authListener } =
+      supabase.auth.onAuthStateChange(
+        (event, session) => {
+          if (
+            !isActive ||
+            event === "INITIAL_SESSION"
+          ) {
+            return;
+          }
+
+          const nextUserId =
+            session?.user.id ?? null;
+
+          if (event === "SIGNED_OUT") {
+            currentUserIdRef.current = null;
+
+            setCurrentUserId(null);
+            setSavedTopicIds({});
+            setFollowingUserIds([]);
+
+            return;
+          }
+
+          if (
+            event !== "SIGNED_IN" ||
+            !nextUserId ||
+            currentUserIdRef.current === nextUserId
+          ) {
+            return;
+          }
+
+          window.setTimeout(() => {
+            void loadUserFeedData();
+          }, 0);
+        }
+      );
+
+    return () => {
+      isActive = false;
+
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
+    if (!authResolved) {
+      return;
+    }
+
     let isActive = true;
 
     async function loadTopics() {
@@ -1344,6 +1372,7 @@ export default function FeedPage() {
   }, [
     language,
     currentUserId,
+    authResolved,
   ]);
 
   const toggleSavedTopic = async (
