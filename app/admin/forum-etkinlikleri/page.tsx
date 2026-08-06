@@ -352,10 +352,10 @@ export default async function AdminForumActivitiesPage({
         </article>
       </section>
 
-      <section className={styles.panel}>
-        <div
-          className={`${styles.panelHeader} ${styles.forumActivityPanelHeader}`}
-        >
+      <section
+        className={`${styles.panel} ${styles.forumActivityControlPanel}`}
+      >
+        <div className={styles.panelHeader}>
           <div>
             <span>SON HAREKETLER</span>
 
@@ -368,9 +368,7 @@ export default async function AdminForumActivitiesPage({
         </div>
 
         <nav
-          className={
-            styles.forumActivityFilters
-          }
+          className={styles.forumActivityFilters}
           aria-label="Forum etkinliği filtreleri"
         >
           {filterOptions.map((option) => {

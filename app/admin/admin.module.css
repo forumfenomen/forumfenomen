@@ -7683,3 +7683,49 @@
 }
 
 /* FORUM ACTIVITY MOBILE COMPACT END */
+
+/* FORUM ACTIVITY PANEL ALIGN START */
+
+.forumActivityControlPanel {
+  padding: 19px;
+}
+
+.forumActivityControlPanel .panelHeader {
+  margin-bottom: 0;
+}
+
+.forumActivityControlPanel .forumActivityFilters {
+  margin-top: 14px;
+}
+
+@media (max-width: 620px) {
+  .forumActivityControlPanel {
+    padding: 14px;
+  }
+
+  .forumActivityControlPanel .panelHeader {
+    position: relative;
+    display: block;
+
+    padding-right: 76px;
+  }
+
+  .forumActivityControlPanel .panelHeader .panelBadge {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    min-height: 28px;
+
+    margin: 0;
+    padding: 0 8px;
+
+    font-size: 8px;
+  }
+
+  .forumActivityControlPanel .forumActivityFilters {
+    margin-top: 12px;
+  }
+}
+
+/* FORUM ACTIVITY PANEL ALIGN END */
