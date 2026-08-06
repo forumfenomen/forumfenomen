@@ -898,128 +898,131 @@ export default function FeedPage() {
       document.documentElement.dataset.theme = "dark";
     }
   }, []);
-
+ 
   useEffect(() => {
-    const supabase = createClient();
+  const supabase = createClient();
 
-    let isActive = true;
+  let isActive = true;
 
-    async function loadSavedTopics() {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
+  async function loadUserFeedData() {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
-      if (!isActive) {
-        return;
-      }
+    if (!isActive) {
+      return;
+    }
 
-      if (userError || !user) {
-        setCurrentUserId(null);
-        setSavedTopicIds({});
-        return;
-      }
+    const user =
+      session?.user ?? null;
 
-      setCurrentUserId(user.id);
+    if (!user) {
+      setCurrentUserId(null);
+      setSavedTopicIds({});
+      setFollowingUserIds([]);
 
-      const { data, error } = await supabase
+      return;
+    }
+
+    setCurrentUserId(user.id);
+
+    const [
+      savedTopicsResult,
+      followingUsersResult,
+    ] = await Promise.all([
+      supabase
         .from("saved_topics")
         .select("topic_id")
-        .eq("user_id", user.id);
+        .eq("user_id", user.id),
 
-      if (!isActive) {
-        return;
-      }
+      supabase
+        .from("user_follows")
+        .select("following_id")
+        .eq("follower_id", user.id),
+    ]);
 
-      if (error) {
-        console.error(
-          "Kaydedilen konular alınamadı:",
-          error.message
-        );
+    if (!isActive) {
+      return;
+    }
 
-        setSavedTopicIds({});
-        return;
-      }
+    if (savedTopicsResult.error) {
+      console.error(
+        "Kaydedilen konular alınamadı:",
+        savedTopicsResult.error.message
+      );
 
+      setSavedTopicIds({});
+    } else {
       const nextSavedTopicIds: Record<
         string,
         boolean
       > = {};
 
-      for (const item of data ?? []) {
-        nextSavedTopicIds[item.topic_id] = true;
+      for (
+        const item of
+          savedTopicsResult.data ?? []
+      ) {
+        nextSavedTopicIds[
+          item.topic_id
+        ] = true;
       }
 
-      setSavedTopicIds(nextSavedTopicIds);
-    }
-
-    void loadSavedTopics();
-
-    const { data: authListener } =
-      supabase.auth.onAuthStateChange(() => {
-        window.setTimeout(() => {
-          void loadSavedTopics();
-        }, 0);
-      });
-
-    return () => {
-      isActive = false;
-      authListener.subscription.unsubscribe();
-    };
-  }, []);
-
-  useEffect(() => {
-    let isActive = true;
-
-    async function loadFollowingUsers() {
-      const supabase = createClient();
-
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-
-      if (!isActive) {
-        return;
-      }
-
-      if (userError || !user) {
-        setFollowingUserIds([]);
-        return;
-      }
-
-      const { data, error } = await supabase
-        .from("user_follows")
-        .select("following_id")
-        .eq("follower_id", user.id);
-
-      if (!isActive) {
-        return;
-      }
-
-      if (error) {
-        console.error(
-          "Takip edilen kullanıcılar alınamadı:",
-          error.message
-        );
-
-        setFollowingUserIds([]);
-        return;
-      }
-
-      setFollowingUserIds(
-        (data ?? []).map(
-          (item) => item.following_id
-        )
+      setSavedTopicIds(
+        nextSavedTopicIds
       );
     }
 
-    void loadFollowingUsers();
+    if (followingUsersResult.error) {
+      console.error(
+        "Takip edilen kullanıcılar alınamadı:",
+        followingUsersResult.error.message
+      );
 
-    return () => {
-      isActive = false;
-    };
-  }, []);
+      setFollowingUserIds([]);
+    } else {
+      setFollowingUserIds(
+        (
+          followingUsersResult.data ?? []
+        ).map(
+          (item) =>
+            item.following_id
+        )
+      );
+    }
+  }
+
+  void loadUserFeedData();
+
+  const { data: authListener } =
+  supabase.auth.onAuthStateChange(
+    (event, session) => {
+      if (
+        !isActive ||
+        event === "INITIAL_SESSION"
+      ) {
+        return;
+      }
+
+      if (!session?.user) {
+        setCurrentUserId(null);
+        setSavedTopicIds({});
+        setFollowingUserIds([]);
+
+        return;
+      }
+
+      window.setTimeout(() => {
+        void loadUserFeedData();
+      }, 0);
+    }
+  );
+
+  return () => {
+    isActive = false;
+
+    authListener.subscription.unsubscribe();
+  };
+}, []);
 
   useEffect(() => {
     let isActive = true;

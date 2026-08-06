@@ -31,6 +31,8 @@ type NotificationRow = {
 
 const POLL_INTERVAL_MS = 120_000;
 
+const LOAD_THROTTLE_MS = 10_000;
+
 function BellIcon() {
   return (
     <svg
@@ -120,6 +122,12 @@ export default function NotificationBell() {
   const panelRef =
     useRef<HTMLDivElement | null>(null);
 
+  const userIdRef =
+    useRef<string | null>(null);
+
+  const lastLoadAtRef =
+    useRef(0);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -155,25 +163,35 @@ export default function NotificationBell() {
     useState(false);
 
   const loadNotifications =
-    useCallback(async () => {
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
+    useCallback(
+      async (force = false) => {
+        const userId = userIdRef.current;
 
-      if (userError || !user) {
-        setIsAuthenticated(false);
-        setNotifications([]);
-        setIsLoading(false);
+        if (!userId) {
+          setIsAuthenticated(false);
+          setNotifications([]);
+          setIsLoading(false);
 
-        return;
-      }
+          return;
+        }
 
-      setIsAuthenticated(true);
+        const now = Date.now();
 
-      const { data, error } = await supabase
-        .from("notifications")
-        .select(`
+        if (
+          !force &&
+          now - lastLoadAtRef.current <
+          LOAD_THROTTLE_MS
+        ) {
+          return;
+        }
+
+        lastLoadAtRef.current = now;
+
+        setIsAuthenticated(true);
+
+        const { data, error } = await supabase
+          .from("notifications")
+          .select(`
           id,
           type,
           title,
@@ -186,28 +204,30 @@ export default function NotificationBell() {
           read_at,
           created_at
         `)
-        .order("created_at", {
-          ascending: false,
-        })
-        .limit(10);
+          .order("created_at", {
+            ascending: false,
+          })
+          .limit(10);
 
-      if (error) {
-        console.error(
-          "Bildirimler alınamadı:",
-          error.message
+        if (error) {
+          console.error(
+            "Bildirimler alınamadı:",
+            error.message
+          );
+
+          setIsLoading(false);
+
+          return;
+        }
+
+        setNotifications(
+          (data ?? []) as NotificationRow[]
         );
 
         setIsLoading(false);
-
-        return;
-      }
-
-      setNotifications(
-        (data ?? []) as NotificationRow[]
-      );
-
-      setIsLoading(false);
-    }, [supabase]);
+      },
+      [supabase]
+    );
 
   useEffect(() => {
     let isActive = true;
@@ -218,12 +238,18 @@ export default function NotificationBell() {
 
     async function setupRealtimeNotifications() {
       const {
-        data: { user },
-      } = await supabase.auth.getUser();
+        data: { session },
+      } = await supabase.auth.getSession();
 
       if (!isActive) {
         return;
       }
+
+      const user =
+        session?.user ?? null;
+
+      userIdRef.current =
+        user?.id ?? null;
 
       if (notificationChannel) {
         await supabase.removeChannel(
@@ -233,7 +259,7 @@ export default function NotificationBell() {
         notificationChannel = null;
       }
 
-      void loadNotifications();
+      void loadNotifications(true);
 
       if (!user) {
         return;
@@ -306,7 +332,14 @@ export default function NotificationBell() {
     const {
       data: authListener,
     } = supabase.auth.onAuthStateChange(
-      () => {
+      (event, session) => {
+        if (event === "INITIAL_SESSION") {
+          return;
+        }
+
+        userIdRef.current =
+          session?.user.id ?? null;
+
         window.setTimeout(() => {
           void setupRealtimeNotifications();
         }, 0);
@@ -479,7 +512,7 @@ export default function NotificationBell() {
     setIsOpen(nextOpen);
 
     if (nextOpen) {
-      void loadNotifications();
+      void loadNotifications(true);
     }
   };
 
