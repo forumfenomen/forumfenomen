@@ -7199,37 +7199,82 @@
 /* ADMIN MOBILE SEARCH INLINE FIX START */
 
 @media (max-width: 620px) {
-    .topicAdminSearch {
-        display: grid !important;
-        grid-template-columns:
-            minmax(0, 1fr) 92px !important;
-        align-items: center !important;
-        gap: 8px !important;
-    }
+  .panelHeader {
+    position: relative;
+    display: block;
+    padding-right: 78px;
+  }
 
-    .topicAdminSearchField {
-        width: auto !important;
-        min-width: 0 !important;
-        flex: none !important;
-    }
+  .panelHeader .topicCountBadge {
+    position: absolute;
+    top: 0;
+    right: 0;
 
-    .topicAdminSearchField input {
-        width: 100% !important;
-        min-width: 0 !important;
-    }
+    min-height: 28px;
+    margin: 0 !important;
+    padding: 0 8px;
 
-    .topicSearchButton {
-        width: 92px !important;
-        min-width: 92px !important;
-        height: 46px !important;
-        margin: 0 !important;
-    }
+    font-size: 8.5px;
+  }
 
-    .topicAdminSearchClear {
-        grid-column: 1 / -1;
-        justify-self: end;
-        margin: 0 !important;
-    }
+  .topicAdminSearch {
+    display: grid !important;
+    grid-template-columns:
+      minmax(0, 1fr) 42px 72px !important;
+
+    align-items: center !important;
+    gap: 7px !important;
+
+    padding-right: 0 !important;
+  }
+
+  .topicAdminSearchField {
+    grid-column: 1;
+
+    width: auto !important;
+    min-width: 0 !important;
+    flex: none !important;
+  }
+
+  .topicAdminSearchField input {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 42px !important;
+  }
+
+  .topicAdminSearchClear {
+    grid-column: 2;
+
+    width: 42px;
+    min-width: 42px;
+    min-height: 42px;
+
+    justify-self: stretch;
+
+    overflow: hidden;
+    margin: 0 !important;
+    padding: 0;
+
+    font-size: 0;
+  }
+
+  .topicAdminSearchClear::before {
+    content: "×";
+
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .topicSearchButton {
+    grid-column: 3;
+
+    width: 72px !important;
+    min-width: 72px !important;
+    height: 42px !important;
+
+    margin: 0 !important;
+  }
 }
 
 /* ADMIN MOBILE SEARCH INLINE FIX END */
