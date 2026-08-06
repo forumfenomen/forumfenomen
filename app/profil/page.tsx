@@ -991,8 +991,9 @@ export default function ProfilePage() {
   display_name,
   username,
   role,
-  username_is_temporary,
+   username_is_temporary,
   avatar_url,
+  avatar_source,
   bio,
   interests,
   profile_visibility,
@@ -1058,12 +1059,46 @@ export default function ProfilePage() {
         profile?.username_is_temporary === true
       );
 
-      setAvatarUrl(
+            const databaseAvatar =
         typeof profile?.avatar_url === "string" &&
-          profile.avatar_url.trim()
-          ? profile.avatar_url
-          : fallbackAvatar
-      );
+        profile.avatar_url.trim()
+          ? profile.avatar_url.trim()
+          : null;
+
+      const avatarSource =
+        profile?.avatar_source === "upload"
+          ? "upload"
+          : profile?.avatar_source === "google"
+            ? "google"
+            : null;
+
+      let resolvedAvatar = databaseAvatar;
+
+      if (
+        avatarSource !== "upload" &&
+        fallbackAvatar &&
+        fallbackAvatar !== databaseAvatar
+      ) {
+        const { error: avatarSyncError } =
+          await supabase
+            .from("profiles")
+            .update({
+              avatar_url: fallbackAvatar,
+              avatar_source: "google",
+            })
+            .eq("id", user.id);
+
+        if (avatarSyncError) {
+          console.error(
+            "Google profil fotoğrafı eşitlenemedi:",
+            avatarSyncError.message
+          );
+        } else {
+          resolvedAvatar = fallbackAvatar;
+        }
+      }
+
+      setAvatarUrl(resolvedAvatar ?? fallbackAvatar);
 
       setProfileBio(databaseBio);
 

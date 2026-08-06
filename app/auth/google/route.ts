@@ -39,6 +39,10 @@ export async function GET(
       provider: "google",
       options: {
         redirectTo: callbackUrl,
+        scopes: "openid email profile",
+        queryParams: {
+          prompt: "consent",
+        },
       },
     });
 

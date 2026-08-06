@@ -172,14 +172,12 @@ export default async function BlogPage() {
       }),
 
     staffProfileIds.length > 0
-      ? supabase
-        .from("profiles")
-        .select(`
-            id,
-            display_name,
-            username
-          `)
-        .in("id", staffProfileIds)
+      ? supabase.rpc(
+        "get_profile_summaries_by_ids",
+        {
+          p_profile_ids: staffProfileIds,
+        }
+      )
       : Promise.resolve({
         data: [],
         error: null,

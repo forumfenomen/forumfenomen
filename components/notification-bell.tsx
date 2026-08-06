@@ -286,8 +286,8 @@ export default function NotificationBell() {
             status === "CHANNEL_ERROR" ||
             status === "TIMED_OUT"
           ) {
-            console.error(
-              "Bildirim Realtime bağlantısı kurulamadı:",
+            console.warn(
+              "Bildirim Realtime bağlantısı kurulamadı, polling devam ediyor:",
               status
             );
           }
