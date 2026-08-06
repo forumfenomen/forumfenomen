@@ -7484,3 +7484,23 @@
 }
 
 /* ADMIN MOBILE NEW TOPIC POSITION END */
+
+/* ADMIN NEW TOPIC MOBILE HEADER ALIGN START */
+
+@media (max-width: 620px) {
+    .pageHeader,
+    .panelHeader {
+        position: relative;
+        display: block;
+    }
+
+    .pageHeader {
+        padding-right: 118px;
+    }
+
+    .panelHeader {
+        padding-right: 118px;
+    }
+}
+
+/* ADMIN NEW TOPIC MOBILE HEADER ALIGN END */
