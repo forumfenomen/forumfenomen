@@ -61,27 +61,27 @@ const filterOptions: Array<{
   value: ActivityFilter;
   label: string;
 }> = [
-  {
-    value: "all",
-    label: "Tümü",
-  },
-  {
-    value: "topics",
-    label: "Konular",
-  },
-  {
-    value: "comments",
-    label: "Yorumlar",
-  },
-  {
-    value: "follows",
-    label: "Takipler",
-  },
-  {
-    value: "follow_requests",
-    label: "Takip İstekleri",
-  },
-];
+    {
+      value: "all",
+      label: "Tümü",
+    },
+    {
+      value: "topics",
+      label: "Konular",
+    },
+    {
+      value: "comments",
+      label: "Yorumlar",
+    },
+    {
+      value: "follows",
+      label: "Takipler",
+    },
+    {
+      value: "follow_requests",
+      label: "Takip İstekleri",
+    },
+  ];
 
 function getDisplayName(
   profile: ProfileSummary | undefined
@@ -101,6 +101,32 @@ function formatDate(value: string) {
     timeStyle: "short",
     timeZone: "Europe/Istanbul",
   }).format(new Date(value));
+}
+
+function getActivityTypeLabel(
+  activityType: string
+) {
+  if (activityType === "topic_created") {
+    return "Konu";
+  }
+
+  if (activityType === "comment_created") {
+    return "Yorum";
+  }
+
+  if (activityType === "user_followed") {
+    return "Takip";
+  }
+
+  if (
+    activityType.startsWith(
+      "follow_request_"
+    )
+  ) {
+    return "Takip isteği";
+  }
+
+  return "Etkinlik";
 }
 
 function isValidFilter(
@@ -222,11 +248,11 @@ export default async function AdminForumActivitiesPage({
   const { data: profileData } =
     profileIds.length > 0
       ? await supabase.rpc(
-          "get_profile_summaries_by_ids",
-          {
-            p_profile_ids: profileIds,
-          }
-        )
+        "get_profile_summaries_by_ids",
+        {
+          p_profile_ids: profileIds,
+        }
+      )
       : { data: [] };
 
   const profileMap = new Map<
@@ -327,7 +353,9 @@ export default async function AdminForumActivitiesPage({
       </section>
 
       <section className={styles.panel}>
-        <div className={styles.panelHeader}>
+        <div
+          className={`${styles.panelHeader} ${styles.forumActivityPanelHeader}`}
+        >
           <div>
             <span>SON HAREKETLER</span>
 
@@ -393,15 +421,15 @@ export default async function AdminForumActivitiesPage({
                 const actor =
                   activity.actor_id
                     ? profileMap.get(
-                        activity.actor_id
-                      )
+                      activity.actor_id
+                    )
                     : undefined;
 
                 const target =
                   activity.target_user_id
                     ? profileMap.get(
-                        activity.target_user_id
-                      )
+                      activity.target_user_id
+                    )
                     : undefined;
 
                 return (
@@ -425,17 +453,35 @@ export default async function AdminForumActivitiesPage({
                       >
                         <strong>
                           {activityNames[
-                            activity
-                              .activity_type
-                          ] ??
-                            activity.activity_type}
+                            activity.activity_type
+                          ] ?? activity.activity_type}
                         </strong>
 
-                        <span>
-                          {formatDate(
-                            activity.created_at
-                          )}
-                        </span>
+                        <div
+                          className={
+                            styles.forumActivityTopMeta
+                          }
+                        >
+                          <span
+                            className={
+                              styles.forumActivityDate
+                            }
+                          >
+                            {formatDate(
+                              activity.created_at
+                            )}
+                          </span>
+
+                          <span
+                            className={
+                              styles.forumActivityType
+                            }
+                          >
+                            {getActivityTypeLabel(
+                              activity.activity_type
+                            )}
+                          </span>
+                        </div>
                       </div>
 
                       <p>

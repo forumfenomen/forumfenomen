@@ -7504,3 +7504,182 @@
 }
 
 /* ADMIN NEW TOPIC MOBILE HEADER ALIGN END */
+
+/* FORUM ACTIVITY MOBILE COMPACT START */
+
+.forumActivityTopMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.forumActivityDate,
+.forumActivityType {
+  display: inline-flex;
+  min-height: 28px;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 9px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 9px;
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  font-size: 8px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.forumActivityType {
+  color: #dda2ef;
+
+  border-color:
+    rgba(205, 82, 232, 0.18);
+
+  background:
+    rgba(205, 82, 232, 0.06);
+}
+
+@media (max-width: 620px) {
+  .forumActivityPanelHeader {
+    position: relative;
+
+    display: block;
+
+    padding-right: 76px;
+  }
+
+  .forumActivityPanelHeader .panelBadge {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    min-height: 28px;
+
+    margin: 0;
+    padding: 0 8px;
+
+    font-size: 8px;
+  }
+
+  .forumActivitySummaryGrid {
+    gap: 7px;
+
+    margin-bottom: 10px;
+  }
+
+  .forumActivitySummaryCard {
+    min-height: 54px;
+    padding: 9px 11px;
+
+    gap: 4px;
+  }
+
+  .forumActivitySummaryCard span {
+    font-size: 8.5px;
+  }
+
+  .forumActivitySummaryCard strong {
+    font-size: 17px;
+  }
+
+  .forumActivityFilters {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: 6px;
+
+    margin-bottom: 10px;
+    padding: 8px 0 10px;
+  }
+
+  .forumActivityFilterButton {
+    min-height: 32px;
+    padding: 0 6px;
+
+    gap: 5px;
+
+    font-size: 8px;
+  }
+
+  .forumActivityFilterButton:nth-child(4),
+  .forumActivityFilterButton:nth-child(5) {
+    grid-column: auto;
+  }
+
+  .forumActivityRow {
+    grid-template-columns: 1fr;
+
+    gap: 9px;
+
+    padding: 11px 12px;
+
+    border-radius: 13px;
+  }
+
+  .forumActivityTopLine {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1fr) auto;
+
+    align-items: start;
+    gap: 8px;
+
+    flex-direction: initial;
+  }
+
+  .forumActivityTopLine strong {
+    padding-top: 5px;
+
+    font-size: 11.5px;
+    line-height: 1.3;
+  }
+
+  .forumActivityTopMeta {
+    gap: 5px;
+  }
+
+  .forumActivityDate,
+  .forumActivityType {
+    min-height: 27px;
+
+    padding: 0 7px;
+
+    font-size: 7.5px;
+  }
+
+  .forumActivityMain p {
+    margin-top: 6px;
+
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  .forumActivityMain small {
+    margin-top: 5px;
+
+    font-size: 9px;
+  }
+
+  .forumActivityActions {
+    justify-content: space-between;
+
+    gap: 7px;
+  }
+
+  .forumActivityStatus,
+  .forumActivityLink {
+    min-height: 30px;
+
+    padding: 0 9px;
+
+    font-size: 8px;
+  }
+}
+
+/* FORUM ACTIVITY MOBILE COMPACT END */
