@@ -287,23 +287,22 @@ export default async function EditAdminTopicPage({ params, searchParams }: PageP
       });
 
       const { error: logError } =
-        await adminSupabase
-          .from("admin_action_logs")
-          .insert({
-            actor_id: user.id,
-            action_type: "topic_edited",
-            target_type: "topic",
-            target_id: topicId,
-            target_user_id:
+        await supabase.rpc(
+          "admin_log_topic_edit",
+          {
+            p_topic_id: topicId,
+            p_target_user_id:
               currentTopic.author_id,
-            old_value: oldValue,
-            new_value: newValue,
-            note: "Konu başlığı, içeriği veya kategorisi düzenlendi.",
-            metadata: {
+            p_old_value: oldValue,
+            p_new_value: newValue,
+            p_note:
+              "Konu başlığı, içeriği veya kategorisi düzenlendi.",
+            p_metadata: {
               topic_id: topicId,
               title,
             },
-          });
+          }
+        );
 
       if (logError) {
         console.error(
