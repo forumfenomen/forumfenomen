@@ -5,6 +5,7 @@ import NotificationBell from "@/components/notification-bell";
 import SiteSearch from "@/components/site-search";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   useEffect,
   useMemo,
@@ -853,6 +854,8 @@ const editorEmojis = [
   "💰", "📈", "📊", "✅", "❌", "⚠️", "📌", "🔗",
 ] as const;
 export default function CreateTopicPage() {
+  const router = useRouter();
+
   const editorRef =
     useRef<HTMLDivElement | null>(null);
 
@@ -1492,7 +1495,10 @@ export default function CreateTopicPage() {
       const sanitizedContent =
         sanitizeTopicHtml(content);
 
-      const { error } = await supabase
+      const {
+        data: createdTopic,
+        error,
+      } = await supabase
         .from("topics")
         .insert({
           author_id: user.id,
@@ -1500,7 +1506,9 @@ export default function CreateTopicPage() {
             activeSubcategory.databaseId,
           title: title.trim(),
           content: sanitizedContent,
-        });
+        })
+        .select("id")
+        .single();
 
       if (error) {
         console.error(
@@ -1512,29 +1520,20 @@ export default function CreateTopicPage() {
         return;
       }
 
-      setPublishMessage("success");
+      if (!createdTopic?.id) {
+        setPublishMessage("error");
+        return;
+      }
 
       window.localStorage.removeItem(
         DRAFT_KEY
       );
 
       setHasSavedDraft(false);
-      setTitle("");
-      setContent("");
-      setTags([]);
-      setTagInput("");
-      setPollEnabled(false);
-      setPollOptions(["", ""]);
-      setAttachment(null);
 
-      if (editorRef.current) {
-        editorRef.current.innerHTML = "";
-      }
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
+      router.replace(
+        `/konu/${createdTopic.id}`
+      );
     } catch (error) {
       console.error(
         "Beklenmeyen konu yayınlama hatası:",
