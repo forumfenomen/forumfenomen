@@ -7633,12 +7633,19 @@
 .forumActivitySearch {
     display: grid;
     grid-template-columns:
-        minmax(0, 1fr) 42px 76px;
+        minmax(0, 1fr) 76px;
 
     align-items: center;
-    gap: 8px;
+    gap: 16px;
 
     margin-top: 4px;
+}
+
+.forumActivitySearchActive {
+    grid-template-columns:
+        minmax(0, 1fr) 42px 76px;
+
+    gap: 8px;
 }
 
 .forumActivitySearchField {
@@ -7748,11 +7755,18 @@
 @media (max-width: 620px) {
     .forumActivitySearch {
         grid-template-columns:
+            minmax(0, 1fr) 68px;
+
+        gap: 16px;
+
+        margin-top: 2px;
+    }
+
+    .forumActivitySearchActive {
+        grid-template-columns:
             minmax(0, 1fr) 38px 68px;
 
         gap: 7px;
-
-        margin-top: 2px;
     }
 
     .forumActivitySearchField input {

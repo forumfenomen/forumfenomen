@@ -423,15 +423,15 @@ export default async function AdminForumActivitiesPage({
             <h2>Etkinlikleri Filtrele</h2>
           </div>
 
-          <div className={styles.panelBadge}>
-            Son {activities.length} etkinlik
-          </div>
+
         </div>
 
         <form
           method="get"
           className={
-            styles.forumActivitySearch
+            searchText
+              ? `${styles.forumActivitySearch} ${styles.forumActivitySearchActive}`
+              : styles.forumActivitySearch
           }
         >
           {activeFilter !== "all" ? (
