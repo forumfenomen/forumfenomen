@@ -130,6 +130,27 @@ function getActivityTypeLabel(
   return "Etkinlik";
 }
 
+function getActivityListTitle(
+  filter: string
+) {
+  switch (filter) {
+    case "topics":
+      return "Konu Etkinlikleri";
+
+    case "comments":
+      return "Yorum Etkinlikleri";
+
+    case "follows":
+      return "Takip Etkinlikleri";
+
+    case "follow_requests":
+      return "Takip İsteği Etkinlikleri";
+
+    default:
+      return "Etkinlik Akışı";
+  }
+}
+
 function isValidFilter(
   value: string | undefined
 ): value is ActivityFilter {
@@ -491,7 +512,9 @@ export default async function AdminForumActivitiesPage({
           <div>
             <span>DENETİM GÜNLÜĞÜ</span>
 
-            <h2>Etkinlik Akışı</h2>
+            <h2>
+              {getActivityListTitle(activeFilter)}
+            </h2>
           </div>
 
           <div className={styles.panelBadge}>

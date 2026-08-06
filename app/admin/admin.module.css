@@ -2366,6 +2366,7 @@
 .forumActivityActions {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 9px;
 }
 
@@ -7316,7 +7317,7 @@
 }
 
 @media (max-width: 620px) {
-    
+
     .forumActivityRow {
         grid-template-columns: 1fr;
 
@@ -7504,13 +7505,19 @@
 .forumActivityStatus,
 .forumActivityLink {
     display: inline-flex;
+    height: 32px;
+    min-height: 32px;
 
     box-sizing: border-box;
 
     align-items: center;
     justify-content: center;
 
+    margin: 0;
+    padding: 0 10px;
+
     line-height: 1;
+    white-space: nowrap;
 }
 
 @media (max-width: 620px) {
@@ -7580,6 +7587,7 @@
 
     .forumActivityStatus,
     .forumActivityLink {
+        height: 30px;
         min-height: 30px;
 
         padding: 0 9px;
