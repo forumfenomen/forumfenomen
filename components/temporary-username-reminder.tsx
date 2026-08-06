@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -62,7 +62,7 @@ export default function TemporaryUsernameReminder() {
 
             if (error) {
                 console.error(
-                    "Geçici kullanıcı adı alınamadı:",
+                    "GeÃ§ici kullanÄ±cÄ± adÄ± alÄ±namadÄ±:",
                     error.message
                 );
 
@@ -128,7 +128,7 @@ export default function TemporaryUsernameReminder() {
 
         if (error) {
             console.error(
-                "Kullanıcı adı hatırlatması ertelenemedi:",
+                "KullanÄ±cÄ± adÄ± hatÄ±rlatmasÄ± ertelenemedi:",
                 error.message
             );
 
@@ -160,7 +160,7 @@ export default function TemporaryUsernameReminder() {
                     aria-hidden="true"
                 >
                     <Image
-                        src="/forumfenomen-icon-master.png"
+                        src="/forumfenomen-icon-256.png"
                         alt=""
                         width={80}
                         height={80}
@@ -170,11 +170,11 @@ export default function TemporaryUsernameReminder() {
                 </div>
 
                 <span className="ff-username-reminder-label">
-                    FORUMFENOMEN’E HOŞ GELDİN
+                    FORUMFENOMENâ€™E HOÅ GELDÄ°N
                 </span>
 
                 <h2 id="username-reminder-title">
-                    Geçici kullanıcı adın hazır
+                    GeÃ§ici kullanÄ±cÄ± adÄ±n hazÄ±r
                 </h2>
 
                 <div className="ff-temporary-username">
@@ -182,9 +182,9 @@ export default function TemporaryUsernameReminder() {
                 </div>
 
                 <p>
-                    Ayarlar bölümünden kullanıcı adını
-                    değiştirebilir, profilini düzenleyebilir
-                    ve gizlilik tercihlerini yönetebilirsin.
+                    Ayarlar bÃ¶lÃ¼mÃ¼nden kullanÄ±cÄ± adÄ±nÄ±
+                    deÄŸiÅŸtirebilir, profilini dÃ¼zenleyebilir
+                    ve gizlilik tercihlerini yÃ¶netebilirsin.
                 </p>
 
                 <div className="ff-username-reminder-actions">
@@ -211,9 +211,9 @@ export default function TemporaryUsernameReminder() {
                 </div>
 
                 <small>
-                    Kullanıcı adını değiştirmediğin sürece
-                    bu hatırlatma 24 saat sonra tekrar
-                    gösterilir.
+                    KullanÄ±cÄ± adÄ±nÄ± deÄŸiÅŸtirmediÄŸin sÃ¼rece
+                    bu hatÄ±rlatma 24 saat sonra tekrar
+                    gÃ¶sterilir.
                 </small>
             </section>
         </div>

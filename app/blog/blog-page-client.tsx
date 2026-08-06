@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import ForumFooter from "@/components/forum-footer";
 import NotificationBell from "@/components/notification-bell";
@@ -36,35 +36,35 @@ const text = {
         eyebrow: "ForumFenomen Blog",
         title: "Fikirden etkiye uzanan dijital rehberler.",
         description:
-            "İçerik üretimi, büyüme, platformlar, para kazanma ve dijital dünyanın kuralları hakkında derinlemesine içerikler.",
-        featured: "Öne Çıkanlar",
-        latest: "Son Eklenen Yazılar",
-        quick: "5 Dakikada Öğren",
-        editor: "ForumFenomen Seçkisi",
-        read: "Devamını Oku",
+            "Ä°Ã§erik Ã¼retimi, bÃ¼yÃ¼me, platformlar, para kazanma ve dijital dÃ¼nyanÄ±n kurallarÄ± hakkÄ±nda derinlemesine iÃ§erikler.",
+        featured: "Ã–ne Ã‡Ä±kanlar",
+        latest: "Son Eklenen YazÄ±lar",
+        quick: "5 Dakikada Ã–ÄŸren",
+        editor: "ForumFenomen SeÃ§kisi",
+        read: "DevamÄ±nÄ± Oku",
         minutes: "dk okuma",
         adLabel: "REKLAM",
-        adTitle: "Markanız burada görünsün ister misiniz?",
+        adTitle: "MarkanÄ±z burada gÃ¶rÃ¼nsÃ¼n ister misiniz?",
         adDescription:
-            "ForumFenomen reklam alanında hedef kitlenize ulaşın.",
+            "ForumFenomen reklam alanÄ±nda hedef kitlenize ulaÅŸÄ±n.",
         advertise: "Reklam Ver",
-        searchPlaceholder: "Blog yazılarında ara...",
-        noResults: "Aramanızla eşleşen yazı bulunamadı.",
+        searchPlaceholder: "Blog yazÄ±larÄ±nda ara...",
+        noResults: "AramanÄ±zla eÅŸleÅŸen yazÄ± bulunamadÄ±.",
         home: "Ana Sayfa",
         categories: "Kategoriler",
-        createTopic: "Konu Oluştur",
+        createTopic: "Konu OluÅŸtur",
         blog: "Blog",
         profile: "Profil",
-        theme: "Temayı değiştir",
+        theme: "TemayÄ± deÄŸiÅŸtir",
         notifications: "Bildirimler",
         search: "Ara",
         categoryNames: {
-            all: "Tümü",
+            all: "TÃ¼mÃ¼",
             platforms: "Platformlar",
-            content: "İçerik Üretimi",
-            growth: "Büyüme",
+            content: "Ä°Ã§erik Ãœretimi",
+            growth: "BÃ¼yÃ¼me",
             money: "Para Kazanma",
-            education: "Eğitim",
+            education: "EÄŸitim",
             legal: "Yasal Mevzuat",
         },
     },
@@ -802,7 +802,7 @@ export default function BlogPageClient({
                     <div className={styles.editorHeading}>
                         <span className={styles.editorLogo}>
                             <Image
-                                src="/forumfenomen-icon-master.png"
+                                src="/forumfenomen-icon-256.png"
                                 alt=""
                                 fill
                                 sizes="46px"
@@ -885,7 +885,7 @@ export default function BlogPageClient({
 
                     <span className="ff-center-nav-image">
                         <Image
-                            src="/forumfenomen-icon-master.png"
+                            src="/forumfenomen-icon-256.png"
                             alt=""
                             fill
                             sizes="70px"
@@ -919,4 +919,5 @@ export default function BlogPageClient({
         </main>
     );
 }
+
 

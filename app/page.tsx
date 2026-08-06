@@ -26,7 +26,7 @@ export default function SplashPage() {
         <div className="splash-ring splash-ring-two" />
 
         <Image
-          src="/forumfenomen-icon-master.png"
+          src="/forumfenomen-icon-256.png"
           alt="ForumFenomen"
           width={1254}
           height={1254}
@@ -38,6 +38,7 @@ export default function SplashPage() {
     </main>
   );
 }
+
 
 
 

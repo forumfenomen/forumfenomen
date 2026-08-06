@@ -898,7 +898,7 @@ export default function ContentProfilePage() {
 
                     <span className="ff-center-nav-image">
                         <Image
-                            src="/forumfenomen-icon-master.png"
+                            src="/forumfenomen-icon-256.png"
                             alt=""
                             width={1254}
                             height={1254}

@@ -2765,7 +2765,7 @@ export default function CreateTopicPage() {
 
           <span className="ff-center-nav-image">
             <Image
-              src="/forumfenomen-icon-master.png"
+              src="/forumfenomen-icon-256.png"
               alt=""
               fill
               sizes="70px"
@@ -2787,6 +2787,7 @@ export default function CreateTopicPage() {
     </main>
   );
 }
+
 
 
 
