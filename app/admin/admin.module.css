@@ -7457,3 +7457,30 @@
 }
 
 /* ADMIN MOBILE SECURITY BADGE POSITION END */
+
+/* ADMIN MOBILE NEW TOPIC POSITION START */
+
+@media (max-width: 620px) {
+  .pageHeader {
+    position: relative;
+    display: block;
+    padding-right: 122px;
+  }
+
+  .pageHeader .newTopicButton {
+    position: absolute;
+    top: 13px;
+    right: 0;
+
+    width: auto;
+    min-width: 108px;
+    min-height: 34px;
+
+    margin: 0 !important;
+    padding: 0 12px;
+
+    font-size: 9px;
+  }
+}
+
+/* ADMIN MOBILE NEW TOPIC POSITION END */
