@@ -175,7 +175,14 @@ export default async function EditAdminTopicPage({ params, searchParams }: PageP
     const currentTopicResult =
       await supabase
         .from("topics")
-        .select(`id, author_id, content_profile_id`)
+        .select(`
+  id,
+  author_id,
+  content_profile_id,
+  category_id,
+  title,
+  content
+`)
         .eq("id", topicId)
         .maybeSingle();
 
@@ -228,6 +235,9 @@ export default async function EditAdminTopicPage({ params, searchParams }: PageP
       }
     }
 
+    const safeContent =
+      textToSafeHtml(content);
+
     const updatePayload: {
       category_id: number;
       title: string;
@@ -236,7 +246,7 @@ export default async function EditAdminTopicPage({ params, searchParams }: PageP
     } = {
       category_id: categoryId,
       title,
-      content: textToSafeHtml(content),
+      content: safeContent,
     };
 
     if (currentTopic.content_profile_id) {
@@ -251,6 +261,56 @@ export default async function EditAdminTopicPage({ params, searchParams }: PageP
     if (error) {
       console.error("Admin konu düzenleme hatası:", error.message);
       redirect(`/admin/konular/${topicId}?error=update`);
+    }
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      const oldValue = JSON.stringify({
+        title: currentTopic.title,
+        content: currentTopic.content,
+        category_id: currentTopic.category_id,
+        content_profile_id:
+          currentTopic.content_profile_id,
+      });
+
+      const newValue = JSON.stringify({
+        title,
+        content: safeContent,
+        category_id: categoryId,
+        content_profile_id:
+          currentTopic.content_profile_id
+            ? contentProfileId
+            : null,
+      });
+
+      const { error: logError } =
+        await adminSupabase
+          .from("admin_action_logs")
+          .insert({
+            actor_id: user.id,
+            action_type: "topic_edited",
+            target_type: "topic",
+            target_id: topicId,
+            target_user_id:
+              currentTopic.author_id,
+            old_value: oldValue,
+            new_value: newValue,
+            note: "Konu başlığı, içeriği veya kategorisi düzenlendi.",
+            metadata: {
+              topic_id: topicId,
+              title,
+            },
+          });
+
+      if (logError) {
+        console.error(
+          "Konu düzenleme işlem kaydı oluşturulamadı:",
+          logError.message
+        );
+      }
     }
 
     revalidatePath("/admin");

@@ -44,10 +44,11 @@ const actionNames: Record<string, string> = {
         "Plus erişimi açıldı",
     user_plus_access_revoked:
         "Plus erişimi kapatıldı",
-comment_hidden: "Yorum gizlendi",
+    comment_hidden: "Yorum gizlendi",
     comment_banned: "Yorum yasaklandı",
     comment_published: "Yorum yeniden yayınlandı",
 
+    topic_edited: "Konu düzenlendi",
     topic_published: "Konu yeniden yayınlandı",
     topic_hidden: "Konu gizlendi",
     topic_banned: "Konu yasaklandı",
@@ -149,6 +150,58 @@ function getMetadataString(
         : null;
 }
 
+type TopicEditSnapshot = {
+    title?: string;
+    content?: string;
+    category_id?: number;
+    content_profile_id?: string | null;
+};
+
+function parseTopicEditSnapshot(
+    value: string | null
+): TopicEditSnapshot | null {
+    if (!value) {
+        return null;
+    }
+
+    try {
+        const parsed = JSON.parse(value);
+
+        if (
+            typeof parsed !== "object" ||
+            parsed === null ||
+            Array.isArray(parsed)
+        ) {
+            return null;
+        }
+
+        return parsed as TopicEditSnapshot;
+    } catch {
+        return null;
+    }
+}
+
+function getPlainTextFromHtml(
+    value: string | undefined
+) {
+    if (!value) {
+        return "-";
+    }
+
+    return value
+        .replace(/<br\s*\/?>/gi, "\n")
+        .replace(/<\/p>/gi, "\n\n")
+        .replace(/<[^>]+>/g, "")
+        .replace(/&nbsp;/gi, " ")
+        .replace(/&amp;/gi, "&")
+        .replace(/&lt;/gi, "<")
+        .replace(/&gt;/gi, ">")
+        .replace(/&quot;/gi, '"')
+        .replace(/&#039;/gi, "'")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+}
+
 function getLogTypeLabel(
     targetType: string,
     actionType: string
@@ -217,6 +270,7 @@ export default async function AdminLogsPage({
 
     const selectedType =
         params.type === "comment" ||
+            params.type === "topic" ||
             params.type === "report"
             ? params.type
             : "all";
@@ -254,6 +308,7 @@ export default async function AdminLogsPage({
     const [
         logsResult,
         totalResult,
+        topicResult,
         commentResult,
         reportResult,
     ] = await Promise.all([
@@ -265,6 +320,17 @@ export default async function AdminLogsPage({
                 count: "exact",
                 head: true,
             }),
+
+        supabase
+            .from("admin_action_logs")
+            .select("id", {
+                count: "exact",
+                head: true,
+            })
+            .eq(
+                "target_type",
+                "topic"
+            ),
 
         supabase
             .from("admin_action_logs")
@@ -388,6 +454,9 @@ export default async function AdminLogsPage({
     const totalCount =
         totalResult.count ?? 0;
 
+    const topicCount =
+        topicResult.count ?? 0;
+
     const commentCount =
         commentResult.count ?? 0;
 
@@ -438,6 +507,19 @@ export default async function AdminLogsPage({
 
                     <strong>{totalCount}</strong>
                 </Link>
+
+                <Link
+                    href="/admin/islem-kayitlari?type=topic"
+                    className={`${styles.topicSummaryCard} ${selectedType === "topic"
+                        ? styles.topicSummaryActive
+                        : ""
+                        }`}
+                >
+                    <span>Konu işlemleri</span>
+
+                    <strong>{topicCount}</strong>
+                </Link>
+
 
                 <Link
                     href="/admin/islem-kayitlari?type=comment"
@@ -581,6 +663,10 @@ export default async function AdminLogsPage({
                                 Tüm işlemler
                             </option>
 
+                            <option value="topic">
+                                Konu işlemleri
+                            </option>
+
                             <option value="comment">
                                 Yorum işlemleri
                             </option>
@@ -619,11 +705,13 @@ export default async function AdminLogsPage({
                         </span>
 
                         <h2>
-                            {selectedType === "comment"
-                                ? "Yorum İşlemleri"
-                                : selectedType === "report"
-                                    ? "Şikâyet İşlemleri"
-                                    : "Son İşlemler"}
+                            {selectedType === "topic"
+                                ? "Konu İşlemleri"
+                                : selectedType === "comment"
+                                    ? "Yorum İşlemleri"
+                                    : selectedType === "report"
+                                        ? "Şikâyet İşlemleri"
+                                        : "Son İşlemler"}
                         </h2>
                     </div>
 
@@ -657,6 +745,24 @@ export default async function AdminLogsPage({
                                     profileMap.get(
                                         log.actor_id
                                     );
+
+                                const isTopicEdit =
+                                    log.action_type ===
+                                    "topic_edited";
+
+                                const oldTopicSnapshot =
+                                    isTopicEdit
+                                        ? parseTopicEditSnapshot(
+                                            log.old_value
+                                        )
+                                        : null;
+
+                                const newTopicSnapshot =
+                                    isTopicEdit
+                                        ? parseTopicEditSnapshot(
+                                            log.new_value
+                                        )
+                                        : null;
 
                                 const commentContent =
                                     getMetadataString(
@@ -758,11 +864,13 @@ export default async function AdminLogsPage({
                                                             log.new_value
                                                         )}`}
                                                     >
-                                                        {isUserNotification
-                                                            ? "GÖNDERİLDİ"
-                                                            : getStatusName(
-                                                                log.new_value
-                                                            )}
+                                                        {isTopicEdit
+                                                            ? "DÜZENLENDİ"
+                                                            : isUserNotification
+                                                                ? "GÖNDERİLDİ"
+                                                                : getStatusName(
+                                                                    log.new_value
+                                                                )}
                                                     </span>
                                                 </div>
 
@@ -786,35 +894,40 @@ export default async function AdminLogsPage({
                                                     textAlign: "right",
                                                 }}
                                             >
-                                                <span
-                                                    className={
-                                                        styles.adminLogValue
-                                                    }
-                                                >
-                                                    Yeni durum:{" "}
-                                                    <strong>
-                                                        {isUserNotification
-                                                            ? "Gönderildi"
-                                                            : getStatusName(
-                                                                log.new_value
-                                                            )}
-                                                    </strong>
-                                                </span>
+                                                {!isTopicEdit ? (
+                                                    <>
+                                                        <span
+                                                            className={
+                                                                styles.adminLogValue
+                                                            }
+                                                        >
+                                                            Yeni durum:{" "}
+                                                            <strong>
+                                                                {isUserNotification
+                                                                    ? "Gönderildi"
+                                                                    : getStatusName(
+                                                                        log.new_value
+                                                                    )}
+                                                            </strong>
+                                                        </span>
 
-                                                <span
-                                                    className={
-                                                        styles.adminLogValue
-                                                    }
-                                                >
-                                                    Önceki durum:{" "}
-                                                    <strong>
-                                                        {isUserNotification
-                                                            ? "-"
-                                                            : getStatusName(
-                                                                log.old_value
-                                                            )}
-                                                    </strong>
-                                                </span>
+                                                        <span
+                                                            className={
+                                                                styles.adminLogValue
+                                                            }
+                                                        >
+                                                            Önceki durum:{" "}
+                                                            <strong>
+                                                                {isUserNotification
+                                                                    ? "-"
+                                                                    : getStatusName(
+                                                                        log.old_value
+                                                                    )}
+                                                            </strong>
+                                                        </span>
+
+                                                    </>
+                                                ) : null}
 
                                                 <small>
                                                     {formatDate(
@@ -874,6 +987,90 @@ export default async function AdminLogsPage({
                                             ) : null}
                                         </div>
 
+                                        {isTopicEdit &&
+                                            oldTopicSnapshot &&
+                                            newTopicSnapshot ? (
+                                            <div
+                                                style={{
+                                                    display: "grid",
+                                                    gridTemplateColumns:
+                                                        "repeat(2, minmax(0, 1fr))",
+                                                    gap: 14,
+                                                    marginTop: 14,
+                                                }}
+                                            >
+                                                <div
+                                                    className={
+                                                        styles.reportResolutionBox
+                                                    }
+                                                >
+                                                    <span>ÖNCEKİ HALİ</span>
+
+                                                    <strong
+                                                        style={{
+                                                            display: "block",
+                                                            marginTop: 8,
+                                                        }}
+                                                    >
+                                                        {oldTopicSnapshot.title ??
+                                                            "-"}
+                                                    </strong>
+
+                                                    <p
+                                                        style={{
+                                                            whiteSpace: "pre-wrap",
+                                                            marginTop: 10,
+                                                        }}
+                                                    >
+                                                        {getPlainTextFromHtml(
+                                                            oldTopicSnapshot.content
+                                                        )}
+                                                    </p>
+
+                                                    <small>
+                                                        Kategori ID:{" "}
+                                                        {oldTopicSnapshot.category_id ??
+                                                            "-"}
+                                                    </small>
+                                                </div>
+
+                                                <div
+                                                    className={
+                                                        styles.reportResolutionBox
+                                                    }
+                                                >
+                                                    <span>YENİ HALİ</span>
+
+                                                    <strong
+                                                        style={{
+                                                            display: "block",
+                                                            marginTop: 8,
+                                                        }}
+                                                    >
+                                                        {newTopicSnapshot.title ??
+                                                            "-"}
+                                                    </strong>
+
+                                                    <p
+                                                        style={{
+                                                            whiteSpace: "pre-wrap",
+                                                            marginTop: 10,
+                                                        }}
+                                                    >
+                                                        {getPlainTextFromHtml(
+                                                            newTopicSnapshot.content
+                                                        )}
+                                                    </p>
+
+                                                    <small>
+                                                        Kategori ID:{" "}
+                                                        {newTopicSnapshot.category_id ??
+                                                            "-"}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        ) : null}
+
                                         {isUserNotification ? (
                                             <div
                                                 className={
@@ -916,7 +1113,7 @@ export default async function AdminLogsPage({
 
                                                         <strong>
                                                             {notificationType ===
-                                                            "system"
+                                                                "system"
                                                                 ? "Sistem bildirimi"
                                                                 : notificationType ??
                                                                 "Bildirim"}
