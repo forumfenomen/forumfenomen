@@ -95,7 +95,7 @@ export default async function EditAdminTopicPage({ params, searchParams }: PageP
   const topicId = routeParams.id;
 
   const { supabase } =
-  await requireAdminAccess();
+    await requireAdminAccess();
 
   const [topicResult, profilesResult, groupsResult, categoriesResult] = await Promise.all([
     supabase
@@ -166,14 +166,18 @@ export default async function EditAdminTopicPage({ params, searchParams }: PageP
   async function updateAdminTopic(formData: FormData) {
     "use server";
 
-    await requireAdminAccess();
-    const adminSupabase = createAdminClient();
+    const { supabase } =
+      await requireAdminAccess();
 
-    const currentTopicResult = await adminSupabase
-      .from("topics")
-      .select(`id, author_id, content_profile_id`)
-      .eq("id", topicId)
-      .maybeSingle();
+    const adminSupabase =
+      createAdminClient();
+
+    const currentTopicResult =
+      await supabase
+        .from("topics")
+        .select(`id, author_id, content_profile_id`)
+        .eq("id", topicId)
+        .maybeSingle();
 
     if (currentTopicResult.error || !currentTopicResult.data) {
       redirect(`/admin/konular/${topicId}?error=not_found`);
