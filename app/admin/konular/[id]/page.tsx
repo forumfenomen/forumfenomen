@@ -94,11 +94,11 @@ export default async function EditAdminTopicPage({ params, searchParams }: PageP
   const queryParams = await searchParams;
   const topicId = routeParams.id;
 
+  const { supabase } =
   await requireAdminAccess();
-  const adminSupabase = createAdminClient();
 
   const [topicResult, profilesResult, groupsResult, categoriesResult] = await Promise.all([
-    adminSupabase
+    supabase
       .from("topics")
       .select(`
         id,
@@ -111,7 +111,7 @@ export default async function EditAdminTopicPage({ params, searchParams }: PageP
       .eq("id", topicId)
       .maybeSingle(),
 
-    adminSupabase
+    supabase
       .from("content_profiles")
       .select(`
         id,
@@ -124,13 +124,13 @@ export default async function EditAdminTopicPage({ params, searchParams }: PageP
       .eq("is_archived", false)
       .order("created_at", { ascending: true }),
 
-    adminSupabase
+    supabase
       .from("category_groups")
       .select(`id, name, sort_order`)
       .eq("is_active", true)
       .order("sort_order", { ascending: true }),
 
-    adminSupabase
+    supabase
       .from("categories")
       .select(`id, group_id, name, sort_order`)
       .eq("is_active", true)
