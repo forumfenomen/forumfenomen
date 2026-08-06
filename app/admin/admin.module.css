@@ -7233,3 +7233,156 @@
 }
 
 /* ADMIN MOBILE SEARCH INLINE FIX END */
+
+/* ADMIN REPORTS MOBILE COMPACT V3 START */
+
+@media (max-width: 620px) {
+  .adminReportList {
+    gap: 8px;
+  }
+
+  .adminReportCard {
+    padding: 12px;
+
+    border-radius: 15px;
+  }
+
+  .adminReportTop {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1fr) auto;
+
+    align-items: start;
+    gap: 7px 10px;
+  }
+
+  .adminReportTop > div:first-child {
+    min-width: 0;
+  }
+
+  .adminReportReason {
+    margin-bottom: 0;
+    padding: 5px 8px;
+
+    font-size: 8.5px;
+    line-height: 1.2;
+  }
+
+  .adminReportTop strong {
+    margin-top: 7px !important;
+    padding-left: 0 !important;
+
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  .adminReportTopMeta {
+    display: flex;
+    min-width: max-content;
+
+    flex-direction: column;
+    align-items: flex-end;
+
+    text-align: right;
+  }
+
+  .adminReportStatus {
+    padding: 5px 8px;
+
+    font-size: 8.5px;
+  }
+
+  .adminReportTopMeta small {
+    margin-top: 5px;
+
+    font-size: 8px;
+    white-space: nowrap;
+  }
+
+  .reportedCommentBox,
+  .reportDetailsBox,
+  .reportResolutionBox {
+    margin-top: 9px;
+    padding: 10px 11px;
+
+    border-radius: 11px;
+  }
+
+  .reportedCommentHeader {
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .reportedCommentHeader span {
+    font-size: 8.5px;
+  }
+
+  .reportedCommentHeader strong {
+    max-width: 46%;
+
+    overflow: hidden;
+
+    font-size: 9px;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .reportedCommentBox p,
+  .reportDetailsBox p,
+  .reportResolutionBox p {
+    margin-top: 7px;
+
+    font-size: 11px;
+    line-height: 1.48;
+  }
+
+  .reportTopicLink {
+    margin-top: 7px;
+
+    font-size: 9.5px;
+    line-height: 1.4;
+  }
+
+  .reportDetailsBox span,
+  .reportResolutionBox span {
+    font-size: 8.5px;
+  }
+
+  .reportResolutionBox small {
+    margin-top: 7px;
+
+    font-size: 8px;
+    line-height: 1.4;
+  }
+
+  .adminReportFooter {
+    display: flex;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 8px;
+
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+
+  .adminReportFooter > span {
+    font-size: 8.5px;
+    line-height: 1.35;
+  }
+
+  .reportActions {
+    justify-content: flex-end;
+    gap: 5px;
+  }
+
+  .reportClosedText {
+    font-size: 9px;
+    white-space: nowrap;
+  }
+}
+
+/* ADMIN REPORTS MOBILE COMPACT V3 END */
