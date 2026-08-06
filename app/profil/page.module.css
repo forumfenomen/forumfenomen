@@ -652,6 +652,52 @@
   grid-column: 1 / -1;
 }
 
+.profileSaveError {
+  grid-column: 1 / -1;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 11px 13px;
+
+  color: #ffb7bf;
+
+  border:
+    1px solid rgba(255, 91, 109, 0.28);
+  border-radius: 12px;
+
+  background:
+    rgba(255, 73, 94, 0.08);
+}
+
+.profileSaveError > span {
+  display: grid;
+  width: 22px;
+  height: 22px;
+
+  flex: 0 0 22px;
+  place-items: center;
+
+  color: #ffffff;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 73, 94, 0.32);
+
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.profileSaveError p {
+  margin: 0;
+
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
 .formActions {
   grid-column: 1 / -1;
 

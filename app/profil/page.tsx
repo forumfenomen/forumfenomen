@@ -676,6 +676,9 @@ export default function ProfilePage() {
   const [savedMessage, setSavedMessage] =
     useState(false);
 
+  const [profileSaveError, setProfileSaveError] =
+    useState("");
+
   const [isSaving, setIsSaving] =
     useState(false);
 
@@ -1059,9 +1062,9 @@ export default function ProfilePage() {
         profile?.username_is_temporary === true
       );
 
-            const databaseAvatar =
+      const databaseAvatar =
         typeof profile?.avatar_url === "string" &&
-        profile.avatar_url.trim()
+          profile.avatar_url.trim()
           ? profile.avatar_url.trim()
           : null;
 
@@ -2746,6 +2749,14 @@ export default function ProfilePage() {
     window.location.assign("/giris");
   }
 
+  function closeProfileEditor() {
+    setEditOpen(false);
+    setProfileSaveError("");
+    setUsernameError("");
+
+    window.location.reload();
+  }
+
   async function handleProfileSave(
     event: FormEvent<HTMLFormElement>
   ) {
@@ -2924,9 +2935,23 @@ export default function ProfilePage() {
           updateError
         );
 
-        window.alert(
-          "Profil bilgileri kaydedilemedi. Lütfen tekrar dene."
-        );
+        const errorMessage =
+          updateError.message ?? "";
+
+        if (
+          errorMessage.includes(
+            "profiles_display_name_not_reserved"
+          )
+        ) {
+          setProfileSaveError(
+            "Bu görünen ad ForumFenomen yönetimi için ayrılmıştır."
+          );
+        } else {
+          setProfileSaveError(
+            "Profil bilgileri kaydedilemedi. Lütfen tekrar dene."
+          );
+        }
+
         return;
       }
 
@@ -4825,9 +4850,7 @@ export default function ProfilePage() {
 
               <button
                 type="button"
-                onClick={() =>
-                  setEditOpen(false)
-                }
+                onClick={closeProfileEditor}
                 aria-label={t.close}
               >
                 <CloseIcon />
@@ -4955,13 +4978,21 @@ export default function ProfilePage() {
                 </div>
               </div>
 
+              {profileSaveError ? (
+                <div
+                  className={styles.profileSaveError}
+                  role="alert"
+                >
+                  <span>!</span>
+                  <p>{profileSaveError}</p>
+                </div>
+              ) : null}
+
               <div className={styles.formActions}>
                 <button
                   type="button"
                   disabled={isSaving}
-                  onClick={() =>
-                    setEditOpen(false)
-                  }
+                  onClick={closeProfileEditor}
                 >
                   {t.cancel}
                 </button>
