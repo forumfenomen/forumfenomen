@@ -2535,16 +2535,15 @@ export default function CreateTopicPage() {
                   {t.subcategoryTitle}
                 </span>
 
-
                 <span
                   className={
-                    contentValid
+                    titleValid
                       ? styles.completed
                       : ""
                   }
                 >
                   <CheckIcon />
-                  {t.contentTitle}
+                  {t.topicTitle}
                 </span>
               </div>
             </section>
