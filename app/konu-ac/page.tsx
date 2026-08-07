@@ -151,7 +151,7 @@ const translations = {
     contentPlaceholder:
       "Sorunu, fikrini veya paylaşmak istediğin bilgiyi ayrıntılı biçimde anlat...",
     contentHint:
-      "Konunun anlaşılabilmesi için en az 40 karakter kullan.",
+      "İstersen konunla ilgili ek bilgi veya açıklama yazabilirsin.",
     tagsTitle: "Etiketler",
     tagsPlaceholder: "Etiket yaz ve Enter'a bas",
     tagsHint: "En fazla 5 etiket ekleyebilirsin.",
@@ -208,7 +208,7 @@ const translations = {
     educationNote:
       "Eğitim programları yakında açıklanacak. Eğitimle ilgili fikir ve beklentilerini bu kategoride paylaşabilirsin.",
     allFieldsNotice:
-      "Yayınlamadan önce başlık ve içerik alanlarını tamamla.",
+      "Yayınlamak için kategori, alt kategori ve konu başlığını tamamla.",
     home: "Ana Sayfa",
     categories: "Kategoriler",
     createTopic: "Konu Oluştur",
@@ -241,7 +241,7 @@ const translations = {
     contentPlaceholder:
       "Describe your question, idea or information in detail...",
     contentHint:
-      "Use at least 40 characters so the topic can be understood.",
+      "Add extra details or context if you want.",
     tagsTitle: "Tags",
     tagsPlaceholder: "Type a tag and press Enter",
     tagsHint: "You can add up to 5 tags.",
@@ -298,7 +298,7 @@ const translations = {
     educationNote:
       "Training programs will be announced soon. You can share your ideas and expectations about education in this category.",
     allFieldsNotice:
-      "Complete the title and content fields before publishing.",
+      "Complete the category, subcategory and topic title before publishing.",
     home: "Home",
     categories: "Categories",
     createTopic: "Create Topic",
@@ -910,6 +910,12 @@ export default function CreateTopicPage() {
   const [emojiMenuOpen, setEmojiMenuOpen] =
     useState(false);
 
+  const [boldActive, setBoldActive] =
+    useState(false);
+
+  const [italicActive, setItalicActive] =
+    useState(false);
+
   const [loginNotice, setLoginNotice] =
     useState(false);
 
@@ -1161,15 +1167,13 @@ export default function CreateTopicPage() {
     Boolean(selectedCategory),
     subcategoryValid,
     titleValid,
-    contentValid,
   ].filter(Boolean).length;
 
   const progress =
-    completedSteps * 25;
+    Math.round((completedSteps / 3) * 100);
 
   const canPublish =
     titleValid &&
-    contentValid &&
     subcategoryValid;
 
   const activeSubcategoryLabel =
@@ -1257,6 +1261,15 @@ export default function CreateTopicPage() {
     );
 
     setContent(editor.innerHTML);
+
+    setBoldActive(
+      document.queryCommandState("bold")
+    );
+
+    setItalicActive(
+      document.queryCommandState("italic")
+    );
+
     rememberEditorSelection();
   }
 
@@ -1914,9 +1927,15 @@ export default function CreateTopicPage() {
                 <div className={styles.toolbar}>
                   <button
                     type="button"
+                    className={
+                      boldActive
+                        ? styles.toolbarActive
+                        : ""
+                    }
                     onClick={() =>
                       applyEditorCommand("bold")
                     }
+                    aria-pressed={boldActive}
                     aria-label="Bold"
                     title={
                       language === "tr"
@@ -1929,9 +1948,15 @@ export default function CreateTopicPage() {
 
                   <button
                     type="button"
+                    className={
+                      italicActive
+                        ? styles.toolbarActive
+                        : ""
+                    }
                     onClick={() =>
                       applyEditorCommand("italic")
                     }
+                    aria-pressed={italicActive}
                     aria-label="Italic"
                     title={
                       language === "tr"
@@ -2510,16 +2535,6 @@ export default function CreateTopicPage() {
                   {t.subcategoryTitle}
                 </span>
 
-                <span
-                  className={
-                    titleValid
-                      ? styles.completed
-                      : ""
-                  }
-                >
-                  <CheckIcon />
-                  {t.topicTitle}
-                </span>
 
                 <span
                   className={

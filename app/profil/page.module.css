@@ -6959,8 +6959,8 @@
 .mobileManagementLink {
   display: inline-flex;
 
-  height: 39px;
-  min-height: 39px;
+  height: 39px !important;
+  min-height: 39px !important;
   min-width: 126px;
 
   flex: 0 0 auto;
@@ -6979,7 +6979,7 @@
   background:
     rgba(120, 25, 150, 0.18);
 
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 760;
   line-height: 1;
   text-decoration: none;
