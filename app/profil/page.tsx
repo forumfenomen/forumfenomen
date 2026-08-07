@@ -34,7 +34,9 @@ type ProfileRole =
 type VisibilityOption =
   | "public"
   | "followers"
-  | "following";
+  | "following"
+  | "nobody";
+
 
 type SectionId =
   | "profile"
@@ -1127,28 +1129,32 @@ export default function ProfilePage() {
 
       setFollowersVisibility(
         profile?.followers_visibility === "followers" ||
-          profile?.followers_visibility === "following"
+          profile?.followers_visibility === "following" ||
+          profile?.followers_visibility === "nobody"
           ? profile.followers_visibility
           : "public"
       );
 
       setFollowingVisibility(
         profile?.following_visibility === "followers" ||
-          profile?.following_visibility === "following"
+          profile?.following_visibility === "following" ||
+          profile?.following_visibility === "nobody"
           ? profile.following_visibility
           : "public"
       );
 
       setCommentsVisibility(
         profile?.comments_visibility === "followers" ||
-          profile?.comments_visibility === "following"
+          profile?.comments_visibility === "following" ||
+          profile?.comments_visibility === "nobody"
           ? profile.comments_visibility
           : "public"
       );
 
       setLikesVisibility(
         profile?.likes_visibility === "followers" ||
-          profile?.likes_visibility === "following"
+          profile?.likes_visibility === "following" ||
+          profile?.likes_visibility === "nobody"
           ? profile.likes_visibility
           : "public"
       );
@@ -4178,6 +4184,12 @@ export default function ProfilePage() {
         : "People I Follow Only";
     }
 
+    if (value === "nobody") {
+      return language === "tr"
+        ? "Hiç Kimse"
+        : "Nobody";
+    }
+
     return language === "tr"
       ? "Herkese Açık"
       : "Public";
@@ -4368,6 +4380,8 @@ export default function ProfilePage() {
                     ? "Sadece Takip Ettiklerim"
                     : "People I Follow Only"}
                 </option>
+
+
               </select>
             </label>
 
@@ -4412,6 +4426,14 @@ export default function ProfilePage() {
                     ? "Sadece Takip Ettiklerim"
                     : "People I Follow Only"}
                 </option>
+
+                <option value="nobody">
+                  {language === "tr"
+                    ? "Hiç Kimse"
+                    : "Nobody"}
+                </option>
+
+
               </select>
             </label>
 
@@ -4455,6 +4477,12 @@ export default function ProfilePage() {
                   {language === "tr"
                     ? "Sadece Takip Ettiklerim"
                     : "People I Follow Only"}
+                </option>
+
+                <option value="nobody">
+                  {language === "tr"
+                    ? "Hiç Kimse"
+                    : "Nobody"}
                 </option>
               </select>
             </label>
@@ -4500,6 +4528,13 @@ export default function ProfilePage() {
                     ? "Sadece Takip Ettiklerim"
                     : "People I Follow Only"}
                 </option>
+
+                <option value="nobody">
+                  {language === "tr"
+                    ? "Hiç Kimse"
+                    : "Nobody"}
+                </option>
+
               </select>
             </label>
 
@@ -4544,6 +4579,13 @@ export default function ProfilePage() {
                     ? "Sadece Takip Ettiklerim"
                     : "People I Follow Only"}
                 </option>
+
+                <option value="nobody">
+                  {language === "tr"
+                    ? "Hiç Kimse"
+                    : "Nobody"}
+                </option>
+
               </select>
             </label>
 
