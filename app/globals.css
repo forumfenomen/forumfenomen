@@ -14346,3 +14346,16 @@ html[data-theme="light"] .ff-feed-page .ff-insight-grid button span {
 }
 
 /* FEED DESKTOP FOOTER GAP ALIGNMENT END */
+
+/* TOPIC TITLE LONG WORD FIX */
+
+.ff-topic-main {
+  min-width: 0 !important;
+}
+
+.ff-topic-main h3 {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
