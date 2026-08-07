@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/client";
@@ -26,10 +26,17 @@ export default function UserPlusAccessActions({
   const [isSaving, setIsSaving] =
     useState(false);
 
+  const [currentAccess, setCurrentAccess] =
+    useState(hasPlusAccess);
+
+  useEffect(() => {
+    setCurrentAccess(hasPlusAccess);
+  }, [hasPlusAccess]);
+
   const [errorMessage, setErrorMessage] =
     useState<string | null>(null);
 
-  const nextAccess = !hasPlusAccess;
+  const nextAccess = !currentAccess;
 
   function openModal() {
     setErrorMessage(null);
@@ -52,7 +59,7 @@ export default function UserPlusAccessActions({
     try {
       const supabase = createClient();
 
-      const { error } = await supabase.rpc(
+      const { data, error } = await supabase.rpc(
         "admin_update_user_plus_access",
         {
           p_user_id: userId,
@@ -64,13 +71,28 @@ export default function UserPlusAccessActions({
         throw error;
       }
 
+      const updatedAccess =
+        Array.isArray(data) &&
+          data.length > 0 &&
+          typeof data[0]?.plus_access === "boolean"
+          ? data[0].plus_access
+          : nextAccess;
+
+      setCurrentAccess(updatedAccess);
+
       setIsModalOpen(false);
+
       router.refresh();
     } catch (error) {
       const message =
         error instanceof Error
           ? error.message
-          : "Plus erişimi güncellenemedi.";
+          : typeof error === "object" &&
+            error !== null &&
+            "message" in error &&
+            typeof error.message === "string"
+            ? error.message
+            : "Plus erişimi güncellenemedi.";
 
       const translatedMessage =
         message.includes("ADMIN_REQUIRED")
@@ -80,8 +102,8 @@ export default function UserPlusAccessActions({
             : message.includes("USER_NOT_FOUND")
               ? "Kullanıcı bulunamadı."
               : message.includes(
-                    "PLUS_ACCESS_ALREADY_SET"
-                  )
+                "PLUS_ACCESS_ALREADY_SET"
+              )
                 ? "Plus erişimi zaten bu durumda."
                 : message;
 
@@ -96,12 +118,12 @@ export default function UserPlusAccessActions({
       <div className={styles.userPlusAccess}>
         <span
           className={
-            hasPlusAccess
+            currentAccess
               ? styles.userPlusStatusActive
               : styles.userPlusStatusInactive
           }
         >
-          {hasPlusAccess
+          {currentAccess
             ? "PLUS AÇIK"
             : "PLUS KAPALI"}
         </span>
@@ -109,13 +131,13 @@ export default function UserPlusAccessActions({
         <button
           type="button"
           className={
-            hasPlusAccess
+            currentAccess
               ? styles.userPlusDisableButton
               : styles.userPlusEnableButton
           }
           onClick={openModal}
         >
-          {hasPlusAccess
+          {currentAccess
             ? "Plus kapat"
             : "Plus aç"}
         </button>
