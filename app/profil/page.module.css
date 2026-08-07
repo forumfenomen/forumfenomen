@@ -671,7 +671,7 @@
     rgba(255, 73, 94, 0.08);
 }
 
-.profileSaveError > span {
+.profileSaveError>span {
   display: grid;
   width: 22px;
   height: 22px;
@@ -5312,9 +5312,7 @@
   overflow-y: auto;
 
   padding:
-    max(20px, env(safe-area-inset-top))
-    14px
-    calc(28px + env(safe-area-inset-bottom));
+    max(20px, env(safe-area-inset-top)) 14px calc(28px + env(safe-area-inset-bottom));
 
   background: rgba(2, 3, 10, 0.82);
   backdrop-filter: blur(9px);
@@ -5339,16 +5337,12 @@
   border-radius: 24px;
 
   background:
-    radial-gradient(
-      circle at 50% -20%,
+    radial-gradient(circle at 50% -20%,
       rgba(218, 56, 232, 0.14),
-      transparent 38%
-    ),
-    linear-gradient(
-      180deg,
+      transparent 38%),
+    linear-gradient(180deg,
       rgba(24, 10, 32, 0.99),
-      rgba(7, 8, 20, 0.99)
-    );
+      rgba(7, 8, 20, 0.99));
 
   box-shadow:
     0 32px 90px rgba(0, 0, 0, 0.55),
@@ -5482,11 +5476,9 @@
     rgba(218, 77, 232, 0.47) !important;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(215, 58, 230, 0.16),
-      rgba(78, 101, 255, 0.12)
-    ) !important;
+      rgba(78, 101, 255, 0.12)) !important;
 
   box-shadow:
     0 0 19px rgba(211, 57, 227, 0.08);
@@ -5502,7 +5494,7 @@
   text-align: left;
 }
 
-.profileReportField > span {
+.profileReportField>span {
   display: block;
 
   margin-bottom: 8px;
@@ -5549,7 +5541,7 @@
   color: #686b77;
 }
 
-.profileReportField > small {
+.profileReportField>small {
   position: absolute;
   right: 10px;
   bottom: 8px;
@@ -5623,11 +5615,9 @@
     1px solid rgba(217, 74, 231, 0.3);
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(211, 57, 229, 0.9),
-      rgba(76, 98, 247, 0.9)
-    );
+      rgba(76, 98, 247, 0.9));
 
   box-shadow:
     0 12px 28px rgba(153, 53, 211, 0.14);
@@ -5638,11 +5628,9 @@
     rgba(229, 102, 239, 0.46);
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(221, 65, 237, 1),
-      rgba(84, 106, 255, 1)
-    );
+      rgba(84, 106, 255, 1));
 }
 
 .profileReportCancelButton {
@@ -5677,39 +5665,32 @@
   justify-content: center;
 }
 
-.profileReportSuccessActions
-.profileReportSubmitButton {
+.profileReportSuccessActions .profileReportSubmitButton {
   width: min(100%, 235px);
 }
 
-:global(html[data-theme="light"])
-.profileReportModal {
+:global(html[data-theme="light"]) .profileReportModal {
   color: #292832;
 
   border-color:
     rgba(112, 43, 135, 0.18);
 
   background:
-    radial-gradient(
-      circle at 50% -20%,
+    radial-gradient(circle at 50% -20%,
       rgba(218, 56, 232, 0.08),
-      transparent 38%
-    ),
+      transparent 38%),
     #ffffff;
 }
 
-:global(html[data-theme="light"])
-.profileReportModal h2 {
+:global(html[data-theme="light"]) .profileReportModal h2 {
   color: #292832;
 }
 
-:global(html[data-theme="light"])
-.profileReportDescription {
+:global(html[data-theme="light"]) .profileReportDescription {
   color: #747481;
 }
 
-:global(html[data-theme="light"])
-.profileReportReasonGrid button {
+:global(html[data-theme="light"]) .profileReportReasonGrid button {
   color: #696a76;
 
   border-color:
@@ -5719,8 +5700,7 @@
     rgba(42, 37, 65, 0.025);
 }
 
-:global(html[data-theme="light"])
-.profileReportField textarea {
+:global(html[data-theme="light"]) .profileReportField textarea {
   color: #292832;
 
   border-color:
@@ -5730,8 +5710,7 @@
     rgba(42, 37, 65, 0.025);
 }
 
-:global(html[data-theme="light"])
-.profileReportCancelButton {
+:global(html[data-theme="light"]) .profileReportCancelButton {
   color: #656572;
 
   border-color:
@@ -5760,9 +5739,7 @@
     overflow: visible;
 
     margin:
-      max(12px, env(safe-area-inset-top))
-      auto
-      24px;
+      max(12px, env(safe-area-inset-top)) auto 24px;
 
     padding: 24px 18px;
   }
@@ -6784,17 +6761,13 @@
   border-radius: 16px;
 
   background:
-    radial-gradient(
-      circle at 15% 0%,
+    radial-gradient(circle at 15% 0%,
       rgba(60, 206, 255, 0.34),
-      transparent 42%
-    ),
-    linear-gradient(
-      135deg,
+      transparent 42%),
+    linear-gradient(135deg,
       #0879e8,
       #315cff 52%,
-      #6538e8
-    );
+      #6538e8);
 
   box-shadow:
     0 12px 30px rgba(24, 103, 255, 0.24),
@@ -6822,12 +6795,10 @@
   height: 170%;
 
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       transparent,
       rgba(255, 255, 255, 0.25),
-      transparent
-    );
+      transparent);
 
   transform: rotate(18deg);
   pointer-events: none;
@@ -6867,17 +6838,37 @@
 }
 
 .plusMembershipIcon svg {
-  width: 21px;
-  height: 21px;
+  width: 26px;
+  height: 26px;
+  overflow: visible;
+}
 
+.plusCrownIcon {
+  display: block;
+}
+
+.plusCrownFill,
+.plusCrownDot,
+.plusCrownBase {
+  fill: #ffd34f;
+  stroke: none;
+}
+
+.plusCrownBadge {
+  fill: #315cff;
+  stroke: #ffd34f;
+  stroke-width: 1.8;
+}
+
+.plusCrownPlus {
   fill: none;
-  stroke: currentColor;
-  stroke-width: 1.65;
+  stroke: #ffd34f;
+  stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-.plusMembershipButton > svg {
+.plusMembershipButton>svg {
   width: 18px;
   height: 18px;
 
@@ -6912,17 +6903,11 @@
   }
 
   .plusMembershipIcon svg {
-  width: 21px;
-  height: 21px;
+    width: 23px;
+    height: 23px;
+  }
 
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.65;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-  .plusMembershipButton > svg {
+  .plusMembershipButton>svg {
     width: 17px;
     height: 17px;
   }
@@ -6950,13 +6935,13 @@
  */
 
 @media (min-width: 681px) {
-  .profileSidebar > .plusMembershipButton {
+  .profileSidebar>.plusMembershipButton {
     order: -1;
 
     margin-bottom: 2px;
   }
 
-  .profileSidebar > .profileMenuWrap {
+  .profileSidebar>.profileMenuWrap {
     order: 0;
   }
 }
@@ -6966,8 +6951,9 @@
  */
 
 @media (max-width: 680px) {
-  .profileSidebar > .plusMembershipButton,
-  .profileSidebar > .profileMenuWrap {
+
+  .profileSidebar>.plusMembershipButton,
+  .profileSidebar>.profileMenuWrap {
     order: initial;
   }
 }
@@ -7008,7 +6994,7 @@
   white-space: nowrap;
 }
 
-.mobileManagementLink > svg {
+.mobileManagementLink>svg {
   width: 16px;
   height: 16px;
 
@@ -7054,11 +7040,9 @@
   color: #ffffff;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       rgba(209, 45, 229, 0.14),
-      rgba(52, 107, 255, 0.1)
-    );
+      rgba(52, 107, 255, 0.1));
 }
 
 .desktopManagementLink .menuIcon {
@@ -7075,7 +7059,7 @@
     rgba(255, 255, 255, 0.025);
 }
 
-.desktopManagementLink > svg,
+.desktopManagementLink>svg,
 .desktopManagementLink .menuIcon svg {
   width: 17px;
   height: 17px;
@@ -7121,11 +7105,9 @@
     border-radius: 11px;
 
     background:
-      linear-gradient(
-        135deg,
+      linear-gradient(135deg,
         rgba(210, 47, 231, 0.15),
-        rgba(56, 105, 255, 0.11)
-      );
+        rgba(56, 105, 255, 0.11));
 
     font-size: 9px;
     font-weight: 750;
@@ -7134,7 +7116,7 @@
     white-space: nowrap;
   }
 
-  .mobileManagementLink > svg {
+  .mobileManagementLink>svg {
     width: 16px;
     height: 16px;
     flex: 0 0 16px;

@@ -5154,13 +5154,65 @@ export default function ProfilePage() {
                     className={styles.plusMembershipIcon}
                     aria-hidden="true"
                   >
-                    <svg viewBox="0 0 24 24">
-                      <path d="M7.2 5.5h7.6" />
-                      <path d="M7.2 5.5v13" />
-                      <path d="M7.2 11.7h6.2" />
-                      <path d="M17.7 7.2v4.6" />
-                      <path d="M15.4 9.5H20" />
-                      <path d="M12 2.8 20 7v10l-8 4.2L4 17V7l8-4.2Z" />
+                    <svg
+                      viewBox="0 0 32 32"
+                      className={styles.plusCrownIcon}
+                    >
+                      <path
+                        className={styles.plusCrownFill}
+                        d="
+        M5.3 10.2
+        L10.2 14.1
+        L15.9 7.2
+        L21.7 14.1
+        L26.7 10.2
+        L24.6 21
+        H7.4
+        Z
+      "
+                      />
+
+                      <circle
+                        className={styles.plusCrownDot}
+                        cx="5.2"
+                        cy="9.3"
+                        r="1.7"
+                      />
+
+                      <circle
+                        className={styles.plusCrownDot}
+                        cx="15.9"
+                        cy="6.2"
+                        r="1.7"
+                      />
+
+                      <circle
+                        className={styles.plusCrownDot}
+                        cx="26.8"
+                        cy="9.3"
+                        r="1.7"
+                      />
+
+                      <rect
+                        className={styles.plusCrownBase}
+                        x="7"
+                        y="22"
+                        width="15"
+                        height="2.7"
+                        rx="1.35"
+                      />
+
+                      <circle
+                        className={styles.plusCrownBadge}
+                        cx="24.2"
+                        cy="23.3"
+                        r="5.2"
+                      />
+
+                      <path
+                        className={styles.plusCrownPlus}
+                        d="M24.2 20.2v6.2M21.1 23.3h6.2"
+                      />
                     </svg>
                   </span>
 
