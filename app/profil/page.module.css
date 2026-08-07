@@ -6543,7 +6543,10 @@
 
     transform: translateY(-50%);
 
-    pointer-events: none;
+    pointer-events: auto;
+    cursor: pointer;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
 
     animation:
       profileMenuArrowMove 1.5s ease-in-out infinite;
@@ -6938,7 +6941,7 @@
   .profileSidebar>.plusMembershipButton {
     order: -1;
 
-    margin-bottom: 2px;
+    margin-bottom: -4px;
   }
 
   .profileSidebar>.profileMenuWrap {

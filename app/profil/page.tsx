@@ -5137,12 +5137,32 @@ export default function ProfilePage() {
                   ))}
                 </nav>
 
-                <span
+                <button
+                  type="button"
                   className={styles.profileMenuArrow}
-                  aria-hidden="true"
+                  aria-label={
+                    language === "tr"
+                      ? "Menüyü sağa kaydır"
+                      : "Scroll menu right"
+                  }
+                  onClick={() => {
+                    const menu =
+                      document.querySelector<HTMLElement>(
+                        `.${styles.profileMenu}`
+                      );
+
+                    if (!menu) {
+                      return;
+                    }
+
+                    menu.scrollBy({
+                      left: Math.max(menu.clientWidth * 0.72, 180),
+                      behavior: "smooth",
+                    });
+                  }}
                 >
                   <ChevronIcon />
-                </span>
+                </button>
               </div>
 
               {canSeePlus ? (
