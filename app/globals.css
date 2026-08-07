@@ -14359,3 +14359,26 @@ html[data-theme="light"] .ff-feed-page .ff-insight-grid button span {
   overflow-wrap: anywhere !important;
   word-break: break-word !important;
 }
+
+/* BOTTOM NAV DESCENDER TEXT FIX START */
+
+.ff-bottom-nav > a:not(.ff-center-nav-button) {
+  line-height: 1.2 !important;
+}
+
+.ff-bottom-nav > a:not(.ff-center-nav-button) > span {
+  display: block !important;
+
+  max-width: 100% !important;
+
+  line-height: 1.25 !important;
+
+  overflow: visible !important;
+
+  padding-bottom: 2px !important;
+
+  white-space: nowrap !important;
+  text-overflow: clip !important;
+}
+
+/* BOTTOM NAV DESCENDER TEXT FIX END */
