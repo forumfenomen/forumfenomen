@@ -23,49 +23,49 @@ type PlusPageClientProps = {
 const translations = {
   tr: {
     premiumLabel: "FORUMFENOMEN PLUS",
-    title: "Ãœret, bÃ¼yÃ¼ ve iÅŸ birliklerini daha gÃ¼Ã§lÃ¼ yÃ¶net.",
+    title: "Üret, büyü ve iş birliklerini daha güçlü yönet.",
     description:
-      "Ä°Ã§erik Ã¼reticileri iÃ§in geliÅŸtirilen yapay zekÃ¢ destekli profesyonel araÃ§lara tek Ã¼yelikle eriÅŸ.",
-    membershipButton: "Plus ÃœyeliÄŸi YakÄ±nda",
-    firstTool: "Ä°LK PLUS ARACI",
-    assistantTitle: "Ä°ÅŸ BirliÄŸi AsistanÄ±",
+      "İçerik üreticileri için geliştirilen yapay zekâ destekli profesyonel araçlara tek üyelikle eriş.",
+    membershipButton: "Plus Üyeliği Yakında",
+    firstTool: "İLK PLUS ARACI",
+    assistantTitle: "İş Birliği Asistanı",
     assistantDescription:
-      "Marka tekliflerini analiz et, iÃ§erik bedelini hesapla ve profesyonel karÅŸÄ± teklifini saniyeler iÃ§inde hazÄ±rla.",
-    priceTitle: "FiyatÄ± Hesapla",
+      "Marka tekliflerini analiz et, içerik bedelini hesapla ve profesyonel karşı teklifini saniyeler içinde hazırla.",
+    priceTitle: "Fiyatı Hesapla",
     priceDescription:
-      "Ä°zlenme, etkileÅŸim, iÃ§erik tÃ¼rÃ¼ ve kullanÄ±m haklarÄ±na gÃ¶re teklif aralÄ±ÄŸÄ±nÄ± oluÅŸtur.",
+      "İzlenme, etkileşim, içerik türü ve kullanım haklarına göre teklif aralığını oluştur.",
     analyseTitle: "Teklifi Analiz Et",
     analyseDescription:
-      "MarkanÄ±n mesajÄ±ndaki dÃ¼ÅŸÃ¼k bÃ¼tÃ§e, uzun kullanÄ±m hakkÄ± ve belirsiz maddeleri tespit et.",
-    negotiationTitle: "PazarlÄ±ÄŸÄ±nÄ± GÃ¼Ã§lendir",
+      "Markanın mesajındaki düşük bütçe, uzun kullanım hakkı ve belirsiz maddeleri tespit et.",
+    negotiationTitle: "Pazarlığını Güçlendir",
     negotiationDescription:
-      "Profesyonel karÅŸÄ± teklif, e-posta ve DM yanÄ±tlarÄ±nÄ± hazÄ±rla.",
-    openAssistant: "AsistanÄ± AÃ§",
+      "Profesyonel karşı teklif, e-posta ve DM yanıtlarını hazırla.",
+    openAssistant: "Asistanı Aç",
     comingSoon: "YAKINDA",
-    upcomingTitle: "SÄ±radaki Plus araÃ§larÄ±",
+    upcomingTitle: "Sıradaki Plus araçları",
     hashtagTitle: "Hashtag Stratejisti",
     hashtagDescription:
-      "Ä°Ã§eriÄŸine uygun geniÅŸ, orta ve niÅŸ hashtag setleri oluÅŸtur.",
-    viralTitle: "Viral Ä°Ã§erik Bulucu",
+      "İçeriğine uygun geniş, orta ve niş hashtag setleri oluştur.",
+    viralTitle: "Viral İçerik Bulucu",
     viralDescription:
-      "YÃ¼kselen iÃ§erik fÄ±rsatlarÄ±nÄ± ve paylaÅŸÄ±m fikirlerini keÅŸfet.",
+      "Yükselen içerik fırsatlarını ve paylaşım fikirlerini keşfet.",
     profileTitle: "Profil Analizi",
     profileDescription:
-      "Profilini, bio metnini ve iÃ§erik sunumunu puanla.",
-    reelsTitle: "Reels Senaryo YazarÄ±",
+      "Profilini, bio metnini ve içerik sunumunu puanla.",
+    reelsTitle: "Reels Senaryo Yazarı",
     reelsDescription:
-      "Hook, sahne akÄ±ÅŸÄ±, ekran yazÄ±sÄ± ve CTA iÃ§eren senaryolar Ã¼ret.",
-    includedTitle: "Plus ile neler aÃ§Ä±lacak?",
-    includedOne: "Yapay zekÃ¢ destekli iÃ§erik araÃ§larÄ±",
-    includedTwo: "Ä°ÅŸ birliÄŸi fiyat ve teklif analizleri",
-    includedThree: "KayÄ±tlÄ± analiz ve Ã§alÄ±ÅŸma geÃ§miÅŸi",
-    includedFour: "Yeni Plus araÃ§larÄ±na erken eriÅŸim",
+      "Hook, sahne akışı, ekran yazısı ve CTA içeren senaryolar üret.",
+    includedTitle: "Plus ile neler açılacak?",
+    includedOne: "Yapay zekâ destekli içerik araçları",
+    includedTwo: "İş birliği fiyat ve teklif analizleri",
+    includedThree: "Kayıtlı analiz ve çalışma geçmişi",
+    includedFour: "Yeni Plus araçlarına erken erişim",
     home: "Ana Sayfa",
     categories: "Kategoriler",
-    createTopic: "Konu OluÅŸtur",
+    createTopic: "Konu Oluştur",
     blog: "Blog",
     profile: "Profil",
-    changeTheme: "TemayÄ± deÄŸiÅŸtir",
+    changeTheme: "Temayı değiştir",
   },
   en: {
     premiumLabel: "FORUMFENOMEN PLUS",
@@ -345,7 +345,7 @@ export default function PlusPageClient({
 
               {hasPlusAccess
                 ? language === "tr"
-                  ? "Plus Beta EriÅŸimin AÃ§Ä±k"
+                  ? "Plus Beta Erişimin Açık"
                   : "Plus Beta Access Active"
                 : t.membershipButton}
             </button>
@@ -428,7 +428,7 @@ export default function PlusPageClient({
               <LockIcon />
 
               {language === "tr"
-                ? "Plus Ã‡ok YakÄ±nda"
+                ? "Plus Çok Yakında"
                 : "Plus Coming Soon"}
             </button>
           )}
@@ -476,19 +476,19 @@ export default function PlusPageClient({
                 title: t.viralTitle,
                 description:
                   t.viralDescription,
-                icon: "â†—",
+                icon: "↗",
               },
               {
                 title: t.profileTitle,
                 description:
                   t.profileDescription,
-                icon: "â—",
+                icon: "◎",
               },
               {
                 title: t.reelsTitle,
                 description:
                   t.reelsDescription,
-                icon: "â–¶",
+                icon: "▶",
               },
             ].map((tool) => (
               <article key={tool.title}>

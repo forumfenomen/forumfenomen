@@ -6866,6 +6866,17 @@
   line-height: 1;
 }
 
+.plusMembershipIcon svg {
+  width: 21px;
+  height: 21px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .plusMembershipButton > svg {
   width: 18px;
   height: 18px;
@@ -6899,6 +6910,17 @@
     border-radius: 10px;
     font-size: 16px;
   }
+
+  .plusMembershipIcon svg {
+  width: 21px;
+  height: 21px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
   .plusMembershipButton > svg {
     width: 17px;

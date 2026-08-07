@@ -698,9 +698,17 @@ export default function ProfilePage() {
   const [profileRole, setProfileRole] =
     useState<ProfileRole>("user");
 
+  const [hasPlusAccess, setHasPlusAccess] =
+    useState(false);
+
   const hasManagementAccess =
     profileRole === "admin" ||
     profileRole === "moderator";
+
+  const canSeePlus =
+    profileRole === "admin" ||
+    profileRole === "moderator" ||
+    hasPlusAccess;
 
   const managementPanelLabel =
     profileRole === "admin"
@@ -994,7 +1002,8 @@ export default function ProfilePage() {
   display_name,
   username,
   role,
-   username_is_temporary,
+  plus_access,
+  username_is_temporary,
   avatar_url,
   avatar_source,
   bio,
@@ -1049,6 +1058,10 @@ export default function ProfilePage() {
           profile?.role === "moderator"
           ? profile.role
           : "user"
+      );
+
+      setHasPlusAccess(
+        profile?.plus_access === true
       );
 
       const resolvedUsername =
@@ -5090,21 +5103,30 @@ export default function ProfilePage() {
                 </span>
               </div>
 
-              <Link
-                href="/plus"
-                className={styles.plusMembershipButton}
-              >
-                <span
-                  className={styles.plusMembershipIcon}
-                  aria-hidden="true"
+              {canSeePlus ? (
+                <Link
+                  href="/plus"
+                  className={styles.plusMembershipButton}
                 >
-                  ✦
-                </span>
+                  <span
+                    className={styles.plusMembershipIcon}
+                    aria-hidden="true"
+                  >
+                    <svg viewBox="0 0 24 24">
+                      <path d="M7.2 5.5h7.6" />
+                      <path d="M7.2 5.5v13" />
+                      <path d="M7.2 11.7h6.2" />
+                      <path d="M17.7 7.2v4.6" />
+                      <path d="M15.4 9.5H20" />
+                      <path d="M12 2.8 20 7v10l-8 4.2L4 17V7l8-4.2Z" />
+                    </svg>
+                  </span>
 
-                <strong>{t.plusMembership}</strong>
+                  <strong>{t.plusMembership}</strong>
 
-                <ChevronIcon />
-              </Link>
+                  <ChevronIcon />
+                </Link>
+              ) : null}
             </aside>
 
 

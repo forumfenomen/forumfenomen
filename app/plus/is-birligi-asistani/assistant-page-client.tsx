@@ -57,225 +57,225 @@ type CreatorAnalysisResult = {
 
 const translations = {
   tr: {
-    backToPlus: "Plus'a dÃ¶n",
+    backToPlus: "Plus'a dön",
     plusTool: "FORUMFENOMEN PLUS ARACI",
-    title: "Ä°ÅŸ BirliÄŸi AsistanÄ±",
+    title: "İş Birliği Asistanı",
     description:
-      "Marka iÅŸ birliklerinde fiyatÄ±nÄ± belirle, teklifleri analiz et ve profesyonel yanÄ±tlarÄ±nÄ± hazÄ±rla.",
+      "Marka iş birliklerinde fiyatını belirle, teklifleri analiz et ve profesyonel yanıtlarını hazırla.",
     priceTab: "Fiyat Hesapla",
     analyseTab: "Teklifi Analiz Et",
-    replyTab: "YanÄ±t HazÄ±rla",
-    active: "AKTÄ°F",
+    replyTab: "Yanıt Hazırla",
+    active: "AKTİF",
     soon: "YAKINDA",
-    formTitle: "Ä°ÅŸ birliÄŸi detaylarÄ±",
-    accountAnalysisTitle: "HesabÄ±nÄ± otomatik analiz et",
+    formTitle: "İş birliği detayları",
+    accountAnalysisTitle: "Hesabını otomatik analiz et",
     accountAnalysisDescription:
-      "KullanÄ±cÄ± adÄ±nÄ± girerek eriÅŸilebilen herkese aÃ§Ä±k performans verilerini otomatik analiz et.",
-    username: "KullanÄ±cÄ± adÄ±",
+      "Kullanıcı adını girerek erişilebilen herkese açık performans verilerini otomatik analiz et.",
+    username: "Kullanıcı adı",
     usernamePlaceholder: "@kullaniciadi",
-    analyseAccount: "HesabÄ± Analiz Et",
-    connectAccount: "HesabÄ±mÄ± BaÄŸla",
-    manualEntry: "Manuel giriÅŸ",
+    analyseAccount: "Hesabı Analiz Et",
+    connectAccount: "Hesabımı Bağla",
+    manualEntry: "Manuel giriş",
     automaticAnalysis: "Otomatik analiz",
-    analysisPreview: "Analiz sonucu burada gÃ¶rÃ¼necek",
+    analysisPreview: "Analiz sonucu burada görünecek",
     analysing: "Hesap analiz ediliyor...",
     accountFound: "Hesap bulundu",
-    analysedContent: "Analiz edilen iÃ§erik",
-    subscribers: "Abone sayÄ±sÄ±",
-    averageLikes: "Ortalama beÄŸeni",
+    analysedContent: "Analiz edilen içerik",
+    subscribers: "Abone sayısı",
+    averageLikes: "Ortalama beğeni",
     averageComments: "Ortalama yorum",
-    followerEngagement: "TakipÃ§i bazlÄ± etkileÅŸim",
-    viewEngagement: "Ä°zlenme bazlÄ± etkileÅŸim",
+    followerEngagement: "Takipçi bazlı etkileşim",
+    viewEngagement: "İzlenme bazlı etkileşim",
     platformComingSoon:
-      "Instagram ve TikTok otomatik analizi yakÄ±nda kullanÄ±ma aÃ§Ä±lacak.",
+      "Instagram ve TikTok otomatik analizi yakında kullanıma açılacak.",
     analysisFailed:
-      "Hesap analizi sÄ±rasÄ±nda bir sorun oluÅŸtu.",
+      "Hesap analizi sırasında bir sorun oluştu.",
     analysisPreviewDescription:
-      "TakipÃ§i, ortalama izlenme ve etkileÅŸim verileri bulunabildiÄŸinde form alanlarÄ±na aktarÄ±lacak.",
+      "Takipçi, ortalama izlenme ve etkileşim verileri bulunabildiğinde form alanlarına aktarılacak.",
     publicDataNotice:
-      "KullanÄ±cÄ± adÄ±yla yapÄ±lan analiz yalnÄ±zca eriÅŸilebilen herkese aÃ§Ä±k verilere dayanÄ±r.",
+      "Kullanıcı adıyla yapılan analiz yalnızca erişilebilen herkese açık verilere dayanır.",
     formDescription:
-      "Teklifin kapsamÄ±nÄ± gir. Hesaplama motoru tÃ¼m ayrÄ±ntÄ±larÄ± birlikte deÄŸerlendirecek.",
+      "Teklifin kapsamını gir. Hesaplama motoru tüm ayrıntıları birlikte değerlendirecek.",
     platform: "Platform",
     instagram: "Instagram",
     tiktok: "TikTok",
     youtube: "YouTube",
-    followers: "TakipÃ§i sayÄ±sÄ±",
-    followersPlaceholder: "Ã–rn. 25.000",
+    followers: "Takipçi sayısı",
+    followersPlaceholder: "Örn. 25.000",
     averageViews: "Ortalama izlenme",
-    averageViewsPlaceholder: "Ã–rn. 18.500",
-    engagement: "EtkileÅŸim oranÄ±",
-    engagementPlaceholder: "Ã–rn. %4,8",
-    averageLikesPlaceholder: "Ã–rn. 850",
-    averageCommentsPlaceholder: "Ã–rn. 42",
+    averageViewsPlaceholder: "Örn. 18.500",
+    engagement: "Etkileşim oranı",
+    engagementPlaceholder: "Örn. %4,8",
+    averageLikesPlaceholder: "Örn. 850",
+    averageCommentsPlaceholder: "Örn. 42",
     averageSaves: "Ortalama kaydetme",
-    averageSavesPlaceholder: "Ã–rn. 65",
-    averageShares: "Ortalama paylaÅŸÄ±m",
-    averageSharesPlaceholder: "Ã–rn. 30",
-    followerBasedEngagement: "Abone bazlÄ± etkileÅŸim",
+    averageSavesPlaceholder: "Örn. 65",
+    averageShares: "Ortalama paylaşım",
+    averageSharesPlaceholder: "Örn. 30",
+    followerBasedEngagement: "Abone bazlı etkileşim",
     followerCountBasedEngagement:
-      "TakipÃ§i bazlÄ± etkileÅŸim",
-    viewBasedEngagement: "Ä°zlenme bazlÄ± etkileÅŸim",
+      "Takipçi bazlı etkileşim",
+    viewBasedEngagement: "İzlenme bazlı etkileşim",
     socialEngagementCalculated:
-      "BeÄŸeni, yorum, kaydetme ve paylaÅŸÄ±m verilerinden otomatik hesaplandÄ±",
+      "Beğeni, yorum, kaydetme ve paylaşım verilerinden otomatik hesaplandı",
     enterSocialPerformance:
-      "EtkileÅŸim oranÄ±nÄ± hesaplamak iÃ§in iÃ§erik performans verilerini gir.",
+      "Etkileşim oranını hesaplamak için içerik performans verilerini gir.",
     manualEngagementCalculated:
-      "BeÄŸeni ve yorum verilerinden otomatik hesaplandÄ±",
+      "Beğeni ve yorum verilerinden otomatik hesaplandı",
     enterManualPerformance:
-      "EtkileÅŸim oranÄ±nÄ± hesaplamak iÃ§in ortalama beÄŸeni ve yorum sayÄ±larÄ±nÄ± gir.",
+      "Etkileşim oranını hesaplamak için ortalama beğeni ve yorum sayılarını gir.",
     engagementAutomatic:
-      "YouTube son iÃ§eriklerinden otomatik hesaplandÄ±",
+      "YouTube son içeriklerinden otomatik hesaplandı",
     engagementEdited:
-      "Otomatik deÄŸer kullanÄ±cÄ± tarafÄ±ndan dÃ¼zenlendi",
+      "Otomatik değer kullanıcı tarafından düzenlendi",
     engagementManual:
-      "EtkileÅŸim oranÄ±nÄ± manuel olarak gir",
-    contentType: "Ä°Ã§erik tÃ¼rÃ¼",
+      "Etkileşim oranını manuel olarak gir",
+    contentType: "İçerik türü",
     reel: "Reels",
     story: "Story",
-    post: "GÃ¶nderi",
+    post: "Gönderi",
     video: "Video",
     ugc: "UGC",
     tiktokVideo: "TikTok Video",
     adVideo: "Reklam Videosu",
-    liveStream: "CanlÄ± YayÄ±n",
+    liveStream: "Canlı Yayın",
     shorts: "Shorts",
     longVideo: "Uzun Video",
     adIntegration: "Reklam Entegrasyonu",
-    quantity: "Ä°Ã§erik adedi",
-    delivery: "Teslim sÃ¼resi",
-    sevenDays: "7 gÃ¼n",
-    fourteenDays: "14 gÃ¼n",
-    thirtyDays: "30 gÃ¼n",
-    usageTitle: "KullanÄ±m ve reklam haklarÄ±",
-    organicOnly: "Sadece organik paylaÅŸÄ±m",
-    paidAds: "Reklamlarda kullanÄ±m",
-    rawFiles: "Ham gÃ¶rÃ¼ntÃ¼ teslimi",
-    exclusivity: "Rakip marka kÄ±sÄ±tlamasÄ±",
-    calculate: "Fiyat aralÄ±ÄŸÄ±nÄ± hesapla",
-    previewLabel: "CANLI Ã–NÄ°ZLEME",
-    previewTitle: "Tahmini iÅŸ birliÄŸi deÄŸeri",
+    quantity: "İçerik adedi",
+    delivery: "Teslim süresi",
+    sevenDays: "7 gün",
+    fourteenDays: "14 gün",
+    thirtyDays: "30 gün",
+    usageTitle: "Kullanım ve reklam hakları",
+    organicOnly: "Sadece organik paylaşım",
+    paidAds: "Reklamlarda kullanım",
+    rawFiles: "Ham görüntü teslimi",
+    exclusivity: "Rakip marka kısıtlaması",
+    calculate: "Fiyat aralığını hesapla",
+    previewLabel: "CANLI ÖNİZLEME",
+    previewTitle: "Tahmini iş birliği değeri",
     previewDescription:
-      "Bilgileri tamamladÄ±ÄŸÄ±nda Ã¶nerilen fiyat aralÄ±ÄŸÄ±n burada gÃ¶rÃ¼necek.",
-    recommendedOffer: "Ã–nerilen profesyonel teklif",
-    negotiationRange: "PazarlÄ±k aralÄ±ÄŸÄ±",
-    minimumPrice: "Minimum kabul fiyatÄ±",
-    premiumPrice: "GÃ¼Ã§lÃ¼ pazarlÄ±k Ã¼st sÄ±nÄ±rÄ±",
-    forumConfidenceScore: "Veri gÃ¼ven skoru",
+      "Bilgileri tamamladığında önerilen fiyat aralığın burada görünecek.",
+    recommendedOffer: "Önerilen profesyonel teklif",
+    negotiationRange: "Pazarlık aralığı",
+    minimumPrice: "Minimum kabul fiyatı",
+    premiumPrice: "Güçlü pazarlık üst sınırı",
+    forumConfidenceScore: "Veri güven skoru",
     verifiedConfidenceNote:
-      "EriÅŸilebilir hesap verileri otomatik analiz edilerek hesaplandÄ±.",
+      "Erişilebilir hesap verileri otomatik analiz edilerek hesaplandı.",
     manualConfidenceNote:
-      "KullanÄ±cÄ±nÄ±n manuel girdiÄŸi verilere gÃ¶re hesaplandÄ±.",
-    priceStrengths: "FiyatÄ± gÃ¼Ã§lendiren nedenler",
+      "Kullanıcının manuel girdiği verilere göre hesaplandı.",
+    priceStrengths: "Fiyatı güçlendiren nedenler",
     priceWarnings: "Dikkat edilmesi gerekenler",
 
     performanceScoreTitle:
-      "Hesap performansÄ±",
+      "Hesap performansı",
     performanceLabel:
       "Performans",
     commercialAssessmentTitle:
-      "Ticari deÄŸerlendirme",
+      "Ticari değerlendirme",
 
     minimumPriceDescription:
-      "Kapsam azaltÄ±lmadan bunun altÄ±na inilmemeli.",
+      "Kapsam azaltılmadan bunun altına inilmemeli.",
     recommendedOfferDescription:
-      "Markaya sunulacak ana teklif rakamÄ±.",
+      "Markaya sunulacak ana teklif rakamı.",
     premiumPriceDescription:
-      "BÃ¼yÃ¼k marka veya ek haklarda kullanÄ±labilir.",
+      "Büyük marka veya ek haklarda kullanılabilir.",
 
     analysisScope:
-      "Analiz kapsamÄ±",
+      "Analiz kapsamı",
     analysedContentResult:
-      "iÃ§erik incelendi",
+      "içerik incelendi",
 
     assessmentStrongViewsLowEngagement:
-      "Ä°zlenme performansÄ± gÃ¼Ã§lÃ¼, ancak etkileÅŸim seviyesi dÃ¼ÅŸÃ¼k. Ã–nerilen teklif ana referans olarak kullanÄ±lmalÄ±.",
+      "İzlenme performansı güçlü, ancak etkileşim seviyesi düşük. Önerilen teklif ana referans olarak kullanılmalı.",
     assessmentStrongOverallPerformance:
-      "Ä°zlenme ve etkileÅŸim performansÄ± gÃ¼Ã§lÃ¼. Ã–nerilen teklif gÃ¼venle sunulabilir; ek haklarda Ã¼st sÄ±nÄ±r savunulabilir.",
+      "İzlenme ve etkileşim performansı güçlü. Önerilen teklif güvenle sunulabilir; ek haklarda üst sınır savunulabilir.",
     assessmentBalancedPerformance:
-      "Hesap dengeli bir ticari performansa sahip. Ã–nerilen teklif ana pazarlÄ±k rakamÄ± olarak kullanÄ±lmalÄ±.",
+      "Hesap dengeli bir ticari performansa sahip. Önerilen teklif ana pazarlık rakamı olarak kullanılmalı.",
     assessmentLimitedPerformance:
-      "Ä°zlenme ve etkileÅŸim performansÄ± sÄ±nÄ±rlÄ±. Minimum fiyat korunmalÄ±, daha yÃ¼ksek teklif iÃ§in kapsam ve haklar gerekÃ§elendirilmelidir.",
+      "İzlenme ve etkileşim performansı sınırlı. Minimum fiyat korunmalı, daha yüksek teklif için kapsam ve haklar gerekçelendirilmelidir.",
     assessmentStandardPerformance:
-      "Hesap standart performans aralÄ±ÄŸÄ±nda. Ã–nerilen fiyat iÃ§erik Ã¼retim emeÄŸi ve kampanya kapsamÄ±na gÃ¶re kullanÄ±lmalÄ±.",
+      "Hesap standart performans aralığında. Önerilen fiyat içerik üretim emeği ve kampanya kapsamına göre kullanılmalı.",
 
     reasonViewsAboveFollowerCount:
-      "Ortalama izlenme takipÃ§i sayÄ±sÄ±nÄ±n Ã¼zerinde.",
+      "Ortalama izlenme takipçi sayısının üzerinde.",
     reasonStrongViewPerformance:
-      "Ä°zlenme performansÄ± takipÃ§i kitlesine gÃ¶re gÃ¼Ã§lÃ¼.",
+      "İzlenme performansı takipçi kitlesine göre güçlü.",
     reasonExceptionalEngagement:
-      "EtkileÅŸim oranÄ± olaÄŸanÃ¼stÃ¼ seviyede.",
+      "Etkileşim oranı olağanüstü seviyede.",
     reasonStrongEngagement:
-      "EtkileÅŸim oranÄ± gÃ¼Ã§lÃ¼ seviyede.",
+      "Etkileşim oranı güçlü seviyede.",
     reasonPaidAdUsage:
-      "Ä°Ã§eriÄŸin reklamda kullanÄ±m hakkÄ± fiyata dahil edildi.",
+      "İçeriğin reklamda kullanım hakkı fiyata dahil edildi.",
     reasonCategoryExclusivity:
-      "Kategori mÃ¼nhasÄ±rlÄ±ÄŸÄ± ticari deÄŸeri artÄ±rdÄ±.",
+      "Kategori münhasırlığı ticari değeri artırdı.",
     reasonRawFileDelivery:
-      "Ham gÃ¶rÃ¼ntÃ¼ teslimi ek Ã¼retim deÄŸeri oluÅŸturdu.",
+      "Ham görüntü teslimi ek üretim değeri oluşturdu.",
     reasonFastDelivery:
-      "HÄ±zlÄ± teslim sÃ¼resi fiyatÄ± yÃ¼kseltti.",
+      "Hızlı teslim süresi fiyatı yükseltti.",
     reasonMultipleContentPackage:
-      "Birden fazla iÃ§erik Ã¼retimi toplam proje deÄŸerini artÄ±rdÄ±.",
+      "Birden fazla içerik üretimi toplam proje değerini artırdı.",
     reasonStandardCreatorPerformance:
-      "Fiyat standart hesap performansÄ± ve Ã¼retim emeÄŸine gÃ¶re oluÅŸturuldu.",
+      "Fiyat standart hesap performansı ve üretim emeğine göre oluşturuldu.",
 
     warningLowViewFollowerRatio:
-      "Ä°zlenme/takipÃ§i oranÄ± dÃ¼ÅŸÃ¼k; teklif verirken performans verilerini gÃ¼ncelle.",
+      "İzlenme/takipçi oranı düşük; teklif verirken performans verilerini güncelle.",
     warningLowEngagementRate:
-      "EtkileÅŸim oranÄ± dÃ¼ÅŸÃ¼k olduÄŸu iÃ§in fiyatÄ±n Ã¼st sÄ±nÄ±rÄ± sÄ±nÄ±rlÄ± tutuldu.",
+      "Etkileşim oranı düşük olduğu için fiyatın üst sınırı sınırlı tutuldu.",
     warningMissingViewData:
-      "Ortalama izlenme verisi bulunmadÄ±ÄŸÄ± iÃ§in tahmin gÃ¼veni dÃ¼ÅŸtÃ¼.",
+      "Ortalama izlenme verisi bulunmadığı için tahmin güveni düştü.",
     warningMissingFollowerData:
-      "TakipÃ§i verisi bulunmadÄ±ÄŸÄ± iÃ§in karÅŸÄ±laÅŸtÄ±rma kapsamÄ± sÄ±nÄ±rlÄ±.",
+      "Takipçi verisi bulunmadığı için karşılaştırma kapsamı sınırlı.",
 
     waiting: "Bilgiler bekleniyor",
-    calculated: "HesaplandÄ±",
+    calculated: "Hesaplandı",
     completeRequiredFields:
-      "TakipÃ§i, ortalama izlenme ve etkileÅŸim oranÄ± alanlarÄ±nÄ± doldur.",
-    confidence: "Tahmin gÃ¼veni",
-    confidenceLow: "DÃ¼ÅŸÃ¼k",
+      "Takipçi, ortalama izlenme ve etkileşim oranı alanlarını doldur.",
+    confidence: "Tahmin güveni",
+    confidenceLow: "Düşük",
     confidenceMedium: "Orta",
-    confidenceHigh: "YÃ¼ksek",
-    betaEstimate: "BETA TAHMÄ°NÄ°",
-    calculationDetails: "Hesaplama Ã¶zeti",
-    dataSource: "Veri kaynaÄŸÄ±",
+    confidenceHigh: "Yüksek",
+    betaEstimate: "BETA TAHMİNİ",
+    calculationDetails: "Hesaplama özeti",
+    dataSource: "Veri kaynağı",
     automaticData: "Otomatik hesap analizi",
-    manualData: "Manuel kullanÄ±cÄ± giriÅŸi",
+    manualData: "Manuel kullanıcı girişi",
     usedPlatform: "Platform",
     usedViews: "Ortalama izlenme",
-    usedEngagement: "EtkileÅŸim oranÄ±",
-    selectedContentType: "Ä°Ã§erik tÃ¼rÃ¼",
-    basePerformanceValue: "Performans tabanÄ±",
-    engagementFactor: "EtkileÅŸim katsayÄ±sÄ±",
-    quantityFactor: "Ä°Ã§erik adedi katsayÄ±sÄ±",
-    deliveryFactor: "Teslim sÃ¼resi katsayÄ±sÄ±",
-    rightsFactor: "KullanÄ±m hakkÄ± katsayÄ±sÄ±",
+    usedEngagement: "Etkileşim oranı",
+    selectedContentType: "İçerik türü",
+    basePerformanceValue: "Performans tabanı",
+    engagementFactor: "Etkileşim katsayısı",
+    quantityFactor: "İçerik adedi katsayısı",
+    deliveryFactor: "Teslim süresi katsayısı",
+    rightsFactor: "Kullanım hakkı katsayısı",
     resultOutdated:
-      "Form deÄŸiÅŸtiÄŸi iÃ§in fiyatÄ± yeniden hesapla.",
+      "Form değiştiği için fiyatı yeniden hesapla.",
     factorsTitle: "Hesaplamaya dahil edilenler",
-    factorOne: "TakipÃ§i ve ortalama izlenme iliÅŸkisi",
-    factorTwo: "Ä°Ã§erik Ã¼retim ve teslim kapsamÄ±",
-    factorThree: "KullanÄ±m hakkÄ± ve reklam sÃ¼resi",
-    factorFour: "MÃ¼nhasÄ±rlÄ±k ve ham gÃ¶rÃ¼ntÃ¼ talepleri",
+    factorOne: "Takipçi ve ortalama izlenme ilişkisi",
+    factorTwo: "İçerik üretim ve teslim kapsamı",
+    factorThree: "Kullanım hakkı ve reklam süresi",
+    factorFour: "Münhasırlık ve ham görüntü talepleri",
     notice:
-      "GÃ¶sterilecek tutarlar kesin piyasa fiyatÄ± deÄŸil, karar desteÄŸi saÄŸlayan tahmini aralÄ±klardÄ±r.",
-    howTitle: "Asistan nasÄ±l Ã§alÄ±ÅŸacak?",
+      "Gösterilecek tutarlar kesin piyasa fiyatı değil, karar desteği sağlayan tahmini aralıklardır.",
+    howTitle: "Asistan nasıl çalışacak?",
     howOneTitle: "Verilerini gir",
     howOneText:
-      "PerformansÄ±nÄ± ve markanÄ±n istediÄŸi iÃ§erikleri belirt.",
-    howTwoTitle: "KapsamÄ± deÄŸerlendir",
+      "Performansını ve markanın istediği içerikleri belirt.",
+    howTwoTitle: "Kapsamı değerlendir",
     howTwoText:
-      "KullanÄ±m haklarÄ±, teslim sÃ¼resi ve ek talepler hesaba katÄ±lÄ±r.",
-    howThreeTitle: "Teklifini hazÄ±rla",
+      "Kullanım hakları, teslim süresi ve ek talepler hesaba katılır.",
+    howThreeTitle: "Teklifini hazırla",
     howThreeText:
-      "Fiyat aralÄ±ÄŸÄ± ve pazarlÄ±k alt sÄ±nÄ±rÄ± birlikte oluÅŸturulur.",
+      "Fiyat aralığı ve pazarlık alt sınırı birlikte oluşturulur.",
     home: "Ana Sayfa",
     categories: "Kategoriler",
-    createTopic: "Konu OluÅŸtur",
+    createTopic: "Konu Oluştur",
     blog: "Blog",
     profile: "Profil",
-    changeTheme: "TemayÄ± deÄŸiÅŸtir",
+    changeTheme: "Temayı değiştir",
   },
   en: {
     backToPlus: "Back to Plus",
@@ -1138,7 +1138,7 @@ export default function CollaborationAssistantPage() {
       setOfferAnalysisResult(null);
       setOfferAnalysisError(
         language === "tr"
-          ? "Ã–nce Fiyat Hesapla sekmesinde iÅŸ birliÄŸi deÄŸerini hesapla."
+          ? "Önce Fiyat Hesapla sekmesinde iş birliği değerini hesapla."
           : "First calculate the collaboration value in the Calculate Price tab."
       );
       return;
@@ -1155,7 +1155,7 @@ export default function CollaborationAssistantPage() {
       setOfferAnalysisResult(null);
       setOfferAnalysisError(
         language === "tr"
-          ? "Marka adÄ±, teklif metni ve teklif edilen Ã¼cret alanlarÄ±nÄ± doldur."
+          ? "Marka adı, teklif metni ve teklif edilen ücret alanlarını doldur."
           : "Complete the brand name, offer text and offered fee fields."
       );
       return;
@@ -1830,7 +1830,7 @@ export default function CollaborationAssistantPage() {
                                 maximumFractionDigits: 2,
                               }
                             )}`
-                          : "â€”"}
+                          : "—"}
                       </strong>
                     </article>
 
@@ -1848,7 +1848,7 @@ export default function CollaborationAssistantPage() {
                                 maximumFractionDigits: 2,
                               }
                             )}`
-                          : "â€”"}
+                          : "—"}
                       </strong>
                     </article>
                   </div>
@@ -2083,7 +2083,7 @@ export default function CollaborationAssistantPage() {
                               maximumFractionDigits: 2,
                             }
                           )}`
-                        : "â€”"}
+                        : "—"}
                     </strong>
                   </div>
 
@@ -2103,7 +2103,7 @@ export default function CollaborationAssistantPage() {
                               maximumFractionDigits: 2,
                             }
                           )}`
-                        : "â€”"}
+                        : "—"}
                     </strong>
                   </div>
 
@@ -2301,7 +2301,7 @@ export default function CollaborationAssistantPage() {
                               maximumFractionDigits: 2,
                             }
                           )}`
-                        : "â€”"}
+                        : "—"}
                     </strong>
                   </div>
 
@@ -2321,7 +2321,7 @@ export default function CollaborationAssistantPage() {
                               maximumFractionDigits: 2,
                             }
                           )}`
-                        : "â€”"}
+                        : "—"}
                     </strong>
                   </div>
 
@@ -2531,7 +2531,7 @@ export default function CollaborationAssistantPage() {
                     ? formatCurrency(
                         pricingResult.minimumPrice
                       )
-                    : "â€” TL"}
+                    : "— TL"}
                 </strong>
               </article>
 
@@ -2554,7 +2554,7 @@ export default function CollaborationAssistantPage() {
                     ? formatCurrency(
                         pricingResult.recommendedOffer
                       )
-                    : "â€” TL"}
+                    : "— TL"}
                 </strong>
               </article>
 
@@ -2575,7 +2575,7 @@ export default function CollaborationAssistantPage() {
                     ? formatCurrency(
                         pricingResult.premiumPrice
                       )
-                    : "â€” TL"}
+                    : "— TL"}
                 </strong>
               </article>
             </div>
@@ -2740,7 +2740,7 @@ export default function CollaborationAssistantPage() {
                       {formatCurrency(
                         pricingResult.negotiationLow
                       )}{" "}
-                      â€“{" "}
+                      –{" "}
                       {formatCurrency(
                         pricingResult.negotiationHigh
                       )}
@@ -2843,7 +2843,7 @@ export default function CollaborationAssistantPage() {
                       {t.engagementFactor}
                     </span>
                     <strong>
-                      Ã—
+                      ×
                       {pricingResult.factors
                         .engagementMultiplier.toLocaleString(
                           language === "tr"
@@ -2862,7 +2862,7 @@ export default function CollaborationAssistantPage() {
                       {t.quantityFactor}
                     </span>
                     <strong>
-                      Ã—
+                      ×
                       {pricingResult.factors
                         .quantityMultiplier.toLocaleString(
                           language === "tr"
@@ -2881,7 +2881,7 @@ export default function CollaborationAssistantPage() {
                       {t.deliveryFactor}
                     </span>
                     <strong>
-                      Ã—
+                      ×
                       {pricingResult.factors
                         .deliveryMultiplier.toLocaleString(
                           language === "tr"
@@ -2900,7 +2900,7 @@ export default function CollaborationAssistantPage() {
                       {t.rightsFactor}
                     </span>
                     <strong>
-                      Ã—
+                      ×
                       {pricingResult.factors
                         .rightsMultiplier.toLocaleString(
                           language === "tr"
@@ -2956,7 +2956,7 @@ export default function CollaborationAssistantPage() {
 
                   <p>
                     {language === "tr"
-                      ? "Markadan gelen teklif metnini ve ticari ÅŸartlarÄ± gir. Sistem teklifi mevcut fiyat sonucunla karÅŸÄ±laÅŸtÄ±racak."
+                      ? "Markadan gelen teklif metnini ve ticari şartları gir. Sistem teklifi mevcut fiyat sonucunla karşılaştıracak."
                       : "Enter the brand offer and commercial terms. The system will compare it with your existing pricing result."}
                   </p>
                 </div>
@@ -2966,13 +2966,13 @@ export default function CollaborationAssistantPage() {
                 <div className={styles.offerPriceWarning}>
                   <strong>
                     {language === "tr"
-                      ? "Ã–nce fiyatÄ±nÄ± hesapla"
+                      ? "Önce fiyatını hesapla"
                       : "Calculate your price first"}
                   </strong>
 
                   <p>
                     {language === "tr"
-                      ? "Teklifi deÄŸerlendirebilmek iÃ§in Fiyat Hesapla sekmesinde gÃ¼ncel bir fiyat sonucu oluÅŸturmalÄ±sÄ±n."
+                      ? "Teklifi değerlendirebilmek için Fiyat Hesapla sekmesinde güncel bir fiyat sonucu oluşturmalısın."
                       : "Create a current pricing result in the Calculate Price tab before analysing an offer."}
                   </p>
 
@@ -3008,7 +3008,7 @@ export default function CollaborationAssistantPage() {
                   <div>
                     <span>
                       {language === "tr"
-                        ? "Ã–nerilen"
+                        ? "Önerilen"
                         : "Recommended"}
                     </span>
 
@@ -3022,7 +3022,7 @@ export default function CollaborationAssistantPage() {
                   <div>
                     <span>
                       {language === "tr"
-                        ? "Ãœst sÄ±nÄ±r"
+                        ? "Üst sınır"
                         : "Ceiling"}
                     </span>
 
@@ -3040,7 +3040,7 @@ export default function CollaborationAssistantPage() {
                   <label>
                     <span>
                       {language === "tr"
-                        ? "Marka adÄ±"
+                        ? "Marka adı"
                         : "Brand name"}
                     </span>
 
@@ -3049,7 +3049,7 @@ export default function CollaborationAssistantPage() {
                       value={offerBrandName}
                       placeholder={
                         language === "tr"
-                          ? "Ã–rn. ForumFenomen"
+                          ? "Örn. ForumFenomen"
                           : "Example: ForumFenomen"
                       }
                       onChange={(event) => {
@@ -3064,7 +3064,7 @@ export default function CollaborationAssistantPage() {
                   <label>
                     <span>
                       {language === "tr"
-                        ? "Teklif edilen Ã¼cret"
+                        ? "Teklif edilen ücret"
                         : "Offered fee"}
                     </span>
 
@@ -3074,7 +3074,7 @@ export default function CollaborationAssistantPage() {
                       value={offeredPrice}
                       placeholder={
                         language === "tr"
-                          ? "Ã–rn. 5.000"
+                          ? "Örn. 5.000"
                           : "Example: 5,000"
                       }
                       onChange={(event) => {
@@ -3099,7 +3099,7 @@ export default function CollaborationAssistantPage() {
                     rows={8}
                     placeholder={
                       language === "tr"
-                        ? "MarkanÄ±n gÃ¶nderdiÄŸi e-posta veya mesajÄ± buraya yapÄ±ÅŸtÄ±r..."
+                        ? "Markanın gönderdiği e-posta veya mesajı buraya yapıştır..."
                         : "Paste the email or message received from the brand..."
                     }
                     onChange={(event) => {
@@ -3115,7 +3115,7 @@ export default function CollaborationAssistantPage() {
                   <label>
                     <span>
                       {language === "tr"
-                        ? "Ã–deme sÃ¼resi"
+                        ? "Ödeme süresi"
                         : "Payment term"}
                     </span>
 
@@ -3135,7 +3135,7 @@ export default function CollaborationAssistantPage() {
 
                       <small>
                         {language === "tr"
-                          ? "gÃ¼n"
+                          ? "gün"
                           : "days"}
                       </small>
                     </div>
@@ -3144,7 +3144,7 @@ export default function CollaborationAssistantPage() {
                   <label>
                     <span>
                       {language === "tr"
-                        ? "Revizyon sÄ±nÄ±rÄ±"
+                        ? "Revizyon sınırı"
                         : "Revision limit"}
                     </span>
 
@@ -3165,7 +3165,7 @@ export default function CollaborationAssistantPage() {
                   <label>
                     <span>
                       {language === "tr"
-                        ? "KullanÄ±m sÃ¼resi"
+                        ? "Kullanım süresi"
                         : "Usage duration"}
                     </span>
 
@@ -3195,7 +3195,7 @@ export default function CollaborationAssistantPage() {
                 <div className={styles.offerRightsSection}>
                   <span>
                     {language === "tr"
-                      ? "Teklifte aÃ§Ä±kÃ§a istenen haklar"
+                      ? "Teklifte açıkça istenen haklar"
                       : "Rights explicitly requested"}
                   </span>
 
@@ -3205,21 +3205,21 @@ export default function CollaborationAssistantPage() {
                         id: "ads" as const,
                         label:
                           language === "tr"
-                            ? "Reklamlarda kullanÄ±m"
+                            ? "Reklamlarda kullanım"
                             : "Paid advertising usage",
                       },
                       {
                         id: "raw" as const,
                         label:
                           language === "tr"
-                            ? "Ham gÃ¶rÃ¼ntÃ¼ teslimi"
+                            ? "Ham görüntü teslimi"
                             : "Raw footage delivery",
                       },
                       {
                         id: "exclusivity" as const,
                         label:
                           language === "tr"
-                            ? "Rakip marka kÄ±sÄ±tlamasÄ±"
+                            ? "Rakip marka kısıtlaması"
                             : "Competitor exclusivity",
                       },
                     ].map((right) => {
@@ -3276,7 +3276,7 @@ export default function CollaborationAssistantPage() {
               <div className={styles.previewTop}>
                 <span>
                   {language === "tr"
-                    ? "TEKLÄ°F SONUCU"
+                    ? "TEKLİF SONUCU"
                     : "OFFER RESULT"}
                 </span>
 
@@ -3291,10 +3291,10 @@ export default function CollaborationAssistantPage() {
 
                   {offerAnalysisResult
                     ? language === "tr"
-                      ? "ANALÄ°Z EDÄ°LDÄ°"
+                      ? "ANALİZ EDİLDİ"
                       : "ANALYSED"
                     : language === "tr"
-                      ? "FORM BEKLENÄ°YOR"
+                      ? "FORM BEKLENİYOR"
                       : "WAITING FOR FORM"}
                 </div>
               </div>
@@ -3304,13 +3304,13 @@ export default function CollaborationAssistantPage() {
                   <div className={styles.previewIntro}>
                     <h2>
                       {language === "tr"
-                        ? "Teklif deÄŸerlendirmesi"
+                        ? "Teklif değerlendirmesi"
                         : "Offer assessment"}
                     </h2>
 
                     <p>
                       {language === "tr"
-                        ? "Form tamamlandÄ±ÄŸÄ±nda fiyat seviyesi, riskler ve Ã¶nerilen karÅŸÄ± teklif burada gÃ¶sterilecek."
+                        ? "Form tamamlandığında fiyat seviyesi, riskler ve önerilen karşı teklif burada gösterilecek."
                         : "The price level, risks and recommended counteroffer will appear here after completing the form."}
                     </p>
                   </div>
@@ -3318,19 +3318,19 @@ export default function CollaborationAssistantPage() {
                   <div className={styles.factorBox}>
                     <h3>
                       {language === "tr"
-                        ? "Analiz edilecek baÅŸlÄ±klar"
+                        ? "Analiz edilecek başlıklar"
                         : "Terms to analyse"}
                     </h3>
 
                     {[
                       language === "tr"
-                        ? "Teklif edilen Ã¼cret"
+                        ? "Teklif edilen ücret"
                         : "Offered fee",
                       language === "tr"
-                        ? "KullanÄ±m haklarÄ±"
+                        ? "Kullanım hakları"
                         : "Usage rights",
                       language === "tr"
-                        ? "Ã–deme ve revizyon ÅŸartlarÄ±"
+                        ? "Ödeme ve revizyon şartları"
                         : "Payment and revision terms",
                       language === "tr"
                         ? "Eksik veya riskli maddeler"
@@ -3360,14 +3360,14 @@ export default function CollaborationAssistantPage() {
                   >
                     <span>
                       {language === "tr"
-                        ? "Teklif kararÄ±"
+                        ? "Teklif kararı"
                         : "Offer decision"}
                     </span>
 
                     <h2>
                       {offerAnalysisResult.status === "strong"
                         ? language === "tr"
-                          ? "GÃ¼Ã§lÃ¼ teklif"
+                          ? "Güçlü teklif"
                           : "Strong offer"
                         : offerAnalysisResult.status ===
                             "acceptable"
@@ -3377,10 +3377,10 @@ export default function CollaborationAssistantPage() {
                           : offerAnalysisResult.status ===
                               "negotiate"
                             ? language === "tr"
-                              ? "PazarlÄ±k gerekli"
+                              ? "Pazarlık gerekli"
                               : "Negotiation required"
                             : language === "tr"
-                              ? "Minimumun altÄ±nda"
+                              ? "Minimumun altında"
                               : "Below minimum"}
                     </h2>
 
@@ -3423,7 +3423,7 @@ export default function CollaborationAssistantPage() {
                     <article>
                       <span>
                         {language === "tr"
-                          ? "Ã–nerilen profesyonel fiyat"
+                          ? "Önerilen profesyonel fiyat"
                           : "Recommended professional price"}
                       </span>
 
@@ -3441,7 +3441,7 @@ export default function CollaborationAssistantPage() {
                     >
                       <span>
                         {language === "tr"
-                          ? "Ã–nerilen karÅŸÄ± teklif"
+                          ? "Önerilen karşı teklif"
                           : "Recommended counteroffer"}
                       </span>
 
@@ -3457,7 +3457,7 @@ export default function CollaborationAssistantPage() {
                   <div className={styles.offerDifferenceCard}>
                     <span>
                       {language === "tr"
-                        ? "Ã–nerilen fiyata gÃ¶re fark"
+                        ? "Önerilen fiyata göre fark"
                         : "Difference from recommendation"}
                     </span>
 
@@ -3506,17 +3506,17 @@ export default function CollaborationAssistantPage() {
                             <span>
                               {risk === "perpetual_usage"
                                 ? language === "tr"
-                                  ? "SÃ¼resiz kullanÄ±m hakkÄ± talep ediliyor."
+                                  ? "Süresiz kullanım hakkı talep ediliyor."
                                   : "Perpetual usage rights are requested."
                                 : risk ===
                                     "unlimited_revision"
                                   ? language === "tr"
-                                    ? "SÄ±nÄ±rsÄ±z revizyon talebi bulunuyor."
+                                    ? "Sınırsız revizyon talebi bulunuyor."
                                     : "Unlimited revisions are requested."
                                   : risk ===
                                       "product_only_offer"
                                     ? language === "tr"
-                                      ? "Teklif yalnÄ±zca Ã¼rÃ¼n karÅŸÄ±lÄ±ÄŸÄ± olabilir."
+                                      ? "Teklif yalnızca ürün karşılığı olabilir."
                                       : "The offer may be product-only."
                                     : risk ===
                                         "performance_guarantee"
@@ -3526,25 +3526,25 @@ export default function CollaborationAssistantPage() {
                                       : risk ===
                                           "multi_platform_usage"
                                         ? language === "tr"
-                                          ? "Birden fazla platformda kullanÄ±m talep ediliyor."
+                                          ? "Birden fazla platformda kullanım talep ediliyor."
                                           : "Multi-platform usage is requested."
                                         : risk ===
                                             "undisclosed_paid_ads"
                                           ? language === "tr"
-                                            ? "Metinde reklam kullanÄ±mÄ± var ancak formda belirtilmedi."
+                                            ? "Metinde reklam kullanımı var ancak formda belirtilmedi."
                                             : "Paid advertising appears in the text but was not selected."
                                           : risk ===
                                               "undisclosed_raw_files"
                                             ? language === "tr"
-                                              ? "Metinde ham gÃ¶rÃ¼ntÃ¼ talebi var ancak formda belirtilmedi."
+                                              ? "Metinde ham görüntü talebi var ancak formda belirtilmedi."
                                               : "Raw footage appears in the text but was not selected."
                                             : risk ===
                                                 "undisclosed_exclusivity"
                                               ? language === "tr"
-                                                ? "Metinde mÃ¼nhasÄ±rlÄ±k var ancak formda belirtilmedi."
+                                                ? "Metinde münhasırlık var ancak formda belirtilmedi."
                                                 : "Exclusivity appears in the text but was not selected."
                                               : language === "tr"
-                                                ? "Teklif ForumFenomen minimum fiyatÄ±nÄ±n altÄ±nda."
+                                                ? "Teklif ForumFenomen minimum fiyatının altında."
                                                 : "The offer is below the ForumFenomen minimum price."}
                             </span>
                           </div>
@@ -3558,7 +3558,7 @@ export default function CollaborationAssistantPage() {
                     <div className={styles.offerResultGroup}>
                       <h3>
                         {language === "tr"
-                          ? "Eksik ÅŸartlar"
+                          ? "Eksik şartlar"
                           : "Missing terms"}
                       </h3>
 
@@ -3576,20 +3576,20 @@ export default function CollaborationAssistantPage() {
                             <span>
                               {term === "payment_term"
                                 ? language === "tr"
-                                  ? "Ã–deme sÃ¼resi belirtilmemiÅŸ."
+                                  ? "Ödeme süresi belirtilmemiş."
                                   : "Payment term is not specified."
                                 : term ===
                                     "usage_duration"
                                   ? language === "tr"
-                                    ? "KullanÄ±m sÃ¼resi belirtilmemiÅŸ."
+                                    ? "Kullanım süresi belirtilmemiş."
                                     : "Usage duration is not specified."
                                   : term ===
                                       "revision_limit"
                                     ? language === "tr"
-                                      ? "Revizyon sÄ±nÄ±rÄ± belirtilmemiÅŸ."
+                                      ? "Revizyon sınırı belirtilmemiş."
                                       : "Revision limit is not specified."
                                     : language === "tr"
-                                      ? "Teslim tarihi belirtilmemiÅŸ."
+                                      ? "Teslim tarihi belirtilmemiş."
                                       : "Delivery date is not specified."}
                             </span>
                           </div>
@@ -3603,7 +3603,7 @@ export default function CollaborationAssistantPage() {
                     <div className={styles.offerResultGroup}>
                       <h3>
                         {language === "tr"
-                          ? "Olumlu ÅŸartlar"
+                          ? "Olumlu şartlar"
                           : "Positive terms"}
                       </h3>
 
@@ -3616,25 +3616,25 @@ export default function CollaborationAssistantPage() {
                               {term ===
                               "price_above_premium"
                                 ? language === "tr"
-                                  ? "Teklif gÃ¼Ã§lÃ¼ pazarlÄ±k Ã¼st sÄ±nÄ±rÄ±nÄ±n Ã¼zerinde."
+                                  ? "Teklif güçlü pazarlık üst sınırının üzerinde."
                                   : "The offer is above the strong negotiation ceiling."
                                 : term ===
                                     "price_meets_recommendation"
                                   ? language === "tr"
-                                    ? "Teklif Ã¶nerilen profesyonel fiyatÄ± karÅŸÄ±lÄ±yor."
+                                    ? "Teklif önerilen profesyonel fiyatı karşılıyor."
                                     : "The offer meets the recommended professional price."
                                   : term ===
                                       "clear_payment_term"
                                     ? language === "tr"
-                                      ? "Ã–deme sÃ¼resi aÃ§Ä±k ve makul."
+                                      ? "Ödeme süresi açık ve makul."
                                       : "The payment term is clear and reasonable."
                                     : term ===
                                         "limited_usage_duration"
                                       ? language === "tr"
-                                        ? "KullanÄ±m sÃ¼resi sÄ±nÄ±rlandÄ±rÄ±lmÄ±ÅŸ."
+                                        ? "Kullanım süresi sınırlandırılmış."
                                         : "The usage duration is limited."
                                       : language === "tr"
-                                        ? "Revizyon sÄ±nÄ±rÄ± makul."
+                                        ? "Revizyon sınırı makul."
                                         : "The revision limit is reasonable."}
                             </span>
                           </div>
@@ -3647,7 +3647,7 @@ export default function CollaborationAssistantPage() {
 
               <p className={styles.notice}>
                 {language === "tr"
-                  ? "Bu analiz sÃ¶zleÅŸme veya hukuki danÄ±ÅŸmanlÄ±k yerine geÃ§mez; ticari karar desteÄŸi saÄŸlar."
+                  ? "Bu analiz sözleşme veya hukuki danışmanlık yerine geçmez; ticari karar desteği sağlar."
                   : "This analysis provides commercial decision support and does not replace legal or contract advice."}
               </p>
             </aside>

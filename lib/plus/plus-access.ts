@@ -50,6 +50,7 @@ export async function getPlusAccessState(): Promise<PlusAccessState> {
     isAuthenticated: true,
     hasAccess:
       profile.role === "admin" ||
+      profile.role === "moderator" ||
       profile.plus_access === true,
     userId,
   };
