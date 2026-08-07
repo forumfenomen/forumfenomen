@@ -5155,8 +5155,29 @@ export default function ProfilePage() {
                       return;
                     }
 
-                    menu.scrollBy({
-                      left: Math.max(menu.clientWidth * 0.72, 180),
+                    const maxScroll =
+                      menu.scrollWidth - menu.clientWidth;
+
+                    const isAtEnd =
+                      menu.scrollLeft >= maxScroll - 12;
+
+                    if (isAtEnd) {
+                      menu.scrollTo({
+                        left: 0,
+                        behavior: "smooth",
+                      });
+
+                      return;
+                    }
+
+                    const nextScroll = Math.min(
+                      menu.scrollLeft +
+                      Math.max(menu.clientWidth * 0.72, 180),
+                      maxScroll
+                    );
+
+                    menu.scrollTo({
+                      left: nextScroll,
                       behavior: "smooth",
                     });
                   }}
