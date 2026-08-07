@@ -414,7 +414,7 @@
 .relatedCard {
     display: grid;
     grid-template-columns:
-        170px minmax(0, 1fr);
+    210px minmax(0, 1fr);
     min-width: 0;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -443,6 +443,7 @@
     object-fit: cover;
     transition: transform 220ms ease;
 }
+
 
 .relatedCard:hover .relatedImage img {
     transform: scale(1.04);
@@ -518,12 +519,12 @@
 
 @media (max-width: 900px) {
     .relatedCard {
-        grid-template-columns: 135px minmax(0, 1fr);
+        grid-template-columns: 42% minmax(0, 1fr);
     }
 
     .relatedImage,
     .relatedFallback {
-        min-height: 170px;
+        min-height: 190px;
     }
 }
 
@@ -540,6 +541,19 @@
 
     .relatedGrid {
         grid-template-columns: 1fr;
+    }
+
+    .relatedCard {
+        grid-template-columns: 44% minmax(0, 1fr);
+    }
+
+    .relatedImage,
+    .relatedFallback {
+        min-height: 210px;
+    }
+
+    .relatedBody {
+        padding: 15px;
     }
 }
 
