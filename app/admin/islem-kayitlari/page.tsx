@@ -545,11 +545,7 @@ export default async function AdminLogsPage({
                     <strong>{reportCount}</strong>
                 </Link>
 
-                <article className={styles.topicSummaryCard}>
-                    <span>Listelenen</span>
-
-                    <strong>{filteredLogs.length}</strong>
-                </article>
+                
             </section>
 
             <section
