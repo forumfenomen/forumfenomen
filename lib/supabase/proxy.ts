@@ -18,6 +18,20 @@ const ALLOWED_PATHS = [
   "/hesap-kisitli",
 ];
 
+const PROTECTED_PATHS = [
+  "/profil",
+  "/konu-ac",
+  "/admin",
+];
+
+function isProtectedPath(pathname: string) {
+  return PROTECTED_PATHS.some(
+    (path) =>
+      pathname === path ||
+      pathname.startsWith(`${path}/`)
+  );
+}
+
 function isAllowedPath(pathname: string) {
   return ALLOWED_PATHS.some(
     (path) =>
@@ -84,7 +98,7 @@ export async function updateSession(
 
   const userId =
     typeof claimsData?.claims?.sub ===
-    "string"
+      "string"
       ? claimsData.claims.sub
       : null;
 
@@ -92,6 +106,27 @@ export async function updateSession(
     request.nextUrl.pathname;
 
   if (!userId) {
+    if (isProtectedPath(pathname)) {
+      const redirectUrl =
+        request.nextUrl.clone();
+
+      redirectUrl.pathname = "/giris";
+      redirectUrl.search = "";
+
+      const response =
+        NextResponse.redirect(
+          redirectUrl
+        );
+
+      supabaseResponse.cookies
+        .getAll()
+        .forEach((cookie) => {
+          response.cookies.set(cookie);
+        });
+
+      return response;
+    }
+
     return supabaseResponse;
   }
 
@@ -120,9 +155,9 @@ export async function updateSession(
 
   const isRestricted =
     account.account_status ===
-      "banned" ||
+    "banned" ||
     account.account_status ===
-      "suspended";
+    "suspended";
 
   if (
     isRestricted &&
