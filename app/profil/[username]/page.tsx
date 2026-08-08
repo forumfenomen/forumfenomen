@@ -520,14 +520,13 @@ export default function PublicProfilePage() {
                 return;
             }
 
-            if (
-                profileError ||
-                !profileData
-            ) {
-                console.error(
-                    "Herkese açık profil alınamadı:",
-                    profileError?.message
-                );
+            if (profileError || !profileData) {
+                if (profileError) {
+                    console.error(
+                        "Herkese açık profil alınamadı:",
+                        profileError.message
+                    );
+                }
 
                 setProfile(null);
                 setNotFound(true);
@@ -2112,8 +2111,8 @@ export default function PublicProfilePage() {
                     >
                         <div
                             className={`${styles.profileReportIcon} ${reportSuccess
-                                    ? styles.profileReportSuccessIcon
-                                    : ""
+                                ? styles.profileReportSuccessIcon
+                                : ""
                                 }`}
                         >
                             <ReportIcon />

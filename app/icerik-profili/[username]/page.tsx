@@ -282,14 +282,13 @@ export default function ContentProfilePage() {
                 return;
             }
 
-            if (
-                profileError ||
-                !profileData
-            ) {
-                console.error(
-                    "İçerik profili alınamadı:",
-                    profileError?.message
-                );
+            if (profileError || !profileData) {
+                if (profileError) {
+                    console.error(
+                        "İçerik profili alınamadı:",
+                        profileError.message
+                    );
+                }
 
                 setProfile(null);
                 setTopics([]);
