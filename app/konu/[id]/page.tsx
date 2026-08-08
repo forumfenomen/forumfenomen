@@ -585,10 +585,12 @@ export default function TopicDetailPage() {
             }
 
             if (error || !data) {
-                console.error(
-                    "Konu detayı alınamadı:",
-                    error?.message
-                );
+                if (error) {
+                    console.error(
+                        "Konu detayı alınamadı:",
+                        error.message
+                    );
+                }
 
                 setTopic(null);
                 setNotFound(true);

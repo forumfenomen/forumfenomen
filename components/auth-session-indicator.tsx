@@ -29,7 +29,17 @@ export default function AuthSessionIndicator() {
     async function checkSession() {
       const {
         data: { session },
+        error,
       } = await supabase.auth.getSession();
+
+      if (!isActive) {
+        return;
+      }
+
+      if (error) {
+        updateIndicator(false);
+        return;
+      }
 
       updateIndicator(Boolean(session));
     }
