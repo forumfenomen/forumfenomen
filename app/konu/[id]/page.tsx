@@ -260,6 +260,11 @@ export default function TopicDetailPage() {
             ? params.id
             : "";
 
+    const isValidTopicId =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+            topicId
+        );
+
     const [language, setLanguage] =
         useState<ForumLanguage>("tr");
 
@@ -545,9 +550,11 @@ export default function TopicDetailPage() {
         let isActive = true;
 
         async function loadTopic() {
-            if (!topicId) {
+            if (!topicId || !isValidTopicId) {
+                setTopic(null);
                 setNotFound(true);
                 setLoading(false);
+                setCommentsLoading(false);
                 return;
             }
 
@@ -714,10 +721,11 @@ export default function TopicDetailPage() {
         topicId,
         authChecked,
         currentUserId,
+        isValidTopicId,
     ]);
 
     useEffect(() => {
-        if (!topicId) {
+        if (!topicId || !isValidTopicId) {
             return;
         }
 
@@ -798,13 +806,19 @@ export default function TopicDetailPage() {
         }
 
         void recordTopicView();
-    }, [topicId]);
+    }, [topicId, isValidTopicId]);
 
     useEffect(() => {
         let isActive = true;
 
         async function loadTopicActions() {
-            if (!topicId) {
+            if (!topicId || !isValidTopicId) {
+                setTopicSaveCount(0);
+                setTopicLikeCount(0);
+                setTopicDislikeCount(0);
+                setTopicReaction(0);
+                setTopicSaved(false);
+                setTopicReported(false);
                 return;
             }
 
@@ -931,7 +945,11 @@ export default function TopicDetailPage() {
         return () => {
             isActive = false;
         };
-    }, [topicId, currentUserId]);
+    }, [
+        topicId,
+        currentUserId,
+        isValidTopicId,
+    ]);
 
     useEffect(() => {
         if (!authChecked) {
@@ -941,7 +959,7 @@ export default function TopicDetailPage() {
         let isActive = true;
 
         async function loadComments() {
-            if (!topicId) {
+            if (!topicId || !isValidTopicId) {
                 setComments([]);
                 setCommentsLoading(false);
                 return;
@@ -951,17 +969,6 @@ export default function TopicDetailPage() {
 
             const supabase = createClient();
 
-            const {
-                data: quotaAllowed,
-                error: quotaError,
-            } = await supabase.rpc(
-                "consume_comment_quota"
-            );
-
-            if (quotaError || quotaAllowed !== true) {
-                setCommentMessage("rate_limit");
-                return;
-            }
 
             const { data, error } = await supabase
                 .from("topic_comments")
@@ -1176,6 +1183,7 @@ export default function TopicDetailPage() {
         topicId,
         authChecked,
         currentUserId,
+        isValidTopicId,
     ]);
 
 
@@ -1494,7 +1502,11 @@ export default function TopicDetailPage() {
             return;
         }
 
-        if (!topicId || topicReactionLoading) {
+        if (
+            !topicId ||
+            !isValidTopicId ||
+            topicReactionLoading
+        ) {
             return;
         }
 
@@ -1559,7 +1571,11 @@ export default function TopicDetailPage() {
             return;
         }
 
-        if (!topicId || topicSaveLoading) {
+        if (
+            !topicId ||
+            !isValidTopicId ||
+            topicSaveLoading
+        ) {
             return;
         }
 
@@ -1651,6 +1667,7 @@ export default function TopicDetailPage() {
 
         if (
             !topicId ||
+            !isValidTopicId ||
             !reportReason ||
             topicReportLoading
         ) {
@@ -1995,6 +2012,11 @@ export default function TopicDetailPage() {
     ) {
         event.preventDefault();
 
+        if (!topicId || !isValidTopicId) {
+            setCommentMessage("error");
+            return;
+        }
+
         const normalizedComment =
             commentText.trim();
 
@@ -2019,6 +2041,18 @@ export default function TopicDetailPage() {
 
             if (userError || !user) {
                 setCommentMessage("login");
+                return;
+            }
+
+            const {
+                data: quotaAllowed,
+                error: quotaError,
+            } = await supabase.rpc(
+                "consume_comment_quota"
+            );
+
+            if (quotaError || quotaAllowed !== true) {
+                setCommentMessage("rate_limit");
                 return;
             }
 
