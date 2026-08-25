@@ -13,8 +13,7 @@
 .documentSection,
 .noticeCard {
   border:
-    1px solid
-    rgba(255, 255, 255, 0.065);
+    1px solid rgba(255, 255, 255, 0.065);
 
   border-radius: 20px;
 
@@ -22,8 +21,7 @@
     rgba(8, 8, 18, 0.9);
 
   box-shadow:
-    0 13px 30px
-    rgba(0, 0, 0, 0.14);
+    0 13px 30px rgba(0, 0, 0, 0.14);
 }
 
 .card {
@@ -43,8 +41,7 @@
   color: #e060e8;
 
   border:
-    1px solid
-    rgba(211, 63, 233, 0.25);
+    1px solid rgba(211, 63, 233, 0.25);
 
   border-radius: 12px;
 
@@ -106,8 +103,7 @@
   color: #d97ce2;
 
   border:
-    1px solid
-    rgba(211, 64, 233, 0.2);
+    1px solid rgba(211, 64, 233, 0.2);
 
   border-radius: 999px;
 
@@ -149,23 +145,19 @@
   color: #ffffff;
 
   border:
-    1px solid
-    rgba(221, 72, 237, 0.38);
+    1px solid rgba(221, 72, 237, 0.38);
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #bc35dd,
-      #4c69ff
-    );
+      #4c69ff);
 }
 
 .secondaryButton {
   color: #c9cbd4;
 
   border:
-    1px solid
-    rgba(255, 255, 255, 0.085);
+    1px solid rgba(255, 255, 255, 0.085);
 
   background:
     rgba(255, 255, 255, 0.025);
@@ -189,8 +181,7 @@
   padding: 18px;
 
   border:
-    1px solid
-    rgba(255, 255, 255, 0.065);
+    1px solid rgba(255, 255, 255, 0.065);
 
   border-radius: 18px;
 
@@ -228,7 +219,7 @@
   padding: 22px;
 }
 
-.contactForm > span {
+.contactForm>span {
   color: #d957e3;
 
   font-size: 9px;
@@ -271,8 +262,7 @@
   color: #ffffff;
 
   border:
-    1px solid
-    rgba(255, 255, 255, 0.08);
+    1px solid rgba(255, 255, 255, 0.08);
 
   border-radius: 12px;
 
@@ -309,8 +299,7 @@
     rgba(212, 61, 234, 0.42);
 
   box-shadow:
-    0 0 0 3px
-    rgba(208, 54, 231, 0.055);
+    0 0 0 3px rgba(208, 54, 231, 0.055);
 }
 
 .submitButton {
@@ -326,17 +315,14 @@
   color: #ffffff;
 
   border:
-    1px solid
-    rgba(220, 70, 236, 0.35);
+    1px solid rgba(220, 70, 236, 0.35);
 
   border-radius: 12px;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #bd36dd,
-      #4b6bff
-    );
+      #4b6bff);
 
   font-size: 11px;
   font-weight: 760;
@@ -352,8 +338,7 @@
   color: #9ae2c7;
 
   border:
-    1px solid
-    rgba(57, 198, 151, 0.21);
+    1px solid rgba(57, 198, 151, 0.21);
 
   border-radius: 12px;
 
@@ -377,9 +362,7 @@
 
   display: grid;
   grid-template-columns:
-    44px
-    minmax(0, 1fr)
-    24px;
+    44px minmax(0, 1fr) 24px;
 
   min-height: 125px;
 
@@ -404,8 +387,7 @@
     rgba(211, 61, 233, 0.28);
 
   box-shadow:
-    0 16px 34px
-    rgba(0, 0, 0, 0.18);
+    0 16px 34px rgba(0, 0, 0, 0.18);
 }
 
 .documentIcon {
@@ -419,8 +401,7 @@
   color: #df63e7;
 
   border:
-    1px solid
-    rgba(210, 61, 232, 0.23);
+    1px solid rgba(210, 61, 232, 0.23);
 
   border-radius: 13px;
 
@@ -483,8 +464,7 @@
   color: #e57cec;
 
   border:
-    1px solid
-    rgba(212, 62, 234, 0.24);
+    1px solid rgba(212, 62, 234, 0.24);
 
   background:
     rgba(208, 54, 230, 0.065);
@@ -494,8 +474,7 @@
   color: #92cfff;
 
   border:
-    1px solid
-    rgba(59, 159, 245, 0.21);
+    1px solid rgba(59, 159, 245, 0.21);
 
   background:
     rgba(50, 147, 235, 0.06);
@@ -538,8 +517,7 @@
   color: #d477df;
 
   border:
-    1px solid
-    rgba(207, 61, 231, 0.22);
+    1px solid rgba(207, 61, 231, 0.22);
 
   border-radius: 11px;
 
@@ -566,8 +544,7 @@
     rgba(255, 255, 255, 0.97);
 
   box-shadow:
-    0 11px 27px
-    rgba(43, 38, 68, 0.06);
+    0 11px 27px rgba(43, 38, 68, 0.06);
 }
 
 :global(html[data-theme="light"]) .card h2,
@@ -606,6 +583,7 @@
 }
 
 @media (max-width: 680px) {
+
   .grid,
   .legalGrid,
   .contactLayout {
@@ -678,11 +656,9 @@
   border-radius: 50%;
 
   background:
-    radial-gradient(
-      circle,
+    radial-gradient(circle,
       rgba(207, 57, 233, 0.085),
-      transparent 68%
-    );
+      transparent 68%);
 }
 
 .contactEmailLink {
@@ -705,8 +681,7 @@
   color: #df78e7;
 
   border:
-    1px solid
-    rgba(210, 63, 232, 0.22);
+    1px solid rgba(210, 63, 232, 0.22);
 
   border-radius: 11px;
 
@@ -752,11 +727,9 @@
   border-radius: 7px;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #d643e2,
-      #586fff
-    );
+      #586fff);
 
   font-size: 11px;
   font-style: normal;
@@ -772,8 +745,7 @@
   line-height: 1.55;
 }
 
-:global(html[data-theme="light"])
-.contactEmailLink {
+:global(html[data-theme="light"]) .contactEmailLink {
   color: #a62cba;
 
   border-color:
@@ -783,8 +755,7 @@
     rgba(198, 52, 219, 0.05);
 }
 
-:global(html[data-theme="light"])
-.contactEmailLink:hover {
+:global(html[data-theme="light"]) .contactEmailLink:hover {
   color: #7e1e8e;
 
   border-color:
@@ -794,8 +765,7 @@
     rgba(198, 52, 219, 0.09);
 }
 
-:global(html[data-theme="light"])
-.contactFormDescription {
+:global(html[data-theme="light"]) .contactFormDescription {
   color: #666976;
 }
 
@@ -832,8 +802,7 @@
   color: #a7a9b4;
 
   border:
-    1px solid
-    rgba(255, 255, 255, 0.065);
+    1px solid rgba(255, 255, 255, 0.065);
 
   border-radius: 9px;
 
@@ -897,8 +866,7 @@
   transform: translateY(-1px);
 
   box-shadow:
-    0 9px 20px
-    rgba(175, 52, 221, 0.2);
+    0 9px 20px rgba(175, 52, 221, 0.2);
 
   filter: brightness(1.06);
 }
@@ -909,8 +877,7 @@
 
 /* Açık tema */
 
-:global(html[data-theme="light"])
-.requiredInfo {
+:global(html[data-theme="light"]) .requiredInfo {
   color: #646773;
 
   border-color:
@@ -920,25 +887,21 @@
     rgba(43, 38, 65, 0.025);
 }
 
-:global(html[data-theme="light"])
-.field select {
+:global(html[data-theme="light"]) .field select {
   color-scheme: light;
 }
 
-:global(html[data-theme="light"])
-.field select option {
+:global(html[data-theme="light"]) .field select option {
   color: #26252d;
 
   background-color: #ffffff;
 }
 
-:global(html[data-theme="light"])
-.field select:invalid {
+:global(html[data-theme="light"]) .field select:invalid {
   color: #777a86;
 }
 
-:global(html[data-theme="light"])
-.field select:valid {
+:global(html[data-theme="light"]) .field select:valid {
   color: #26252d;
 }
 
@@ -966,7 +929,7 @@
   padding: 20px !important;
 }
 
-.contactCard > span {
+.contactCard>span {
   font-size: 10.5px !important;
   font-weight: 850 !important;
 }
@@ -1002,7 +965,7 @@
     20px 22px 24px !important;
 }
 
-.contactForm > span {
+.contactForm>span {
   font-size: 10.5px !important;
 }
 
@@ -1091,15 +1054,12 @@
 
 /* Açık tema okunabilirliği */
 
-:global(html[data-theme="light"])
-.contactCard p,
-:global(html[data-theme="light"])
-.contactFormDescription {
+:global(html[data-theme="light"]) .contactCard p,
+:global(html[data-theme="light"]) .contactFormDescription {
   color: #5d606c !important;
 }
 
-:global(html[data-theme="light"])
-.field label {
+:global(html[data-theme="light"]) .field label {
   color: #3e404a !important;
 }
 
@@ -1113,17 +1073,14 @@
       Sabit alt navigasyonun form butonunu örtmesini engeller.
     */
     padding-bottom:
-      calc(
-        36px +
-        env(safe-area-inset-bottom)
-      ) !important;
+      calc(36px + env(safe-area-inset-bottom)) !important;
   }
 
   .contactCard {
     padding: 17px !important;
   }
 
-  .contactCard > span {
+  .contactCard>span {
     font-size: 10px !important;
   }
 
@@ -1147,7 +1104,7 @@
       17px 15px 25px !important;
   }
 
-  .contactForm > span {
+  .contactForm>span {
     font-size: 10px !important;
   }
 
@@ -1171,17 +1128,17 @@
   .field select {
     min-height: 47px !important;
 
-    font-size: 13px !important;
+    font-size: 16px !important;
   }
 
   .field textarea {
     min-height: 125px !important;
 
-    font-size: 13px !important;
+    font-size: 16px !important;
   }
 
   .field select option {
-    font-size: 13px !important;
+    font-size: 16px !important;
   }
 
   .submitButton {
@@ -1236,7 +1193,7 @@
   Kart içindeki işaretlenen üst-alt boşluklar azaltılır.
 */
 
-.contactCard > span {
+.contactCard>span {
   margin: 0 !important;
 
   line-height: 1.2 !important;
