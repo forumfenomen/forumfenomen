@@ -267,6 +267,12 @@ export default function ContactPage() {
       setSubject("");
       setMessage("");
 
+      if (
+        document.activeElement instanceof HTMLElement
+      ) {
+        document.activeElement.blur();
+      }
+
       window.setTimeout(() => {
         setSubmitted(false);
       }, 6000);
