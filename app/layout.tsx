@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 import AuthSessionIndicator from "@/components/auth-session-indicator";
 import PresenceTracker from "@/components/presence-tracker";
 import RouteScrollReset from "@/components/route-scroll-reset";
@@ -18,9 +19,10 @@ export default function RootLayout({
     <html lang="tr">
       <body>
         <RouteScrollReset />
-<PresenceTracker />
+        <PresenceTracker />
         <AuthSessionIndicator />
         {children}
+        <Analytics />
       </body>
     </html>
   );
